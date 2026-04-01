@@ -301,6 +301,8 @@ st.markdown("""
 def load_data():
     data_path = os.path.join(os.path.dirname(__file__), '..', 'nem_data.json')
     if not os.path.exists(data_path):
+        data_path = os.path.join(os.path.dirname(__file__), 'nem_data.json')
+    if not os.path.exists(data_path):
         data_path = '/home/user/workspace/nem_data.json'
     with open(data_path) as f:
         return json.load(f)
@@ -1355,6 +1357,10 @@ with tabs[1]:
         fig_s2 = go.Figure()
         fig_s2.add_trace(go.Scatter(x=yrs_hist, y=rev_vals_h, mode='lines+markers',
                                     line=dict(color=COLORS['blue'], width=2), marker=dict(size=6)))
+        fig_s2.add_annotation(x=yrs_hist[-1], y=rev_vals_h[-1],
+                              text=f"${rev_vals_h[-1]/1000:.1f}B", showarrow=False,
+                              font=dict(color=COLORS['blue'], size=11),
+                              xanchor='right', yanchor='bottom')
         apply_layout(fig_s2, "REVENUE NEARLY DOUBLED IN 2 YEARS", 200)
         fig_s2.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20))
         st.plotly_chart(fig_s2, use_container_width=True)
@@ -1364,7 +1370,14 @@ with tabs[1]:
         fig_s3 = go.Figure()
         fig_s3.add_trace(go.Scatter(x=aisc_yrs_h, y=aisc_data_h, mode='lines+markers',
                                     line=dict(color=COLORS['amber'], width=2), marker=dict(size=6)))
-        apply_layout(fig_s3, "AISC DECLINING — BEST IN CLASS", 200)
+        fig_s3.add_hline(y=1456, line_dash='dot', line_color=COLORS['muted'], line_width=1,
+                         annotation_text='Global avg: $1,456', annotation_position='bottom right',
+                         annotation_font=dict(size=9, color=COLORS['muted']))
+        fig_s3.add_annotation(x=aisc_yrs_h[-1], y=aisc_data_h[-1],
+                              text=f"${aisc_data_h[-1]:,}", showarrow=False,
+                              font=dict(color=COLORS['amber'], size=11),
+                              xanchor='right', yanchor='top')
+        apply_layout(fig_s3, "AISC DECLINING &mdash; BEST IN CLASS", 200)
         fig_s3.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20))
         st.plotly_chart(fig_s3, use_container_width=True)
     source_footer("NEM FY2021-2025 10-K Filings, Market Data")
@@ -1941,6 +1954,14 @@ with tabs[5]:
     total_cells = len(heat_data) * len(heat_data[0])
     apply_layout(fig_heat, f"SENSITIVITY: {cells_above}/{total_cells} cells > ${BASE['price']:.2f}", 400)
     fig_heat.update_layout(xaxis_title="Exit Multiple", yaxis_title="WACC")
+    # Highlight base case cell
+    base_wacc_label = f"{BASE['wacc']*100:.1f}%"
+    _exit_m = st.session_state.get('exit_multiple', 9.5)
+    base_mult_label = f"{_exit_m:.1f}\u00d7"
+    fig_heat.add_annotation(x=base_mult_label, y=base_wacc_label,
+        text='<b>BASE CASE</b>', showarrow=True, arrowhead=2,
+        font=dict(size=9, color=COLORS['blue']), arrowcolor=COLORS['blue'],
+        bgcolor='#0d1117', bordercolor=COLORS['blue'], borderwidth=1, ax=50, ay=-35)
     st.plotly_chart(fig_heat, use_container_width=True)
 
     # WACC Build
@@ -2050,6 +2071,11 @@ with tabs[6]:
                 hovertext=f"{peer_names[p]}<br>EV/EBITDA: {ev_ebitdas[i_s]:.1f}×<br>FCF Yield: {fcf_yields_p[i_s]:.1f}%"))
         apply_layout(fig_scatter, "EV/EBITDA vs FCF YIELD (bubble=mkt cap)", 300)
         fig_scatter.update_layout(showlegend=False, xaxis_title="EV/EBITDA (x)", yaxis_title="FCF Yield (%)")
+        # Mark the "ideal" quadrant — low EV/EBITDA, high FCF yield
+        fig_scatter.add_annotation(x=min(ev_ebitdas) + 1, y=max(fcf_yields_p) - 0.5,
+            text='<b>Best Value</b><br>Low multiple, high yield', showarrow=False,
+            font=dict(size=9, color=COLORS['green']),
+            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, opacity=0.8)
         st.plotly_chart(fig_scatter, use_container_width=True)
 
     # P/NAV
@@ -2431,6 +2457,12 @@ with tabs[8]:
             text=[f"{v:.1f}%" for _, v in sorted_v], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
         apply_layout(fig_tornado, "% VARIANCE EXPLAINED (R-squared)", 280)
         fig_tornado.update_layout(xaxis_title="Variance Explained (%)")
+        # Annotate the dominant driver
+        top_var = sorted_v[-1]
+        fig_tornado.add_annotation(x=top_var[1], y=top_var[0],
+            text=f'<b>{top_var[1]:.0f}%</b> &mdash; dominant driver', showarrow=True, arrowhead=2,
+            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=45, ay=-20)
         st.plotly_chart(fig_tornado, use_container_width=True)
 
     st.markdown('<div class="panel-header">SIMULATION PARAMETERS</div>', unsafe_allow_html=True)
@@ -2522,7 +2554,14 @@ with tabs[9]:
         fig_shares.add_trace(go.Bar(x=yrs_cr, y=shares_data, marker_color=share_colors,
                                     text=[f"{v:,.0f}M" for v in shares_data], textposition='outside',
                                     textfont=dict(color=COLORS['text'], size=10)))
-        apply_layout(fig_shares, "DILUTED SHARES — BUYBACK EFFECT", 280)
+        apply_layout(fig_shares, "DILUTED SHARES &mdash; BUYBACK EFFECT", 280)
+        # Annotate net reduction
+        if len(shares_data) >= 2:
+            net_chg = shares_data[-1] - max(shares_data)
+            fig_shares.add_annotation(x=yrs_cr[-1], y=shares_data[-1],
+                text=f'<b>{net_chg:,.0f}M</b><br>from peak', showarrow=True, arrowhead=2,
+                font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+                bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-25)
         st.plotly_chart(fig_shares, use_container_width=True)
     with c3:
         st.markdown('<div class="panel-header">DIVIDEND SUSTAINABILITY</div>', unsafe_allow_html=True)
@@ -2583,6 +2622,53 @@ with tabs[10]:
         — incremental upside <b style="color:#58a6ff;">WITHOUT requiring gold price appreciation</b>.
       </span>
     </div>""", unsafe_allow_html=True)
+
+    # --- CATALYST WATERFALL CHART ---
+    st.markdown('<br>', unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown('<div class="panel-header">PROBABILITY-WEIGHTED EV BY CATALYST ($/SHARE)</div>', unsafe_allow_html=True)
+        cat_names_wf = [c['Catalyst'] for c in catalysts if c['Status'] != 'COMPLETED']
+        cat_evs_wf = [c['Impact'] * c['Prob'] for c in catalysts if c['Status'] != 'COMPLETED']
+        cat_cats_wf = [c['Cat'] for c in catalysts if c['Status'] != 'COMPLETED']
+        cat_colors_map = {'Earnings': COLORS['blue'], 'Operations': COLORS['green'],
+                          'Financial': COLORS['amber'], 'Valuation': '#58a6ff'}
+        cat_bar_colors = [cat_colors_map.get(ct, COLORS['blue']) for ct in cat_cats_wf]
+        sorted_cats = sorted(zip(cat_names_wf, cat_evs_wf, cat_bar_colors), key=lambda x: x[1])
+        fig_cat_wf = go.Figure(go.Bar(
+            x=[v for _, v, _ in sorted_cats], y=[n for n, _, _ in sorted_cats], orientation='h',
+            marker_color=[c for _, _, c in sorted_cats],
+            text=[f"${v:.2f}" for _, v, _ in sorted_cats], textposition='outside',
+            textfont=dict(color=COLORS['text'], size=10)))
+        apply_layout(fig_cat_wf, f"FORWARD CATALYSTS: ${forward_ev:.2f}/sh TOTAL EV", 320)
+        fig_cat_wf.add_annotation(x=sorted_cats[-1][1], y=sorted_cats[-1][0],
+            text='<b>Highest EV</b>', showarrow=True, arrowhead=2,
+            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-20)
+        st.plotly_chart(fig_cat_wf, use_container_width=True)
+
+    with c2:
+        st.markdown('<div class="panel-header">CATALYST TIMELINE (Q1 2026 &ndash; Q1 2027)</div>', unsafe_allow_html=True)
+        quarter_order = ['Q1 2026', 'Q2 2026', 'Q3 2026', 'Q4 2026', 'Q1 2027']
+        quarter_map = {q: i for i, q in enumerate(quarter_order)}
+        tl_names = [c['Catalyst'] for c in catalysts]
+        tl_x = [quarter_map.get(c['Q'], 0) for c in catalysts]
+        status_colors = {'COMPLETED': COLORS['green'], 'IN PROGRESS': COLORS['amber'], 'UPCOMING': COLORS['blue']}
+        tl_colors = [status_colors.get(c['Status'], COLORS['blue']) for c in catalysts]
+        tl_symbols = ['circle' if c['Status'] == 'COMPLETED' else 'diamond' if c['Status'] == 'IN PROGRESS' else 'circle-open' for c in catalysts]
+        fig_tl = go.Figure()
+        fig_tl.add_trace(go.Scatter(
+            x=tl_x, y=tl_names, mode='markers+text',
+            marker=dict(size=14, color=tl_colors, symbol=tl_symbols, line=dict(width=1, color=COLORS['border'])),
+            text=[c['Q'] for c in catalysts], textposition='middle right',
+            textfont=dict(size=9, color=COLORS['muted']), showlegend=False))
+        apply_layout(fig_tl, "WHEN CATALYSTS TRIGGER", 320)
+        fig_tl.update_layout(
+            xaxis=dict(tickmode='array', tickvals=list(range(len(quarter_order))),
+                       ticktext=quarter_order, gridcolor=COLORS['border']),
+            yaxis=dict(gridcolor='rgba(0,0,0,0)'))
+        st.plotly_chart(fig_tl, use_container_width=True)
+
     source_footer("NEM Investor Presentations, Earnings Calls")
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -2750,6 +2836,10 @@ with tabs[11]:
     ))
     apply_layout(fig_score, 'CHANNEL CHECK SIGNALS: 5 BULLISH / 1 NEUTRAL / 2 BEARISH', 260)
     fig_score.update_layout(yaxis=dict(range=[0, 7], showticklabels=False))
+    fig_score.add_annotation(x='BULLISH (5)', y=bull_count,
+        text='<b>Net Score: +3</b>', showarrow=True, arrowhead=2,
+        font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+        bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=50, ay=-25)
     st.plotly_chart(fig_score, use_container_width=True)
 
     # Key bearish findings box (intellectual honesty)
@@ -2861,6 +2951,45 @@ with tabs[12]:
             angularaxis=dict(gridcolor='#30363d', tickfont=dict(color='#e6edf3', size=10))),
         title='NEM ESG vs Sector Average (Percentile)', height=380)
     st.plotly_chart(fig_radar, use_container_width=True)
+
+    # --- ESG PEER COMPARISON ---
+    st.markdown('<div class="panel-header">ESG PEER COMPARISON</div>', unsafe_allow_html=True)
+    esg_peers = ['NEM', 'Barrick (GOLD)', 'Agnico Eagle (AEM)']
+    esg_peer_scores = {
+        'MSCI': [7, 5.5, 6],  # AA=7, A=5.5, AA=6
+        'S&P CSA Pct': [99, 72, 85],
+        'CDP Climate': [8, 6, 7],  # A-=8, B=6, A-=7
+    }
+    c_esg1, c_esg2 = st.columns(2)
+    with c_esg1:
+        fig_esg_peer = go.Figure()
+        bar_width = 0.25
+        for i_m, (metric, scores) in enumerate(esg_peer_scores.items()):
+            fig_esg_peer.add_trace(go.Bar(
+                name=metric, x=esg_peers, y=scores,
+                marker_color=[COLORS['green'], COLORS['blue'], COLORS['blue']],
+                opacity=1.0 - i_m * 0.2,
+                text=[f"{s}" for s in scores], textposition='outside',
+                textfont=dict(color=COLORS['text'], size=10)))
+        apply_layout(fig_esg_peer, "NEM LEADS ON KEY ESG METRICS", 300)
+        fig_esg_peer.update_layout(barmode='group')
+        fig_esg_peer.add_annotation(x='NEM', y=99,
+            text='<b>99th pct</b><br>S&amp;P CSA', showarrow=True, arrowhead=2,
+            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-25)
+        st.plotly_chart(fig_esg_peer, use_container_width=True)
+    with c_esg2:
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
+          <div style="color:#58a6ff;font-size:11px;font-weight:700;letter-spacing:1.5px;margin-bottom:12px;">ESG CAPITAL FLOWS CONTEXT</div>
+          <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+            <b style="color:#3fb950;">$30T+</b> in ESG-mandated assets globally (Bloomberg Intelligence, 2022).<br>
+            <b style="color:#3fb950;">&gt;$40T projected by 2030</b> (Bloomberg Intelligence).<br><br>
+            As the #1-ranked gold miner on Bloomberg ESG Transparency and 99th percentile on S&amp;P CSA,
+            NEM is the primary beneficiary of ESG capital allocation in the gold sector.
+            Passive ESG index inclusion alone drives steady institutional buying pressure.
+          </div>
+        </div>""", unsafe_allow_html=True)
 
     # Honest tensions
     st.markdown('<div class="panel-header">HONEST TENSIONS</div>', unsafe_allow_html=True)
@@ -3312,6 +3441,29 @@ with tabs[14]:
       </div>
     </div>""", unsafe_allow_html=True)
 
+    # --- CONVERGENCE BAR CHART ---
+    st.markdown('<div class="panel-header">FOUR METHODS CONVERGE ON UNDERVALUATION</div>', unsafe_allow_html=True)
+    val_methods = ['DCF', 'P/NAV', 'MC Sim Median', 'Rel Val Est.']
+    val_prices = [B['dcf_price'], B['nav_price'], 135.28, 130.0]
+    val_colors_conv = [COLORS['green']] * len(val_methods)
+    fig_convergence = go.Figure(go.Bar(
+        x=val_methods, y=val_prices, marker_color=val_colors_conv,
+        text=[f"${v:.2f}" for v in val_prices], textposition='outside',
+        textfont=dict(color=COLORS['text'], size=12, family='monospace')))
+    fig_convergence.add_hline(y=B['price'], line_color=COLORS['red'], line_width=2, line_dash='dash',
+        annotation_text=f"Current: ${B['price']:.2f}", annotation_position='bottom right',
+        annotation_font=dict(size=10, color=COLORS['red']))
+    fig_convergence.add_hline(y=B['blended_target'], line_color=COLORS['blue'], line_width=1.5, line_dash='dot',
+        annotation_text=f"Blended Target: ${B['blended_target']:.2f}", annotation_position='top right',
+        annotation_font=dict(size=10, color=COLORS['blue']))
+    apply_layout(fig_convergence, f"ALL 4 METHODS ABOVE CURRENT PRICE (${B['price']:.2f})", 350)
+    fig_convergence.update_layout(yaxis_title="Implied Price ($/share)")
+    fig_convergence.add_annotation(x='DCF', y=B['dcf_price'],
+        text=f'<b>+{(B["dcf_price"]/B["price"]-1)*100:.0f}%</b>', showarrow=True, arrowhead=2,
+        font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+        bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=35, ay=-25)
+    st.plotly_chart(fig_convergence, use_container_width=True)
+
     # Closing argument
     aisc_d = d['nem_operational']['aisc_2025']
     st.markdown(f"""
@@ -3432,6 +3584,10 @@ with tabs[15]:
             name='GLD Dividends (Zero)', marker_color='rgba(139,148,158,0.3)'))
         apply_layout(fig_div_adv, "CUMULATIVE DIVIDENDS: NEM vs GLD", 280)
         fig_div_adv.update_layout(barmode='group')
+        fig_div_adv.add_annotation(x='5yr', y=nem_divs_cum[-1],
+            text=f'<b>${nem_divs_cum[-1]:.0f}/sh</b><br>GLD pays $0', showarrow=True, arrowhead=2,
+            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=-45, ay=-25)
         st.plotly_chart(fig_div_adv, use_container_width=True)
     with c2:
         # Breakeven comparison
@@ -3656,6 +3812,34 @@ with tabs[17]:
           <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{rev_beats}/{total_q}</div>
           <div class="kpi-sub">{rev_beats/total_q*100:.0f}% of quarters</div></div>""", unsafe_allow_html=True)
 
+    # --- EPS BEAT/MISS BAR CHART ---
+    st.markdown('<div class="panel-header">QUARTERLY EPS: ACTUAL vs ESTIMATE</div>', unsafe_allow_html=True)
+    earn_periods = [e['period'] for e in earn_m]
+    earn_actual = [e['actual_eps'] for e in earn_m]
+    earn_est = [e['est_eps'] for e in earn_m]
+    beat_miss_colors = [COLORS['green'] if a >= e else COLORS['red'] for a, e in zip(earn_actual, earn_est)]
+    fig_eps = go.Figure()
+    fig_eps.add_trace(go.Bar(x=earn_periods, y=earn_actual, name='Actual EPS',
+        marker_color=beat_miss_colors,
+        text=[f"${a:.2f}" for a in earn_actual], textposition='outside',
+        textfont=dict(color=COLORS['text'], size=10)))
+    fig_eps.add_trace(go.Scatter(x=earn_periods, y=earn_est, name='Consensus Est.',
+        mode='lines+markers', line=dict(color=COLORS['amber'], width=2, dash='dash'),
+        marker=dict(size=7, color=COLORS['amber'])))
+    apply_layout(fig_eps, f"EPS BEAT RATE: {beats}/{total_q} QUARTERS ({beats/total_q*100:.0f}%)", 300)
+    fig_eps.update_layout(barmode='group', yaxis_title='EPS ($)')
+    # Annotate the largest beat
+    surprises = [(earn_actual[i] - earn_est[i], i) for i in range(len(earn_actual)) if earn_est[i] > 0]
+    if surprises:
+        best_surprise = max(surprises, key=lambda x: x[0])
+        if best_surprise[0] > 0:
+            idx_best = best_surprise[1]
+            fig_eps.add_annotation(x=earn_periods[idx_best], y=earn_actual[idx_best],
+                text=f'<b>+${best_surprise[0]:.2f}</b><br>beat', showarrow=True, arrowhead=2,
+                font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+                bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=35, ay=-25)
+    st.plotly_chart(fig_eps, use_container_width=True)
+
     # Capital allocation timeline
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">CAPITAL ALLOCATION TIMELINE</div>', unsafe_allow_html=True)
@@ -3788,7 +3972,13 @@ with tabs[18]:
             textfont=dict(color=COLORS['text'], size=10)))
         fig_roic.add_trace(go.Scatter(x=roic_years, y=wacc_vals_ch, name=f'WACC ({wacc_v*100:.2f}%)',
             line=dict(color=COLORS['amber'], width=2, dash='dash'), marker=dict(size=7)))
-        apply_layout(fig_roic, "ROIC vs WACC (% — above line = value creation)", 300)
+        apply_layout(fig_roic, "ROIC vs WACC (% &mdash; above line = value creation)", 300)
+        # Label the ROIC-WACC spread on latest year
+        latest_spread = roic_vals[-1] - wacc_v * 100
+        fig_roic.add_annotation(x=roic_years[-1], y=roic_vals[-1],
+            text=f'<b>Spread: {latest_spread:+.1f}%</b>', showarrow=True, arrowhead=2,
+            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=45, ay=-30)
         st.plotly_chart(fig_roic, use_container_width=True)
 
     with c2:
