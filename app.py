@@ -1015,7 +1015,7 @@ with tabs[0]:
         <b style="color:#3fb950;">Earnings call tone.</b> Daniel Morgan (Barrenjoey) asked on Q2 if guidance was
         "pitched conservatively." Adam Baker (Macquarie) asked on Q4 if the $2,000/oz reserve price was
         "still too conservative." CTechO Hardy's reply: <i>"our reserve price assumption remains conservative
-        at more than 20% below the three-year trailing average."</i> With gold at $4,576, that reserve price
+        at more than 20% below the three-year trailing average."</i> With gold at ${B['gold_spot']:,}, that reserve price
         is 56% below spot. Tone scores: Q2 3.6 (31 negative mentions) &rarr; Q3 4.5 (only 7 negatives) &rarr; Q4 4.1.
         <br><br>
         <b style="color:#3fb950;">The copper surprise.</b> This one I didn't expect. A study of Microsoft's
@@ -1041,7 +1041,7 @@ with tabs[0]:
         CEO Viljoen: zero transactions either way. Absence of buying is absence of conviction.
         <br><br>
         <b style="color:#f85149;">Ghana royalty.</b> The <i>Minerals and Mining Royalties Regulations, 2025</i>
-        took effect Mar 9, 2026. Sliding scale of 5%&ndash;12% &mdash; at $4,576 gold, the 12% ceiling is active.
+        took effect Mar 9, 2026. Sliding scale of 5%&ndash;12% &mdash; at ${B['gold_spot']:,} gold, the 12% ceiling is active.
         NEM's Ahafo stability agreement (3%&ndash;5%) expired Dec 31, 2025; renewal was denied. Per NEM's Q4 filing:
         +$310/oz on Ghana AISC, +$50/oz on total NEM. Excluded from 2026 guidance. Ahafo produced 734 Koz in 2025.
         <br><br>
@@ -1062,7 +1062,7 @@ with tabs[0]:
     """, unsafe_allow_html=True)
 
     # The Credibility Question
-    st.markdown("""
+    st.markdown(f"""
     <div style="background:#0d1117;border-left:3px solid #58a6ff;padding:16px 20px;margin-bottom:16px;">
       <div style="color:#58a6ff;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE CREDIBILITY QUESTION</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
@@ -1080,8 +1080,8 @@ with tabs[0]:
         Agnico Eagle (AEM) is the gold standard &mdash; +0.1% average deviation post-merger, never missed
         (excl. 2020 COVID force majeure). NEM's recent trajectory is converging toward Barrick-level, not yet AEM-level.
         <br><br>
-        I haircut our production estimate to 5.11 Moz (&minus;2.9% vs. guided 5.26 Moz). At $4,576 gold
-        and $1,680 AISC, each 100 Koz of production variance equals ~$290M in FCF. The &minus;2.9% haircut
+        I haircut our production estimate to 5.11 Moz (&minus;2.9% vs. guided 5.26 Moz). At ${B['gold_spot']:,} gold
+        and $1,680 AISC, each 100 Koz of production variance equals ~${(B['gold_spot'] - 1680) * 100000 / 1e6:.0f}M in FCF. The &minus;2.9% haircut
         puts $443M of FCF at risk vs. guidance &mdash; that's the credibility gap, quantified.
       </div>
     </div>
@@ -1433,21 +1433,21 @@ with tabs[2]:
 
 
     @st.cache_data
-    def gold_history():
+    def gold_history(current_gold_spot):
         np.random.seed(0)
         dates = pd.date_range('2016-01-01', '2026-03-31', freq='ME')
         annual_avgs = {2016: 1251, 2017: 1257, 2018: 1268, 2019: 1393, 2020: 1770,
-                       2021: 1799, 2022: 1802, 2023: 1943, 2024: 2386, 2025: 3200, 2026: 4576}
+                       2021: 1799, 2022: 1802, 2023: 1943, 2024: 2386, 2025: 3200, 2026: current_gold_spot}
         prices = []
         for dt in dates:
             yr = dt.year
             base_p = annual_avgs.get(yr, 1500)
             noise = np.random.normal(0, base_p * 0.03)
             prices.append(max(base_p + noise, 1000))
-        prices[-1] = 4576
+        prices[-1] = current_gold_spot
         return dates, np.array(prices)
 
-    g_dates, g_prices = gold_history()
+    g_dates, g_prices = gold_history(DATA['gold_macro']['gold_spot'])
 
     st.markdown('<div class="panel-header">GOLD PRICE VS. NEM ALL-IN SUSTAINING COST</div>', unsafe_allow_html=True)
     fig_gold = make_subplots(specs=[[{"secondary_y": False}]])
@@ -2869,7 +2869,7 @@ with tabs[11]:
          '<b>Ghana royalty law enacted Mar 9, 2026. Cadia class action filed Feb 2, 2026.</b>'
          '<br><br>'
          '<span style="color:#f85149;"><b>Ghana:</b></span> <i>Minerals and Mining Royalties (Regulations), 2025</i> &mdash; '
-         'sliding scale of 5%&ndash;12% based on gold price (approx. +1 ppt per $500/oz). At $4,576 gold, the <b>12% ceiling is active</b>. '
+         f'sliding scale of 5%&ndash;12% based on gold price (approx. +1 ppt per $500/oz). At ${BASE["gold_spot"]:,} gold, the <b>12% ceiling is active</b>. '
          'Previous rate: 3%&ndash;5% under Ahafo stability agreement (expired Dec 31, 2025; renewal denied). '
          'Impact per NEM Q4 2025 filing: <b>+$310/oz AISC on Ghana ops, +$50/oz on total NEM AISC</b>. '
          'Explicitly excluded from 2026 guidance. Ahafo 2025 production: 734 Koz (664K South + 70K North).'
@@ -3408,7 +3408,7 @@ with tabs[13]:
       </div>
 
       <div style="color:#e6edf3;font-size:12px;line-height:1.6;max-width:900px;margin:0 auto;">
-        At $4,576/oz gold and $1,680/oz AISC, each 100 Koz of production variance = <span style="font-weight:700;">~$290M in FCF</span>.
+        At ${B['gold_spot']:,}/oz gold and $1,680/oz AISC, each 100 Koz of production variance = <span style="font-weight:700;">~${(B['gold_spot'] - 1680) * 100000 / 1e6:.0f}M in FCF</span>.
         <br>Our base case applies a <span style="color:{COLORS['amber']};font-weight:700;">-2.9% haircut</span> (blending post-Goldcorp avg with recent trajectory),
         implying actual production of <span style="font-weight:700;">~5.11 Moz</span> — with <span style="color:{COLORS['amber']};font-weight:700;">$443M in FCF</span> at risk vs. guidance.
         <br><br>

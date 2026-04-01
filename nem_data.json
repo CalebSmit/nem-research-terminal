@@ -486,11 +486,11 @@
   "earnings_history": [
     {
       "period": "Q4 2025",
-      "actual_eps": 1.19,
-      "est_eps": 2.03,
+      "actual_eps": 2.52,
+      "est_eps": 1.97,
       "actual_rev": 6818,
       "est_rev": 6228,
-      "rev_surprise": 590
+      "rev_surprise": 9.9
     },
     {
       "period": "Q3 2025",
