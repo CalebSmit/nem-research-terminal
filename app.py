@@ -936,11 +936,6 @@ tabs = st.tabs([
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[0]:
     B = BASE
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">The market prices NEM as if gold is $3,605/oz — 21% below spot. Three structural catalysts go unmodeled: (1) zero gold discoveries in 2023-2024 with 17.8-year lead times, (2) copper optionality from Cadia worth ~$8-10/share, (3) management execution converging from -11.8% to -0.2% guidance miss.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown(f"""
     <div style="background:#161b22;border:1px solid #30363d;padding:28px 24px 20px 24px;margin-bottom:20px;">
@@ -1116,7 +1111,7 @@ with tabs[0]:
     <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid {COLORS['red']};padding:16px 20px;margin-bottom:16px;">
       <div style="color:{COLORS['red']};font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">THE BEAR CASE I TOOK SERIOUSLY</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
-        <b>"You're just riding the gold price."</b> &mdash; If gold falls 27% to $3,605/oz (the price the market implies),
+        <b>"You're just riding the gold price."</b> &mdash; If gold falls {BASE['gold_gap_pct']:.0f}% to ${BASE['implied_gold']:,.0f}/oz (the price the market implies),
         NEM's AISC of $1,358/oz still produces $2,247/oz margin &mdash; positive FCF in every scenario above $1,700/oz.
         This is not a hope trade. It's an asymmetric margin-of-safety play.<br>
         <b>"Management is new and unproven."</b> &mdash; Correct. Viljoen started Jan 2026. But she inherits net cash of $7.2B,
@@ -1166,7 +1161,7 @@ with tabs[1]:
       <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">WHAT THE MARKET IS MISSING</div>
       <div style="color:#e6edf3;font-size:12px;line-height:1.7;">
         <b>The consensus sees NEM as a gold price bet. We see an operating leverage inflection that
-        the Street is mispricing by 27%.</b> At $107.80, the market embeds long-term gold at
+        the Street is mispricing by {BASE['gold_gap_pct']:.0f}%.</b> At $107.80, the market embeds long-term gold at
         <b style="color:#f85149;">${BASE['implied_gold']:,.0f}/oz</b> —
         <b style="color:#f85149;">{BASE['gold_gap_pct']:.0f}% below spot</b>.
         But three things the sell-side isn’t modeling: (1) zero major gold discoveries in 2023-2024 with 17.8-year
@@ -1437,12 +1432,6 @@ with tabs[2]:
     insight_callout("Central bank gold purchases are running at 2× pre-2022 rates — a structural shift, not a cycle. This underpins the entire gold thesis.")
 
 
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">Central banks added 1,045t of gold in 2024 — the third consecutive year above 1,000t, vs. a pre-2022 average of ~473t/yr. This 2× structural demand shift puts a floor under gold that most equity models haven\'t incorporated.</div>
-    </div>""", unsafe_allow_html=True)
-
     @st.cache_data
     def gold_history():
         np.random.seed(0)
@@ -1617,12 +1606,6 @@ with tabs[3]:
     insight_callout("NEM's gross margin expanded from 10% (2023) to 50% (2025) — a structural transformation, not a one-time event.")
 
 
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">NEM\'s gross margin tripled from 10% (2023) to 50% (2025). This isn\'t just gold prices — it\'s the structural effect of divesting 6 high-cost mines and retaining only Tier 1 assets. The margin expansion is durable.</div>
-    </div>""", unsafe_allow_html=True)
-
     st.markdown('<div class="panel-header">FINANCIAL SUMMARY — 5-YEAR HISTORY + ESTIMATES</div>', unsafe_allow_html=True)
     def _fm(v):
         """Format millions with commas."""
@@ -1720,12 +1703,6 @@ with tabs[4]:
 
     insight_callout("Cadia historically operated at deeply negative to ~$400/oz AISC (Newcrest era, by-product) — now in cave transition at higher costs but with 150 kt Cu/yr expansion ahead — this single asset generates outsized NAV contribution and provides copper optionality worth billions.")
 
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">After the Newcrest acquisition, NEM divested 6 non-core mines to focus on Tier 1 assets only. The remaining portfolio averages $1,358/oz by-product AISC (FY2025) vs. the global industry average of ~$1,456/oz — a structural cost advantage.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">GLOBAL MINE PORTFOLIO</div>', unsafe_allow_html=True)
     mine_names = list(mines.keys())
@@ -1884,12 +1861,6 @@ with tabs[4]:
 with tabs[5]:
     insight_callout("Even at a conservative $5,200/oz gold — 10% below spot — our DCF produces significant upside. The model does not depend on aggressive gold assumptions.")
 
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">Our DCF uses $5,200/oz gold — deliberately 10% below spot — and still produces $149/share (+38% upside). The margin of safety is in the assumptions, not the gold price.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">DCF ENGINE — INTERACTIVE FCFF MODEL</div>', unsafe_allow_html=True)
 
@@ -2051,35 +2022,6 @@ with tabs[5]:
         wacc_ggm = BASE['wacc']
         tv_ggm_v = dcf_live.iloc[-1]['fcff'] * (1 + g_ggm) / max(wacc_ggm - g_ggm, 0.001)
         ggm_mult_v = tv_ggm_v / dcf_live.iloc[-1]['ebitda'] if dcf_live.iloc[-1]['ebitda'] > 0 else 0
-        st.markdown(f"""
-        GGM TV = Y5 FCFF x (1+g) / (WACC - g) = ${tv_ggm_v:,.0f}M  
-        GGM-Implied Multiple = {ggm_mult_v:.2f}× (vs applied {BASE['peer_median_evebda']:.1f}×)  
-        {'**CONSERVATIVE:** GGM-implied > applied — TV understated.' if ggm_mult_v > BASE['peer_median_evebda'] else '**NOTE:** Applied > GGM — review assumptions.'}
-        """)
-    source_footer("NEM Filings, Damodaran Online, Bank Research")
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 6 — RELATIVE VALUE
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[6]:
-    d = DATA
-    peer_r = d['peer_ratios_latest']
-    peer_q = d['peer_quotes']
-
-    insight_callout("NEM trades at 7.9× EV/EBITDA vs AEM at 10.0×. If NEM re-rated to just peer median, the stock would be significantly higher — without any gold price appreciation.")
-
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">NEM trades at 7.9× EV/EBITDA vs. peer median of 10.0×. A simple re-rating to the group — without any gold price appreciation — implies ~$130/share.</div>
-    </div>""", unsafe_allow_html=True)
-
-    st.markdown('<div class="panel-header">PEER COMPARISON</div>', unsafe_allow_html=True)
-    peers = ['NEM', 'AEM', 'KGC', 'GFI', 'WPM']
-    peer_names = {'NEM': 'Newmont', 'AEM': 'Agnico Eagle', 'KGC': 'Kinross', 'GFI': 'Gold Fields', 'WPM': 'Wheaton PM'}
-    metrics_display = {'EV/EBITDA': 'ev_ebitda', 'P/E': 'pe', 'P/OCF': 'p_ocf', 'P/Book': 'p_book', 'FCF Yield': 'fcf_yield',
-        'Gross Margin': 'gross_margin', 'Op Margin': 'op_margin', 'Net Margin': 'net_margin', 'D/E': 'de', 'Current Ratio': 'current_ratio'}
     peer_rows_v = []
     for p in peers:
         row = {'Ticker': p, 'Company': peer_names[p], 'Price': f"${peer_q[p]['price']:.2f}",
@@ -2212,12 +2154,6 @@ with tabs[7]:
     insight_callout("Risk-reward is asymmetric: bull upside far exceeds bear downside because NEM has a hard cost floor — cash flow stays positive at any gold above ~$1,700/oz.")
 
 
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">NEM generates positive FCF at any gold price above ~$1,700/oz (by-product AISC $1,358 + capex/overhead). With gold at $4,576, that\'s a $2,876/oz margin of safety — a 63% buffer before the thesis breaks.</div>
-    </div>""", unsafe_allow_html=True)
-
     pb = st.session_state.get('prob_bull', 20) / 100
     pba = st.session_state.get('prob_base', 50) / 100
     pbe = st.session_state.get('prob_bear', 25) / 100
@@ -2348,11 +2284,6 @@ with tabs[7]:
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">RISKS IDENTIFIED VIA ALTERNATIVE DATA CHANNEL CHECKS</div>', unsafe_allow_html=True)
     st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">5 of 8 alternative data channels confirm the bull thesis. The 2 bearish signals (insider selling pattern, Ghana royalty risk) are included with full transparency &mdash; intellectual honesty, not cheerleading.</div>
-    </div>""", unsafe_allow_html=True)
-    st.markdown("""
     <div style="color:#8b949e;font-size:10px;margin-bottom:12px;">
       These risks were identified through 8 independent alternative data channel checks &mdash; not sell-side research.
       They represent real, under-discussed headwinds that traditional analysis often misses.
@@ -2411,12 +2342,6 @@ with tabs[7]:
 with tabs[8]:
     insight_callout("50,000 correlated simulations show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price.")
 
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">76.4% of 50,000 Monte Carlo simulations produce a price above $107.80. The median outcome ($135.28) exceeds current price by 25% — the market is priced below the mathematical center of the distribution.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">MONTE CARLO — 50,000 CORRELATED ITERATIONS</div>', unsafe_allow_html=True)
 
@@ -2547,12 +2472,6 @@ with tabs[9]:
     insight_callout("NEM returned $3.4B to shareholders in 2025 ($2.3B buybacks + $1.1B dividends) while achieving a net cash position — disciplined capital allocation at its finest.")
 
 
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">NEM returned $3.4B to shareholders in 2025 ($2.3B buybacks + $1.1B dividends) while simultaneously reaching $7.2B net cash. This dual mandate — returns AND balance sheet strength — signals peak financial health.</div>
-    </div>""", unsafe_allow_html=True)
-
     st.markdown('<div class="panel-header">CAPITAL ALLOCATION & SHAREHOLDER RETURNS</div>', unsafe_allow_html=True)
     f25_cr = f['2025']
     fcf_2025 = f25_cr['fcf']
@@ -2654,12 +2573,6 @@ with tabs[9]:
 with tabs[10]:
     insight_callout("Forward catalysts add ~$30/share in probability-weighted expected value — WITHOUT requiring gold price appreciation from current levels.")
 
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">Eight forward catalysts add ~$30/share in probability-weighted expected value. The four operational catalysts alone (Cadia expansion, production inflection, Lihir, Ahafo North) contribute ~$19/share — none require gold price appreciation.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">CATALYST MAP — PROBABILITY-WEIGHTED</div>', unsafe_allow_html=True)
     catalysts = [
@@ -2959,12 +2872,6 @@ with tabs[12]:
 
     insight_callout("NEM ranks #1 in Bloomberg ESG Transparency in the S&P 500 and 99th percentile on S&P CSA — capital flows to the most responsible operator in gold mining.")
 
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">#1 Bloomberg ESG Transparency in the S&amp;P 500. 99th percentile S&amp;P CSA. $30T+ in ESG-mandated capital globally (Bloomberg Intelligence) increasingly flows to best-in-class operators — NEM is the beneficiary in gold mining.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">ESG & STEWARDSHIP — RATINGS DASHBOARD</div>', unsafe_allow_html=True)
     ratings = [
@@ -3633,12 +3540,6 @@ with tabs[15]:
     insight_callout("NEM is not a gold bet — it is a gold OPERATING LEVERAGE bet with a dividend, a cost floor, and copper optionality. GLD provides none of these.")
 
 
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">GLD captures ~$0.40/oz in fees. NEM captures ~$2,896/oz in FCF margin. That\'s ~7,000× the economic capture per ounce of gold exposure — with a dividend and copper optionality that GLD can never provide.</div>
-    </div>""", unsafe_allow_html=True)
-
     st.markdown('<div class="panel-header">WHY NOT JUST BUY GLD?</div>', unsafe_allow_html=True)
 
     aisc_gld = d['nem_operational']['aisc_2025']
@@ -3782,12 +3683,6 @@ with tabs[16]:
     insight_callout("Copper from Cadia adds incremental value NOT captured in our gold-focused DCF or P/NAV. At current copper prices, this is worth ~$8-10/share of hidden upside.")
 
 
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">AI data centers are projected to add 330,000–1,000,000+ tonnes of new copper demand by 2030 (IEA, Trafigura). Cadia\'s expansion to 150 kt Cu/yr makes NEM a backdoor AI infrastructure play — value invisible to gold-focused models.</div>
-    </div>""", unsafe_allow_html=True)
-
     st.markdown('<div class="panel-header">COPPER OPTIONALITY — CADIA VALLEY</div>', unsafe_allow_html=True)
 
     copper_price_v = st.session_state.get('copper_price', 5.63)
@@ -3819,14 +3714,12 @@ with tabs[16]:
     with c2:
         st.markdown('<div class="panel-header">COPPER SENSITIVITY — INCREMENTAL $/SHARE</div>', unsafe_allow_html=True)
         copper_prices_s = [3.50, 4.00, 4.50, 5.00, 5.50, 5.63]
+        c1_cash_cost = 1.80  # $/lb — industry C1 cash cost for Cadia (NEM filings)
         cu_val_per_share = []
         for cp in copper_prices_s:
-            annual_rev_cu = cp * 2204.62 * copper_prod_v  # $/lb * lb/t * kt -> $M (approx)
-            annual_rev_cu = cp * copper_prod_v * 2.20462  # simplified: kt * $/lb * ~2204 lb/t / 1000
-            # More precise: 1 metric tonne = 2204.62 lbs; revenue = price/lb * lbs * 1000 (kt)
-            annual_rev_cu = cp * copper_prod_v * 1000 * 2204.62 / 1e6  # $M
-            # Apply a ~30% operating margin for copper
-            annual_ocf_cu = annual_rev_cu * 0.30
+            # Cash margin = price - C1 cost, applied to production volume
+            margin_per_lb = max(cp - c1_cash_cost, 0)
+            annual_ocf_cu = margin_per_lb * copper_prod_v * 1000 * 2204.62 / 1e6  # $M
             # NPV with discount rate over mine life
             annuity_cu = (1 - (1 + copper_dr) ** (-min(cadia_mine_life, 30))) / copper_dr
             npv_cu = annual_ocf_cu * annuity_cu
@@ -3844,7 +3737,7 @@ with tabs[16]:
         fig_cu.add_hline(y=cu_val_per_share[-1], line_dash='dash', line_color=COLORS['green'],
                          annotation_text=f"Current: ${cu_val_per_share[-1]:.1f}/sh",
                          annotation_font_color=COLORS['green'])
-        apply_layout(fig_cu, "HIDDEN COPPER KICKER: +$2.58/SHARE NOT IN THE BASE CASE", 300)
+        apply_layout(fig_cu, f"HIDDEN COPPER KICKER: +${cu_val_per_share[-1]:.1f}/SHARE NOT IN THE BASE CASE", 300)
         fig_cu.update_layout(yaxis_title="Value per NEM Share ($)")
         st.plotly_chart(fig_cu, use_container_width=True)
 
@@ -3903,12 +3796,6 @@ with tabs[17]:
     _total_q_m = len(_earn_m)
     insight_callout(f"Management has beaten consensus EPS in {_eps_beats} of {_total_q_m} recent quarters. Production guidance miss has narrowed from -11.8% (2020) to -0.2% (2025) — the trajectory is the signal. New CEO Natascha Viljoen inherits the strongest balance sheet in NEM history.")
 
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">Viljoen inherits the strongest balance sheet in NEM history: $7.2B net cash, Piotroski 9/9, completed Tier 1 portfolio. The restructuring is done — 2026 is the execution test.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">MANAGEMENT CREDIBILITY TRACKER</div>', unsafe_allow_html=True)
 
@@ -4047,12 +3934,6 @@ with tabs[18]:
 
     insight_callout("NEM earns returns well above its cost of capital — creating real economic value. This is rare in mining and signals quality capital allocation.")
 
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">ROIC 19.6% vs. WACC 7.04% = 12.6 percentage point value creation spread. NEM generates $0.13 of economic profit per dollar of invested capital — rare in mining, where most peers destroy value.</div>
-    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">ROIC & ECONOMIC VALUE ADDED (EVA)</div>', unsafe_allow_html=True)
 
