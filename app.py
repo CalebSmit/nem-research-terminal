@@ -974,6 +974,30 @@ with tabs[0]:
     </div>
     """, unsafe_allow_html=True)
 
+    # REVERSE DCF VISUAL CALLOUT — the insight that started everything
+    st.markdown(f"""
+    <div style="background:#161b22;border:2px solid #f85149;padding:20px 24px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="color:#f85149;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:700;">
+            THE REVERSE DCF INSIGHT</div>
+          <div style="color:#e6edf3;font-size:13px;line-height:1.7;">
+            Run the model backward: what gold price justifies NEM at ${B['price']:.2f}?
+            Answer: <b style="color:#f85149;">${B['implied_gold']:,.0f}/oz</b>. Gold actually trades at
+            <b style="color:#3fb950;">${B['gold_spot']:,}/oz</b>. That's a
+            <b style="color:#d29922;">{B['gold_gap_pct']:.0f}% gap</b> &mdash; the market is betting
+            gold reverts to 2023 levels. The 8 checks below test whether it will.</div>
+        </div>
+        <div style="text-align:center;min-width:140px;">
+          <div style="color:#f85149;font-size:28px;font-weight:700;">${B['implied_gold']:,.0f}</div>
+          <div style="color:#8b949e;font-size:9px;letter-spacing:1px;">MARKET IMPLIED</div>
+          <div style="color:#d29922;font-size:20px;font-weight:700;margin:4px 0;">vs</div>
+          <div style="color:#3fb950;font-size:28px;font-weight:700;">${B['gold_spot']:,}</div>
+          <div style="color:#8b949e;font-size:9px;letter-spacing:1px;">ACTUAL SPOT</div>
+        </div>
+      </div>
+    </div>""", unsafe_allow_html=True)
+
     # The 8 Channel Checks
     st.markdown("""
     <div style="background:#0d1117;border-left:3px solid #3fb950;padding:16px 20px;margin-bottom:16px;">
@@ -1247,7 +1271,27 @@ with tabs[1]:
           <div class="kpi-sub">vs. XAU/USD</div>
         </div>""", unsafe_allow_html=True)
 
-    st.markdown('<br>', unsafe_allow_html=True)
+    # REVERSE DCF BANNER — the thesis anchor
+    st.markdown(f"""
+    <div style="background:#161b22;border:2px solid #f85149;padding:14px 20px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="color:#f85149;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:4px;">
+            REVERSE DCF — THE CORE MISPRICING</div>
+          <div style="color:#e6edf3;font-size:12px;line-height:1.5;">
+            The market prices NEM as if gold is <b style="color:#f85149;">${BASE['implied_gold']:,.0f}/oz</b>.
+            Gold is actually at <b style="color:#3fb950;">${BASE['gold_spot']:,}/oz</b>.
+            The <b style="color:#d29922;">{BASE['gold_gap_pct']:.0f}% gap</b> is the thesis.</div>
+        </div>
+        <div style="text-align:center;border-left:1px solid #30363d;padding-left:20px;">
+          <div style="color:#f85149;font-size:24px;font-weight:700;">${BASE['implied_gold']:,.0f}</div>
+          <div style="color:#8b949e;font-size:8px;letter-spacing:1px;">IMPLIED</div>
+          <div style="color:#d29922;font-size:12px;font-weight:700;margin:2px 0;">→</div>
+          <div style="color:#3fb950;font-size:24px;font-weight:700;">${BASE['gold_spot']:,}</div>
+          <div style="color:#8b949e;font-size:8px;letter-spacing:1px;">ACTUAL</div>
+        </div>
+      </div>
+    </div>""", unsafe_allow_html=True)
 
     st.markdown('<div class="panel-header">THREE-DRIVER THESIS</div>', unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
@@ -3292,35 +3336,97 @@ with tabs[14]:
     B = BASE
     d = DATA
 
-    insight_callout("Two independent valuation methods — DCF and P/NAV — both imply the market is pricing gold far below actual spot. The convergence reduces model risk.")
-
-
-    st.markdown("""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">Four independent methods (DCF $149, P/NAV $112, MC Sim $135, Rel Val ~$130) converge on the same zone. The reverse DCF reveals the market embeds $3,605/oz gold — 21% below spot. When four layers agree, the probability of mispricing is high.</div>
-    </div>""", unsafe_allow_html=True)
-
-    st.markdown('<div class="panel-header">REVERSE DCF — THE KILLER INSIGHT</div>', unsafe_allow_html=True)
+    # ═══════════════════════════════════════════════════════════════════════════
+    # HERO SECTION — REVERSE DCF GAP (THE SINGLE MOST IMPORTANT INSIGHT)
+    # ═══════════════════════════════════════════════════════════════════════════
     implied_gold_v = B['implied_gold']
     gold_spot_v = B['gold_spot']
     gold_gap_v = gold_spot_v - implied_gold_v
+    gold_gap_pct_v = B['gold_gap_pct']
 
     st.markdown(f"""
-    <div style="background:#161b22;border:2px solid #58a6ff;padding:24px;text-align:center;margin-bottom:16px;">
-      <div style="color:#8b949e;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">
-        WHAT GOLD PRICE IS THE MARKET IMPLYING?</div>
-      <div style="color:#58a6ff;font-size:36px;font-weight:700;margin-bottom:6px;">${implied_gold_v:,.0f}/oz</div>
-      <div style="color:#8b949e;font-size:12px;margin-bottom:16px;">Implied at current stock price of ${B['price']:.2f}</div>
-      <div style="color:#e6edf3;font-size:16px;font-weight:600;">
-        Market pricing gold at <span style="color:#f85149;">${implied_gold_v:,.0f}/oz</span> —
-        <span style="color:#3fb950;">{B['gold_gap_pct']:.1f}% below</span> actual spot of
-        <span style="color:#3fb950;">${gold_spot_v:,}/oz</span></div>
-      <div style="color:#d29922;font-size:14px;margin-top:8px;">The ${gold_gap_v:,.0f}/oz gap = the mispricing</div>
-      <div style="color:#8b949e;font-size:9px;margin-top:8px;font-style:italic;">Note: Reverse DCF is a simplified single-variable solve holding all other assumptions (production, AISC, multiples) constant. It isolates the gold price variable to reveal what the market is implicitly embedding.</div>
+    <div style="background:linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+         border:3px solid #f85149;padding:0;margin-bottom:24px;overflow:hidden;">
+      <div style="background:#f85149;padding:8px 20px;">
+        <div style="color:#ffffff;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:700;
+             text-align:center;">THE SINGLE MOST IMPORTANT INSIGHT IN THIS ANALYSIS</div>
+      </div>
+      <div style="padding:32px 28px 24px 28px;">
+        <div style="display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-bottom:24px;">
+          <div style="text-align:center;">
+            <div style="color:#8b949e;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">
+              THE MARKET IS PRICING GOLD AT</div>
+            <div style="color:#f85149;font-size:48px;font-weight:700;letter-spacing:2px;line-height:1;">
+              ${implied_gold_v:,.0f}<span style="font-size:20px;color:#8b949e;">/oz</span></div>
+          </div>
+          <div style="text-align:center;">
+            <div style="color:#8b949e;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">
+              GOLD IS ACTUALLY AT</div>
+            <div style="color:#3fb950;font-size:48px;font-weight:700;letter-spacing:2px;line-height:1;">
+              ${gold_spot_v:,}<span style="font-size:20px;color:#8b949e;">/oz</span></div>
+          </div>
+          <div style="text-align:center;">
+            <div style="color:#8b949e;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">
+              THE GAP</div>
+            <div style="color:#d29922;font-size:48px;font-weight:700;letter-spacing:2px;line-height:1;">
+              {gold_gap_pct_v:.0f}%</div>
+          </div>
+        </div>
+        <div style="text-align:center;border-top:1px solid #30363d;padding-top:16px;">
+          <div style="color:#e6edf3;font-size:16px;line-height:1.6;">
+            If you believe gold stays above <b style="color:#f85149;">${implied_gold_v:,.0f}</b>, NEM is undervalued.</div>
+          <div style="color:#8b949e;font-size:10px;margin-top:8px;">
+            Reverse DCF: solving backward for the gold price the market embeds in NEM's current stock price of ${B['price']:.2f}.</div>
+        </div>
+      </div>
     </div>""", unsafe_allow_html=True)
 
-    # Final Verdict
+    # REVERSE DCF GAP BAR CHART — the visual that IS the thesis
+    fig_gold_gap = go.Figure()
+    fig_gold_gap.add_trace(go.Bar(
+        x=["Market's Implied Gold"], y=[implied_gold_v],
+        marker_color='#f85149', width=0.5,
+        text=[f"${implied_gold_v:,.0f}/oz"], textposition='outside',
+        textfont=dict(color='#f85149', size=16, family='monospace, Fira Code'),
+        name="Market's Implied Gold"))
+    fig_gold_gap.add_trace(go.Bar(
+        x=["Current Spot Gold"], y=[gold_spot_v],
+        marker_color='#3fb950', width=0.5,
+        text=[f"${gold_spot_v:,}/oz"], textposition='outside',
+        textfont=dict(color='#3fb950', size=16, family='monospace, Fira Code'),
+        name="Current Spot Gold"))
+    fig_gold_gap.add_annotation(
+        x=0.5, y=(gold_spot_v + implied_gold_v) / 2,
+        xref='paper',
+        text=f'<b>${gold_gap_v:,.0f}/oz GAP</b><br><b>{gold_gap_pct_v:.0f}% MISPRICING</b>',
+        showarrow=True, arrowhead=0, arrowcolor='#d29922', arrowwidth=2,
+        ax=120, ay=0,
+        font=dict(size=14, color='#d29922', family='monospace, Fira Code'),
+        bgcolor='#0d1117', bordercolor='#d29922', borderwidth=2, borderpad=8)
+    apply_layout(fig_gold_gap, "REVERSE DCF: WHAT THE MARKET PRICES vs REALITY", 380)
+    fig_gold_gap.update_layout(
+        yaxis_title="Gold Price ($/oz)",
+        yaxis_range=[0, gold_spot_v * 1.18],
+        showlegend=False,
+        bargap=0.4)
+    st.plotly_chart(fig_gold_gap, use_container_width=True)
+
+    st.markdown(f"""
+    <div style="background:#161b22;border-left:4px solid #d29922;padding:14px 20px;margin-bottom:24px;">
+      <div style="color:#e6edf3;font-size:12px;line-height:1.7;">
+        <b style="color:#d29922;">How to read this chart:</b> The red bar is the gold price the market
+        <i>implicitly assumes</i> when it prices NEM at ${B['price']:.2f}. The green bar is where gold
+        actually trades. The ${gold_gap_v:,.0f}/oz gap between them — that's the mispricing, expressed
+        in a single number. Everything else in this dashboard explains <i>why</i> that gap exists
+        and <i>why</i> it should close.</div>
+      <div style="color:#8b949e;font-size:9px;margin-top:8px;font-style:italic;">
+        Methodology: Reverse DCF is a single-variable solve holding all other assumptions (production, AISC, multiples)
+        constant. It isolates the gold price variable to reveal what the market is implicitly embedding.</div>
+    </div>""", unsafe_allow_html=True)
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # FINAL VERDICT — BUY / TARGET / UPSIDE
+    # ═══════════════════════════════════════════════════════════════════════════
     rec_v = B['recommendation']
     rec_color_v = B['rec_color']
     target_v = B['blended_target']
@@ -3376,7 +3482,9 @@ with tabs[14]:
       </div>
     </div>""", unsafe_allow_html=True)
 
-    # CONVERGENCE OF EVIDENCE — the differentiator
+    # ═══════════════════════════════════════════════════════════════════════════
+    # CONVERGENCE OF EVIDENCE
+    # ═══════════════════════════════════════════════════════════════════════════
     st.markdown('<div class="panel-header">CONVERGENCE OF EVIDENCE — FOUR INDEPENDENT LAYERS</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="color:#8b949e;font-size:11px;margin-bottom:16px;line-height:1.5;">
@@ -3436,7 +3544,7 @@ with tabs[14]:
         4 / 4 layers point to <span style="color:{COLORS['green']};">UNDERVALUATION</span>
       </div>
       <div style="color:#8b949e;font-size:11px;line-height:1.6;">
-        When DCF, alternative data, analyst momentum, and supply structure all agree — and the market is pricing gold at a 26.9% discount to spot —
+        When DCF, alternative data, analyst momentum, and supply structure all agree — and the market is pricing gold at a {gold_gap_pct_v:.0f}% discount to spot —
         the probability of mispricing is high. This is not a single-factor bet.
       </div>
     </div>""", unsafe_allow_html=True)
@@ -3471,10 +3579,11 @@ with tabs[14]:
          padding:20px;margin-top:20px;font-size:12px;line-height:1.8;color:#e6edf3;">
       <b style="color:#58a6ff;font-size:13px;">THE INVESTMENT CASE IN ONE PARAGRAPH</b><br><br>
       Newmont is the world's largest gold producer at an inflection point: gold is structurally bid by central bank de-dollarization
-      (1,100+ tonnes/yr, 2× pre-2022 average), and NEM has transformed its portfolio — AISC declining to ${aisc_d:,}/oz,
+      (1,100+ tonnes/yr, 2&times; pre-2022 average), and NEM has transformed its portfolio — AISC declining to ${aisc_d:,}/oz,
       net cash of ${(B['cash'] - B['total_debt_val']):,}M, and FCF yield of {d['nem_annual_financials']['2025']['fcf'] / (d['market_data']['nem_market_cap'] / 1e6) * 100:.1f}%.
-      The market is pricing the stock as if gold is ${B['implied_gold']:,.0f}/oz — {B['gold_gap_pct']:.1f}% below
-      actual spot of ${B['gold_spot']:,}/oz. Our blended DCF/P/NAV model produces a target of
+      <b style="color:#f85149;">The reverse DCF reveals the market is pricing gold at ${B['implied_gold']:,.0f}/oz — {B['gold_gap_pct']:.1f}% below
+      actual spot of ${B['gold_spot']:,}/oz.</b> If gold stays anywhere near current levels, the stock is mispriced.
+      Our blended DCF/P/NAV model produces a target of
       <b style="color:#58a6ff;">${target_v:.2f}</b>, representing
       <b style="color:#3fb950;">{upside_v:+.1f}% upside</b>.
       The asymmetry is compelling: the bull case offers outsized returns, while the bear case still generates positive FCF.
