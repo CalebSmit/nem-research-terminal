@@ -1,9 +1,9 @@
 {
   "as_of": "2026-03-31",
   "market_data": {
-    "nem_price": 107.8,
-    "nem_market_cap": 117272835634,
-    "nem_pe": 16.87,
+    "nem_price": 108.25,
+    "nem_market_cap": 119949000000,
+    "nem_pe": 15.71,
     "nem_eps": 6.39,
     "nem_div_yield": 0.01,
     "nem_52w_low": 42.93,
@@ -21,7 +21,7 @@
       "ebitda": 13123,
       "ebit": 10353,
       "net_income": 7085,
-      "eps": 6.41,
+      "eps": 6.89,
       "interest_expense": 301,
       "tax_expense": 4596,
       "income_before_tax": 11763,
@@ -314,9 +314,9 @@
   },
   "peer_quotes": {
     "NEM": {
-      "price": 107.8,
-      "market_cap": 117272835634,
-      "pe": 16.87,
+      "price": 108.25,
+      "market_cap": 119949000000,
+      "pe": 15.71,
       "div_yield": 0.01
     },
     "AEM": {

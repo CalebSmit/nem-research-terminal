@@ -1010,7 +1010,7 @@ with tabs[0]:
         <b style="color:#3fb950;">Analyst revisions.</b> 4 upgrades, 0 downgrades in 6 months. Bernstein's Bob Brackett
         upgraded to Outperform on Feb 27, target $121&rarr;$157. Citigroup's Alexander Hacking raised to $150
         on Mar 3. Scotiabank's Tanya Jakusconek went from $71.50 to $151. Of 9 covering analysts, 8 say Buy.
-        Consensus mean ($123.44) still trails our model (${B['blended_target']:.2f}) by {((B['blended_target']/123.44)-1)*100:.0f}%.
+        Consensus mean (${DATA['analyst_consensus']['avg_target']:.2f}) still trails our model (${B['blended_target']:.2f}) by {((B['blended_target']/DATA['analyst_consensus']['avg_target'])-1)*100:.0f}%.
         <br><br>
         <b style="color:#3fb950;">Earnings call tone.</b> Daniel Morgan (Barrenjoey) asked on Q2 if guidance was
         "pitched conservatively." Adam Baker (Macquarie) asked on Q4 if the $2,000/oz reserve price was
@@ -1169,7 +1169,7 @@ with tabs[1]:
         moat; (2) copper optionality from Cadia (expanding to 150 kt Cu/yr) is a backdoor AI data center play
         worth ~$8-10/share that pure gold miners can't replicate; (3) management's guidance miss has compressed
         from -11.8% to -0.2%, but 0 of 18 sell-side models we reviewed apply a credibility haircut.
-        Four analyst upgrades, zero downgrades — but consensus ($123) still trails our ${BASE['blended_target']:.2f}.
+        Four analyst upgrades, zero downgrades — but consensus (${DATA['analyst_consensus']['avg_target']:.0f}) still trails our ${BASE['blended_target']:.2f}.
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -2827,7 +2827,7 @@ with tabs[11]:
          'CIBC (Anita Soni) upgraded Oct 10, 2025 at $78&rarr;$112. '
          'UBS (Daniel Major) is the lone trimmer: $150&rarr;$140 on Mar 27. '
          '<br><br>'
-         '<b>Consensus:</b> 9 analysts &mdash; 8 Buy (88.9%), 1 Hold. Mean target $123.44, median $115.00. '
+         f'<b>Consensus:</b> {DATA["analyst_consensus"]["total_ratings"]} analysts &mdash; {int(DATA["analyst_consensus"]["bullish_pct"])}% Buy. Mean target ${DATA["analyst_consensus"]["avg_target"]:.2f}, median ${DATA["analyst_consensus"]["median_target"]:.0f}. '
          'High: $157 (Bernstein). Low: $84 (Raymond James, Brian MacArthur). '
          f'Our model (${BASE["blended_target"]:.2f}) sits between consensus mean and Bernstein&rsquo;s high.',
          'Perplexity Finance analyst data, Yahoo Finance (Feb 27, 2026), SEC filings'),
@@ -3680,7 +3680,7 @@ with tabs[14]:
             'signal': '4 UPGRADES / 0 DOWNGRADES',
             'color': COLORS['green'],
             'icon': '▲',
-            'detail': f'Consensus target: ~$123 → Our target: ${B["blended_target"]:.2f} (+{((B["blended_target"]/123)-1)*100:.0f}% above Street)',
+            'detail': f'Consensus target: ~${DATA["analyst_consensus"]["avg_target"]:.0f} → Our target: ${B["blended_target"]:.2f} (+{((B["blended_target"]/DATA["analyst_consensus"]["avg_target"])-1)*100:.0f}% above Street)',
             'sub': 'Wall Street is moving our direction but hasn\'t fully caught up. Contrarian alpha remains.',
         },
         {
