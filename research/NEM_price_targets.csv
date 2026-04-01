@@ -1,0 +1,16 @@
+id,date,firm,analyst,action,rating_current,rating_prior,price_target_current,price_target_prior,sentiment
+69c6a9b2e04ea10001e07607,2026-03-27,UBS,Daniel Major,Maintains,Buy,Buy,140,150,bullish
+69bd61d685c813000170151a,2026-03-20,Scotiabank,Tanya Jakusconek,Maintains,Sector Outperform,Sector Outperform,151,152,bullish
+69a722a44d72a700010260ea,2026-03-03,Citigroup,Alexander Hacking,Maintains,Buy,Buy,150,118,bullish
+69a18ca07574ea0001e86a87,2026-02-27,Bernstein,Bob Brackett,Upgrades,Market Outperform,Market Perform,157,121,bullish
+6977c4426795c2000146dd35,2026-01-26,Scotiabank,Tanya Jakusconek,Maintains,Sector Outperform,Sector Outperform,152,114,bullish
+692db39721a45000013eab32,2025-12-01,UBS,Daniel Major,Maintains,Buy,Buy,125,105.5,bullish
+68fa31460941aa000109a104,2025-10-23,Scotiabank,Tanya Jakusconek,Upgrades,Sector Outperform,Sector Perform,114,71.5,bullish
+68f1341efc3d510001b4e01f,2025-10-16,UBS,Daniel Major,Maintains,Buy,Buy,105.5,92,bullish
+68f0de0c83de4900015a5ad5,2025-10-16,B of A Securities,Michael Jalonen,Maintains,Buy,Buy,115,105,bullish
+68efb9310941aa000108c1e0,2025-10-15,Citigroup,Alexander Hacking,Maintains,Buy,Buy,104,74,bullish
+68e8e817fc3d510001b297d2,2025-10-10,CIBC,Anita Soni,Upgrades,Outperformer,Neutral,112,78,neutral
+69c6e3bab96a7f00019aeb23,2025-09-30,Freedom Broker,Vitaly Kononov,Maintains,Buy,Buy,107,60,bullish
+68d2df399867070001d6dd6e,2025-09-23,Raymond James,Brian MacArthur,Maintains,Outperform,Outperform,84,77,bullish
+68cd753667b7170001d0011e,2025-09-19,UBS,Daniel Major,Maintains,Buy,Buy,92,70,bullish
+68c159bea89c3500011ac767,2025-09-10,RBC Capital,Josh Wolfson,Upgrades,Outperform,Sector Perform,95,66,bullish
