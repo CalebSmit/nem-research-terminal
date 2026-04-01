@@ -1450,8 +1450,7 @@ with tabs[2]:
         fig_cb.add_hline(y=cb_data['pre_2022_avg'], line_dash='dash', line_color=COLORS['amber'], line_width=1.5,
                          annotation_text=f"Pre-2022 avg: {cb_data['pre_2022_avg']}t", annotation_font_color=COLORS['amber'])
         apply_layout(fig_cb, "CB PURCHASES: STRUCTURAL DEMAND SHIFT", 280)
-    fig_cb.add_hline(y=473, line_color='#8b949e', line_width=1, line_dash='dot', annotation_text='Pre-2022 avg: 473t/yr', annotation_position='bottom right', annotation_font=dict(size=9, color='#8b949e'))
-    fig_cb.add_annotation(x='2022', y=1136, text='<b>1,136t</b><br>Record (2× avg)', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=40, ay=-30)
+        fig_cb.add_annotation(x='2022', y=1136, text='<b>1,136t</b><br>Record (2× avg)', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=40, ay=-30)
         st.plotly_chart(fig_cb, use_container_width=True)
 
     st.markdown('<div class="panel-header">MAJOR BANK GOLD PRICE FORECASTS</div>', unsafe_allow_html=True)
@@ -1599,7 +1598,7 @@ with tabs[3]:
             text=[f'${v/1000:.1f}B' for v in fcf_est], textposition='outside',
             textfont=dict(color=COLORS['text'], size=10), name='Estimate'))
         apply_layout(fig_fcf, "FCF TRIPLED: $2.3B → $7.3B IN 2 YEARS", 300)
-    fig_fcf.add_annotation(x='2025', y=7300, text='<b>$7.3B FCF</b><br>Record — 2.5× 2024', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-40, ay=-30)
+        fig_fcf.add_annotation(x='2025', y=7300, text='<b>$7.3B FCF</b><br>Record — 2.5× 2024', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-40, ay=-30)
         st.plotly_chart(fig_fcf, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">EARNINGS BEAT TRACKER (EPS)</div>', unsafe_allow_html=True)
@@ -2261,16 +2260,14 @@ with tabs[7]:
     # RISKS IDENTIFIED VIA ALTERNATIVE DATA
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">RISKS IDENTIFIED VIA ALTERNATIVE DATA CHANNEL CHECKS</div>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="color:#8b949e;font-size:10px;margin-bottom:12px;">
-      These risks were identified through 8 independent alternative data channel checks — not sell-side research.
-
     st.markdown("""
     <div style="background:#0d1117;border:2px solid #58a6ff;padding:14px 20px;margin-bottom:16px;">
       <div style="color:#58a6ff;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;">WHAT THE MARKET IS MISSING</div>
-      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">5 of 8 alternative data channels confirm the bull thesis. The 2 bearish signals (insider selling pattern, Ghana royalty risk) are included with full transparency — intellectual honesty, not cheerleading.</div>
+      <div style="color:#e6edf3;font-size:12px;line-height:1.6;font-weight:500;">5 of 8 alternative data channels confirm the bull thesis. The 2 bearish signals (insider selling pattern, Ghana royalty risk) are included with full transparency &mdash; intellectual honesty, not cheerleading.</div>
     </div>""", unsafe_allow_html=True)
-
+    st.markdown("""
+    <div style="color:#8b949e;font-size:10px;margin-bottom:12px;">
+      These risks were identified through 8 independent alternative data channel checks &mdash; not sell-side research.
       They represent real, under-discussed headwinds that traditional analysis often misses.
     </div>""", unsafe_allow_html=True)
 
@@ -2514,7 +2511,7 @@ with tabs[9]:
         fig_debt.add_hline(y=0, line_color='#30363d', line_dash='dash')
         apply_layout(fig_debt, "$9.4B DEBT → NET CASH IN 2 YEARS", 280)
         fig_debt.update_layout(barmode='group')
-    fig_debt.add_annotation(x='2025', y=7200, text='<b>Net Cash: $7.2B</b><br>Fortress balance sheet', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-50, ay=-30)
+        fig_debt.add_annotation(x='2025', y=7200, text='<b>Net Cash: $7.2B</b><br>Fortress balance sheet', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-50, ay=-30)
         st.plotly_chart(fig_debt, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">DILUTED SHARE COUNT (M)</div>', unsafe_allow_html=True)
