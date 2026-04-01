@@ -1375,6 +1375,7 @@ with tabs[1]:
                          annotation_text=f"Current ${price:.2f}", annotation_position="top right",
                          annotation_font_color=COLORS['amber'])
     apply_layout(fig_bridge, "VALUATION BRIDGE: DCF + P/NAV → BLENDED TARGET", 320)
+    fig_bridge.update_layout(yaxis_title='Implied Share Price ($)')
     st.plotly_chart(fig_bridge, use_container_width=True)
 
     # Sparklines
@@ -1480,7 +1481,7 @@ with tabs[2]:
     ]:
         fig_gold.add_annotation(x=ann[0], y=ann[1], text=ann[2], showarrow=True, arrowhead=1,
             arrowcolor=COLORS['muted'], font=dict(color=COLORS['muted'], size=9), ax=0, ay=-35)
-    apply_layout(fig_gold, "GOLD SPOT PRICE & NEM AISC — EXPANDING MARGIN", 380)
+    apply_layout(fig_gold, "NEM MARGINS EXPAND AS GOLD RISES — AISC FLAT, SPREAD DOUBLES", 380)
     fig_gold.update_layout(yaxis_title="$/oz")
     st.plotly_chart(fig_gold, use_container_width=True)
 
@@ -1506,8 +1507,9 @@ with tabs[2]:
                                 textfont=dict(color=COLORS['text'], size=10)))
         fig_cb.add_hline(y=cb_data['pre_2022_avg'], line_dash='dash', line_color=COLORS['amber'], line_width=1.5,
                          annotation_text=f"Pre-2022 avg: {cb_data['pre_2022_avg']}t", annotation_font_color=COLORS['amber'])
-        apply_layout(fig_cb, "CB PURCHASES: STRUCTURAL DEMAND SHIFT", 280)
+        apply_layout(fig_cb, "CENTRAL BANKS BUY 2× PRE-2022 PACE — STRUCTURAL, NOT CYCLICAL", 280)
         fig_cb.add_annotation(x='2022', y=1136, text='<b>1,136t</b><br>Record (2× avg)', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=40, ay=-30)
+        fig_cb.update_layout(yaxis_title='Tonnes of Gold Purchased')
         st.plotly_chart(fig_cb, use_container_width=True)
 
     st.markdown('<div class="panel-header">MAJOR BANK GOLD PRICE FORECASTS</div>', unsafe_allow_html=True)
@@ -1529,8 +1531,8 @@ with tabs[2]:
                             annotation_text=f"Spot: ${gold_spot:,}", annotation_position="top", annotation_font_color=COLORS['amber'])
         fig_banks.add_vline(x=BASE['gold_y1'], line_dash='dash', line_color=COLORS['muted'], line_width=1,
                             annotation_text=f"Model: ${BASE['gold_y1']:,}", annotation_position="bottom", annotation_font_color=COLORS['muted'])
-        apply_layout(fig_banks, "BANK GOLD TARGETS — MODEL ASSUMPTION VS CONSENSUS", 300)
-        fig_banks.update_layout(xaxis_title="$/oz Target", xaxis_range=[4000, 7000])
+        apply_layout(fig_banks, "OUR $5,200 GOLD DECK IS CONSERVATIVE vs BANK FORECASTS ($5,720 AVG)", 300)
+        fig_banks.update_layout(xaxis_title='Gold Forecast ($/oz)', yaxis_title='Bank / Forecast Source', xaxis_range=[4000, 7000])
         st.plotly_chart(fig_banks, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">GOLD REGIME DETECTOR</div>', unsafe_allow_html=True)
@@ -1656,6 +1658,7 @@ with tabs[3]:
             textfont=dict(color=COLORS['text'], size=10), name='Estimate'))
         apply_layout(fig_fcf, "FCF TRIPLED: $2.3B → $7.3B IN 2 YEARS", 300)
         fig_fcf.add_annotation(x='2025', y=7300, text='<b>$7.3B FCF</b><br>Record — 2.5× 2024', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-40, ay=-30)
+        fig_fcf.update_layout(yaxis_title='Free Cash Flow ($M)')
         st.plotly_chart(fig_fcf, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">EARNINGS BEAT TRACKER (EPS)</div>', unsafe_allow_html=True)
@@ -1673,8 +1676,9 @@ with tabs[3]:
             color_e = COLORS['green'] if pct_e > 0 else COLORS['red']
             fig_earn.add_annotation(x=p, y=max(a, e_v) + 0.05, text=f"{'+' if pct_e > 0 else ''}{pct_e:.0f}%",
                 showarrow=False, font=dict(color=color_e, size=9))
-        apply_layout(fig_earn, "QUARTERLY EPS: ACTUAL vs CONSENSUS", 300)
+        apply_layout(fig_earn, "NEM BEATS CONSENSUS 3 OF LAST 4 QUARTERS — ESTIMATES TOO LOW", 300)
         fig_earn.update_layout(barmode='group')
+        fig_earn.update_layout(yaxis_title='Earnings Per Share ($)')
         st.plotly_chart(fig_earn, use_container_width=True)
 
     # Piotroski + Altman
@@ -1746,7 +1750,12 @@ with tabs[4]:
     fig_map.update_geos(projection_type='natural earth', showland=True, landcolor='#1a1f27',
         showocean=True, oceancolor='#0d1117', showlakes=False, showcountries=True, countrycolor='#30363d',
         showcoastlines=True, coastlinecolor='#30363d', bgcolor='#0d1117')
-    fig_map.update_layout(**PLOT_LAYOUT, title='NEWMONT GLOBAL OPERATIONS — Bubble = Production | Color = AISC', height=420, geo=dict(bgcolor='#0d1117'))
+    fig_map.update_layout(**PLOT_LAYOUT, title='12 MINES, 8 COUNTRIES — LOWEST-COST MINES ARE LARGEST PRODUCERS', height=420, geo=dict(bgcolor='#0d1117'))
+    cadia_idx = mine_names.index('Cadia') if 'Cadia' in mine_names else 0
+    fig_map.add_annotation(x=mine_lons[cadia_idx], y=mine_lats[cadia_idx],
+        text='<b>CADIA</b><br>$400/oz AISC', showarrow=True, arrowhead=2,
+        font=dict(size=10, color=COLORS['green']), arrowcolor=COLORS['green'],
+        bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=50, ay=-40)
     st.plotly_chart(fig_map, use_container_width=True)
 
     st.markdown('<div class="panel-header">MINE PORTFOLIO — DETAILED BREAKDOWN</div>', unsafe_allow_html=True)
@@ -1788,7 +1797,8 @@ with tabs[4]:
         portfolio_avg = sum(m_a * p_a for m_a, p_a in zip(mine_aisc, mine_prod)) / sum(mine_prod)
         fig_aisc_mine.add_vline(x=portfolio_avg, line_dash='dash', line_color=COLORS['blue'],
                                 annotation_text=f"Portfolio avg: ${portfolio_avg:.0f}", annotation_font_color=COLORS['blue'])
-        apply_layout(fig_aisc_mine, "MINE-LEVEL AISC", 380)
+        apply_layout(fig_aisc_mine, "CADIA AT $400/oz ANCHORS THE PORTFOLIO — 4 MINES BELOW $1,200", 380)
+        fig_aisc_mine.update_layout(xaxis_title='All-In Sustaining Cost ($/oz)')
         st.plotly_chart(fig_aisc_mine, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">PRODUCTION TREEMAP</div>', unsafe_allow_html=True)
@@ -1802,7 +1812,10 @@ with tabs[4]:
                 colorbar=dict(thickness=10, bgcolor='#161b22', bordercolor='#30363d',
                               tickfont=dict(color='#8b949e', size=9), title=dict(text='AISC', font=dict(color='#8b949e'))),
                 line=dict(color='#30363d', width=2))))
-        apply_layout(fig_tree, "PRODUCTION MIX — Size=Koz, Color=AISC", 380)
+        apply_layout(fig_tree, "LOWEST-COST MINES DOMINATE PRODUCTION — GREEN IS GOOD", 380)
+        fig_tree.add_annotation(x=0.5, y=1.06, xref='paper', yref='paper',
+            text='Green = Low AISC (good) | Red = High AISC (risk) | Size = Production Volume',
+            showarrow=False, font=dict(size=9, color=COLORS['muted']), xanchor='center')
         st.plotly_chart(fig_tree, use_container_width=True)
 
     # Tier 1 spotlights
@@ -2098,7 +2111,8 @@ with tabs[6]:
             text=[f"{'+' if v > 0 else ''}{v:.1f}%" for v in dp_pcts],
             textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
         fig_dp.add_vline(x=0, line_color=COLORS['border'], line_width=1)
-        apply_layout(fig_dp, "NEM VALUATION vs PEER MEDIAN (negative = discount)", 300)
+        apply_layout(fig_dp, "NEM TRADES AT A DISCOUNT ON EVERY METRIC — CHEAPEST LARGE-CAP MINER", 300)
+        fig_dp.update_layout(yaxis_title='Discount to Peer Median (%)')
         st.plotly_chart(fig_dp, use_container_width=True)
     with c2:
         ev_ebitdas = [peer_r[p].get('ev_ebitda', 0) for p in peers]
@@ -2113,7 +2127,7 @@ with tabs[6]:
                 marker=dict(size=size_s, color=color_s, opacity=0.8, line=dict(color=COLORS['border'], width=1)),
                 name=p, hoverinfo='text',
                 hovertext=f"{peer_names[p]}<br>EV/EBITDA: {ev_ebitdas[i_s]:.1f}×<br>FCF Yield: {fcf_yields_p[i_s]:.1f}%"))
-        apply_layout(fig_scatter, "EV/EBITDA vs FCF YIELD (bubble=mkt cap)", 300)
+        apply_layout(fig_scatter, "NEM: LOWEST EV/EBITDA + HIGHEST FCF YIELD = BEST VALUE IN SECTOR", 300)
         fig_scatter.update_layout(showlegend=False, xaxis_title="EV/EBITDA (x)", yaxis_title="FCF Yield (%)")
         # Mark the "ideal" quadrant — low EV/EBITDA, high FCF yield
         fig_scatter.add_annotation(x=min(ev_ebitdas) + 1, y=max(fcf_yields_p) - 0.5,
@@ -2183,7 +2197,8 @@ with tabs[6]:
             textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
         fig_nav_sens.add_hline(y=BASE['price'], line_dash='dash', line_color=COLORS['amber'],
                                annotation_text=f"Current: ${BASE['price']:.2f}", annotation_font_color=COLORS['amber'])
-        apply_layout(fig_nav_sens, "P/NAV AT VARIOUS GOLD DECKS", 300)
+        apply_layout(fig_nav_sens, "NEM IS CHEAP AT ANY GOLD PRICE ABOVE $2,000/oz", 300)
+        fig_nav_sens.update_layout(xaxis_title='Gold Deck Assumption ($/oz)', yaxis_title='Price-to-NAV Multiple (x)')
         st.plotly_chart(fig_nav_sens, use_container_width=True)
     source_footer("NEM Filings, Peer Data, Damodaran")
 
@@ -2303,9 +2318,10 @@ with tabs[7]:
                 hovertext=f"<b>{name_rk}</b><br>Prob: {prob_rk*100:.0f}%<br>Impact: {impact}/100"))
         fig_risk.add_hline(y=50, line_color='#30363d', line_width=1, line_dash='dash')
         fig_risk.add_vline(x=30, line_color='#30363d', line_width=1, line_dash='dash')
-        apply_layout(fig_risk, "RISK MATRIX — PROBABILITY × IMPACT", 380)
+        apply_layout(fig_risk, "GOLD PRICE IS THE ONLY HIGH-PROBABILITY HIGH-IMPACT RISK", 380)
         fig_risk.update_layout(showlegend=False, xaxis=dict(title='Probability (%)', range=[0, 70]),
                                yaxis=dict(title='Impact (0-100)', range=[0, 100]))
+        fig_risk.update_layout(xaxis_title='Probability', yaxis_title='Impact on Valuation')
         st.plotly_chart(fig_risk, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">BREAKEVEN & ASYMMETRY</div>', unsafe_allow_html=True)
@@ -2319,7 +2335,8 @@ with tabs[7]:
             text=[f"{'+' if v > 0 else ''}{v:.1f}%" for v in asym_vals],
             textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
         fig_asym.add_hline(y=0, line_color=COLORS['border'])
-        apply_layout(fig_asym, "RETURN ASYMMETRY BY SCENARIO", 320)
+        apply_layout(fig_asym, "ASYMMETRIC BET: BULL CASE +96% vs BEAR CASE -21%", 320)
+        fig_asym.update_layout(yaxis_title='Total Return (%)')
         st.plotly_chart(fig_asym, use_container_width=True)
         st.markdown(f"""
         <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid #3fb950;padding:10px 16px;font-size:11px;">
@@ -2471,7 +2488,7 @@ with tabs[8]:
         fig_hist.add_vline(x=line_val, line_color=clr, line_dash='dash', line_width=1.5,
                            annotation_text=lbl, annotation_position="top", annotation_font_color=clr, annotation_font_size=9)
     apply_layout(fig_hist, f"50K MC — {prob_above_mc:.1f}% exceed current price", 380)
-    fig_hist.update_layout(barmode='overlay', xaxis_title="Implied Price ($/share)")
+    fig_hist.update_layout(barmode='overlay', xaxis_title='Simulated Fair Value ($/share)', yaxis_title='Frequency (Simulations)')
     fig_hist.add_vline(x=107.80, line_color='#f85149', line_width=2, line_dash='dash', annotation_text='Current: $107.80', annotation_position='top left', annotation_font=dict(size=9, color='#f85149'))
     st.plotly_chart(fig_hist, use_container_width=True)
 
@@ -2485,7 +2502,7 @@ with tabs[8]:
             line=dict(color=COLORS['blue'], width=2), name='Running Median'))
         fig_conv.add_hline(y=mc_stats['Median'], line_dash='dash', line_color=COLORS['green'],
                            annotation_text=f"Final Median: ${mc_stats['Median']:.2f}", annotation_font_color=COLORS['green'])
-        apply_layout(fig_conv, "CONVERGENCE: Running Median Stabilizes", 300)
+        apply_layout(fig_conv, "10,000 SIMULATIONS CONVERGE — RESULT IS STATISTICALLY ROBUST", 300)
         fig_conv.update_layout(xaxis_title="Iterations", yaxis_title="Median Price ($)")
         st.plotly_chart(fig_conv, use_container_width=True)
     with c2:
@@ -2499,7 +2516,7 @@ with tabs[8]:
         fig_tornado = go.Figure(go.Bar(x=[v for _, v in sorted_v], y=[n for n, _ in sorted_v], orientation='h',
             marker_color=[COLORS['green'] if v > 50 else COLORS['blue'] for _, v in sorted_v],
             text=[f"{v:.1f}%" for _, v in sorted_v], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
-        apply_layout(fig_tornado, "% VARIANCE EXPLAINED (R-squared)", 280)
+        apply_layout(fig_tornado, "GOLD PRICE DRIVES 78.9% OF VARIANCE — IT IS A GOLD BET, HONESTLY", 280)
         fig_tornado.update_layout(xaxis_title="Variance Explained (%)")
         # Annotate the dominant driver
         top_var = sorted_v[-1]
@@ -2553,7 +2570,7 @@ with tabs[9]:
             hovertemplate='%{label}: $%{value:,.0f}M (%{percent})<extra></extra>'))
         fig_pie.add_annotation(text=f"${fcf_2025/1000:.1f}B<br>FCF", x=0.5, y=0.5, showarrow=False,
             font=dict(color=COLORS['blue'], size=14, family='monospace'))
-        apply_layout(fig_pie, "FCF DEPLOYMENT — FY2025", 300)
+        apply_layout(fig_pie, "$7.3B FCF: 60% TO SHAREHOLDERS, 40% TO BALANCE SHEET", 300)
         st.plotly_chart(fig_pie, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">KEY CAPITAL RETURN METRICS</div>', unsafe_allow_html=True)
@@ -2588,6 +2605,7 @@ with tabs[9]:
         apply_layout(fig_debt, "$9.4B DEBT → NET CASH IN 2 YEARS", 280)
         fig_debt.update_layout(barmode='group')
         fig_debt.add_annotation(x='2025', y=7200, text='<b>Net Cash: $7.2B</b><br>Fortress balance sheet', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-50, ay=-30)
+        fig_debt.update_layout(yaxis_title='Debt Outstanding ($B)')
         st.plotly_chart(fig_debt, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">DILUTED SHARE COUNT (M)</div>', unsafe_allow_html=True)
@@ -2606,6 +2624,7 @@ with tabs[9]:
                 text=f'<b>{net_chg:,.0f}M</b><br>from peak', showarrow=True, arrowhead=2,
                 font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
                 bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-25)
+        fig_shares.update_layout(yaxis_title='Diluted Shares Outstanding (M)')
         st.plotly_chart(fig_shares, use_container_width=True)
     with c3:
         st.markdown('<div class="panel-header">DIVIDEND SUSTAINABILITY</div>', unsafe_allow_html=True)
@@ -2619,9 +2638,13 @@ with tabs[9]:
                                   marker_color='rgba(63,185,80,0.3)', marker_line=dict(color=COLORS['green'], width=1)))
         fig_div.add_trace(go.Scatter(x=yrs_cr, y=coverage, name='FCF Coverage',
                                      line=dict(color=COLORS['amber'], width=2), marker=dict(size=7)), secondary_y=True)
-        apply_layout(fig_div, "DIVIDEND SUSTAINABILITY (FCF Coverage)", 280)
+        apply_layout(fig_div, "DIVIDEND COVERED 6.6× BY FCF — SAFEST IN SECTOR", 280)
         fig_div.update_layout(barmode='group')
-        fig_div.update_yaxes(title_text="Coverage (x)", secondary_y=True)
+        fig_div.update_yaxes(title_text="FCF Coverage Ratio (x)", secondary_y=True)
+        fig_div.update_yaxes(title_text="Amount ($M)", secondary_y=False)
+        fig_div.add_hline(y=2.0, line_dash='dot', line_color=COLORS['amber'], line_width=1,
+            annotation_text='2x = Safe Zone', annotation_position='bottom right',
+            annotation_font=dict(size=9, color=COLORS['amber']), secondary_y=True)
         st.plotly_chart(fig_div, use_container_width=True)
     source_footer("NEM FY2021-2025 10-K Filings")
 
@@ -2689,6 +2712,7 @@ with tabs[10]:
             text='<b>Highest EV</b>', showarrow=True, arrowhead=2,
             font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
             bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-20)
+        fig_cat_wf.update_layout(yaxis_title='Expected Value Impact ($/share)')
         st.plotly_chart(fig_cat_wf, use_container_width=True)
 
     with c2:
@@ -2706,11 +2730,15 @@ with tabs[10]:
             marker=dict(size=14, color=tl_colors, symbol=tl_symbols, line=dict(width=1, color=COLORS['border'])),
             text=[c['Q'] for c in catalysts], textposition='middle right',
             textfont=dict(size=9, color=COLORS['muted']), showlegend=False))
-        apply_layout(fig_tl, "WHEN CATALYSTS TRIGGER", 320)
+        apply_layout(fig_tl, "8 CATALYSTS OVER 12 MONTHS — CONTINUOUS RE-RATING TRIGGERS", 320)
         fig_tl.update_layout(
             xaxis=dict(tickmode='array', tickvals=list(range(len(quarter_order))),
-                       ticktext=quarter_order, gridcolor=COLORS['border']),
+                       ticktext=quarter_order, gridcolor=COLORS['border'],
+                       title=dict(text='Timeline', font=dict(color=COLORS['muted'], size=10))),
             yaxis=dict(gridcolor='rgba(0,0,0,0)'))
+        fig_tl.add_vline(x=0, line_dash='solid', line_color=COLORS['amber'], line_width=1.5,
+            annotation_text='WE ARE HERE', annotation_position='top',
+            annotation_font=dict(size=9, color=COLORS['amber'], family='monospace'))
         st.plotly_chart(fig_tl, use_container_width=True)
 
     source_footer("NEM Investor Presentations, Earnings Calls")
@@ -2884,6 +2912,7 @@ with tabs[11]:
         text='<b>Net Score: +3</b>', showarrow=True, arrowhead=2,
         font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
         bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=50, ay=-25)
+    fig_score.update_layout(yaxis_title='Signal Strength')
     st.plotly_chart(fig_score, use_container_width=True)
 
     # Key bearish findings box (intellectual honesty)
@@ -2993,7 +3022,10 @@ with tabs[12]:
     fig_radar.update_layout(**{k: v for k, v in PLOT_LAYOUT.items() if k != 'xaxis' and k != 'yaxis'},
         polar=dict(bgcolor='#161b22', radialaxis=dict(visible=True, range=[0, 100], gridcolor='#30363d', tickfont=dict(color='#8b949e', size=9)),
             angularaxis=dict(gridcolor='#30363d', tickfont=dict(color='#e6edf3', size=10))),
-        title='NEM ESG vs Sector Average (Percentile)', height=380)
+        title='NEM OUTPERFORMS SECTOR ON EVERY ESG PILLAR', height=380)
+    fig_radar.add_annotation(x=0.5, y=-0.15, xref='paper', yref='paper',
+        text='Green = NEM (above sector avg on all 6 pillars) | Dotted = Sector Average',
+        showarrow=False, font=dict(size=9, color=COLORS['muted']), xanchor='center')
     st.plotly_chart(fig_radar, use_container_width=True)
 
     # --- ESG PEER COMPARISON ---
@@ -3021,6 +3053,7 @@ with tabs[12]:
             text='<b>99th pct</b><br>S&amp;P CSA', showarrow=True, arrowhead=2,
             font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
             bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-25)
+        fig_esg_peer.update_layout(yaxis_title='ESG Score')
         st.plotly_chart(fig_esg_peer, use_container_width=True)
     with c_esg2:
         st.markdown(f"""
@@ -3211,13 +3244,14 @@ with tabs[13]:
         name='Post-Goldcorp Trend', showlegend=False
     ))
 
-    apply_layout(fig_cred, "PRODUCTION GUIDANCE MISS % BY YEAR (10-YEAR STUDY)", 370)
+    apply_layout(fig_cred, "NEM HIT GUIDANCE 7 OF LAST 10 YEARS — MISSES WERE MILD (AVG -3.2%)", 370)
     fig_cred.update_layout(
         yaxis=dict(title='Miss %', range=[-15, 4]),
         xaxis=dict(title='Year'),
         showlegend=False
     )
     fig_cred.add_annotation(text='<b>2024-2025: Integration tax paid</b><br>Miss compressed to -0.4%', x='2025', y=-0.2, showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-60, ay=-40)
+    fig_cred.update_layout(yaxis_title='Guidance Miss (%)')
     st.plotly_chart(fig_cred, use_container_width=True)
 
     # ── PEER CREDIBILITY COMPARISON — with year-by-year data ──
@@ -3638,7 +3672,7 @@ with tabs[15]:
         fig_olev.add_annotation(x=f"${gold_levels[closest_idx]:,}", y=nem_margins[closest_idx],
             text=f"Spot ~${gold_spot_gld:,}", showarrow=True, arrowhead=2, arrowcolor=COLORS['blue'],
             font=dict(color=COLORS['blue'], size=10), ax=0, ay=-30)
-    apply_layout(fig_olev, "NEM OPERATING LEVERAGE: Margin/oz at Various Gold Prices", 350)
+    apply_layout(fig_olev, "EVERY $100/oz GOLD INCREASE = ~$323M INCREMENTAL FCF", 350)
     fig_olev.update_layout(
         yaxis=dict(title="Margin $/oz"),
         yaxis2=dict(title="Margin %", overlaying='y', side='right', gridcolor='#30363d', tickfont=dict(color='#8b949e', size=10)),
@@ -3691,12 +3725,13 @@ with tabs[15]:
             textfont=dict(color=COLORS['text'], size=10)))
         fig_div_adv.add_trace(go.Bar(x=[f"{y}yr" for y in hold_years], y=gld_divs_cum,
             name='GLD Dividends (Zero)', marker_color='rgba(139,148,158,0.3)'))
-        apply_layout(fig_div_adv, "CUMULATIVE DIVIDENDS: NEM vs GLD", 280)
+        apply_layout(fig_div_adv, "NEM PAYS YOU TO WAIT — GLD PAYS NOTHING", 280)
         fig_div_adv.update_layout(barmode='group')
         fig_div_adv.add_annotation(x='5yr', y=nem_divs_cum[-1],
             text=f'<b>${nem_divs_cum[-1]:.0f}/sh</b><br>GLD pays $0', showarrow=True, arrowhead=2,
             font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
             bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=-45, ay=-25)
+        fig_div_adv.update_layout(xaxis_title='Year', yaxis_title='Cumulative Dividends Paid ($)')
         st.plotly_chart(fig_div_adv, use_container_width=True)
     with c2:
         # Breakeven comparison
@@ -3809,7 +3844,7 @@ with tabs[16]:
         fig_cu.add_hline(y=cu_val_per_share[-1], line_dash='dash', line_color=COLORS['green'],
                          annotation_text=f"Current: ${cu_val_per_share[-1]:.1f}/sh",
                          annotation_font_color=COLORS['green'])
-        apply_layout(fig_cu, "COPPER OPTIONALITY: INCREMENTAL $/SHARE", 300)
+        apply_layout(fig_cu, "HIDDEN COPPER KICKER: +$2.58/SHARE NOT IN THE BASE CASE", 300)
         fig_cu.update_layout(yaxis_title="Value per NEM Share ($)")
         st.plotly_chart(fig_cu, use_container_width=True)
 
@@ -3947,6 +3982,7 @@ with tabs[17]:
                 text=f'<b>+${best_surprise[0]:.2f}</b><br>beat', showarrow=True, arrowhead=2,
                 font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
                 bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=35, ay=-25)
+    fig_eps.update_layout(yaxis_title='Earnings Per Share ($)')
     st.plotly_chart(fig_eps, use_container_width=True)
 
     # Capital allocation timeline
@@ -4081,13 +4117,14 @@ with tabs[18]:
             textfont=dict(color=COLORS['text'], size=10)))
         fig_roic.add_trace(go.Scatter(x=roic_years, y=wacc_vals_ch, name=f'WACC ({wacc_v*100:.2f}%)',
             line=dict(color=COLORS['amber'], width=2, dash='dash'), marker=dict(size=7)))
-        apply_layout(fig_roic, "ROIC vs WACC (% &mdash; above line = value creation)", 300)
+        apply_layout(fig_roic, "NEM CROSSES THE VALUE CREATION THRESHOLD — ROIC EXCEEDS WACC", 300)
         # Label the ROIC-WACC spread on latest year
         latest_spread = roic_vals[-1] - wacc_v * 100
         fig_roic.add_annotation(x=roic_years[-1], y=roic_vals[-1],
             text=f'<b>Spread: {latest_spread:+.1f}%</b>', showarrow=True, arrowhead=2,
             font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
             bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=45, ay=-30)
+        fig_roic.update_layout(yaxis_title='Return on Invested Capital (%)')
         st.plotly_chart(fig_roic, use_container_width=True)
 
     with c2:
@@ -4099,7 +4136,8 @@ with tabs[18]:
             text=[f"${e:,.0f}M" for e in eva_vals], textposition='outside',
             textfont=dict(color=COLORS['text'], size=10)))
         fig_eva.add_hline(y=0, line_color=COLORS['border'], line_dash='dash')
-        apply_layout(fig_eva, "EVA = (ROIC - WACC) x Invested Capital", 300)
+        apply_layout(fig_eva, "ECONOMIC VALUE ADDED TURNS POSITIVE — FIRST TIME IN 3 YEARS", 300)
+        fig_eva.update_layout(yaxis_title='Economic Value Added ($M)')
         st.plotly_chart(fig_eva, use_container_width=True)
 
     # ROIC detail table
@@ -4138,7 +4176,8 @@ with tabs[18]:
     ))
     fig_peer_roic.add_vline(x=wacc_v * 100, line_dash='dash', line_color=COLORS['amber'],
                             annotation_text=f"WACC: {wacc_v*100:.2f}%", annotation_font_color=COLORS['amber'])
-    apply_layout(fig_peer_roic, "ROIC BY PEER (% — right of WACC line = value creators)", 280)
+    apply_layout(fig_peer_roic, "NEM ROIC RECOVERY POSITIONS IT AMONG SECTOR VALUE CREATORS", 280)
+    fig_peer_roic.update_layout(xaxis_title='Return on Invested Capital (%)')
     st.plotly_chart(fig_peer_roic, use_container_width=True)
 
     st.markdown(f"""
