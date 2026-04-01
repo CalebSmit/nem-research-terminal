@@ -955,7 +955,7 @@ with tabs[0]:
       <div style="color:#58a6ff;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE STARTING POINT</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
         I started where everyone starts: a DCF model that said Newmont was cheap. $149.24 implied value
-        versus $107.80 market price. Fine. Every team in this competition will have a DCF that says NEM
+        versus ${B['price']:.2f} market price. Fine. Every team in this competition will have a DCF that says NEM
         is undervalued. That's the consensus view dressed up in a spreadsheet.
         <br><br>
         The interesting part came when I ran the model backward. I asked: what gold price does the
@@ -994,7 +994,7 @@ with tabs[0]:
     </div>""", unsafe_allow_html=True)
 
     # The 8 Channel Checks
-    st.markdown("""
+    st.markdown(f"""
     <div style="background:#0d1117;border-left:3px solid #3fb950;padding:16px 20px;margin-bottom:16px;">
       <div style="color:#3fb950;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE 8 CHANNEL CHECKS</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
@@ -1010,7 +1010,7 @@ with tabs[0]:
         <b style="color:#3fb950;">Analyst revisions.</b> 4 upgrades, 0 downgrades in 6 months. Bernstein's Bob Brackett
         upgraded to Outperform on Feb 27, target $121&rarr;$157. Citigroup's Alexander Hacking raised to $150
         on Mar 3. Scotiabank's Tanya Jakusconek went from $71.50 to $151. Of 9 covering analysts, 8 say Buy.
-        Consensus mean ($123.44) still trails our model ($137.93) by 12%.
+        Consensus mean ($123.44) still trails our model (${B['blended_target']:.2f}) by {((B['blended_target']/123.44)-1)*100:.0f}%.
         <br><br>
         <b style="color:#3fb950;">Earnings call tone.</b> Daniel Morgan (Barrenjoey) asked on Q2 if guidance was
         "pitched conservatively." Adam Baker (Macquarie) asked on Q4 if the $2,000/oz reserve price was
@@ -1161,15 +1161,15 @@ with tabs[1]:
       <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">WHAT THE MARKET IS MISSING</div>
       <div style="color:#e6edf3;font-size:12px;line-height:1.7;">
         <b>The consensus sees NEM as a gold price bet. We see an operating leverage inflection that
-        the Street is mispricing by {BASE['gold_gap_pct']:.0f}%.</b> At $107.80, the market embeds long-term gold at
+        the Street is mispricing by {BASE['gold_gap_pct']:.0f}%.</b> At ${BASE['price']:.2f}, the market embeds long-term gold at
         <b style="color:#f85149;">${BASE['implied_gold']:,.0f}/oz</b> —
         <b style="color:#f85149;">{BASE['gold_gap_pct']:.0f}% below spot</b>.
-        But three things the sell-side isn’t modeling: (1) zero major gold discoveries in 2023-2024 with 17.8-year
-        mine development lead times means supply <i>cannot</i> respond — NEM’s 96 Moz reserve base becomes a structural
+        But three things the sell-side isn't modeling: (1) zero major gold discoveries in 2023-2024 with 17.8-year
+        mine development lead times means supply <i>cannot</i> respond — NEM's 96 Moz reserve base becomes a structural
         moat; (2) copper optionality from Cadia (expanding to 150 kt Cu/yr) is a backdoor AI data center play
-        worth ~$8-10/share that pure gold miners can’t replicate; (3) management’s guidance miss has compressed
+        worth ~$8-10/share that pure gold miners can't replicate; (3) management's guidance miss has compressed
         from -11.8% to -0.2%, but 0 of 18 sell-side models we reviewed apply a credibility haircut.
-        Four analyst upgrades, zero downgrades — but consensus ($123) still trails our $137.93.
+        Four analyst upgrades, zero downgrades — but consensus ($123) still trails our ${BASE['blended_target']:.2f}.
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -2145,6 +2145,159 @@ with tabs[5]:
     source_footer("NEM Filings, Peer Data, Damodaran")
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# TAB 7 — RELATIVE VALUATION
+# ═══════════════════════════════════════════════════════════════════════════════
+with tabs[6]:
+    d = DATA
+    B = BASE
+    peer_q = d['peer_quotes']
+    peer_r = d['peer_ratios_latest']
+
+    # ── Compute peer metrics ──
+    tickers_rv = ['NEM', 'AEM', 'KGC', 'GFI', 'WPM']
+    ev_ebitda_vals = {t: peer_r[t].get('ev_ebitda', None) for t in tickers_rv}
+    pe_vals = {t: peer_q[t].get('pe', None) for t in tickers_rv}
+
+    peer_only_ev = [ev_ebitda_vals[t] for t in tickers_rv if t != 'NEM' and ev_ebitda_vals[t] is not None]
+    peer_only_pe = [pe_vals[t] for t in tickers_rv if t != 'NEM' and pe_vals[t] is not None]
+    median_ev = float(np.median(peer_only_ev)) if peer_only_ev else 0
+    median_pe = float(np.median(peer_only_pe)) if peer_only_pe else 0
+
+    nem_ev = ev_ebitda_vals.get('NEM', 0) or 0
+    nem_pe = pe_vals.get('NEM', 0) or 0
+    ev_discount_pct = ((nem_ev / median_ev) - 1) * 100 if median_ev else 0
+    pe_discount_pct = ((nem_pe / median_pe) - 1) * 100 if median_pe else 0
+    implied_price_rv = B['price'] * (median_ev / nem_ev) if nem_ev else B['price']
+    rv_upside = ((implied_price_rv / B['price']) - 1) * 100
+
+    insight_callout(f"NEM trades at {nem_ev:.1f}x EV/EBITDA — a {abs(ev_discount_pct):.0f}% {'discount' if ev_discount_pct < 0 else 'premium'} to the peer median of {median_ev:.1f}x. If NEM re-rated to the peer median, the implied share price is ${implied_price_rv:.2f} — {rv_upside:+.0f}% from today.")
+
+    # ── Peer Comparison Table ──
+    st.markdown('<div class="panel-header">PEER COMPARISON TABLE</div>', unsafe_allow_html=True)
+
+    # Table header
+    st.markdown(f"""
+    <div style="background:#0d1117;border:1px solid #30363d;overflow-x:auto;">
+      <div style="display:flex;padding:10px 16px;border-bottom:2px solid #30363d;background:#0d1117;min-width:600px;">
+        <span style="color:#8b949e;font-size:9px;letter-spacing:1px;width:60px;font-weight:700;">TICKER</span>
+        <span style="color:#8b949e;font-size:9px;letter-spacing:1px;width:80px;font-weight:700;">PRICE</span>
+        <span style="color:#8b949e;font-size:9px;letter-spacing:1px;width:100px;font-weight:700;">MKT CAP</span>
+        <span style="color:#8b949e;font-size:9px;letter-spacing:1px;width:80px;font-weight:700;">P/E</span>
+        <span style="color:#8b949e;font-size:9px;letter-spacing:1px;width:90px;font-weight:700;">EV/EBITDA</span>
+        <span style="color:#8b949e;font-size:9px;letter-spacing:1px;width:80px;font-weight:700;">DIV YIELD</span>
+      </div>""", unsafe_allow_html=True)
+
+    for t in tickers_rv:
+        q = peer_q[t]
+        r = peer_r[t]
+        mcap_str = f"${q['market_cap']/1e9:.1f}B"
+        pe_str = f"{q['pe']:.1f}x" if q.get('pe') else '—'
+        ev_str = f"{r['ev_ebitda']:.1f}x" if r.get('ev_ebitda') else '—'
+        dy_str = f"{q.get('div_yield', 0)*100:.1f}%" if q.get('div_yield') is not None else '—'
+        is_nem = t == 'NEM'
+        bg = '#1a2233' if is_nem else ('#161b22' if tickers_rv.index(t) % 2 == 0 else '#0d1117')
+        border = f"border-left:3px solid {COLORS['blue']};" if is_nem else ""
+        name_clr = COLORS['blue'] if is_nem else '#e6edf3'
+        st.markdown(f"""
+        <div style="display:flex;padding:8px 16px;border-bottom:1px solid #30363d;background:{bg};{border}align-items:center;min-width:600px;">
+          <span style="color:{name_clr};font-size:10px;width:60px;font-weight:{'700' if is_nem else '400'};">{t}</span>
+          <span style="color:#e6edf3;font-size:10px;width:80px;">${q['price']:.2f}</span>
+          <span style="color:#e6edf3;font-size:10px;width:100px;">{mcap_str}</span>
+          <span style="color:#e6edf3;font-size:10px;width:80px;">{pe_str}</span>
+          <span style="color:#e6edf3;font-size:10px;width:90px;">{ev_str}</span>
+          <span style="color:#e6edf3;font-size:10px;width:80px;">{dy_str}</span>
+        </div>""", unsafe_allow_html=True)
+
+    # Median row
+    all_pe_rv = [pe_vals[t] for t in tickers_rv if pe_vals[t] is not None]
+    all_ev_rv = [ev_ebitda_vals[t] for t in tickers_rv if ev_ebitda_vals[t] is not None]
+    all_dy_rv = [peer_q[t].get('div_yield', 0) for t in tickers_rv if peer_q[t].get('div_yield') is not None]
+    st.markdown(f"""
+        <div style="display:flex;padding:8px 16px;border-top:2px solid #30363d;background:#0d1117;align-items:center;min-width:600px;">
+          <span style="color:{COLORS['amber']};font-size:10px;width:60px;font-weight:700;">MEDIAN</span>
+          <span style="color:#8b949e;font-size:10px;width:80px;">—</span>
+          <span style="color:#8b949e;font-size:10px;width:100px;">—</span>
+          <span style="color:{COLORS['amber']};font-size:10px;width:80px;font-weight:600;">{np.median(all_pe_rv):.1f}x</span>
+          <span style="color:{COLORS['amber']};font-size:10px;width:90px;font-weight:600;">{np.median(all_ev_rv):.1f}x</span>
+          <span style="color:{COLORS['amber']};font-size:10px;width:80px;font-weight:600;">{np.median(all_dy_rv)*100:.1f}%</span>
+        </div>
+    </div>""", unsafe_allow_html=True)
+
+    # ── EV/EBITDA Bar Chart ──
+    st.markdown('<div class="panel-header">EV/EBITDA — PEER COMPARISON</div>', unsafe_allow_html=True)
+    ev_chart_tickers = [t for t in tickers_rv if ev_ebitda_vals[t] is not None]
+    ev_chart_vals = [ev_ebitda_vals[t] for t in ev_chart_tickers]
+    ev_bar_colors = [COLORS['blue'] if t == 'NEM' else COLORS['muted'] for t in ev_chart_tickers]
+    fig_ev = go.Figure(go.Bar(
+        y=ev_chart_tickers, x=ev_chart_vals, orientation='h',
+        marker_color=ev_bar_colors,
+        text=[f"{v:.1f}x" for v in ev_chart_vals], textposition='outside',
+        textfont=dict(color=COLORS['text'], size=10)
+    ))
+    fig_ev.add_vline(x=median_ev, line_color=COLORS['amber'], line_dash='dash', line_width=2,
+        annotation_text=f"Peer Median: {median_ev:.1f}x", annotation_position="top",
+        annotation_font=dict(size=9, color=COLORS['amber']))
+    fig_ev.add_annotation(x=nem_ev, y='NEM',
+        text=f"<b>{ev_discount_pct:+.0f}%</b> vs median", showarrow=True, arrowhead=2,
+        font=dict(size=9, color=COLORS['blue']), arrowcolor=COLORS['blue'],
+        bgcolor='#0d1117', bordercolor=COLORS['blue'], borderwidth=1, ax=60, ay=-25)
+    apply_layout(fig_ev, "NEM TRADES AT A DISCOUNT TO GOLD PEERS ON EV/EBITDA", 320)
+    fig_ev.update_layout(xaxis_title='EV/EBITDA (x)', yaxis=dict(autorange='reversed'))
+    st.plotly_chart(fig_ev, use_container_width=True)
+
+    # ── P/E Ratio Bar Chart ──
+    st.markdown('<div class="panel-header">P/E RATIO — PEER COMPARISON</div>', unsafe_allow_html=True)
+    pe_chart_tickers = [t for t in tickers_rv if pe_vals[t] is not None]
+    pe_chart_vals = [pe_vals[t] for t in pe_chart_tickers]
+    pe_bar_colors = [COLORS['blue'] if t == 'NEM' else COLORS['muted'] for t in pe_chart_tickers]
+    fig_pe = go.Figure(go.Bar(
+        y=pe_chart_tickers, x=pe_chart_vals, orientation='h',
+        marker_color=pe_bar_colors,
+        text=[f"{v:.1f}x" for v in pe_chart_vals], textposition='outside',
+        textfont=dict(color=COLORS['text'], size=10)
+    ))
+    fig_pe.add_vline(x=median_pe, line_color=COLORS['amber'], line_dash='dash', line_width=2,
+        annotation_text=f"Peer Median: {median_pe:.1f}x", annotation_position="top",
+        annotation_font=dict(size=9, color=COLORS['amber']))
+    fig_pe.add_annotation(x=nem_pe, y='NEM',
+        text=f"<b>{pe_discount_pct:+.0f}%</b> vs median", showarrow=True, arrowhead=2,
+        font=dict(size=9, color=COLORS['blue']), arrowcolor=COLORS['blue'],
+        bgcolor='#0d1117', bordercolor=COLORS['blue'], borderwidth=1, ax=60, ay=-25)
+    apply_layout(fig_pe, "NEM IS ATTRACTIVELY VALUED ON P/E AMONG GOLD PEERS", 320)
+    fig_pe.update_layout(xaxis_title='P/E Ratio (x)', yaxis=dict(autorange='reversed'))
+    st.plotly_chart(fig_pe, use_container_width=True)
+
+    # ── Re-Rating Scenario ──
+    st.markdown('<div class="panel-header">RE-RATING SCENARIO</div>', unsafe_allow_html=True)
+    c1_rv, c2_rv, c3_rv = st.columns(3)
+    with c1_rv:
+        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">NEM EV/EBITDA</div>
+          <div class="kpi-value" style="color:{COLORS['blue']};font-size:22px;">{nem_ev:.1f}x</div>
+          <div class="kpi-sub">Current multiple</div></div>""", unsafe_allow_html=True)
+    with c2_rv:
+        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">PEER MEDIAN</div>
+          <div class="kpi-value" style="color:{COLORS['amber']};font-size:22px;">{median_ev:.1f}x</div>
+          <div class="kpi-sub">{abs(ev_discount_pct):.0f}% {'discount' if ev_discount_pct < 0 else 'premium'}</div></div>""", unsafe_allow_html=True)
+    with c3_rv:
+        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">IMPLIED PRICE</div>
+          <div class="kpi-value" style="color:{COLORS['green']};font-size:22px;">${implied_price_rv:.2f}</div>
+          <div class="kpi-sub">{rv_upside:+.0f}% upside if re-rated</div></div>""", unsafe_allow_html=True)
+
+    st.markdown(f"""
+    <div style="background:#0d1117;border:2px solid {COLORS['green']};padding:18px;margin-top:12px;">
+      <div style="color:{COLORS['green']};font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">RE-RATING MATH</div>
+      <div style="color:#e6edf3;font-size:12px;line-height:1.7;">
+        If NEM re-rated from <b>{nem_ev:.1f}x</b> to the peer median of <b>{median_ev:.1f}x</b> EV/EBITDA,
+        the implied share price = <b style="color:{COLORS['green']};">${implied_price_rv:.2f}</b>
+        (current ${B['price']:.2f} &times; {median_ev:.1f} / {nem_ev:.1f}).<br>
+        That represents <b style="color:{COLORS['green']};">{rv_upside:+.0f}% upside</b> from the current price —
+        and this is <i>before</i> any gold price appreciation or operational improvement.
+      </div>
+    </div>""", unsafe_allow_html=True)
+
+    source_footer("Yahoo Finance, Koyfin, NEM/AEM/KGC/GFI/WPM Filings")
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # TAB 7 — RISK ENGINE
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[7]:
@@ -2414,7 +2567,7 @@ with tabs[8]:
                            annotation_text=lbl, annotation_position="top", annotation_font_color=clr, annotation_font_size=9)
     apply_layout(fig_hist, f"50K MC — {prob_above_mc:.1f}% exceed current price", 380)
     fig_hist.update_layout(barmode='overlay', xaxis_title='Simulated Fair Value ($/share)', yaxis_title='Frequency (Simulations)')
-    fig_hist.add_vline(x=107.80, line_color='#f85149', line_width=2, line_dash='dash', annotation_text='Current: $107.80', annotation_position='top left', annotation_font=dict(size=9, color='#f85149'))
+    fig_hist.add_vline(x=BASE['price'], line_color='#f85149', line_width=2, line_dash='dash', annotation_text=f"Current: ${BASE['price']:.2f}", annotation_position='top left', annotation_font=dict(size=9, color='#f85149'))
     st.plotly_chart(fig_hist, use_container_width=True)
 
     c1, c2 = st.columns(2)
@@ -2676,7 +2829,7 @@ with tabs[11]:
          '<br><br>'
          '<b>Consensus:</b> 9 analysts &mdash; 8 Buy (88.9%), 1 Hold. Mean target $123.44, median $115.00. '
          'High: $157 (Bernstein). Low: $84 (Raymond James, Brian MacArthur). '
-         'Our model ($137.93) sits between consensus mean and Bernstein&rsquo;s high.',
+         f'Our model (${BASE["blended_target"]:.2f}) sits between consensus mean and Bernstein&rsquo;s high.',
          'Perplexity Finance analyst data, Yahoo Finance (Feb 27, 2026), SEC filings'),
 
         ('2. INSIDER TRADING', 'NEUTRAL-BEARISH', COLORS['amber'],
@@ -2835,7 +2988,7 @@ with tabs[11]:
       <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
         <b style="color:{COLORS['red']};">1. Insider Selling:</b> Zero open-market purchases in 12 months. 21 sales (81,989 shares / $7.59M).
         David Fry's $2.05M sale on Mar 16 had no confirmed 10b5-1 plan. NEM fell 7.1% the next day.
-        If management believed shares were deeply undervalued at $107.80, someone would be buying.<br>
+        If management believed shares were deeply undervalued at ${BASE['price']:.2f}, someone would be buying.<br>
         <b style="color:{COLORS['red']};">2. Ghana Royalty:</b> The sliding-scale royalty (5%&ndash;12%, 12% ceiling active at current gold) is law as of Mar 9, 2026.
         Adds +$310/oz to Ghana AISC and +$50/oz to total NEM AISC. Excluded from 2026 guidance &mdash;
         meaning actual AISC will run higher than guided.<br>
@@ -3267,7 +3420,80 @@ with tabs[13]:
       </div>
     </div>''', unsafe_allow_html=True)
 
-    source_footer("NEM Annual Reports & Investor Day Presentations 2015-2025, AEM Q4 Reports 2020-2025, Barrick Q4 Reports 2020-2025, SEC EDGAR, Newmont.com, Barrick.com, AgnicoEagle.com")
+    # ── GUIDANCE VS ACTUALS — PRODUCTION & AISC (merged from MGMT tab) ──
+    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">GUIDANCE VS ACTUALS — PRODUCTION & AISC</div>', unsafe_allow_html=True)
+    guide_data_c = [
+        {'Year': 'FY2024', 'Metric': 'Production (Moz)', 'Guidance': '6.9', 'Actual': '6.8', 'Diff': '-0.1', 'Color': COLORS['amber']},
+        {'Year': 'FY2024', 'Metric': 'AISC ($/oz)', 'Guidance': '$1,450', 'Actual': '$1,620', 'Diff': '+$170', 'Color': COLORS['red']},
+        {'Year': 'FY2025', 'Metric': 'Production (Moz)', 'Guidance': '5.6', 'Actual': '5.9', 'Diff': '+0.3', 'Color': COLORS['green']},
+        {'Year': 'FY2025', 'Metric': 'AISC ($/oz)', 'Guidance': '$1,620', 'Actual': '$1,358', 'Diff': '-$262', 'Color': COLORS['green']},
+        {'Year': 'FY2026', 'Metric': 'Production (Moz)', 'Guidance': '5.3', 'Actual': 'Pending', 'Diff': '—', 'Color': COLORS['muted']},
+        {'Year': 'FY2026', 'Metric': 'AISC ($/oz)', 'Guidance': '$1,680', 'Actual': 'Pending', 'Diff': '—', 'Color': COLORS['muted']},
+    ]
+    for row_gc in guide_data_c:
+        st.markdown(f"""
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid #30363d;background:#161b22;">
+          <span style="color:#8b949e;font-size:10px;width:80px;">{row_gc['Year']}</span>
+          <span style="color:#e6edf3;font-size:10px;flex:1;">{row_gc['Metric']}</span>
+          <span style="color:#8b949e;font-size:10px;width:80px;">Guide: {row_gc['Guidance']}</span>
+          <span style="color:#e6edf3;font-size:10px;width:80px;">Actual: {row_gc['Actual']}</span>
+          <span style="color:{row_gc['Color']};font-size:10px;font-weight:600;width:80px;">{row_gc['Diff']}</span>
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown('<br>', unsafe_allow_html=True)
+
+    # ── QUARTERLY EPS BEAT TRACKER (merged from MGMT tab) ──
+    st.markdown('<div class="panel-header">QUARTERLY EPS BEAT TRACKER</div>', unsafe_allow_html=True)
+    earn_c = d['earnings_history']
+    beats_c = sum(1 for e in earn_c if e['actual_eps'] >= e['est_eps'])
+    total_q_c = len(earn_c)
+    avg_beat_c = np.mean([(e['actual_eps'] / e['est_eps'] - 1) * 100 for e in earn_c if e['est_eps'] > 0])
+
+    c1c, c2c, c3c = st.columns(3)
+    with c1c:
+        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">BEAT RATE</div>
+          <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{beats_c}/{total_q_c}</div>
+          <div class="kpi-sub">{beats_c/total_q_c*100:.0f}% of quarters</div></div>""", unsafe_allow_html=True)
+    with c2c:
+        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">AVG BEAT MAGNITUDE</div>
+          <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{avg_beat_c:+.1f}%</div>
+          <div class="kpi-sub">vs consensus EPS</div></div>""", unsafe_allow_html=True)
+    with c3c:
+        rev_beats_c = sum(1 for e in earn_c if e.get('rev_surprise', 0) > 0)
+        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">REVENUE BEATS</div>
+          <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{rev_beats_c}/{total_q_c}</div>
+          <div class="kpi-sub">{rev_beats_c/total_q_c*100:.0f}% of quarters</div></div>""", unsafe_allow_html=True)
+
+    # --- EPS BEAT/MISS BAR CHART ---
+    st.markdown('<div class="panel-header">QUARTERLY EPS: ACTUAL vs ESTIMATE</div>', unsafe_allow_html=True)
+    earn_periods_c = [e['period'] for e in earn_c]
+    earn_actual_c = [e['actual_eps'] for e in earn_c]
+    earn_est_c = [e['est_eps'] for e in earn_c]
+    beat_miss_colors_c = [COLORS['green'] if a >= e else COLORS['red'] for a, e in zip(earn_actual_c, earn_est_c)]
+    fig_eps_c = go.Figure()
+    fig_eps_c.add_trace(go.Bar(x=earn_periods_c, y=earn_actual_c, name='Actual EPS',
+        marker_color=beat_miss_colors_c,
+        text=[f"${a:.2f}" for a in earn_actual_c], textposition='outside',
+        textfont=dict(color=COLORS['text'], size=10)))
+    fig_eps_c.add_trace(go.Scatter(x=earn_periods_c, y=earn_est_c, name='Consensus Est.',
+        mode='lines+markers', line=dict(color=COLORS['amber'], width=2, dash='dash'),
+        marker=dict(size=7, color=COLORS['amber'])))
+    apply_layout(fig_eps_c, f"EPS BEAT RATE: {beats_c}/{total_q_c} QUARTERS ({beats_c/total_q_c*100:.0f}%)", 300)
+    fig_eps_c.update_layout(barmode='group', yaxis_title='EPS ($)')
+    surprises_c = [(earn_actual_c[i] - earn_est_c[i], i) for i in range(len(earn_actual_c)) if earn_est_c[i] > 0]
+    if surprises_c:
+        best_surprise_c = max(surprises_c, key=lambda x: x[0])
+        if best_surprise_c[0] > 0:
+            idx_best_c = best_surprise_c[1]
+            fig_eps_c.add_annotation(x=earn_periods_c[idx_best_c], y=earn_actual_c[idx_best_c],
+                text=f'<b>+${best_surprise_c[0]:.2f}</b><br>beat', showarrow=True, arrowhead=2,
+                font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+                bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=35, ay=-25)
+    fig_eps_c.update_layout(yaxis_title='Earnings Per Share ($)')
+    st.plotly_chart(fig_eps_c, use_container_width=True)
+
+    source_footer("NEM Annual Reports & Investor Day Presentations 2015-2025, AEM Q4 Reports 2020-2025, Barrick Q4 Reports 2020-2025, SEC EDGAR, Newmont.com, Barrick.com, AgnicoEagle.com, NEM Earnings Calls")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -3454,7 +3680,7 @@ with tabs[14]:
             'signal': '4 UPGRADES / 0 DOWNGRADES',
             'color': COLORS['green'],
             'icon': '▲',
-            'detail': 'Consensus target: ~$123 → Our target: $137.93 (+12% above Street)',
+            'detail': f'Consensus target: ~$123 → Our target: ${B["blended_target"]:.2f} (+{((B["blended_target"]/123)-1)*100:.0f}% above Street)',
             'sub': 'Wall Street is moving our direction but hasn\'t fully caught up. Contrarian alpha remains.',
         },
         {
@@ -3787,95 +4013,82 @@ with tabs[16]:
     source_footer("NEM FY2025 Annual Report, CME Copper Futures, IEA Copper Outlook")
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# TAB 15 — MANAGEMENT CREDIBILITY
+# TAB 18 — CEO & LEADERSHIP
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[17]:
     d = DATA
-    _earn_m = d['earnings_history']
-    _eps_beats = sum(1 for e in _earn_m if e['actual_eps'] >= e['est_eps'])
-    _total_q_m = len(_earn_m)
-    insight_callout(f"Management has beaten consensus EPS in {_eps_beats} of {_total_q_m} recent quarters. Production guidance miss has narrowed from -11.8% (2020) to -0.2% (2025) — the trajectory is the signal. New CEO Natascha Viljoen inherits the strongest balance sheet in NEM history.")
 
+    insight_callout("New CEO Natascha Viljoen inherits the strongest balance sheet in NEM history — net cash $7.2B, Piotroski 9/9. Her Anglo American Platinum track record (22% LTI reduction) signals operational excellence DNA. For guidance/EPS credibility data, see the 14-CREDIBILITY tab.")
 
-    st.markdown('<div class="panel-header">MANAGEMENT CREDIBILITY TRACKER</div>', unsafe_allow_html=True)
+    # CEO Profile
+    st.markdown('<div class="panel-header">CEO PROFILE &mdash; NATASCHA VILJOEN</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
+      <div style="color:#58a6ff;font-size:14px;font-weight:700;margin-bottom:8px;">Natascha Viljoen — President & CEO (since Jan 1, 2026)</div>
+      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+        <b>Tenure:</b> CEO since January 2026 | <b>Background:</b> Chemical Engineering, former COO of Anglo American Platinum<br>
+        <b>Why This Matters:</b><br>
+        - Succeeded Tom Palmer (CEO 2019-2025), who led the Newcrest acquisition and balance sheet transformation<br>
+        - At Anglo American Platinum, achieved a 22% reduction in lost-time injury (LTI) rates — operational excellence DNA<br>
+        - Deep processing/metallurgy expertise — aligned with NEM's AISC optimization priority<br>
+        - First female CEO of a major gold miner — ESG narrative tailwind<br>
+        - Inherits the strongest balance sheet in NEM's history: net cash $7.2B, Piotroski 9/9<br>
+        <b style="color:#d29922;">Key Risk:</b> New CEO transition always carries execution uncertainty. Track 2026 guidance delivery closely.
+      </div>
+    </div>""", unsafe_allow_html=True)
 
-    # Guidance vs Actuals
-    st.markdown('<div class="panel-header">GUIDANCE VS ACTUALS — PRODUCTION & AISC</div>', unsafe_allow_html=True)
-    guide_data = [
-        {'Year': 'FY2024', 'Metric': 'Production (Moz)', 'Guidance': '6.9', 'Actual': '6.8', 'Diff': '-0.1', 'Color': COLORS['amber']},
-        {'Year': 'FY2024', 'Metric': 'AISC ($/oz)', 'Guidance': '$1,450', 'Actual': '$1,620', 'Diff': '+$170', 'Color': COLORS['red']},
-        {'Year': 'FY2025', 'Metric': 'Production (Moz)', 'Guidance': '5.6', 'Actual': '5.9', 'Diff': '+0.3', 'Color': COLORS['green']},
-        {'Year': 'FY2025', 'Metric': 'AISC ($/oz)', 'Guidance': '$1,620', 'Actual': '$1,358', 'Diff': '-$262', 'Color': COLORS['green']},
-        {'Year': 'FY2026', 'Metric': 'Production (Moz)', 'Guidance': '5.3', 'Actual': 'Pending', 'Diff': '—', 'Color': COLORS['muted']},
-        {'Year': 'FY2026', 'Metric': 'AISC ($/oz)', 'Guidance': '$1,680', 'Actual': 'Pending', 'Diff': '—', 'Color': COLORS['muted']},
+    # Predecessor
+    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">PREDECESSOR — TOM PALMER (2019-2025)</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:16px 20px;">
+      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+        Led $26B Newcrest acquisition, $8.5B debt repayment, $2.3B buyback program, net cash position achieved.
+        Palmer's legacy: transformed NEM from an overleveraged acquirer into a fortress balance sheet with Tier 1 assets only.
+      </div>
+    </div>""", unsafe_allow_html=True)
+
+    # Board Composition
+    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">BOARD COMPOSITION & GOVERNANCE</div>', unsafe_allow_html=True)
+    board_members = [
+        {'Name': 'Gregory Boyce', 'Role': 'Chairman', 'Expertise': 'Mining CEO (Peabody Energy)', 'Color': COLORS['blue']},
+        {'Name': 'Natascha Viljoen', 'Role': 'President & CEO', 'Expertise': 'Mining operations, chemical engineering', 'Color': COLORS['blue']},
+        {'Name': 'Bruce Brook', 'Role': 'Independent Director', 'Expertise': 'Finance, audit (former EY partner)', 'Color': COLORS['muted']},
+        {'Name': 'Maura Clark', 'Role': 'Independent Director', 'Expertise': 'Energy markets, commodity trading', 'Color': COLORS['muted']},
+        {'Name': 'Harry M. Conger', 'Role': 'Independent Director', 'Expertise': 'Mining operations', 'Color': COLORS['muted']},
+        {'Name': 'Emma FitzGerald', 'Role': 'Independent Director', 'Expertise': 'Sustainability, ESG', 'Color': COLORS['green']},
+        {'Name': 'José Manuel Madero', 'Role': 'Independent Director', 'Expertise': 'Latin American mining', 'Color': COLORS['muted']},
+        {'Name': 'Jane Nelson', 'Role': 'Independent Director', 'Expertise': 'ESG, corporate responsibility', 'Color': COLORS['green']},
     ]
-    for row_g in guide_data:
+    for bm in board_members:
         st.markdown(f"""
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid #30363d;background:#161b22;">
-          <span style="color:#8b949e;font-size:10px;width:80px;">{row_g['Year']}</span>
-          <span style="color:#e6edf3;font-size:10px;flex:1;">{row_g['Metric']}</span>
-          <span style="color:#8b949e;font-size:10px;width:80px;">Guide: {row_g['Guidance']}</span>
-          <span style="color:#e6edf3;font-size:10px;width:80px;">Actual: {row_g['Actual']}</span>
-          <span style="color:{row_g['Color']};font-size:10px;font-weight:600;width:80px;">{row_g['Diff']}</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #30363d;background:#161b22;">
+          <span style="color:#e6edf3;font-size:11px;font-weight:600;width:160px;">{bm['Name']}</span>
+          <span style="color:{bm['Color']};font-size:10px;width:160px;">{bm['Role']}</span>
+          <span style="color:#8b949e;font-size:10px;flex:1;">{bm['Expertise']}</span>
         </div>""", unsafe_allow_html=True)
 
+    # Compensation Alignment
     st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">COMPENSATION ALIGNMENT WITH SHAREHOLDERS</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;">
+      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+        <b style="color:{COLORS['green']};">Positives:</b><br>
+        - 60% of CEO long-term incentive tied to TSR (total shareholder return) vs gold peer group<br>
+        - Stock ownership requirement: 6x base salary for CEO, 3x for other NEOs<br>
+        - Clawback policy covers both financial restatements and misconduct<br>
+        - Annual say-on-pay approval &gt;90% in 2024 and 2025<br><br>
+        <b style="color:{COLORS['amber']};">Watch items:</b><br>
+        - New CEO compensation benchmarked to "large cap mining" — could be inflated vs pure gold peers<br>
+        - No disclosed performance targets for 2026 incentive plan (pending first proxy under Viljoen)
+      </div>
+    </div>""", unsafe_allow_html=True)
 
-    # Earnings beat tracker
-    st.markdown('<div class="panel-header">QUARTERLY EPS BEAT TRACKER</div>', unsafe_allow_html=True)
-    earn_m = d['earnings_history']
-    beats = sum(1 for e in earn_m if e['actual_eps'] >= e['est_eps'])
-    total_q = len(earn_m)
-    avg_beat = np.mean([(e['actual_eps'] / e['est_eps'] - 1) * 100 for e in earn_m if e['est_eps'] > 0])
-
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">BEAT RATE</div>
-          <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{beats}/{total_q}</div>
-          <div class="kpi-sub">{beats/total_q*100:.0f}% of quarters</div></div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">AVG BEAT MAGNITUDE</div>
-          <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{avg_beat:+.1f}%</div>
-          <div class="kpi-sub">vs consensus EPS</div></div>""", unsafe_allow_html=True)
-    with c3:
-        rev_beats = sum(1 for e in earn_m if e.get('rev_surprise', 0) > 0)
-        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">REVENUE BEATS</div>
-          <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{rev_beats}/{total_q}</div>
-          <div class="kpi-sub">{rev_beats/total_q*100:.0f}% of quarters</div></div>""", unsafe_allow_html=True)
-
-    # --- EPS BEAT/MISS BAR CHART ---
-    st.markdown('<div class="panel-header">QUARTERLY EPS: ACTUAL vs ESTIMATE</div>', unsafe_allow_html=True)
-    earn_periods = [e['period'] for e in earn_m]
-    earn_actual = [e['actual_eps'] for e in earn_m]
-    earn_est = [e['est_eps'] for e in earn_m]
-    beat_miss_colors = [COLORS['green'] if a >= e else COLORS['red'] for a, e in zip(earn_actual, earn_est)]
-    fig_eps = go.Figure()
-    fig_eps.add_trace(go.Bar(x=earn_periods, y=earn_actual, name='Actual EPS',
-        marker_color=beat_miss_colors,
-        text=[f"${a:.2f}" for a in earn_actual], textposition='outside',
-        textfont=dict(color=COLORS['text'], size=10)))
-    fig_eps.add_trace(go.Scatter(x=earn_periods, y=earn_est, name='Consensus Est.',
-        mode='lines+markers', line=dict(color=COLORS['amber'], width=2, dash='dash'),
-        marker=dict(size=7, color=COLORS['amber'])))
-    apply_layout(fig_eps, f"EPS BEAT RATE: {beats}/{total_q} QUARTERS ({beats/total_q*100:.0f}%)", 300)
-    fig_eps.update_layout(barmode='group', yaxis_title='EPS ($)')
-    # Annotate the largest beat
-    surprises = [(earn_actual[i] - earn_est[i], i) for i in range(len(earn_actual)) if earn_est[i] > 0]
-    if surprises:
-        best_surprise = max(surprises, key=lambda x: x[0])
-        if best_surprise[0] > 0:
-            idx_best = best_surprise[1]
-            fig_eps.add_annotation(x=earn_periods[idx_best], y=earn_actual[idx_best],
-                text=f'<b>+${best_surprise[0]:.2f}</b><br>beat', showarrow=True, arrowhead=2,
-                font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
-                bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=35, ay=-25)
-    fig_eps.update_layout(yaxis_title='Earnings Per Share ($)')
-    st.plotly_chart(fig_eps, use_container_width=True)
-
-    # Capital allocation timeline
+    # Capital allocation timeline (kept here — it's leadership decision-making content)
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">CAPITAL ALLOCATION TIMELINE</div>', unsafe_allow_html=True)
-
     cap_events = [
         {'Date': '2023-Q4', 'Event': 'Newcrest Acquisition Closes', 'Type': 'M&A',
          'Impact': 'Added Cadia ($400/oz AISC), Lihir, Telfer. Doubled reserve base to 118 Moz.',
@@ -3903,27 +4116,7 @@ with tabs[17]:
           <div style="color:#e6edf3;font-size:11px;line-height:1.5;">{evt['Impact']}</div>
         </div>""", unsafe_allow_html=True)
 
-    # CEO Profile
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">CEO PROFILE</div>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
-      <div style="color:#58a6ff;font-size:14px;font-weight:700;margin-bottom:8px;">Natascha Viljoen — President & CEO (since Jan 1, 2026)</div>
-      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        <b>Tenure:</b> CEO since January 2026 | <b>Background:</b> Chemical Engineering, former COO of Anglo American Platinum<br>
-        <b>Why This Matters:</b><br>
-        - Succeeded Tom Palmer (CEO 2019-2025), who led the Newcrest acquisition and balance sheet transformation<br>
-        - At Anglo American Platinum, achieved a 22% reduction in lost-time injury (LTI) rates — operational excellence DNA<br>
-        - Deep processing/metallurgy expertise — aligned with NEM’s AISC optimization priority<br>
-        - First female CEO of a major gold miner — ESG narrative tailwind<br>
-        - Inherits the strongest balance sheet in NEM’s history: net cash $7.2B, Piotroski 9/9<br>
-        <b style="color:#d29922;">Key Risk:</b> New CEO transition always carries execution uncertainty. Track 2026 guidance delivery closely.
-      </div>
-    </div>
-    <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:12px 16px;margin-top:8px;">
-      <div style="color:#8b949e;font-size:10px;">PREDECESSOR: <span style="color:#e6edf3;">Tom Palmer (CEO 2019-2025)</span> — Led $26B Newcrest acquisition, $8.5B debt repayment, $2.3B buyback program, net cash position achieved. Palmer’s legacy: transformed NEM from an overleveraged acquirer into a fortress balance sheet with Tier 1 assets only.</div>
-    </div>""", unsafe_allow_html=True)
-    source_footer("NEM Earnings Calls, Annual Reports, Investor Presentations 2023-2025")
+    source_footer("NEM Proxy Statements, Earnings Calls, Annual Reports, Investor Presentations 2023-2025")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 16 — ROIC / EVA
