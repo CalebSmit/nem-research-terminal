@@ -1271,7 +1271,7 @@ with tabs[1]:
         <div class="kpi-tile">
           <div class="kpi-label">MC P(> Current Price)</div>
           <div class="kpi-value" style="color:{mc_color};">{mc_prob:.1f}%</div>
-          <div class="kpi-sub">10K-iteration estimate</div>
+          <div class="kpi-sub">50K-iteration estimate</div>
         </div>""", unsafe_allow_html=True)
     with c2:
         fs = BASE['f_score']
@@ -1451,7 +1451,7 @@ with tabs[1]:
                               text=f"${aisc_data_h[-1]:,}", showarrow=False,
                               font=dict(color=COLORS['amber'], size=11),
                               xanchor='right', yanchor='top')
-        apply_layout(fig_s3, "AISC DECLINING &mdash; BEST IN CLASS", 200)
+        apply_layout(fig_s3, "AISC $1,358 &mdash; BELOW GLOBAL AVG", 200)
         fig_s3.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20))
         st.plotly_chart(fig_s3, use_container_width=True)
     source_footer("NEM FY2021-2025 10-K Filings, Market Data")
@@ -2583,7 +2583,7 @@ with tabs[8]:
             line=dict(color=COLORS['blue'], width=2), name='Running Median'))
         fig_conv.add_hline(y=mc_stats['Median'], line_dash='dash', line_color=COLORS['green'],
                            annotation_text=f"Final Median: ${mc_stats['Median']:.2f}", annotation_font_color=COLORS['green'])
-        apply_layout(fig_conv, "10,000 SIMULATIONS CONVERGE — RESULT IS STATISTICALLY ROBUST", 300)
+        apply_layout(fig_conv, "50,000 SIMULATIONS CONVERGE — RESULT IS STATISTICALLY ROBUST", 300)
         fig_conv.update_layout(xaxis_title="Iterations", yaxis_title="Median Price ($)")
         st.plotly_chart(fig_conv, use_container_width=True)
     with c2:
@@ -4304,8 +4304,14 @@ with tabs[18]:
 # ═══════════════════════════════════════════════════════════════════════════════
 st.markdown("""
 <div style="text-align:center;padding:24px 0 12px 0;border-top:1px solid #30363d;margin-top:32px;">
-  <span style="color:#8b949e;font-size:10px;letter-spacing:2px;text-transform:uppercase;">
-    Built for the Perplexity Stock Pitch Competition 2026 &nbsp;|&nbsp; Data as of Mar 31, 2026 &nbsp;|&nbsp; NEM Equity Research Terminal
-  </span>
+  <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">
+    NEM EQUITY RESEARCH TERMINAL v2
+  </div>
+  <div style="color:#8b949e;font-size:9px;letter-spacing:1px;line-height:1.8;">
+    Built for the Perplexity Stock Pitch Competition 2026 &nbsp;|&nbsp; Data as of Mar 31, 2026<br>
+    19 interactive tabs &nbsp;|&nbsp; 38 overridable assumptions &nbsp;|&nbsp; 8 alt-data channel checks &nbsp;|&nbsp; 50K Monte Carlo simulations<br>
+    Every input sourced &nbsp;|&nbsp; Every assumption transparent &nbsp;|&nbsp; Every number stress-testable<br>
+    <span style="color:#58a6ff;">Built entirely with Perplexity Computer</span>
+  </div>
 </div>
 """, unsafe_allow_html=True)
