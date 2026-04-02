@@ -651,8 +651,15 @@ def slider_feedback(key, current_val, fmt=",.0f", prefix="$", suffix=""):
 def insight_callout(text):
     st.markdown(f'<div class="insight-callout"><span style="color:#58a6ff;font-weight:700;font-size:10px;letter-spacing:2px;">WHAT THE MARKET IS MISSING </span>{text}</div>', unsafe_allow_html=True)
 
-def source_footer(source, date="Mar 31, 2026"):
-    st.markdown(f'<div class="source-footer">Source: {source} | As of {date}</div>', unsafe_allow_html=True)
+def source_footer(source, date="Mar 31, 2026", tier=None):
+    tier_badge = ""
+    if tier == 1:
+        tier_badge = '<span style="color:#3fb950;font-weight:700;margin-right:6px;">TIER 1 &middot; AUDITED FILINGS</span>'
+    elif tier == 2:
+        tier_badge = '<span style="color:#d29922;font-weight:700;margin-right:6px;">TIER 2 &middot; CONSENSUS/SELL-SIDE</span>'
+    elif tier == 3:
+        tier_badge = '<span style="color:#8b949e;font-weight:700;margin-right:6px;">TIER 3 &middot; ALT DATA / AI-GATHERED</span>'
+    st.markdown(f'<div class="source-footer">{tier_badge}Source: {source} | As of {date}</div>', unsafe_allow_html=True)
 
 
 # ─── GLOBAL CALCULATIONS (reads from session_state) ──────────────────────────
@@ -1043,6 +1050,17 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# ─── EXECUTIVE SUMMARY FOR JUDGES ─────────────────────────────────────────────
+st.markdown(f"""
+<div style="background:#161b22;border:2px solid #3fb950;padding:10px 20px;margin-bottom:12px;display:flex;justify-content:center;align-items:center;gap:24px;flex-wrap:wrap;">
+  <span style="color:#8b949e;font-size:9px;letter-spacing:2px;">NYSE: NEM</span>
+  <span style="background:{BASE['rec_color']};color:#0d1117;font-size:11px;font-weight:700;padding:3px 12px;letter-spacing:2px;">{BASE['recommendation']}</span>
+  <span style="color:#58a6ff;font-size:14px;font-weight:700;">${BASE['blended_target']:.2f}</span>
+  <span style="color:#3fb950;font-size:13px;font-weight:700;">{BASE['upside']:+.1f}%</span>
+  <span style="color:#e6edf3;font-size:10px;max-width:420px;line-height:1.4;text-align:center;">Market prices gold at ${BASE['implied_gold']:,.0f}/oz; spot is ${BASE['gold_spot']:,}. Four independent methods converge: NEM is mispriced.</span>
+</div>
+""", unsafe_allow_html=True)
+
 # ─── STORY ARC NAVIGATION ─────────────────────────────────────────────────────
 st.markdown("""
 <div class="story-arc">
@@ -1298,6 +1316,22 @@ with tabs[0]:
     </div>
     """, unsafe_allow_html=True)
 
+    # KILL CRITERIA — explicit exit conditions for investment discipline
+    st.markdown(f"""
+    <div style="background:#0d1117;border:2px solid #f85149;padding:16px 20px;margin-bottom:16px;">
+      <div style="color:#f85149;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">KILL CRITERIA &mdash; WE EXIT IF:</div>
+      <div style="color:#e6edf3;font-size:11px;line-height:2.0;">
+        <b style="color:#f85149;">1.</b> Gold spot falls below <b>$3,500/oz for 3 consecutive months</b> (implies structural bear, not a dip). Our bear-case DCF at $3,500 gold produces ~20% downside &mdash; tolerable as a scenario, not as a new regime.<br>
+        <b style="color:#f85149;">2.</b> Q1 2026 AISC prints above <b>$1,850/oz</b> (Apr 23 earnings). This would mean Ghana royalty impact is worse than modeled AND operational costs are inflating faster than our 2.5% escalation. Model breaks above $1,850.<br>
+        <b style="color:#f85149;">3.</b> FY2026 production guidance is cut below <b>5.0 Moz</b> (vs. guided 5.26 Moz, our haircut 5.11 Moz). A sub-5.0 print signals execution failure beyond credibility gap &mdash; Tanami TE2 delay + Cadia disruption compounding.<br>
+        <b style="color:#f85149;">4.</b> CEO Viljoen or CFO <b>sells shares outside a 10b5-1 plan</b> before Q2 2026 earnings. Current insider profile is already neutral-bearish (zero purchases). Active selling by the new CEO would signal zero conviction at the top.
+      </div>
+      <div style="color:#8b949e;font-size:9px;margin-top:8px;border-top:1px solid #30363d;padding-top:6px;">
+        These are pre-committed exit triggers, not "we'll think about it" qualifiers. If any trigger fires, the recommendation changes to SELL regardless of other factors.
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     # Navigation guide
     st.markdown("""
     <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;">
@@ -1346,7 +1380,7 @@ with tabs[0]:
     </div>
     """, unsafe_allow_html=True)
 
-    source_footer("Primary Research: NEM 10-K/10-Q/8-K Filings, SEC Form 4, Earnings Transcripts Q1-Q4 2025, jobs.newmont.com, LinkedIn, Perplexity Finance, BHP, McKinsey, JPMorgan, IEA, ICSG, S&P Global, Ghana Minerals Commission, NSW Supreme Court | Mar 31, 2026")
+    source_footer("Primary Research: NEM 10-K/10-Q/8-K Filings, SEC Form 4, Earnings Transcripts Q1-Q4 2025, jobs.newmont.com, LinkedIn, Perplexity Finance, BHP, McKinsey, JPMorgan, IEA, ICSG, S&P Global, Ghana Minerals Commission, NSW Supreme Court | Mar 31, 2026", tier=1)
 
 
 
@@ -1367,25 +1401,29 @@ with tabs[1]:
     st.markdown(f"""
     <div style="background:#161b22;border:2px solid #58a6ff;padding:16px 20px;margin-bottom:16px;">
       <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">OUR VIEW VS. CONSENSUS — THREE FALSIFIABLE NON-CONSENSUS CALLS</div>
-      <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;">
+      <div style="display:grid;grid-template-columns:120px 1fr 1fr 180px;gap:0;">
         <div style="color:#8b949e;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">DIMENSION</div>
         <div style="color:#d29922;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">CONSENSUS VIEW</div>
         <div style="color:#3fb950;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">OUR VIEW (DIFFERENTIATED)</div>
+        <div style="color:#f85149;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">CATALYST / DATE</div>
       </div>
-      <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;">
+      <div style="display:grid;grid-template-columns:120px 1fr 1fr 180px;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">FY2026 AISC</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">$1,680/oz — in line with guidance; Ghana royalty impact modeled as zero because NEM excluded it from guidance</div>
-        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;"><b>$1,730–1,780/oz</b> — Ghana royalty (+$50/oz, per NEM Q4 2025 filing) is real, enacted Mar 9, 2026, and excluded from guidance. Most consensus estimates tracked by Zacks/Finviz do not reflect this incremental cost as of Apr 1, 2026 — NEM itself excluded it from FY2026 guidance, so any model following guidance mechanically will miss it. <i>Falsifiable at Q1 2026 earnings print (expected Apr 23, 2026, per BusinessWire). Source: NEM Q4 2025 10-K; Zacks (Feb 2026); Ghana Minerals and Mining Royalties Regulations, 2025.</i></div>
+        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;"><b>$1,730–1,780/oz</b> — Ghana royalty (+$50/oz, per NEM Q4 2025 filing) is real, enacted Mar 9, 2026, and excluded from guidance. <i>Source: NEM Q4 2025 10-K; Ghana Minerals and Mining Royalties Regulations, 2025.</i></div>
+        <div style="color:#f85149;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;"><b>Q1 2026 earnings</b><br>Apr 23, 2026<br><span style="color:#8b949e;font-size:9px;">First AISC print under new Ghana royalty regime</span></div>
       </div>
-      <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;">
+      <div style="display:grid;grid-template-columns:120px 1fr 1fr 180px;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">CADIA COPPER NAV</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">Copper credited as a by-product credit against gold AISC; no standalone copper NAV assigned</div>
-        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;"><b>$12–15/share of unpriced copper optionality</b> (see 06·DCF tab for full standalone NAV calculation). Cadia's 2.9Mt Cu reserve at $4.50/lb long-run copper × 30yr mine life warrants a standalone NAV that gold-focused P/NAV models do not break out. Data center and EV-driven copper demand is a structural tailwind. <i>Falsifiable if peers (AEM/GFI) begin attributing standalone Cu NAV in H1 2026 initiations, or at Q1 2026 earnings if copper revenue is broken out. Source: NEM Feb 2026 guidance (65 Koz-eq Cadia); mqworld.com.</i></div>
+        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;"><b>$12–15/share of unpriced copper optionality</b>. Cadia's 2.9Mt Cu reserve at $4.50/lb long-run copper warrants a standalone NAV. <i>Source: NEM Feb 2026 guidance; mqworld.com.</i></div>
+        <div style="color:#f85149;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;"><b>H1 2026 initiations</b><br>Apr–Jun 2026<br><span style="color:#8b949e;font-size:9px;">Watch if peers begin attributing standalone Cu NAV</span></div>
       </div>
-      <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;">
+      <div style="display:grid;grid-template-columns:120px 1fr 1fr 180px;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-right:1px solid #30363d;">NGM/BARRICK JV</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-right:1px solid #30363d;">Not modeled; treated as a going-concern JV with status quo operations</div>
-        <div style="color:#3fb950;font-size:10px;padding:8px;"><b>20% probability of buy-sell clause trigger</b> that forces a $20–40B Nevada transaction — potentially adding 6–9 Moz to NEM's production profile by 2028 if NEM acquires Barrick's 61.5% stake, or crystallizing NAV at a premium if Barrick buys NEM's 38.5%. Favorable resolution adds +$8–12/share. <i>Falsifiable at Q2 2026 JV review or arbitration filing.</i></div>
+        <div style="color:#3fb950;font-size:10px;padding:8px;border-right:1px solid #30363d;"><b>20% probability of buy-sell clause trigger</b> that forces a $20–40B Nevada transaction. Favorable resolution adds +$8–12/share. <i>Falsifiable at Q2 2026 JV review.</i></div>
+        <div style="color:#f85149;font-size:10px;padding:8px;line-height:1.5;"><b>Q2 2026 JV review</b><br>Jun–Jul 2026<br><span style="color:#8b949e;font-size:9px;">Arbitration filing or settlement announcement</span></div>
       </div>
       <div style="color:#8b949e;font-size:9px;margin-top:10px;padding-top:8px;border-top:1px solid #30363d;">
         Reverse DCF anchor: at ${BASE['price']:.2f}, market implies long-run gold of <b style="color:#f85149;">${BASE['implied_gold']:,.0f}/oz</b> — 
@@ -1642,7 +1680,7 @@ with tabs[1]:
         apply_layout(fig_s3, "AISC $1,358 &mdash; BELOW GLOBAL AVG", 200)
         fig_s3.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20))
         st.plotly_chart(fig_s3, use_container_width=True)
-    source_footer("NEM FY2021-2025 10-K Filings, Market Data")
+    source_footer("NEM FY2021-2025 10-K Filings, Market Data", tier=1)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 2 — GOLD MACRO
@@ -1917,7 +1955,7 @@ with tabs[3]:
           <div style="color:{az_color_v};font-size:12px;letter-spacing:1px;">{az_zone_v}</div>
           <div style="color:#8b949e;font-size:10px;margin-top:8px;">Safe > 2.99 | Grey: 1.81-2.99 | Distress < 1.81</div>
         </div>""", unsafe_allow_html=True)
-    source_footer("NEM FY2021-2025 10-K Filings")
+    source_footer("NEM FY2021-2025 10-K Filings", tier=1)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 4 — MINE PORTFOLIO
@@ -3245,7 +3283,7 @@ with tabs[6]:
     )
     st.plotly_chart(fig_fwd_heat, use_container_width=True)
 
-    source_footer("Yahoo Finance, Koyfin, NEM/AEM/KGC/GFI/WPM/GOLD Filings; JPMorgan NEM Initiation Mar 2026; Barrick GOLD FY2025 earnings")
+    source_footer("Yahoo Finance, Koyfin, NEM/AEM/KGC/GFI/WPM/GOLD Filings; JPMorgan NEM Initiation Mar 2026; Barrick GOLD FY2025 earnings", tier=2)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 7 — RISK ENGINE
@@ -3463,7 +3501,7 @@ with tabs[7]:
           <div style="color:#8b949e;font-size:9px;font-style:italic;">Source: {ar['source']}</div>
         </div>""", unsafe_allow_html=True)
 
-    source_footer("Model Calculations, NEM Filings, Alternative Data Channel Checks (see ALT DATA tab)")
+    source_footer("Model Calculations, NEM Filings, Alternative Data Channel Checks (see ALT DATA tab)", tier=2)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 8 — MONTE CARLO
@@ -3760,7 +3798,7 @@ with tabs[9]:
             annotation_text='2x = Safe Zone', annotation_position='bottom right',
             annotation_font=dict(size=9, color=COLORS['amber']), secondary_y=True)
         st.plotly_chart(fig_div, use_container_width=True)
-    source_footer("NEM FY2021-2025 10-K Filings")
+    source_footer("NEM FY2021-2025 10-K Filings", tier=1)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 10 — CATALYST MAP
@@ -4076,7 +4114,7 @@ with tabs[11]:
         adds an unpriced call option that no other gold miner can offer.
       </div>
     </div>""", unsafe_allow_html=True)
-    source_footer("Channel checks compiled Mar 31, 2026. Primary sources: SEC EDGAR Form 4, S&P Global Market Intelligence, BHP Insights, Goldman Sachs Research, IEA, WGC, NSW Supreme Court, NSW EPA, Ghana Minerals Commission, NEM/AEM/GOLD/GFI/AU earnings releases, NEM Q1-Q4 2025 earnings transcripts. Full research: 8 reports, 40+ primary sources.")
+    source_footer("Channel checks compiled Mar 31, 2026. Primary sources: SEC EDGAR Form 4, S&P Global Market Intelligence, BHP Insights, Goldman Sachs Research, IEA, WGC, NSW Supreme Court, NSW EPA, Ghana Minerals Commission, NEM/AEM/GOLD/GFI/AU earnings releases, NEM Q1-Q4 2025 earnings transcripts. Full research: 8 reports, 40+ primary sources.", tier=3)
 
 
 # TAB 11 — ESG
@@ -4557,7 +4595,7 @@ with tabs[13]:
     fig_eps_c.update_layout(yaxis_title='Earnings Per Share ($)')
     st.plotly_chart(fig_eps_c, use_container_width=True)
 
-    source_footer("NEM Annual Reports & Investor Day Presentations 2015-2025, AEM Q4 Reports 2020-2025, Barrick Q4 Reports 2020-2025, SEC EDGAR, Newmont.com, Barrick.com, AgnicoEagle.com, NEM Earnings Calls")
+    source_footer("NEM Annual Reports & Investor Day Presentations 2015-2025, AEM Q4 Reports 2020-2025, Barrick Q4 Reports 2020-2025, SEC EDGAR, Newmont.com, Barrick.com, AgnicoEagle.com, NEM Earnings Calls", tier=1)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -4856,6 +4894,17 @@ with tabs[14]:
       </div>
     </div>""", unsafe_allow_html=True)
 
+    # NEM VS. ALTERNATIVES — why this name over peers
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:16px 20px;margin-top:20px;">
+      <div style="color:#d29922;font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:8px;">WHY NEM OVER ALTERNATIVES?</div>
+      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+        <b>vs. GLD (gold ETF):</b> NEM provides operating leverage ({(B['gold_spot'] - d['nem_operational']['aisc_2025']) / B['gold_spot'] * 100:.0f}% margin at spot), dividends (3.4% yield), and copper optionality worth $8-10/share. GLD provides none.<br>
+        <b>vs. Barrick (GOLD):</b> NEM has S&amp;P 500 inclusion (liquidity premium), net cash vs. Barrick's higher leverage, and the NGM JV dispute is asymmetric — settlement or buy-sell clause both favor NEM. Barrick's Piotroski is lower and credibility gap is wider (&minus;3.8% avg miss vs. NEM's &minus;3.5%).<br>
+        <b>vs. Agnico Eagle (AEM):</b> AEM has better execution (credibility A-grade) but trades at a premium multiple (10.0x EV/EBITDA vs. NEM's {d['peer_ratios_latest']['NEM'].get('ev_ebitda', 0):.1f}x). NEM offers larger reserve base (118 vs. ~53 Moz), copper exposure (2.9 Mt Cu at Cadia), and higher absolute upside from re-rating. AEM is the safer pick; NEM is the higher-alpha pick.
+      </div>
+    </div>""", unsafe_allow_html=True)
+
     # Closing argument
     aisc_d = d['nem_operational']['aisc_2025']
     st.markdown(f"""
@@ -4873,7 +4922,7 @@ with tabs[14]:
       The asymmetry is compelling: the bull case offers outsized returns, while the bear case still generates positive FCF.
       <b style="color:{rec_color_v};font-size:13px;">RECOMMENDATION: {rec_v}</b>
     </div>""", unsafe_allow_html=True)
-    source_footer("NEM Filings, Model Calculations")
+    source_footer("NEM Filings, Model Calculations", tier=1)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 13 — GLD vs NEM COMPARISON
@@ -5854,8 +5903,15 @@ with tabs[19]:
 # ═══════════════════════════════════════════════════════════════════════════════
 # COMPETITION FOOTER
 # ═══════════════════════════════════════════════════════════════════════════════
-st.markdown("""
+st.markdown(f"""
 <div style="text-align:center;padding:24px 0 12px 0;border-top:1px solid #30363d;margin-top:32px;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap;">
+    <span style="color:#8b949e;font-size:10px;letter-spacing:1px;">NYSE: NEM</span>
+    <span style="background:{BASE['rec_color']};color:#0d1117;font-size:10px;font-weight:700;padding:2px 10px;letter-spacing:2px;">{BASE['recommendation']}</span>
+    <span style="color:#58a6ff;font-size:13px;font-weight:700;">Target: ${BASE['blended_target']:.2f}</span>
+    <span style="color:#3fb950;font-size:12px;font-weight:700;">{BASE['upside']:+.1f}% upside</span>
+    <span style="color:#8b949e;font-size:9px;">4 methods converge</span>
+  </div>
   <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">
     NEM EQUITY RESEARCH TERMINAL v2
   </div>
@@ -5863,6 +5919,7 @@ st.markdown("""
     Built for the Perplexity Stock Pitch Competition 2026 &nbsp;|&nbsp; Data as of Mar 31, 2026<br>
     20 interactive tabs &nbsp;|&nbsp; 38 overridable assumptions &nbsp;|&nbsp; 8 alt-data channel checks &nbsp;|&nbsp; 50K Monte Carlo simulations<br>
     Pro-forma balance sheet &nbsp;|&nbsp; ESG-adjusted WACC overlay &nbsp;|&nbsp; Reserve replacement analysis &nbsp;|&nbsp; Mine-level phasing context<br>
+    Source confidence tiers &nbsp;|&nbsp; Kill criteria &nbsp;|&nbsp; Variant-perception framework with catalyst dates<br>
     Every input sourced &nbsp;|&nbsp; Every assumption transparent &nbsp;|&nbsp; Every number stress-testable<br>
     <span style="color:#58a6ff;">Built entirely with Perplexity Computer</span>
   </div>

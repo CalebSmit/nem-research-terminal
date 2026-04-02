@@ -249,19 +249,66 @@ The app contains 20 sequential tabs organized as a story arc:
 
 ---
 
-## VALIDATION NOTES
+## COMPETITIVE ANALYSIS — WEAKNESS ASSESSMENT & FIX DECISIONS
+
+The following weaknesses were identified in [COMPETITIVE_ANALYSIS.md](COMPETITIVE_ANALYSIS.md). Each is evaluated for whether it should be fixed in the dashboard.
+
+### Weakness 1: No explicit variant-perception framework with catalyst timeline
+**Fix in dashboard? YES.**
+The "Our View vs. Consensus" grid in Tab 02 (CMD) lists three non-consensus calls but lacks a "catalyst that closes the gap with a date" column. Adding a fourth column ("Catalyst / Date") to the existing grid turns a good table into a falsifiable, time-bound framework that judges can evaluate.
+**Implementation:** Add "CATALYST / DATE" column to the CMD tab's consensus grid. Each row gets a specific event + date (e.g., "Q1 2026 AISC print — Apr 23, 2026").
+
+### Weakness 2: No disconfirming-evidence section with explicit kill criteria
+**Fix in dashboard? YES.**
+Tab 01 (STORY) has "WHAT ALMOST KILLED THE THESIS" — honest and strong — but never states exit conditions. Adding a "KILL CRITERIA" panel after the bear case preemption turns intellectual honesty into investment discipline. This is a 15-line addition.
+**Implementation:** New panel in Tab 01 (STORY) after the bear case preemption: "WE EXIT IF" with 3-4 specific, falsifiable conditions.
+
+### Weakness 3: No 30-second judge summary / closing is buried
+**Fix in dashboard? YES.**
+The competition footer (lines 5857-5870) lists features but not the thesis. A judge skimming the bottom of any tab sees stats, not the conclusion. Adding an "EXECUTIVE SUMMARY FOR JUDGES" strip above the story arc nav (visible on every tab render as the page header) gives immediate thesis visibility.
+**Implementation:** New judge summary strip between the terminal header and story arc nav. Five data points: Ticker, Recommendation, Target, Upside, one-sentence thesis.
+
+### Weakness 4: Source confidence signaling absent
+**Fix in dashboard? YES.**
+All `source_footer()` calls treat 10-K filings and LinkedIn scrapes identically. Adding a confidence tier to the source_footer function is low-effort and high-signal.
+**Implementation:** Modify `source_footer()` to accept an optional `tier` parameter. Tier 1 = audited filings (green), Tier 2 = consensus/sell-side (amber), Tier 3 = alt data/AI-gathered (muted). Apply to key tabs.
+
+### Weakness 5: Evidence hierarchy is flat — all 20 tabs have equal visual weight
+**Fix in dashboard? NO.**
+Streamlit tabs are inherently flat — there is no native way to make some tabs visually "bigger" than others without breaking the tab bar layout. The story arc nav already groups tabs into phases with color coding, which is the closest available solution. Attempting to resize individual tabs would break the Bloomberg Terminal aesthetic and introduce CSS fragility.
+**Reasoning visible in submission:** The story arc navigation bar above the tab row already communicates which phase (and therefore which tabs) are most important. The VERDICT phase is red-highlighted to draw attention.
+
+### Weakness 6: No position sizing or portfolio context
+**Fix in dashboard? NO.**
+Position sizing requires knowledge of the portfolio, AUM, and risk budget — none of which are defined in a stock pitch competition. Adding generic Kelly criterion math without portfolio context would be academically correct but practically meaningless.
+**Reasoning visible in submission:** The RISK tab (Tab 08) already includes probability-weighted scenario analysis with explicit upside/downside percentages, which is the relevant input for position sizing. The judge can apply their own framework.
+
+### Weakness 7: No explicit comparison to alternative investments (GOLD, AEM on risk-adjusted basis)
+**Fix in dashboard? PARTIAL.**
+Tab 16 (GLD CMP) already covers GLD. Adding a brief "Why NEM over GOLD/AEM" callout to the VERDICT tab (Tab 15) addresses the gap without creating a new tab.
+**Implementation:** Add a brief "NEM VS. ALTERNATIVES" callout in Tab 15 after the convergence section, citing 2-3 differentiators vs. Barrick (NGM JV optionality, S&P 500 inclusion) and Agnico (copper exposure, larger reserve base).
+
+---
+
+## VALIDATION NOTES (Updated 2026-04-02 — post competitive-analysis fixes)
 
 1. **Syntax check:** `py_compile.compile('app.py', doraise=True)` — PASS
 2. **Import check:** All imports (streamlit, plotly, pandas, numpy, scipy) resolve — PASS
 3. **Data loading:** `nem_data.json` loads with all expected keys — PASS
-4. **Streamlit launch:** `streamlit run app.py --server.headless=true` starts on port 8501 — PASS
-5. **HTTP response:** `curl http://localhost:8501` returns HTTP 200 — PASS
-6. **No runtime errors:** Page HTML contains no Python tracebacks — PASS
+4. **Streamlit launch:** `streamlit run app.py --server.port 5002 --server.headless=true` — PASS
+5. **HTTP response:** `curl http://localhost:5002` returns HTTP 200 — PASS
+6. **No runtime errors:** Log contains zero Traceback/Error/Exception lines — PASS
 
 ### Key Interactions Validated
 - App starts and renders the terminal header with live data
+- **NEW:** Executive Summary for Judges strip renders between header and story arc nav
 - Story arc navigation bar renders above the 20-tab row
 - Hero KPI strip on Tab 01 shows correct Price, Target, Upside, Rating values
+- **NEW:** Kill Criteria panel renders in Tab 01 after bear case preemption
+- **NEW:** Variant-perception grid in Tab 02 now has 4 columns (includes CATALYST / DATE)
+- **NEW:** Source footers show Tier 1/2/3 confidence badges where applied
+- **NEW:** "WHY NEM OVER ALTERNATIVES?" callout renders in Tab 15 before closing argument
+- **NEW:** Competition footer includes thesis conclusion (Recommendation, Target, Upside)
 - Sidebar sliders show deviation badges when modified
 - Tab 20 renders quarterly model with reserve analysis collapsed in expander
 - Tab 15 conviction meter displays correctly based on 4-method convergence
