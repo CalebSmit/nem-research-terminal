@@ -293,6 +293,78 @@ st.markdown("""
   [data-testid="stSlider"] [role="slider"] {
     background-color: #58a6ff !important;
   }
+
+  /* ─── UX: STORY ARC NAVIGATION BAR ──────────────────────────────── */
+  .story-arc {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-bottom: 2px solid #30363d;
+    padding: 0;
+    margin-bottom: 16px;
+    overflow-x: auto;
+  }
+  .story-arc .arc-phase {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8b949e;
+    border-right: 1px solid #30363d;
+    min-width: 100px;
+  }
+  .story-arc .arc-phase:last-child { border-right: none; }
+  .story-arc .arc-phase .arc-label { font-weight: 700; margin-bottom: 2px; }
+  .story-arc .arc-phase .arc-tabs { font-size: 8px; color: #6e7681; letter-spacing: 1px; }
+  .story-arc .arc-phase.arc-setup { border-bottom: 2px solid #58a6ff; color: #58a6ff; }
+  .story-arc .arc-phase.arc-context { border-bottom: 2px solid #d29922; color: #d29922; }
+  .story-arc .arc-phase.arc-valuation { border-bottom: 2px solid #3fb950; color: #3fb950; }
+  .story-arc .arc-phase.arc-evidence { border-bottom: 2px solid #bc8cff; color: #bc8cff; }
+  .story-arc .arc-phase.arc-verdict { border-bottom: 2px solid #f85149; color: #f85149; }
+
+  /* ─── UX: SLIDER DEVIATION BADGE ────────────────────────────────── */
+  .slider-deviation {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 1px 6px;
+    margin-left: 4px;
+    font-weight: 700;
+  }
+  .slider-deviation.at-default { color: #3fb950; }
+  .slider-deviation.modified { color: #d29922; background: rgba(210,153,34,0.1); }
+
+  /* ─── UX: HERO KPI STRIP ───────────────────────────────────────── */
+  .hero-kpi-strip {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: #161b22;
+    border: 2px solid #58a6ff;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .hero-kpi-strip .hero-kpi {
+    flex: 1;
+    text-align: center;
+    padding: 16px 12px;
+    border-right: 1px solid #30363d;
+  }
+  .hero-kpi-strip .hero-kpi:last-child { border-right: none; }
+  .hero-kpi-strip .hero-kpi .hk-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: #8b949e; margin-bottom: 4px;
+  }
+  .hero-kpi-strip .hero-kpi .hk-value {
+    font-size: 28px; font-weight: 700; line-height: 1;
+  }
+  .hero-kpi-strip .hero-kpi .hk-sub {
+    font-size: 9px; color: #8b949e; margin-top: 4px;
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -555,6 +627,26 @@ def why_expander(key, current_val=None):
         st.markdown(f'<div style="color:#d29922;font-size:9px;">✎ MODIFIED (AI default: {default_val})</div>', unsafe_allow_html=True)
     with st.expander(f"ℹ Why {meta.get('label', key)}?", expanded=False):
         st.markdown(f"**Value:** {current_val}  \n**Rationale:** {meta.get('why', 'N/A')}  \n**Source:** {meta.get('source', 'N/A')}")
+
+def slider_feedback(key, current_val, fmt=",.0f", prefix="$", suffix=""):
+    """Show color-coded deviation badge when a slider differs from its AI default."""
+    meta = DEFAULTS.get(key, {})
+    default_val = meta.get('value')
+    if default_val is None:
+        return
+    if current_val == default_val:
+        st.markdown(f'<span class="slider-deviation at-default">&#10003; AT DEFAULT ({prefix}{default_val:{fmt}}{suffix})</span>', unsafe_allow_html=True)
+    else:
+        if default_val != 0:
+            pct = (current_val / default_val - 1) * 100
+        else:
+            pct = 0
+        direction = "ABOVE" if pct > 0 else "BELOW"
+        impact_color = '#f85149' if abs(pct) > 15 else '#d29922'
+        st.markdown(f'<div style="font-size:10px;margin-top:-4px;margin-bottom:6px;">'
+                    f'<span style="color:{impact_color};font-weight:700;">{pct:+.1f}% {direction} DEFAULT</span> '
+                    f'<span style="color:#8b949e;">(AI: {prefix}{default_val:{fmt}}{suffix} &rarr; You: {prefix}{current_val:{fmt}}{suffix})</span></div>',
+                    unsafe_allow_html=True)
 
 def insight_callout(text):
     st.markdown(f'<div class="insight-callout"><span style="color:#58a6ff;font-weight:700;font-size:10px;letter-spacing:2px;">WHAT THE MARKET IS MISSING </span>{text}</div>', unsafe_allow_html=True)
@@ -833,10 +925,7 @@ with st.sidebar:
                                  st.session_state.get('gold_y1', 5200), 100,
                                  key='sidebar_gold_y1')
     st.session_state['gold_y1'] = gold_y1_sidebar
-    default_gold = DEFAULTS['gold_y1']['value']
-    if gold_y1_sidebar != default_gold:
-        pct_dev = (gold_y1_sidebar / default_gold - 1) * 100
-        st.markdown(f'<div style="color:#d29922;font-size:10px;">AI suggested: ${default_gold:,} | You: ${gold_y1_sidebar:,} ({pct_dev:+.1f}%)</div>', unsafe_allow_html=True)
+    slider_feedback('gold_y1', gold_y1_sidebar, fmt=",.0f", prefix="$")
     with st.expander("ℹ Why $5,200?"):
         st.markdown(DEFAULTS['gold_y1']['why'])
     if st.button("⟲ Reset Gold", key='sb_reset_gold'):
@@ -853,13 +942,16 @@ with st.sidebar:
             st.markdown(f'<div style="color:#8b949e;font-size:9px;">Calculated WACC: {BASE["wacc"]*100:.2f}%</div>', unsafe_allow_html=True)
         else:
             st.session_state['beta'] = st.slider("Beta", 0.1, 2.0, st.session_state.get('beta', 0.61), 0.01, key='sb_beta')
+            slider_feedback('beta', st.session_state['beta'], fmt=".2f", prefix="")
             st.session_state['erp'] = st.slider("ERP (%)", 2.0, 8.0, st.session_state.get('erp', 4.5), 0.25, key='sb_erp')
+            slider_feedback('erp', st.session_state['erp'], fmt=".1f", prefix="", suffix="%")
         if st.button("⟲ Reset WACC", key='sb_reset_wacc'):
             reset_section(['beta', 'erp', 'rf'])
             st.rerun()
 
     with st.expander("TERMINAL VALUE"):
         st.session_state['exit_multiple'] = st.slider("Exit EV/EBITDA (x)", 4.0, 18.0, st.session_state.get('exit_multiple', 9.5), 0.5, key='sb_exit_mult')
+        slider_feedback('exit_multiple', st.session_state['exit_multiple'], fmt=".1f", prefix="", suffix="x")
         why_expander('exit_multiple', st.session_state['exit_multiple'])
         st.session_state['ggm_growth'] = st.slider("GGM Growth (%)", 0.0, 3.0, st.session_state.get('ggm_growth', 0.8), 0.1, key='sb_ggm')
         if st.button("⟲ Reset TV", key='sb_reset_tv'):
@@ -900,7 +992,9 @@ with st.sidebar:
 
     with st.expander("PRODUCTION"):
         st.session_state['production_y1'] = st.slider("Year 1 Prod (Moz)", 3.0, 8.0, st.session_state.get('production_y1', 5.3), 0.1, key='sb_prod_y1')
+        slider_feedback('production_y1', st.session_state['production_y1'], fmt=".1f", prefix="", suffix=" Moz")
         st.session_state['production_target'] = st.slider("LT Target (Moz)", 4.0, 8.0, st.session_state.get('production_target', 6.0), 0.1, key='sb_prod_lt')
+        slider_feedback('production_target', st.session_state['production_target'], fmt=".1f", prefix="", suffix=" Moz")
         st.session_state['gold_escalation'] = st.slider("Gold Esc. (%/yr)", 0.0, 8.0, st.session_state.get('gold_escalation', 3.0), 0.5, key='sb_gold_esc')
         if st.button("⟲ Reset Production", key='sb_reset_prod'):
             reset_section(['production_y1', 'production_target', 'gold_escalation'])
@@ -949,7 +1043,33 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ─── 19 TABS ──────────────────────────────────────────────────────────────────
+# ─── STORY ARC NAVIGATION ─────────────────────────────────────────────────────
+st.markdown("""
+<div class="story-arc">
+  <div class="arc-phase arc-setup">
+    <div class="arc-label">SETUP</div>
+    <div class="arc-tabs">01-02 &middot; Story &amp; Dashboard</div>
+  </div>
+  <div class="arc-phase arc-context">
+    <div class="arc-label">CONTEXT</div>
+    <div class="arc-tabs">03-05 &middot; Gold, Profile, Mines</div>
+  </div>
+  <div class="arc-phase arc-valuation">
+    <div class="arc-label">VALUATION</div>
+    <div class="arc-tabs">06-09 &middot; DCF, RelVal, Risk, MC</div>
+  </div>
+  <div class="arc-phase arc-evidence">
+    <div class="arc-label">EVIDENCE</div>
+    <div class="arc-tabs">10-14 &middot; Returns to Credibility</div>
+  </div>
+  <div class="arc-phase arc-verdict">
+    <div class="arc-label">VERDICT</div>
+    <div class="arc-tabs">15-20 &middot; Verdict to Model</div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ─── 20 TABS ──────────────────────────────────────────────────────────────────
 tabs = st.tabs([
     "01·STORY", "02·CMD", "03·GOLD", "04·PROFILE", "05·MINES",
     "06·DCF", "07·REL VAL", "08·RISK", "09·MC SIM",
@@ -963,6 +1083,33 @@ tabs = st.tabs([
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[0]:
     B = BASE
+
+    # ── UX IMPROVEMENT: Hero KPI strip — immediate at-a-glance thesis summary ──
+    _rec_bg = '#3fb950' if B['upside'] > 20 else ('#d29922' if B['upside'] > -20 else '#f85149')
+    st.markdown(f"""
+    <div class="hero-kpi-strip">
+      <div class="hero-kpi">
+        <div class="hk-label">NEM Price</div>
+        <div class="hk-value" style="color:#e6edf3;">${B['price']:.2f}</div>
+        <div class="hk-sub">NYSE &middot; Mar 31 2026</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="hk-label">Our Target</div>
+        <div class="hk-value" style="color:#58a6ff;">${B['blended_target']:.2f}</div>
+        <div class="hk-sub">DCF / P/NAV Blend</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="hk-label">Upside</div>
+        <div class="hk-value" style="color:#3fb950;">{B['upside']:+.1f}%</div>
+        <div class="hk-sub">vs. Current Price</div>
+      </div>
+      <div class="hero-kpi" style="background:{_rec_bg};">
+        <div class="hk-label" style="color:rgba(0,0,0,0.6);">Rating</div>
+        <div class="hk-value" style="color:#0d1117;font-size:32px;">{B['recommendation']}</div>
+        <div class="hk-sub" style="color:rgba(0,0,0,0.5);">4 Methods Converge</div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown(f"""
     <div style="background:#161b22;border:1px solid #30363d;padding:28px 24px 20px 24px;margin-bottom:20px;">
@@ -4691,6 +4838,24 @@ with tabs[14]:
         bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=35, ay=-25)
     st.plotly_chart(fig_convergence, use_container_width=True)
 
+    # ── UX IMPROVEMENT: Conviction Meter — visual confidence summary ──
+    _methods_above = sum(1 for v in val_prices if v > B['price'])
+    _meter_pct = _methods_above / 4 * 100
+    _meter_color = '#3fb950' if _methods_above >= 3 else ('#d29922' if _methods_above >= 2 else '#f85149')
+    st.markdown(f"""
+    <div style="background:#161b22;border:2px solid {_meter_color};padding:20px 24px;margin-top:20px;">
+      <div style="text-align:center;margin-bottom:12px;">
+        <span style="color:{_meter_color};font-size:11px;letter-spacing:3px;font-weight:700;">CONVICTION METER</span>
+      </div>
+      <div style="background:#30363d;height:12px;width:100%;overflow:hidden;">
+        <div style="background:{_meter_color};height:100%;width:{_meter_pct}%;transition:width 0.5s;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;">
+        <span style="color:#8b949e;font-size:9px;">{_methods_above} of 4 independent methods above current price</span>
+        <span style="color:{_meter_color};font-size:11px;font-weight:700;">{_meter_pct:.0f}% CONVERGENCE</span>
+      </div>
+    </div>""", unsafe_allow_html=True)
+
     # Closing argument
     aisc_d = d['nem_operational']['aisc_2025']
     st.markdown(f"""
@@ -5522,162 +5687,162 @@ with tabs[19]:
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('<div style="color:#8b949e;font-size:9px;margin-top:4px;">H1/H2 weighting is directional, derived from NEM guidance language — not mine-level schedule. Specific phasing is not publicly disclosed at quarterly frequency. Model uses macro 52% H2 weight applied uniformly.</div>', unsafe_allow_html=True)
 
-    # ══ RESERVE REPLACEMENT ANALYSIS ════════════════════════════════════
+    # ══ RESERVE REPLACEMENT ANALYSIS (collapsed by default to reduce scroll) ═══
     st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">RESERVE REPLACEMENT ANALYSIS — MULTI-YEAR CONTEXT &amp; PEER FRAMING</div>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f85149;padding:8px 14px;margin-bottom:12px;font-size:10px;color:#8b949e;">
-      <span style="color:#d29922;font-weight:700;">WHY RESERVE REPLACEMENT MATTERS</span> &mdash;
-      A miner that produces but does not replace its reserve base is liquidating its in-situ asset. 
-      NAV-based valuation is only sustainable if the reserve base is maintained or grown. 
-      Reserve replacement ratio (RRR) = new additions (organic + price revision) ÷ depletion from mining.
-      Below 100% = reserve base shrinking on organic basis; above 100% = growing.
-      Note: price revisions are a common industry practice (raising reserve price assumption inflates RRR). 
-      The <b>organic replacement ratio</b> (exploration additions only) is the most defensible metric.
-      Sources: NEM 2025 Reserves Release (Feb 19, 2026); NEM 2024 Reserves Release (Feb 20, 2025); 
-      Barrick 2024 Reserves Release (Feb 6, 2025); NEM Q4 2025 10-K.
-    </div>""", unsafe_allow_html=True)
+    with st.expander("RESERVE REPLACEMENT ANALYSIS — MULTI-YEAR CONTEXT & PEER FRAMING (click to expand)", expanded=False):
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f85149;padding:8px 14px;margin-bottom:12px;font-size:10px;color:#8b949e;">
+          <span style="color:#d29922;font-weight:700;">WHY RESERVE REPLACEMENT MATTERS</span> &mdash;
+          A miner that produces but does not replace its reserve base is liquidating its in-situ asset. 
+          NAV-based valuation is only sustainable if the reserve base is maintained or grown. 
+          Reserve replacement ratio (RRR) = new additions (organic + price revision) ÷ depletion from mining.
+          Below 100% = reserve base shrinking on organic basis; above 100% = growing.
+          Note: price revisions are a common industry practice (raising reserve price assumption inflates RRR). 
+          The <b>organic replacement ratio</b> (exploration additions only) is the most defensible metric.
+          Sources: NEM 2025 Reserves Release (Feb 19, 2026); NEM 2024 Reserves Release (Feb 20, 2025); 
+          Barrick 2024 Reserves Release (Feb 6, 2025); NEM Q4 2025 10-K.
+        </div>""", unsafe_allow_html=True)
 
-    # Reserve data (real, sourced)
-    # NEM FY2025 (end-2025 release): 118.2 Moz. Depletion: 7.2 Moz. Divestitures: 8.6 Moz.
-    # Additions: 6.6 Moz (price revision) + 2.0 Moz (exploration/conversion) = 8.6 Moz positive
-    # FY2024 end: 134.1 Moz. Depletion: 7.8 Moz. Price revision: +14.2 Moz (net of cost: 7.0 Moz net). Exploration: +2.9 Moz
-    # FY2023 end: 135.9 Moz (stated in 2024 release)
-    reserve_history = [
-        # (Year-end, Total Moz, Depletion Moz, Divestitures Moz, Price Revision Moz, Exploration Moz, Price Assumption)
-        ('FY2023', 135.9, 7.5,  0.0,   5.0,  2.0,  1400),  # estimated; 2023 base
-        ('FY2024', 134.1, 7.8,  2.7,   7.0,  2.9,  1700),  # sourced: NEM Feb 2025 release (price ↑ to $1,700/oz)
-        ('FY2025', 118.2, 7.2,  8.6,   6.6,  2.0,  2000),  # sourced: NEM Feb 2026 release (price ↑ to $2,000/oz)
-    ]
+        # Reserve data (real, sourced)
+        # NEM FY2025 (end-2025 release): 118.2 Moz. Depletion: 7.2 Moz. Divestitures: 8.6 Moz.
+        # Additions: 6.6 Moz (price revision) + 2.0 Moz (exploration/conversion) = 8.6 Moz positive
+        # FY2024 end: 134.1 Moz. Depletion: 7.8 Moz. Price revision: +14.2 Moz (net of cost: 7.0 Moz net). Exploration: +2.9 Moz
+        # FY2023 end: 135.9 Moz (stated in 2024 release)
+        reserve_history = [
+            # (Year-end, Total Moz, Depletion Moz, Divestitures Moz, Price Revision Moz, Exploration Moz, Price Assumption)
+            ('FY2023', 135.9, 7.5,  0.0,   5.0,  2.0,  1400),  # estimated; 2023 base
+            ('FY2024', 134.1, 7.8,  2.7,   7.0,  2.9,  1700),  # sourced: NEM Feb 2025 release (price ↑ to $1,700/oz)
+            ('FY2025', 118.2, 7.2,  8.6,   6.6,  2.0,  2000),  # sourced: NEM Feb 2026 release (price ↑ to $2,000/oz)
+        ]
 
-    # Compute replacement ratios
-    rr_table_rows = []
-    for yr, total_moz, depl_moz, divest_moz, price_rev_moz, explor_moz, price_assum in reserve_history:
-        organic_rr = explor_moz / depl_moz * 100 if depl_moz > 0 else 0  # most honest
-        total_gross_rr = (price_rev_moz + explor_moz) / depl_moz * 100 if depl_moz > 0 else 0  # incl. price revisions
-        rr_table_rows.append({
-            'Year-End': yr,
-            'Reserves (Moz)': f"{total_moz:.1f}",
-            'Depletion (Moz)': f"{depl_moz:.1f}",
-            'Divestitures (Moz)': f"{divest_moz:.1f}",
-            'Price Revision (Moz)': f"{price_rev_moz:.1f}",
-            'Exploration/Conversion (Moz)': f"{explor_moz:.1f}",
-            'Organic RRR (excl. price)': f"{organic_rr:.0f}%",
-            'Gross RRR (incl. price)': f"{total_gross_rr:.0f}%",
-            'Reserve Price ($/oz)': f"${price_assum:,}",
-        })
+        # Compute replacement ratios
+        rr_table_rows = []
+        for yr, total_moz, depl_moz, divest_moz, price_rev_moz, explor_moz, price_assum in reserve_history:
+            organic_rr = explor_moz / depl_moz * 100 if depl_moz > 0 else 0  # most honest
+            total_gross_rr = (price_rev_moz + explor_moz) / depl_moz * 100 if depl_moz > 0 else 0  # incl. price revisions
+            rr_table_rows.append({
+                'Year-End': yr,
+                'Reserves (Moz)': f"{total_moz:.1f}",
+                'Depletion (Moz)': f"{depl_moz:.1f}",
+                'Divestitures (Moz)': f"{divest_moz:.1f}",
+                'Price Revision (Moz)': f"{price_rev_moz:.1f}",
+                'Exploration/Conversion (Moz)': f"{explor_moz:.1f}",
+                'Organic RRR (excl. price)': f"{organic_rr:.0f}%",
+                'Gross RRR (incl. price)': f"{total_gross_rr:.0f}%",
+                'Reserve Price ($/oz)': f"${price_assum:,}",
+            })
 
-    rr_df = pd.DataFrame(rr_table_rows)
-    st.dataframe(rr_df.set_index('Year-End'), use_container_width=True)
-    st.markdown('<div style="color:#8b949e;font-size:9px;margin-top:-8px;">FY2023 data is estimated (Depletion ~7.5 Moz, Price Revision ~5 Moz). FY2024 and FY2025 are sourced from NEM official reserve releases. Divestitures reduce total but are not "depletion" — excluded from RRR denominator.</div>', unsafe_allow_html=True)
+        rr_df = pd.DataFrame(rr_table_rows)
+        st.dataframe(rr_df.set_index('Year-End'), use_container_width=True)
+        st.markdown('<div style="color:#8b949e;font-size:9px;margin-top:-8px;">FY2023 data is estimated (Depletion ~7.5 Moz, Price Revision ~5 Moz). FY2024 and FY2025 are sourced from NEM official reserve releases. Divestitures reduce total but are not "depletion" — excluded from RRR denominator.</div>', unsafe_allow_html=True)
 
-    st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<br>', unsafe_allow_html=True)
 
-    # KPI tiles for reserve replacement
-    c_rr1, c_rr2, c_rr3, c_rr4 = st.columns(4)
-    nem_fy25_depl = 7.2
-    nem_fy25_explor = 2.0
-    nem_fy25_price_rev = 6.6
-    nem_fy25_organic_rr = nem_fy25_explor / nem_fy25_depl * 100
-    nem_fy25_gross_rr = (nem_fy25_price_rev + nem_fy25_explor) / nem_fy25_depl * 100
-    nem_fy25_total_moz = 118.2
-    nem_fy25_annual_prod = 5.30  # 2026 guidance
-    reserve_life_yrs = nem_fy25_total_moz / nem_fy25_annual_prod
+        # KPI tiles for reserve replacement
+        c_rr1, c_rr2, c_rr3, c_rr4 = st.columns(4)
+        nem_fy25_depl = 7.2
+        nem_fy25_explor = 2.0
+        nem_fy25_price_rev = 6.6
+        nem_fy25_organic_rr = nem_fy25_explor / nem_fy25_depl * 100
+        nem_fy25_gross_rr = (nem_fy25_price_rev + nem_fy25_explor) / nem_fy25_depl * 100
+        nem_fy25_total_moz = 118.2
+        nem_fy25_annual_prod = 5.30  # 2026 guidance
+        reserve_life_yrs = nem_fy25_total_moz / nem_fy25_annual_prod
 
-    for col_rr, lbl_rr, val_rr, sub_rr, clr_rr in [
-        (c_rr1, 'FY2025 DEPLETION', f'{nem_fy25_depl:.1f} Moz', f'{nem_fy25_depl/nem_fy25_annual_prod*100:.0f}% of annual prod', COLORS['red']),
-        (c_rr2, 'ORGANIC RRR (FY2025)', f'{nem_fy25_organic_rr:.0f}%', 'Exploration additions only', COLORS['red'] if nem_fy25_organic_rr < 80 else COLORS['amber']),
-        (c_rr3, 'GROSS RRR (FY2025)', f'{nem_fy25_gross_rr:.0f}%', 'Incl. price revisions ($2,000/oz)', COLORS['amber'] if nem_fy25_gross_rr < 120 else COLORS['green']),
-        (c_rr4, 'RESERVE LIFE (2025 BASE)', f'{reserve_life_yrs:.0f} yrs', f'{nem_fy25_total_moz:.0f}Moz ÷ {nem_fy25_annual_prod}Moz/yr', COLORS['green']),
-    ]:
-        with col_rr:
-            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">{lbl_rr}</div>
-              <div class="kpi-value" style="color:{clr_rr};font-size:18px;">{val_rr}</div>
-              <div class="kpi-sub">{sub_rr}</div></div>""", unsafe_allow_html=True)
+        for col_rr, lbl_rr, val_rr, sub_rr, clr_rr in [
+            (c_rr1, 'FY2025 DEPLETION', f'{nem_fy25_depl:.1f} Moz', f'{nem_fy25_depl/nem_fy25_annual_prod*100:.0f}% of annual prod', COLORS['red']),
+            (c_rr2, 'ORGANIC RRR (FY2025)', f'{nem_fy25_organic_rr:.0f}%', 'Exploration additions only', COLORS['red'] if nem_fy25_organic_rr < 80 else COLORS['amber']),
+            (c_rr3, 'GROSS RRR (FY2025)', f'{nem_fy25_gross_rr:.0f}%', 'Incl. price revisions ($2,000/oz)', COLORS['amber'] if nem_fy25_gross_rr < 120 else COLORS['green']),
+            (c_rr4, 'RESERVE LIFE (2025 BASE)', f'{reserve_life_yrs:.0f} yrs', f'{nem_fy25_total_moz:.0f}Moz ÷ {nem_fy25_annual_prod}Moz/yr', COLORS['green']),
+        ]:
+            with col_rr:
+                st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">{lbl_rr}</div>
+                  <div class="kpi-value" style="color:{clr_rr};font-size:18px;">{val_rr}</div>
+                  <div class="kpi-sub">{sub_rr}</div></div>""", unsafe_allow_html=True)
 
-    st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<br>', unsafe_allow_html=True)
 
-    # Reserve replacement bar chart
-    fig_rr = go.Figure()
-    rr_years = ['FY2023E', 'FY2024', 'FY2025']
-    organic_rrs = [2.0/7.5*100, 2.9/7.8*100, 2.0/7.2*100]
-    gross_rrs   = [(5.0+2.0)/7.5*100, (7.0+2.9)/7.8*100, (6.6+2.0)/7.2*100]
+        # Reserve replacement bar chart
+        fig_rr = go.Figure()
+        rr_years = ['FY2023E', 'FY2024', 'FY2025']
+        organic_rrs = [2.0/7.5*100, 2.9/7.8*100, 2.0/7.2*100]
+        gross_rrs   = [(5.0+2.0)/7.5*100, (7.0+2.9)/7.8*100, (6.6+2.0)/7.2*100]
 
-    fig_rr.add_trace(go.Bar(
-        x=rr_years, y=organic_rrs, name='Organic RRR (exploration only)',
-        marker_color=COLORS['blue'],
-        text=[f"{v:.0f}%" for v in organic_rrs], textposition='outside',
-        textfont=dict(color=COLORS['text'], size=9)
-    ))
-    fig_rr.add_trace(go.Bar(
-        x=rr_years, y=gross_rrs, name='Gross RRR (incl. price revision)',
-        marker_color=COLORS['amber'], opacity=0.7,
-        text=[f"{v:.0f}%" for v in gross_rrs], textposition='outside',
-        textfont=dict(color=COLORS['text'], size=9)
-    ))
-    fig_rr.add_hline(y=100, line_dash='dash', line_color=COLORS['green'], line_width=2,
-                     annotation_text='100% replacement threshold',
-                     annotation_font_color=COLORS['green'], annotation_position='top right')
-    apply_layout(fig_rr, 'RESERVE REPLACEMENT RATIO — ORGANIC vs. GROSS (incl. PRICE REVISION)', 320)
-    fig_rr.update_layout(barmode='group', yaxis_title='Replacement Ratio (%)')
-    st.plotly_chart(fig_rr, use_container_width=True)
+        fig_rr.add_trace(go.Bar(
+            x=rr_years, y=organic_rrs, name='Organic RRR (exploration only)',
+            marker_color=COLORS['blue'],
+            text=[f"{v:.0f}%" for v in organic_rrs], textposition='outside',
+            textfont=dict(color=COLORS['text'], size=9)
+        ))
+        fig_rr.add_trace(go.Bar(
+            x=rr_years, y=gross_rrs, name='Gross RRR (incl. price revision)',
+            marker_color=COLORS['amber'], opacity=0.7,
+            text=[f"{v:.0f}%" for v in gross_rrs], textposition='outside',
+            textfont=dict(color=COLORS['text'], size=9)
+        ))
+        fig_rr.add_hline(y=100, line_dash='dash', line_color=COLORS['green'], line_width=2,
+                         annotation_text='100% replacement threshold',
+                         annotation_font_color=COLORS['green'], annotation_position='top right')
+        apply_layout(fig_rr, 'RESERVE REPLACEMENT RATIO — ORGANIC vs. GROSS (incl. PRICE REVISION)', 320)
+        fig_rr.update_layout(barmode='group', yaxis_title='Replacement Ratio (%)')
+        st.plotly_chart(fig_rr, use_container_width=True)
 
-    # Peer context
-    st.markdown('<div class="panel-header">PEER CONTEXT — RESERVE REPLACEMENT (SOURCED)</div>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;padding:14px 18px;">
-      <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;margin-bottom:4px;">
-        <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">COMPANY</div>
-        <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">RESERVES (MOZ)</div>
-        <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">DEPLETION</div>
-        <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">GROSS RRR</div>
-        <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">NOTE</div>
-      </div>
-      <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;">
-        <div style="color:{COLORS['blue']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">NEM (FY2025)</div>
-        <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">118.2 Moz</div>
-        <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">7.2 Moz</div>
-        <div style="color:{COLORS['amber']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">{nem_fy25_gross_rr:.0f}%</div>
-        <div style="color:#8b949e;font-size:9px;padding:4px 8px;border-bottom:1px solid #21262d;">Organics weak (28%); gross supported by price revision to $2,000/oz. FY2025 net reduction driven by divestitures (8.6 Moz) not operations.</div>
-      </div>
-      <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;">
-        <div style="color:#d29922;font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">Barrick (FY2024)</div>
-        <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">89 Moz</div>
-        <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">~7.5 Moz</div>
-        <div style="color:{COLORS['green']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">&gt;180%*</div>
-        <div style="color:#8b949e;font-size:9px;padding:4px 8px;border-bottom:1px solid #21262d;">*5yr cumulative 2020-2024 (Barrick stated). Includes Reko Diq (13Moz) + Lumwana. Single-year organic ~100%. Source: Barrick Feb 6, 2025 press release.</div>
-      </div>
-      <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;">
-        <div style="color:#8b949e;font-size:10px;font-weight:700;padding:4px 8px;">Sector Benchmark</div>
-        <div style="color:#8b949e;font-size:10px;padding:4px 8px;">—</div>
-        <div style="color:#8b949e;font-size:10px;padding:4px 8px;">—</div>
-        <div style="color:#3fb950;font-size:10px;font-weight:700;padding:4px 8px;">~100-120%</div>
-        <div style="color:#8b949e;font-size:9px;padding:4px 8px;">Institutional benchmark: ~100% gross RRR is the minimum for reserve life maintenance. 120%+ with exploration-only additions = top-tier industry performance. Exact peer data for AEM/KGC requires their reserve releases.</div>
-      </div>
-    </div>""", unsafe_allow_html=True)
+        # Peer context
+        st.markdown('<div class="panel-header">PEER CONTEXT — RESERVE REPLACEMENT (SOURCED)</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;padding:14px 18px;">
+          <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;margin-bottom:4px;">
+            <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">COMPANY</div>
+            <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">RESERVES (MOZ)</div>
+            <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">DEPLETION</div>
+            <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">GROSS RRR</div>
+            <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">NOTE</div>
+          </div>
+          <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;">
+            <div style="color:{COLORS['blue']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">NEM (FY2025)</div>
+            <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">118.2 Moz</div>
+            <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">7.2 Moz</div>
+            <div style="color:{COLORS['amber']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">{nem_fy25_gross_rr:.0f}%</div>
+            <div style="color:#8b949e;font-size:9px;padding:4px 8px;border-bottom:1px solid #21262d;">Organics weak (28%); gross supported by price revision to $2,000/oz. FY2025 net reduction driven by divestitures (8.6 Moz) not operations.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;">
+            <div style="color:#d29922;font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">Barrick (FY2024)</div>
+            <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">89 Moz</div>
+            <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">~7.5 Moz</div>
+            <div style="color:{COLORS['green']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">&gt;180%*</div>
+            <div style="color:#8b949e;font-size:9px;padding:4px 8px;border-bottom:1px solid #21262d;">*5yr cumulative 2020-2024 (Barrick stated). Includes Reko Diq (13Moz) + Lumwana. Single-year organic ~100%. Source: Barrick Feb 6, 2025 press release.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;">
+            <div style="color:#8b949e;font-size:10px;font-weight:700;padding:4px 8px;">Sector Benchmark</div>
+            <div style="color:#8b949e;font-size:10px;padding:4px 8px;">—</div>
+            <div style="color:#8b949e;font-size:10px;padding:4px 8px;">—</div>
+            <div style="color:#3fb950;font-size:10px;font-weight:700;padding:4px 8px;">~100-120%</div>
+            <div style="color:#8b949e;font-size:9px;padding:4px 8px;">Institutional benchmark: ~100% gross RRR is the minimum for reserve life maintenance. 120%+ with exploration-only additions = top-tier industry performance. Exact peer data for AEM/KGC requires their reserve releases.</div>
+          </div>
+        </div>""", unsafe_allow_html=True)
 
-    # Valuation context: reserve replacement and NAV
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="background:#0d1117;border:1px solid #58a6ff;padding:14px 18px;">
-      <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:10px;">RESERVE REPLACEMENT → VALUATION LINK</div>
-      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        <b style="color:#3fb950;">Benign interpretation:</b> NEM's FY2025 gross RRR of {nem_fy25_gross_rr:.0f}% (including price revision to $2,000/oz) is broadly 
-        adequate. The 16 Moz reserve decline in FY2025 is overwhelmingly driven by divestitures (8.6 Moz), not operational depletion. 
-        Remaining portfolio (118.2 Moz) still represents {reserve_life_yrs:.0f}+ years of production life at current rates — one of the 
-        highest in the sector. The $2,000/oz reserve price is still 60%+ below current spot ($5,200); price reserves could be 
-        restated dramatically higher at spot prices, adding tens of millions of Moz.<br><br>
-        <b style="color:#f85149;">Bear case watch:</b> Organic replacement ratio of {nem_fy25_organic_rr:.0f}% (FY2025, exploration-only) is below the 
-        100% threshold. If exploration spending is cut (currently ~$240M in FY2026) or if gold prices fall, reserve additions could 
-        compress further. Cadia's M&amp;I resource fell 8.5 Moz in FY2025 due to geotechnical concerns at the in-pit tailings 
-        facility — a data point worth monitoring at Q1 2026 earnings. This does not threaten the current reserve base 
-        but reduces the optionality buffer.
-      </div>
-      <div style="color:#8b949e;font-size:9px;margin-top:8px;border-top:1px solid #30363d;padding-top:6px;">
-        Sources: NEM 2025 Mineral Reserves Release (Feb 19, 2026); NEM 2024 Mineral Reserves Release (Feb 20, 2025); 
-        Barrick 2024 Mineral Reserves Release (Feb 6, 2025).
-      </div>
-    </div>""", unsafe_allow_html=True)
+        # Valuation context: reserve replacement and NAV
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background:#0d1117;border:1px solid #58a6ff;padding:14px 18px;">
+          <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:10px;">RESERVE REPLACEMENT → VALUATION LINK</div>
+          <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+            <b style="color:#3fb950;">Benign interpretation:</b> NEM's FY2025 gross RRR of {nem_fy25_gross_rr:.0f}% (including price revision to $2,000/oz) is broadly 
+            adequate. The 16 Moz reserve decline in FY2025 is overwhelmingly driven by divestitures (8.6 Moz), not operational depletion. 
+            Remaining portfolio (118.2 Moz) still represents {reserve_life_yrs:.0f}+ years of production life at current rates — one of the 
+            highest in the sector. The $2,000/oz reserve price is still 60%+ below current spot ($5,200); price reserves could be 
+            restated dramatically higher at spot prices, adding tens of millions of Moz.<br><br>
+            <b style="color:#f85149;">Bear case watch:</b> Organic replacement ratio of {nem_fy25_organic_rr:.0f}% (FY2025, exploration-only) is below the 
+            100% threshold. If exploration spending is cut (currently ~$240M in FY2026) or if gold prices fall, reserve additions could 
+            compress further. Cadia's M&amp;I resource fell 8.5 Moz in FY2025 due to geotechnical concerns at the in-pit tailings 
+            facility — a data point worth monitoring at Q1 2026 earnings. This does not threaten the current reserve base 
+            but reduces the optionality buffer.
+          </div>
+          <div style="color:#8b949e;font-size:9px;margin-top:8px;border-top:1px solid #30363d;padding-top:6px;">
+            Sources: NEM 2025 Mineral Reserves Release (Feb 19, 2026); NEM 2024 Mineral Reserves Release (Feb 20, 2025); 
+            Barrick 2024 Mineral Reserves Release (Feb 6, 2025).
+          </div>
+        </div>""", unsafe_allow_html=True)
 
     source_footer(
         "NEM Q4 2025 Earnings Call (Feb 19, 2026) | Reuters (Feb 19, 2026) | Finviz/LSEG consensus | "
