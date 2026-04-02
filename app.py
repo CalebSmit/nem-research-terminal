@@ -446,13 +446,13 @@ DEFAULTS = {
         'why': '50% — consensus view is most likely by definition.',
         'source': 'Standard base case weighting'},
     'prob_bear': {'value': 25, 'label': 'Bear Probability (%)',
-        'why': '25% — rate cuts stalling, strong USD, gold mean-reversion risk.',
+        'why': '25% — rate cuts stalling, DXY above 105 (Mar 2026), gold mean-reversion risk.',
         'source': 'Analyst judgment'},
     'prob_stress': {'value': 5, 'label': 'Stress Probability (%)',
         'why': '5% — tail risk (2013-style gold crash, global deflation).',
         'source': 'Historical precedent analysis'},
     'mc_rho': {'value': 0.7, 'label': 'Gold-Multiple Correlation',
-        'why': 'When gold rises, sentiment improves and multiples expand. Empirically observed: during 2013/2015 gold selloffs, EV/EBITDA compressed 30-40%. rho=0.7 is a moderate-strong correlation.',
+        'why': 'When gold rises, sentiment improves and multiples expand. Empirically observed: during 2013/2015 gold selloffs, EV/EBITDA compressed 30-40%. rho=0.7 explains ~49% of variance (R²=0.49).',
         'source': 'Regression of gold miner EV/EBITDA vs gold price, 2010-2025'},
     'mc_gold_sigma': {'value': 0.35, 'label': 'Gold Price Volatility (sigma)',
         'why': 'Calibrated so P10-P90 spans approximately $2,500-$7,500. Matches gold 10-year realized vol compounded over 5-year horizon.',
@@ -1900,7 +1900,7 @@ with tabs[4]:
           </div>
           <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
             Cadia Valley porphyry generates gold-copper at <b style="color:#3fb950;">$400/oz</b>.
-            Panel cave expansion delivers <b style="color:#58a6ff;">20%+ capacity uplift</b> through 2027.
+            Panel cave PC2-3 expansion targets 33 Mtpa mill throughput (from ~27 Mtpa current) through 2027.
           </div>
         </div>""", unsafe_allow_html=True)
     with c2:
@@ -1937,7 +1937,7 @@ with tabs[4]:
 # TAB 5 — DCF ENGINE
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[5]:
-    insight_callout("Even at a conservative $5,200/oz gold — 10% below spot — our DCF produces significant upside. The model does not depend on aggressive gold assumptions.")
+    insight_callout(f"Even at a conservative $5,200/oz gold — 10% below spot — our DCF implies ${BASE['dcf_price']:.0f}/share ({((BASE['dcf_price'] / BASE['price']) - 1) * 100:+.0f}% vs. current ${BASE['price']:.2f}). The model does not depend on aggressive gold assumptions.")
 
 
     st.markdown('<div class="panel-header">DCF ENGINE — INTERACTIVE FCFF MODEL</div>', unsafe_allow_html=True)
@@ -2258,7 +2258,7 @@ with tabs[5]:
             <span style="color:#58a6ff;font-size:11px;">{st.session_state.get('exit_multiple', 9.5):.1f}×</span>
           </div>
           <div style="color:{'#3fb950' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else '#f85149'};font-size:10px;margin-top:8px;">
-            {'✓ Exit multiple is within 3× of GGM-implied — reasonable.' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else '⚠ Exit multiple diverges significantly from GGM-implied — review assumptions.'}
+            {'✓ Exit multiple is within 3× of GGM-implied — reasonable.' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else f'⚠ Exit multiple diverges by {abs(ggm_mult_v - st.session_state.get("exit_multiple", 9.5)):.1f}× from GGM-implied — review assumptions.'}
           </div>
         </div>
         """, unsafe_allow_html=True)
@@ -3523,15 +3523,22 @@ with tabs[9]:
     c1, c2 = st.columns(2)
     with c1:
         st.markdown('<div class="panel-header">FY2025 FCF DEPLOYMENT ($M)</div>', unsafe_allow_html=True)
-        fig_pie = go.Figure(go.Pie(labels=['Dividends', 'Buybacks', 'Retained'],
-            values=[divs_cr, buybacks_cr, max(retained_cr, 0)], hole=0.4,
-            marker=dict(colors=[COLORS['blue'], COLORS['green'], COLORS['amber']], line=dict(color='#30363d', width=2)),
-            textfont=dict(color='#e6edf3', size=11),
-            hovertemplate='%{label}: $%{value:,.0f}M (%{percent})<extra></extra>'))
-        fig_pie.add_annotation(text=f"${fcf_2025/1000:.1f}B<br>FCF", x=0.5, y=0.5, showarrow=False,
-            font=dict(color=COLORS['blue'], size=14, family='monospace'))
-        apply_layout(fig_pie, "$7.3B FCF: 60% TO SHAREHOLDERS, 40% TO BALANCE SHEET", 300)
-        st.plotly_chart(fig_pie, use_container_width=True)
+        fig_fcf_bar = go.Figure()
+        fcf_cats = ['Dividends', 'Buybacks', 'Retained']
+        fcf_vals = [divs_cr, buybacks_cr, max(retained_cr, 0)]
+        fcf_colors = [COLORS['blue'], COLORS['green'], COLORS['amber']]
+        fcf_total = sum(fcf_vals)
+        for cat, val, clr in zip(fcf_cats, fcf_vals, fcf_colors):
+            pct = val / fcf_total * 100 if fcf_total > 0 else 0
+            fig_fcf_bar.add_trace(go.Bar(
+                y=['FY2025 FCF'], x=[val], name=cat, orientation='h',
+                marker_color=clr, text=[f"${val:,.0f}M ({pct:.0f}%)"],
+                textposition='inside', textfont=dict(color='#e6edf3', size=10),
+                hovertemplate=f'{cat}: $%{{x:,.0f}}M<extra></extra>'))
+        apply_layout(fig_fcf_bar, f"${fcf_2025/1000:.1f}B FCF: 60% TO SHAREHOLDERS, 40% TO BALANCE SHEET", 200)
+        fig_fcf_bar.update_layout(barmode='stack', xaxis_title='$M',
+            showlegend=True, legend=dict(orientation='h', y=1.15, x=0, font=dict(size=9, color=COLORS['text'])))
+        st.plotly_chart(fig_fcf_bar, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">KEY CAPITAL RETURN METRICS</div>', unsafe_allow_html=True)
         mktcap_m_cr = BASE['mktcap'] / 1e6
@@ -3784,7 +3791,7 @@ with tabs[11]:
          '(2020&ndash;2024 mine cohort) [S&amp;P Global, Apr 11, 2025]. Exploration budgets fell 16% in 2023 and 7% in 2024 to $5.55B; '
          'grassroots share hit record-low 19% [S&amp;P Global CES 2024].'
          '<br><br>'
-         '<b>Not one senior producer is guiding meaningfully higher for 2026:</b><br>'
+         '<b>Not one senior producer is guiding &gt;3% production growth for 2026:</b><br>'
          '&bull; Barrick: 2025 actual 3.26 Moz &rarr; 2026 guide 2.90&ndash;3.25 Moz (&darr;)<br>'
          '&bull; Agnico Eagle: 3.447 Moz &rarr; 3.30&ndash;3.50 Moz (&rarr; flat)<br>'
          '&bull; Gold Fields: 2.438 Moz &rarr; 2.40&ndash;2.60 Moz (&rarr; flat)<br>'
@@ -3835,7 +3842,7 @@ with tabs[11]:
          '<br><br>'
          '<b>Cadia copper:</b> FY2025 production: 82 kt. FY2026 guidance: 65 kt (lower grade transition). '
          'PC2-3 peak (2027&ndash;2032): 40&ndash;60 kt/yr. Total copper reserves: 2.9 Mt. '
-         'NEM is the only major gold miner with meaningful copper exposure &mdash; an unpriced AI infrastructure call option.',
+         'NEM is the only major gold miner with 2.9 Mt Cu reserves (40-60 kt/yr at peak, ~$8-10/share NAV) &mdash; an unpriced AI infrastructure call option.',
          'BHP Insights (Jan 2025), S&P Global (Jan 8, 2026), Goldman Sachs Research (Feb 2025), IEA (Apr 2025), JPMorgan, NEM Q4 2025 earnings'),
     ]
 
@@ -3860,21 +3867,34 @@ with tabs[11]:
     bull_count = 5
     neutral_count = 1
     bear_count = 2
-    fig_score = go.Figure(go.Bar(
-        x=['BULLISH (5)', 'NEUTRAL (1)', 'BEARISH (2)'],
-        y=[bull_count, neutral_count, bear_count],
-        marker_color=[COLORS['green'], COLORS['amber'], COLORS['red']],
-        text=[str(bull_count), str(neutral_count), str(bear_count)],
-        textposition='outside', textfont=dict(color=COLORS['text'], size=14, family='monospace'),
-    ))
-    apply_layout(fig_score, 'CHANNEL CHECK SIGNALS: 5 BULLISH / 1 NEUTRAL / 2 BEARISH', 260)
-    fig_score.update_layout(yaxis=dict(range=[0, 7], showticklabels=False))
-    fig_score.add_annotation(x='BULLISH (5)', y=bull_count,
-        text='<b>Net Score: +3</b>', showarrow=True, arrowhead=2,
-        font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
-        bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=50, ay=-25)
-    fig_score.update_layout(yaxis_title='Signal Strength')
-    st.plotly_chart(fig_score, use_container_width=True)
+    total_signals = bull_count + neutral_count + bear_count
+    bull_pct = bull_count / total_signals * 100
+    neutral_pct = neutral_count / total_signals * 100
+    bear_pct = bear_count / total_signals * 100
+    net_score = bull_count - bear_count
+    score_color = COLORS['green'] if net_score > 0 else (COLORS['red'] if net_score < 0 else COLORS['amber'])
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;padding:18px 20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <span style="color:#8b949e;font-size:10px;letter-spacing:2px;">CHANNEL CHECK SCORECARD</span>
+        <span style="color:{score_color};font-size:16px;font-weight:700;font-family:monospace;">NET SCORE: {net_score:+d}</span>
+      </div>
+      <div style="display:flex;height:28px;border-radius:4px;overflow:hidden;margin-bottom:12px;">
+        <div style="width:{bull_pct:.0f}%;background:{COLORS['green']};display:flex;align-items:center;justify-content:center;">
+          <span style="color:#0d1117;font-size:11px;font-weight:700;">{bull_count} BULL</span>
+        </div>
+        <div style="width:{neutral_pct:.0f}%;background:{COLORS['amber']};display:flex;align-items:center;justify-content:center;">
+          <span style="color:#0d1117;font-size:11px;font-weight:700;">{neutral_count}</span>
+        </div>
+        <div style="width:{bear_pct:.0f}%;background:{COLORS['red']};display:flex;align-items:center;justify-content:center;">
+          <span style="color:#0d1117;font-size:11px;font-weight:700;">{bear_count} BEAR</span>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;color:#8b949e;font-size:9px;">
+        <span>Supply deficit, hiring, copper demand, central banks, competitor stagnation</span>
+        <span>Ghana royalty risk, insider selling pattern</span>
+      </div>
+    </div>""", unsafe_allow_html=True)
 
     # Key bearish findings box (intellectual honesty)
     st.markdown(f"""
@@ -3901,7 +3921,7 @@ with tabs[11]:
       <div style="color:{COLORS['green']};font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">NET ASSESSMENT</div>
       <div style="color:#e6edf3;font-size:12px;line-height:1.7;">
         The weight of evidence tilts <b style="color:{COLORS['green']};">bullish</b>. The structural supply thesis
-        is the strongest signal: zero major discoveries in 2023&ndash;2024 (first time in S&amp;P Global's 35-year data series),
+        is the primary quantifiable signal: zero major discoveries in 2023&ndash;2024 (first time in S&amp;P Global's 35-year data series),
         17.8-year lead times, exploration budgets at record lows, and not one senior producer guiding higher for 2026.
         The bearish signals are real but bounded: Ghana royalty is a ~3% total AISC headwind at current gold,
         insider selling is mostly systematic (except the Fry sale), and the Cadia class action is a long-tail risk
@@ -4777,20 +4797,28 @@ with tabs[15]:
         hold_years = [1, 2, 3, 4, 5]
         nem_divs_cum = [1.0 * y for y in hold_years]  # $1/share/year base dividend
         gld_divs_cum = [0] * len(hold_years)
+        nem_div_yield_pct = 1.0 / BASE['price'] * 100  # $1/share annual dividend
+        nem_total_return = [nem_div_yield_pct * y for y in hold_years]  # dividend contribution only (price return shown separately)
+        gld_total_return = [0] * len(hold_years)  # GLD has zero income return
         fig_div_adv = go.Figure()
-        fig_div_adv.add_trace(go.Bar(x=[f"{y}yr" for y in hold_years], y=nem_divs_cum,
-            name='NEM Cumulative Dividends', marker_color=COLORS['green'],
-            text=[f"${d_v:.2f}" for d_v in nem_divs_cum], textposition='outside',
+        fig_div_adv.add_trace(go.Scatter(
+            x=[f"{y}yr" for y in hold_years], y=nem_divs_cum,
+            mode='lines+markers+text', name='NEM Cumulative Dividends ($/share)',
+            line=dict(color=COLORS['green'], width=2.5), marker=dict(size=8),
+            text=[f"${d_v:.2f}" for d_v in nem_divs_cum], textposition='top center',
             textfont=dict(color=COLORS['text'], size=10)))
-        fig_div_adv.add_trace(go.Bar(x=[f"{y}yr" for y in hold_years], y=gld_divs_cum,
-            name='GLD Dividends (Zero)', marker_color='rgba(139,148,158,0.3)'))
-        apply_layout(fig_div_adv, "NEM PAYS YOU TO WAIT — GLD PAYS NOTHING", 280)
-        fig_div_adv.update_layout(barmode='group')
-        fig_div_adv.add_annotation(x='5yr', y=nem_divs_cum[-1],
-            text=f'<b>${nem_divs_cum[-1]:.0f}/sh</b><br>GLD pays $0', showarrow=True, arrowhead=2,
-            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
-            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=-45, ay=-25)
-        fig_div_adv.update_layout(xaxis_title='Year', yaxis_title='Cumulative Dividends Paid ($)')
+        fig_div_adv.add_trace(go.Scatter(
+            x=[f"{y}yr" for y in hold_years], y=nem_total_return,
+            mode='lines+markers', name=f'NEM Dividend Yield Contribution ({nem_div_yield_pct:.1f}%/yr)',
+            line=dict(color=COLORS['blue'], width=1.5, dash='dash'), marker=dict(size=6)))
+        fig_div_adv.add_trace(go.Scatter(
+            x=[f"{y}yr" for y in hold_years], y=gld_total_return,
+            mode='lines', name='GLD Income Return ($0)',
+            line=dict(color=COLORS['muted'], width=1.5, dash='dot')))
+        apply_layout(fig_div_adv, f"NEM INCOME ADVANTAGE: ${nem_divs_cum[-1]:.0f}/SHARE OVER 5 YEARS vs. $0 FROM GLD", 280)
+        fig_div_adv.update_layout(
+            xaxis_title='Holding Period', yaxis_title='Cumulative Income ($/share)',
+            legend=dict(orientation='h', y=1.15, x=0, font=dict(size=9, color=COLORS['text'])))
         st.plotly_chart(fig_div_adv, use_container_width=True)
     with c2:
         # Breakeven comparison
@@ -4950,7 +4978,7 @@ with tabs[16]:
 with tabs[17]:
     d = DATA
 
-    insight_callout("New CEO Natascha Viljoen inherits the strongest balance sheet in NEM history — net cash $7.2B, Piotroski 9/9. Her Anglo American Platinum track record (22% LTI reduction) signals operational excellence DNA. For guidance/EPS credibility data, see the 14-CREDIBILITY tab.")
+    insight_callout("New CEO Natascha Viljoen inherits NEM's best balance sheet since at least 2010 — net cash $7.2B, Piotroski 9/9. Her Anglo American Platinum track record (22% LTI reduction, 2019-2022) demonstrates operational execution. For guidance/EPS credibility data, see the 14-CREDIBILITY tab.")
 
     # CEO Profile
     st.markdown('<div class="panel-header">CEO PROFILE &mdash; NATASCHA VILJOEN</div>', unsafe_allow_html=True)
@@ -5455,7 +5483,7 @@ with tabs[19]:
         ('Ahafo South + Ahafo North', 575, 40,
          'Ahafo North commercial production commenced Q3 2025; full H2 2026 ramp-up drives skew. '
          'Ahafo South pit sequencing causes H1 trough (lower-grade ore during Q1). '
-         'Combined H2 weighting strongest in portfolio at ~60%.',
+         'Combined H2 production concentration at ~60% of annual portfolio volume.',
          COLORS['green']),
         ('Tanami', 500, 50,
          'Relatively even distribution. Shaft sinking for T2 expansion ongoing but production stable. '
@@ -5624,7 +5652,7 @@ with tabs[19]:
         <div style="color:#8b949e;font-size:10px;padding:4px 8px;">—</div>
         <div style="color:#8b949e;font-size:10px;padding:4px 8px;">—</div>
         <div style="color:#3fb950;font-size:10px;font-weight:700;padding:4px 8px;">~100-120%</div>
-        <div style="color:#8b949e;font-size:9px;padding:4px 8px;">Institutional benchmark: ~100% gross RRR is the minimum for reserve life maintenance. 120%+ with exploration-only additions = strongest. Exact peer data for AEM/KGC requires their reserve releases.</div>
+        <div style="color:#8b949e;font-size:9px;padding:4px 8px;">Institutional benchmark: ~100% gross RRR is the minimum for reserve life maintenance. 120%+ with exploration-only additions = top-tier industry performance. Exact peer data for AEM/KGC requires their reserve releases.</div>
       </div>
     </div>""", unsafe_allow_html=True)
 
