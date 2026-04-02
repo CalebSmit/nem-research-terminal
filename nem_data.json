@@ -207,7 +207,8 @@
         "reserves_moz": 15.2,
         "mine_life_yrs": 20,
         "lat": -32.75,
-        "lon": 116.38
+        "lon": 116.38,
+        "nav_discount_rate": 5.0
       },
       "Tanami": {
         "country": "Australia",
@@ -217,7 +218,8 @@
         "reserves_moz": 9.8,
         "mine_life_yrs": 18,
         "lat": -20.05,
-        "lon": 129.7
+        "lon": 129.7,
+        "nav_discount_rate": 5.0
       },
       "Cadia": {
         "country": "Australia",
@@ -227,7 +229,8 @@
         "reserves_moz": 26.0,
         "mine_life_yrs": 30,
         "lat": -33.47,
-        "lon": 148.98
+        "lon": 148.98,
+        "nav_discount_rate": 5.0
       },
       "Lihir": {
         "country": "Papua New Guinea",
@@ -237,7 +240,8 @@
         "reserves_moz": 18.5,
         "mine_life_yrs": 22,
         "lat": -3.13,
-        "lon": 152.62
+        "lon": 152.62,
+        "nav_discount_rate": 6.5
       },
       "Ahafo": {
         "country": "Ghana",
@@ -247,7 +251,8 @@
         "reserves_moz": 12.0,
         "mine_life_yrs": 15,
         "lat": 7.04,
-        "lon": -2.22
+        "lon": -2.22,
+        "nav_discount_rate": 7.5
       },
       "Ahafo North": {
         "country": "Ghana",
@@ -257,7 +262,8 @@
         "reserves_moz": 3.5,
         "mine_life_yrs": 13,
         "lat": 7.5,
-        "lon": -2.0
+        "lon": -2.0,
+        "nav_discount_rate": 7.5
       },
       "Penasquito": {
         "country": "Mexico",
@@ -267,7 +273,8 @@
         "reserves_moz": 8.0,
         "mine_life_yrs": 10,
         "lat": 24.25,
-        "lon": -102.25
+        "lon": -102.25,
+        "nav_discount_rate": 7.5
       },
       "Merian": {
         "country": "Suriname",
@@ -277,7 +284,8 @@
         "reserves_moz": 4.5,
         "mine_life_yrs": 10,
         "lat": 4.82,
-        "lon": -54.52
+        "lon": -54.52,
+        "nav_discount_rate": 8.0
       },
       "Cerro Negro": {
         "country": "Argentina",
@@ -287,7 +295,8 @@
         "reserves_moz": 5.0,
         "mine_life_yrs": 12,
         "lat": -46.55,
-        "lon": -70.28
+        "lon": -70.28,
+        "nav_discount_rate": 10.5
       },
       "Pueblo Viejo": {
         "country": "Dominican Republic",
@@ -297,7 +306,8 @@
         "reserves_moz": 8.0,
         "mine_life_yrs": 15,
         "lat": 19.07,
-        "lon": -70.18
+        "lon": -70.18,
+        "nav_discount_rate": 8.5
       },
       "Yanacocha": {
         "country": "Peru",
@@ -307,7 +317,8 @@
         "reserves_moz": 7.7,
         "mine_life_yrs": 20,
         "lat": -6.97,
-        "lon": -78.52
+        "lon": -78.52,
+        "nav_discount_rate": 8.5
       }
     },
     "aisc_2021": 1069
@@ -342,6 +353,12 @@
       "market_cap": 59206419323,
       "pe": 40.25,
       "div_yield": 0.01
+    },
+    "GOLD": {
+      "price": 20.15,
+      "market_cap": 35627000000,
+      "pe": 17.2,
+      "div_yield": 0.027
     }
   },
   "peer_ratios_latest": {
@@ -407,6 +424,20 @@
       "de": 0.001,
       "current_ratio": 7.78,
       "icr": 274.59
+    },
+    "GOLD": {
+      "ev_ebitda": 6.8,
+      "pe": 17.2,
+      "p_ocf": 8.5,
+      "p_book": 1.82,
+      "fcf_yield": 0.048,
+      "ev_sales": 3.9,
+      "gross_margin": 0.51,
+      "op_margin": 0.35,
+      "net_margin": 0.21,
+      "fcf_margin": 0.28,
+      "de": 0.31,
+      "current_ratio": 1.72
     }
   },
   "gold_macro": {
@@ -532,5 +563,92 @@
       "est_rev": 4634,
       "rev_surprise": -34
     }
-  ]
+  ],
+  "peer_forward_multiples": {
+    "NEM": {
+      "FY2026E_ebitda": 18896,
+      "FY2027E_ebitda": 20623,
+      "FY2026E_fcf": 10449,
+      "FY2027E_fcf": 11661,
+      "ev": 148929,
+      "FY2026E_ev_ebitda": 7.88,
+      "FY2027E_ev_ebitda": 7.22,
+      "FY2026E_fcf_yield": 0.0871,
+      "FY2027E_fcf_yield": 0.0972
+    },
+    "AEM": {
+      "FY2026E_ebitda": 8200,
+      "FY2027E_ebitda": 9100,
+      "FY2026E_fcf": 3800,
+      "FY2027E_fcf": 4500,
+      "ev": 108000,
+      "FY2026E_ev_ebitda": 13.17,
+      "FY2027E_ev_ebitda": 11.87,
+      "FY2026E_fcf_yield": 0.0375,
+      "FY2027E_fcf_yield": 0.0444
+    },
+    "GOLD": {
+      "FY2026E_ebitda": 6400,
+      "FY2027E_ebitda": 7100,
+      "FY2026E_fcf": 1800,
+      "FY2027E_fcf": 2400,
+      "ev": 44000,
+      "FY2026E_ev_ebitda": 6.88,
+      "FY2027E_ev_ebitda": 6.2,
+      "FY2026E_fcf_yield": 0.0505,
+      "FY2027E_fcf_yield": 0.0674
+    },
+    "KGC": {
+      "FY2026E_ebitda": 3800,
+      "FY2027E_ebitda": 4200,
+      "FY2026E_fcf": 1200,
+      "FY2027E_fcf": 1600,
+      "ev": 42000,
+      "FY2026E_ev_ebitda": 11.05,
+      "FY2027E_ev_ebitda": 10.0,
+      "FY2026E_fcf_yield": 0.0329,
+      "FY2027E_fcf_yield": 0.0439
+    },
+    "GFI": {
+      "FY2026E_ebitda": 3200,
+      "FY2027E_ebitda": 3600,
+      "FY2026E_fcf": 1100,
+      "FY2027E_fcf": 1400,
+      "ev": 46000,
+      "FY2026E_ev_ebitda": 14.38,
+      "FY2027E_ev_ebitda": 12.78,
+      "FY2026E_fcf_yield": 0.0271,
+      "FY2027E_fcf_yield": 0.0345
+    }
+  },
+  "ngm_jv_dispute": {
+    "description": "Nevada Gold Mines JV Default Notice \u2014 Feb 2026",
+    "nem_stake_pct": 38.5,
+    "barrick_stake_pct": 61.5,
+    "notice_date": "2026-02",
+    "allegation": "Resource diversion from Nevada Gold Mines to Fourmile (Barrick 100% asset)",
+    "scenarios": {
+      "settlement": {
+        "probability": 0.5,
+        "fcf_impact_msq": 800,
+        "nav_impact_per_share": 8.0,
+        "direction": "positive",
+        "desc": "Settlement/operational restructuring; NEM retains full 38.5% interest with corrected resource allocation"
+      },
+      "arbitration": {
+        "probability": 0.3,
+        "fcf_impact_msq": 0,
+        "nav_impact_per_share": -3.0,
+        "direction": "neutral-negative",
+        "desc": "Multi-year arbitration; NGM operations disrupted; NEM stuck in limbo"
+      },
+      "buy_sell": {
+        "probability": 0.2,
+        "fcf_impact_msq": -2000,
+        "nav_impact_per_share": -6.0,
+        "direction": "negative",
+        "desc": "Buy-sell clause trigger; NEM forced buyer/seller of 38.5% Nevada stake at 0-40B implied value \u2014 potential NAV dilution"
+      }
+    }
+  }
 }
