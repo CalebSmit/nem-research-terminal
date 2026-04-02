@@ -2022,61 +2022,27 @@ with tabs[5]:
         wacc_ggm = BASE['wacc']
         tv_ggm_v = dcf_live.iloc[-1]['fcff'] * (1 + g_ggm) / max(wacc_ggm - g_ggm, 0.001)
         ggm_mult_v = tv_ggm_v / dcf_live.iloc[-1]['ebitda'] if dcf_live.iloc[-1]['ebitda'] > 0 else 0
-    peer_rows_v = []
-    for p in peers:
-        row = {'Ticker': p, 'Company': peer_names[p], 'Price': f"${peer_q[p]['price']:.2f}",
-               'Mkt Cap': f"${peer_q[p]['market_cap']/1e9:.1f}B", 'Div Yield': f"{peer_q[p]['div_yield']*100:.1f}%"}
-        for label, key in metrics_display.items():
-            val = peer_r.get(p, {}).get(key)
-            if val is None: row[label] = '—'
-            elif 'Margin' in label or 'Yield' in label: row[label] = f"{val*100:.1f}%"
-            else: row[label] = f"{val:.2f}×"
-        peer_rows_v.append(row)
-    st.dataframe(pd.DataFrame(peer_rows_v), use_container_width=True, hide_index=True)
-
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="panel-header">NEM DISCOUNT/PREMIUM VS PEER MEDIAN</div>', unsafe_allow_html=True)
-        metrics_compare = ['EV/EBITDA', 'P/E', 'P/OCF', 'P/Book']
-        metric_keys_c = ['ev_ebitda', 'pe', 'p_ocf', 'p_book']
-        dp_metrics, dp_pcts = [], []
-        for label_c, key_c in zip(metrics_compare, metric_keys_c):
-            nem_val = peer_r['NEM'].get(key_c)
-            others = [peer_r[p].get(key_c) for p in ['AEM', 'KGC', 'GFI', 'WPM'] if peer_r[p].get(key_c)]
-            if nem_val and others:
-                median_c = np.median(others)
-                pct_diff = (nem_val / median_c - 1) * 100
-                dp_metrics.append(f"{label_c}\n(NEM: {nem_val:.1f}×, Med: {median_c:.1f}×)")
-                dp_pcts.append(pct_diff)
-        colors_dp = [COLORS['green'] if v < 0 else COLORS['red'] for v in dp_pcts]
-        fig_dp = go.Figure(go.Bar(x=dp_pcts, y=dp_metrics, orientation='h', marker_color=colors_dp,
-            text=[f"{'+' if v > 0 else ''}{v:.1f}%" for v in dp_pcts],
-            textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
-        fig_dp.add_vline(x=0, line_color=COLORS['border'], line_width=1)
-        apply_layout(fig_dp, "NEM TRADES AT A DISCOUNT ON EVERY METRIC — CHEAPEST LARGE-CAP MINER", 300)
-        fig_dp.update_layout(yaxis_title='Discount to Peer Median (%)')
-        st.plotly_chart(fig_dp, use_container_width=True)
-    with c2:
-        ev_ebitdas = [peer_r[p].get('ev_ebitda', 0) for p in peers]
-        fcf_yields_p = [peer_r[p].get('fcf_yield', 0) * 100 if peer_r[p].get('fcf_yield') else 0 for p in peers]
-        mktcaps_p = [peer_q[p]['market_cap'] / 1e9 for p in peers]
-        fig_scatter = go.Figure()
-        for i_s, p in enumerate(peers):
-            color_s = COLORS['green'] if p == 'NEM' else COLORS['blue']
-            size_s = max(mktcaps_p[i_s] * 0.5, 15)
-            fig_scatter.add_trace(go.Scatter(x=[ev_ebitdas[i_s]], y=[fcf_yields_p[i_s]],
-                mode='markers+text', text=[f"<b>{p}</b>"], textposition='top center',
-                marker=dict(size=size_s, color=color_s, opacity=0.8, line=dict(color=COLORS['border'], width=1)),
-                name=p, hoverinfo='text',
-                hovertext=f"{peer_names[p]}<br>EV/EBITDA: {ev_ebitdas[i_s]:.1f}×<br>FCF Yield: {fcf_yields_p[i_s]:.1f}%"))
-        apply_layout(fig_scatter, "NEM: LOWEST EV/EBITDA + HIGHEST FCF YIELD = BEST VALUE IN SECTOR", 300)
-        fig_scatter.update_layout(showlegend=False, xaxis_title="EV/EBITDA (x)", yaxis_title="FCF Yield (%)")
-        # Mark the "ideal" quadrant — low EV/EBITDA, high FCF yield
-        fig_scatter.add_annotation(x=min(ev_ebitdas) + 1, y=max(fcf_yields_p) - 0.5,
-            text='<b>Best Value</b><br>Low multiple, high yield', showarrow=False,
-            font=dict(size=9, color=COLORS['green']),
-            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, opacity=0.8)
-        st.plotly_chart(fig_scatter, use_container_width=True)
+        st.markdown(f"""
+        <div style="background:#0d1117;border:1px solid #30363d;padding:16px;">
+          <div style="color:#8b949e;font-size:10px;letter-spacing:1px;margin-bottom:10px;">SANITY CHECK: DOES THE EXIT MULTIPLE MAKE SENSE?</div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
+            <span style="color:#8b949e;font-size:11px;">GGM Terminal Value</span>
+            <span style="color:#58a6ff;font-size:11px;">${tv_ggm_v:,.0f}M</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
+            <span style="color:#8b949e;font-size:11px;">GGM Implied EV/EBITDA</span>
+            <span style="color:#58a6ff;font-size:11px;">{ggm_mult_v:.1f}×</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
+            <span style="color:#8b949e;font-size:11px;">Your Exit Multiple</span>
+            <span style="color:#58a6ff;font-size:11px;">{st.session_state.get('exit_multiple', 9.5):.1f}×</span>
+          </div>
+          <div style="color:{'#3fb950' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else '#f85149'};font-size:10px;margin-top:8px;">
+            {'✓ Exit multiple is within 3× of GGM-implied — reasonable.' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else '⚠ Exit multiple diverges significantly from GGM-implied — review assumptions.'}
+          </div>
+        </div>
+        """, unsafe_allow_html=True)
+        why_expander('ggm_growth')
 
     # P/NAV
     st.markdown('<div class="panel-header">P/NAV MODEL — FULL BUILD</div>', unsafe_allow_html=True)
