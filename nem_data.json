@@ -208,7 +208,16 @@
         "mine_life_yrs": 20,
         "lat": -32.75,
         "lon": 116.38,
-        "nav_discount_rate": 5.0
+        "nav_discount_rate": 5.0,
+        "copper_data": {
+          "annual_prod_ktpa": 10,
+          "c1_cost_per_lb": 2.1,
+          "current_price_per_lb": 5.63,
+          "longrun_price_per_lb": 4.5,
+          "fy2026_guidance_ktpa": 10,
+          "fy2026_revenue_m": 124,
+          "note": "Boddington gold-copper open pit. Copper is secondary by-product. Source: NEM filings."
+        }
       },
       "Tanami": {
         "country": "Australia",
@@ -230,7 +239,19 @@
         "mine_life_yrs": 30,
         "lat": -33.47,
         "lon": 148.98,
-        "nav_discount_rate": 5.0
+        "nav_discount_rate": 5.0,
+        "copper_data": {
+          "reserves_mt": 2.9,
+          "annual_prod_ktpa": 120,
+          "c1_cost_per_lb": 1.8,
+          "current_price_per_lb": 5.63,
+          "longrun_price_per_lb": 4.5,
+          "mine_life_yrs": 30,
+          "nav_discount_rate": 5.0,
+          "fy2026_guidance_ktpa": 65,
+          "fy2026_revenue_m": 808,
+          "note": "Cadia copper production 65 Koz-equivalent guidance per NEM Feb 2026 investor day. Copper revenue is a by-product credit in NEM's AISC reporting \u2014 meaning it is NETTED against costs, not shown as standalone revenue. Cadia gold AISC of $400/oz is net of significant copper credit. Gross copper-only NAV: uses $4.50/lb long-run price \u00d7 120 kt/yr ramp (PC2 expansion) \u00d7 C1 margin. Source: NEM Q4 2025 earnings, mqworld.com Feb 2026, NEM investor presentation."
+        }
       },
       "Lihir": {
         "country": "Papua New Guinea",
@@ -649,6 +670,171 @@
         "direction": "negative",
         "desc": "Buy-sell clause trigger; NEM forced buyer/seller of 38.5% Nevada stake at 0-40B implied value \u2014 potential NAV dilution"
       }
+    },
+    "valuation_framework": {
+      "description": "Probability-weighted NAV adjustment to blended target price. Each scenario modifies: (a) NGM production contribution, (b) NEM's balance sheet (cash cost of acquisition or proceeds from sale), (c) AISC for Nevada. Base case blended target assumes status quo (no JV change). Scenarios are additive adjustments.",
+      "base_case_jv_adjustment": 0.0,
+      "settlement": {
+        "probability": 0.5,
+        "production_delta_moz_from_2027": 0.2,
+        "aisc_delta_per_oz": -15,
+        "net_balance_sheet_m": 0,
+        "nav_per_share_delta": 9.0,
+        "ev_contribution": 4.5,
+        "desc": "Favorable operational restructuring \u2014 NGM production stabilizes, NEM retains 38.5% stake with improved governance. +$9/sh NAV (midpoint of $8-$12 range)."
+      },
+      "arbitration": {
+        "probability": 0.3,
+        "production_delta_moz_from_2027": -0.1,
+        "aisc_delta_per_oz": 20,
+        "net_balance_sheet_m": -150,
+        "nav_per_share_delta": -3.0,
+        "ev_contribution": -0.9,
+        "desc": "Multi-year arbitration. Operational uncertainty dampens NGM production. Legal costs ~$150M. -$3/sh."
+      },
+      "buy_sell_nem_buys": {
+        "probability": 0.1,
+        "production_delta_moz_from_2027": 0.8,
+        "aisc_delta_per_oz": -5,
+        "net_balance_sheet_m": -22000,
+        "nav_per_share_delta": 16.0,
+        "ev_contribution": 1.6,
+        "desc": "NEM acquires Barrick 61.5% stake at ~$22B (Barrick's NewCo IPO implied ~$42B for full bundle; Nevada stake est. $20-25B). +6-9 Moz added. Highly leveraging but NAV-accretive at $5,000+ gold. +$16/sh."
+      },
+      "buy_sell_barrick_buys": {
+        "probability": 0.1,
+        "production_delta_moz_from_2027": -0.6,
+        "aisc_delta_per_oz": 0,
+        "net_balance_sheet_m": 14000,
+        "nav_per_share_delta": -6.0,
+        "ev_contribution": -0.6,
+        "desc": "Barrick acquires NEM's 38.5% at ~$14B (premium to book). NEM loses Nevada production but crystallizes cash. Net: NAV dilutive due to lost long-life low-cost ounces. -$6/sh."
+      },
+      "probability_weighted_adjustment": {
+        "formula": "sum(P(scenario) \u00d7 NAV delta per scenario)",
+        "value": 4.6,
+        "breakdown": "0.50\u00d79.0 + 0.30\u00d7(-3.0) + 0.10\u00d716.0 + 0.10\u00d7(-6.0) = 4.50 - 0.90 + 1.60 - 0.60 = 4.60",
+        "note": "The $4.60/sh probability-weighted JV adjustment is NOT in the current base DCF price. It represents potential upside/downside from JV resolution versus the status quo assumption.",
+        "base_dcf_already_includes": false
+      }
+    }
+  },
+  "forward_quarterly_model": {
+    "notes": "Forward quarterly model as of Apr 1 2026. Production phasing: 52% H2-weighted per NEM Q4 2025 call (Feb 19, 2026). AISC: FY2026 guidance $1,680/oz; Q1 elevated ~$1,720/oz (Boddington bushfire + Cadia cave transition). Gold price assumption per DCF base: $5,200/oz. Copper: Cadia guidance 65 Koz-equivalent (as reported by NEM in Feb 2026 guidance). Consensus EPS from MarketBeat (n=1 analyst per quarter, thin coverage \u2014 treat as indicative only): Q1 $1.00, Q2 $0.98, Q3 $1.27, Q4 $1.24 (FY2026 sum: $4.49). Our model EPS materially higher due to gold price deck ($5,200 vs. analyst conservatism). Source: NEM Q4 2025 earnings call (Feb 19, 2026), Reuters, Bloomberg, Zacks, MarketBeat.",
+    "gold_price_assumption": 5200,
+    "copper_price_assumption": 5.63,
+    "quarters": {
+      "Q1_2026": {
+        "label": "Q1 2026",
+        "production_moz": 1.166,
+        "aisc_per_oz": 1720,
+        "gold_price": 5050,
+        "copper_prod_koz_equiv": 14.5,
+        "copper_revenue_m": 203,
+        "gold_revenue_m": 5888,
+        "total_revenue_m": 6270,
+        "ebitda_m": 3620,
+        "ebitda_margin_pct": 57.7,
+        "fcf_m": 1820,
+        "eps_model": 1.87,
+        "eps_consensus": 1.0,
+        "consensus_source": "MarketBeat (n=1, indicative only)",
+        "notes": "Boddington bushfire depresses Q1 production and elevates AISC. Cadia cave transition ongoing."
+      },
+      "Q2_2026": {
+        "label": "Q2 2026",
+        "production_moz": 1.378,
+        "aisc_per_oz": 1700,
+        "gold_price": 5100,
+        "copper_prod_koz_equiv": 17.5,
+        "copper_revenue_m": 246,
+        "gold_revenue_m": 7028,
+        "total_revenue_m": 7460,
+        "ebitda_m": 4480,
+        "ebitda_margin_pct": 60.1,
+        "fcf_m": 2310,
+        "eps_model": 2.28,
+        "eps_consensus": 0.98,
+        "consensus_source": "MarketBeat (n=1, indicative only)",
+        "notes": "Production recovery, NGM JV dispute expected to reach initial resolution or arbitration filing."
+      },
+      "Q3_2026": {
+        "label": "Q3 2026",
+        "production_moz": 1.484,
+        "aisc_per_oz": 1665,
+        "gold_price": 5200,
+        "copper_prod_koz_equiv": 18.0,
+        "copper_revenue_m": 253,
+        "gold_revenue_m": 7717,
+        "total_revenue_m": 8170,
+        "ebitda_m": 5040,
+        "ebitda_margin_pct": 61.7,
+        "fcf_m": 2650,
+        "eps_model": 2.58,
+        "eps_consensus": 1.27,
+        "consensus_source": "MarketBeat (n=1, indicative only)",
+        "notes": "H2 production ramp. Ahafo South sequencing improves. Penasquito recovery."
+      },
+      "Q4_2026": {
+        "label": "Q4 2026",
+        "production_moz": 1.272,
+        "aisc_per_oz": 1650,
+        "gold_price": 5300,
+        "copper_prod_koz_equiv": 15.0,
+        "copper_revenue_m": 211,
+        "gold_revenue_m": 6742,
+        "total_revenue_m": 7140,
+        "ebitda_m": 4420,
+        "ebitda_margin_pct": 61.9,
+        "fcf_m": 2280,
+        "eps_model": 2.25,
+        "eps_consensus": 1.24,
+        "consensus_source": "MarketBeat (n=1, indicative only)",
+        "notes": "Year-end sequencing impact. Tanami shaft work continues. Q4 2026 results due ~Feb 2027."
+      },
+      "Q1_2027": {
+        "label": "Q1 2027",
+        "production_moz": 1.3,
+        "aisc_per_oz": 1640,
+        "gold_price": 5400,
+        "copper_prod_koz_equiv": 16.0,
+        "copper_revenue_m": 225,
+        "gold_revenue_m": 7020,
+        "total_revenue_m": 7440,
+        "ebitda_m": 4670,
+        "ebitda_margin_pct": 62.8,
+        "fcf_m": 2430,
+        "eps_model": 2.38,
+        "eps_consensus": 1.14,
+        "consensus_source": "MarketBeat (n=1, indicative only)",
+        "notes": "FY2027 ramp begins. Tanami TE2 expected commercial production H2 2027. Cadia PC2 milestone."
+      },
+      "Q2_2027": {
+        "label": "Q2 2027",
+        "production_moz": 1.4,
+        "aisc_per_oz": 1625,
+        "gold_price": 5500,
+        "copper_prod_koz_equiv": 17.5,
+        "copper_revenue_m": 246,
+        "gold_revenue_m": 7700,
+        "total_revenue_m": 8150,
+        "ebitda_m": 5180,
+        "ebitda_margin_pct": 63.6,
+        "fcf_m": 2740,
+        "eps_model": 2.64,
+        "eps_consensus": 1.14,
+        "consensus_source": "MarketBeat (n=1, indicative only)",
+        "notes": "FY2027 H1 supported by Cadia ramp-up and improved mine sequencing across portfolio."
+      }
+    },
+    "consensus_vs_model_note": "Material gap between our model EPS and MarketBeat consensus (1 analyst): Our model uses $5,050-$5,500/oz gold; MarketBeat estimates appear to use ~$2,500-3,000/oz gold deck. The consensus EPS figures from Finviz ($8.13 FY2026E on $23.28B revenue) appear more current. All consensus figures sourced from public data as of Apr 2026; cite as indicative, not Bloomberg consensus.",
+    "bridge_to_consensus": {
+      "our_fy2026_eps": 8.98,
+      "consensus_fy2026_eps_finviz": 8.13,
+      "consensus_fy2026_revenue_b": 23.28,
+      "our_fy2026_revenue_b": 28.8,
+      "gap_driver": "Gold price assumption: our $5,200 vs. implied consensus ~$4,200-4,500. Production in-line. AISC in-line.",
+      "note": "Finviz consensus from ~29 analysts as of Feb 19, 2026 (post-Q4 earnings). MarketBeat shows only 1 estimate per quarter."
     }
   }
 }

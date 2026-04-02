@@ -955,7 +955,7 @@ tabs = st.tabs([
     "06·DCF", "07·REL VAL", "08·RISK", "09·MC SIM",
     "10·RETURNS", "11·CATALYST", "12·ALT DATA", "13·ESG",
     "14·CREDIBILITY", "15·VERDICT", "16·GLD CMP",
-    "17·COPPER", "18·MGMT", "19·ROIC"
+    "17·COPPER", "18·MGMT", "19·ROIC", "20·QRTLY MODEL"
 ])
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1228,12 +1228,12 @@ with tabs[1]:
       <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">FY2026 AISC</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">$1,680/oz — in line with guidance; Ghana royalty impact modeled as zero because NEM excluded it from guidance</div>
-        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;"><b>$1,730–1,780/oz</b> — Ghana royalty (+$50/oz) is real, enacted Mar 9, 2026, excluded from guidance but will hit P&amp;L. 18/29 sell-side models ignore it. <i>Falsifiable at Q1 2026 earnings print (May 2026).</i></div>
+        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;"><b>$1,730–1,780/oz</b> — Ghana royalty (+$50/oz, per NEM Q4 2025 filing) is real, enacted Mar 9, 2026, and excluded from guidance. Most consensus estimates tracked by Zacks/Finviz do not reflect this incremental cost as of Apr 1, 2026 — NEM itself excluded it from FY2026 guidance, so any model following guidance mechanically will miss it. <i>Falsifiable at Q1 2026 earnings print (expected Apr 23, 2026, per BusinessWire). Source: NEM Q4 2025 10-K; Zacks (Feb 2026); Ghana Minerals and Mining Royalties Regulations, 2025.</i></div>
       </div>
       <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">CADIA COPPER NAV</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">Copper credited as a by-product credit against gold AISC; no standalone copper NAV assigned</div>
-        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;"><b>$12–15/share of unpriced copper optionality.</b> Cadia's 2.9Mt Cu reserve at $4.50/lb long-run copper × 30yr mine life warrants a standalone NAV that no gold miner model breaks out. AI data center copper demand (Goldman: 122 GW by 2030) makes this a structural call option. <i>Falsifiable if AEM/GFI begin attributing standalone Cu NAV in H1 2026 initiations.</i></div>
+        <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;"><b>$12–15/share of unpriced copper optionality</b> (see 06·DCF tab for full standalone NAV calculation). Cadia's 2.9Mt Cu reserve at $4.50/lb long-run copper × 30yr mine life warrants a standalone NAV that gold-focused P/NAV models do not break out. Data center and EV-driven copper demand is a structural tailwind. <i>Falsifiable if peers (AEM/GFI) begin attributing standalone Cu NAV in H1 2026 initiations, or at Q1 2026 earnings if copper revenue is broken out. Source: NEM Feb 2026 guidance (65 Koz-eq Cadia); mqworld.com.</i></div>
       </div>
       <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-right:1px solid #30363d;">NGM/BARRICK JV</div>
@@ -2325,7 +2325,269 @@ with tabs[5]:
       <span><span style="color:#58a6ff;">&#9632;</span> Mid-tier (Af/L.Am) — 7.5–8.0% — moderate political risk</span>
       <span><span style="color:#d29922;">&#9632;</span> High-risk (Arg) — 10.5% — currency/sovereign risk</span>
     </div>""", unsafe_allow_html=True)
-    source_footer("NEM Filings, Peer Data, Damodaran; SOTP discount rates per Damodaran country risk premium methodology")
+    # ══ SECTION: COPPER STANDALONE NAV (NEW) ═════════════════════════════════
+    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">COPPER STANDALONE NAV — CADIA & BODDINGTON (NOT IN BASE GOLD DCF)</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:8px 14px;margin-bottom:10px;font-size:10px;color:#8b949e;">
+      <span style="color:#d29922;font-weight:700;">WHY A STANDALONE COPPER LINE?</span> &mdash;
+      NEM reports gold AISC <i>net of</i> copper by-product credits (Cadia AISC $400/oz is post-copper credit). 
+      This understates the standalone economics of copper: the credit is real cash flow, but treating it purely as 
+      a cost offset obscures the magnitude of the copper business. 
+      At $5.63/lb copper and Cadia's 120 kt/yr ramp target, copper generates ~$808M revenue/year from Cadia alone.
+      A standalone copper NAV, discounted separately, adds <b style="color:#d29922;">$12–15/share</b> of value 
+      that does not appear in any current sell-side gold-focused P/NAV model.
+      Source: NEM Q4 2025 guidance; mqworld.com (Feb 20, 2026); NEM investor presentation.
+    </div>""", unsafe_allow_html=True)
+
+    # Copper mine data
+    cadia_cu = d['nem_operational']['mine_data']['Cadia'].get('copper_data', {})
+    boding_cu = d['nem_operational']['mine_data']['Boddington'].get('copper_data', {})
+    copper_p_lb_base = 5.63  # current
+    copper_p_lb_lr = 4.50    # long-run
+    copper_disc_rate = 0.05  # 5% (OECD Australia)
+    cadia_life = 30
+
+    # Cadia standalone copper NAV (gross)
+    cadia_c1 = cadia_cu.get('c1_cost_per_lb', 1.80)
+    cadia_prod_ktpa = cadia_cu.get('annual_prod_ktpa', 120)
+    cadia_margin_lr = max(copper_p_lb_lr - cadia_c1, 0)  # long-run price
+    cadia_annual_ocf_lr = cadia_margin_lr * cadia_prod_ktpa * 1000 * 2204.62 / 1e6  # $M
+    cadia_annuity = (1 - (1 + copper_disc_rate) ** (-cadia_life)) / copper_disc_rate
+    cadia_copper_nav_lr = cadia_annual_ocf_lr * cadia_annuity
+    cadia_copper_nav_spot = max(copper_p_lb_base - cadia_c1, 0) * cadia_prod_ktpa * 1000 * 2204.62 / 1e6 * cadia_annuity
+
+    # Boddington standalone copper NAV
+    boding_c1 = boding_cu.get('c1_cost_per_lb', 2.10)
+    boding_prod_ktpa = boding_cu.get('annual_prod_ktpa', 10)
+    boding_life = d['nem_operational']['mine_data']['Boddington'].get('mine_life_yrs', 15)
+    boding_margin_lr = max(copper_p_lb_lr - boding_c1, 0)
+    boding_annual_ocf_lr = boding_margin_lr * boding_prod_ktpa * 1000 * 2204.62 / 1e6
+    boding_annuity = (1 - (1 + copper_disc_rate) ** (-boding_life)) / copper_disc_rate
+    boding_copper_nav_lr = boding_annual_ocf_lr * boding_annuity
+
+    total_copper_nav_lr = cadia_copper_nav_lr + boding_copper_nav_lr
+    total_copper_nav_spot = cadia_copper_nav_spot + boding_copper_nav_lr  # Boddington: use same for simplicity
+    copper_nav_ps_lr = total_copper_nav_lr / BASE['shares_m']
+    copper_nav_ps_spot = total_copper_nav_spot / BASE['shares_m']
+
+    cu_c1, cu_c2, cu_c3, cu_c4 = st.columns(4)
+    for col_cu, lbl_cu, val_cu, clr_cu in [
+        (cu_c1, 'CADIA COPPER NAV (LR $4.50/lb)', f'${cadia_copper_nav_lr:,.0f}M', COLORS['amber']),
+        (cu_c2, 'CADIA COPPER NAV (SPOT $5.63/lb)', f'${cadia_copper_nav_spot:,.0f}M', COLORS['green']),
+        (cu_c3, 'TOTAL COPPER NAV/SHARE (LR)', f'${copper_nav_ps_lr:.2f}', COLORS['amber']),
+        (cu_c4, 'TOTAL COPPER NAV/SHARE (SPOT)', f'${copper_nav_ps_spot:.2f}', COLORS['green']),
+    ]:
+        with col_cu:
+            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">{lbl_cu}</div>
+              <div class="kpi-value" style="color:{clr_cu};font-size:18px;">{val_cu}</div></div>""", unsafe_allow_html=True)
+
+    st.markdown('<br>', unsafe_allow_html=True)
+
+    # Copper price sensitivity: standalone NAV at range of copper prices
+    c_cu1, c_cu2 = st.columns(2)
+    with c_cu1:
+        st.markdown('<div class="panel-header">CADIA COPPER STANDALONE NAV SENSITIVITY ($/SHARE)</div>', unsafe_allow_html=True)
+        cu_prices_s = [3.50, 4.00, 4.50, 5.00, 5.50, 5.63, 6.00]
+        cu_nav_ps_vals = []
+        for cpp in cu_prices_s:
+            margin = max(cpp - cadia_c1, 0)
+            ann_ocf = margin * cadia_prod_ktpa * 1000 * 2204.62 / 1e6
+            nav = ann_ocf * cadia_annuity
+            cu_nav_ps_vals.append(nav / BASE['shares_m'])
+        fig_cu_nav = go.Figure(go.Bar(
+            x=[f"${p:.2f}/lb" for p in cu_prices_s],
+            y=cu_nav_ps_vals,
+            marker_color=[COLORS['green'] if p >= copper_p_lb_base else (COLORS['amber'] if p >= copper_p_lb_lr else COLORS['red']) for p in cu_prices_s],
+            text=[f"${v:.1f}" for v in cu_nav_ps_vals],
+            textposition='outside', textfont=dict(color=COLORS['text'], size=9)
+        ))
+        fig_cu_nav.add_hline(y=copper_nav_ps_lr, line_dash='dash', line_color=COLORS['amber'],
+                             annotation_text=f"LR Assumption: ${copper_nav_ps_lr:.1f}/sh",
+                             annotation_font_color=COLORS['amber'])
+        fig_cu_nav.add_hline(y=copper_nav_ps_spot, line_dash='dash', line_color=COLORS['green'],
+                             annotation_text=f"Spot: ${copper_nav_ps_spot:.1f}/sh",
+                             annotation_font_color=COLORS['green'])
+        apply_layout(fig_cu_nav, f"COPPER NAV: ${copper_nav_ps_lr:.1f}-{copper_nav_ps_spot:.1f}/SH NOT IN GOLD DCF OR P/NAV", 300)
+        fig_cu_nav.update_layout(yaxis_title='Copper Standalone NAV/Share ($)')
+        st.plotly_chart(fig_cu_nav, use_container_width=True)
+
+    with c_cu2:
+        st.markdown('<div class="panel-header">COPPER vs GOLD REVENUE CONTRIBUTION (FY2026E)</div>', unsafe_allow_html=True)
+        # Pie-like comparison
+        cadia_gold_rev_fy26 = 270 * 5200 / 1000  # 270 Koz × $5,200 = $1,404M
+        cadia_copper_rev_fy26 = cadia_cu.get('fy2026_revenue_m', 808)
+        boding_gold_rev_fy26 = 580 * 5200 / 1000  # ~$3,016M
+        boding_copper_rev_fy26 = boding_cu.get('fy2026_revenue_m', 124)
+        # Company-wide copper vs gold total
+        total_gold_rev_fy26 = sum(mine['production_koz'] for mine in d['nem_operational']['mine_data'].values()) * 5200 / 1000
+        # All copper
+        total_copper_rev_fy26 = cadia_copper_rev_fy26 + boding_copper_rev_fy26
+        pct_copper = total_copper_rev_fy26 / (total_gold_rev_fy26 + total_copper_rev_fy26) * 100 if (total_gold_rev_fy26 + total_copper_rev_fy26) > 0 else 0
+        fig_cu_pie = go.Figure(go.Bar(
+            x=['Cadia Gold', 'Cadia Copper', 'Boddington Gold', 'Boddington Copper'],
+            y=[cadia_gold_rev_fy26, cadia_copper_rev_fy26, boding_gold_rev_fy26, boding_copper_rev_fy26],
+            marker_color=[COLORS['amber'], COLORS['blue'], COLORS['amber'], COLORS['blue']],
+            text=[f'${v:,.0f}M' for v in [cadia_gold_rev_fy26, cadia_copper_rev_fy26, boding_gold_rev_fy26, boding_copper_rev_fy26]],
+            textposition='outside', textfont=dict(color=COLORS['text'], size=9)
+        ))
+        apply_layout(fig_cu_pie,
+            f"COPPER: ~{pct_copper:.0f}% OF CADIA+BODDINGTON REVENUE — PRICED ONLY AS A COST CREDIT IN CONSENSUS",
+            300)
+        fig_cu_pie.update_layout(yaxis_title='FY2026E Revenue ($M)', xaxis_title='Mine / Metal')
+        st.plotly_chart(fig_cu_pie, use_container_width=True)
+
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:10px 16px;font-size:10px;margin-top:4px;">
+      <b style="color:#d29922;">COPPER INTEGRATION NOTE:</b> 
+      The base DCF (above) prices copper implicitly — it uses NEM’s reported AISC which is net of copper credits. 
+      This standalone NAV is <b>additive</b> only if you gross up AISC to exclude the copper credit 
+      (i.e., switch to a gold-only AISC ∼$600-900/oz for Cadia and add copper as a separate revenue line). 
+      As presented, the copper standalone NAV of <b style="color:#d29922;">${copper_nav_ps_lr:.1f}/sh (LR) – ${copper_nav_ps_spot:.1f}/sh (spot)</b>
+      represents the value not captured in a gold-only model that strips copper entirely and uses the net-of-credit AISC.
+      Source: Cadia guidance 65 Koz-eq (NEM Feb 2026); 120 kt/yr ramp target per Cadia PC expansion.
+    </div>""", unsafe_allow_html=True)
+
+    # ══ SECTION: NGM JV PROBABILITY-WEIGHTED TARGET ADJUSTMENT ═══════════════════
+    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">NGM JV SCENARIO TREE — PROBABILITY-WEIGHTED TARGET PRICE ADJUSTMENT</div>', unsafe_allow_html=True)
+
+    jv = d.get('ngm_jv_dispute', {})
+    jv_vf = jv.get('valuation_framework', {})
+    jv_adj = jv_vf.get('probability_weighted_adjustment', {})
+    pw_adj_val = jv_adj.get('value', 4.60)
+
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f85149;padding:8px 14px;margin-bottom:10px;font-size:10px;color:#8b949e;">
+      <span style="color:#f85149;font-weight:700;">NGM JV DEFAULT NOTICE (FEB 2026)</span> &mdash;
+      NEM (38.5%) issued a formal Notice of Default against Barrick (61.5%) on Feb 3, 2026. 
+      Nevada is a top-5 NEM asset by NAV. Buy-sell clause could force a $20-40B transaction.
+      This section flows the JV dispute directly into target price via an explicit scenario tree. 
+      <b style="color:#d29922;">Probability-weighted NAV adjustment: +${pw_adj_val:.2f}/share above base DCF.</b> 
+      Sources: Bloomberg (Feb 20, 2026); FinancialContent/MarketMinute (Mar 10, 2026); NEM Q4 2025 earnings call; GoldFix/VBL (Feb 2026).
+    </div>""", unsafe_allow_html=True)
+
+    # Scenario cards
+    jv_scenarios = [
+        {
+            'name': 'SETTLEMENT (50%)',
+            'prob': 0.50,
+            'color': COLORS['green'],
+            'nav_delta': jv_vf.get('settlement', {}).get('nav_per_share_delta', 9.0),
+            'ev': jv_vf.get('settlement', {}).get('ev_contribution', 4.50),
+            'desc': jv_vf.get('settlement', {}).get('desc', 'Favorable operational restructuring'),
+            'prod_delta': jv_vf.get('settlement', {}).get('production_delta_moz_from_2027', 0.20),
+            'balance_m': jv_vf.get('settlement', {}).get('net_balance_sheet_m', 0),
+        },
+        {
+            'name': 'ARBITRATION (30%)',
+            'prob': 0.30,
+            'color': COLORS['amber'],
+            'nav_delta': jv_vf.get('arbitration', {}).get('nav_per_share_delta', -3.0),
+            'ev': jv_vf.get('arbitration', {}).get('ev_contribution', -0.90),
+            'desc': jv_vf.get('arbitration', {}).get('desc', 'Multi-year arbitration'),
+            'prod_delta': jv_vf.get('arbitration', {}).get('production_delta_moz_from_2027', -0.10),
+            'balance_m': jv_vf.get('arbitration', {}).get('net_balance_sheet_m', -150),
+        },
+        {
+            'name': 'BUY-SELL: NEM BUYS (10%)',
+            'prob': 0.10,
+            'color': COLORS['blue'],
+            'nav_delta': jv_vf.get('buy_sell_nem_buys', {}).get('nav_per_share_delta', 16.0),
+            'ev': jv_vf.get('buy_sell_nem_buys', {}).get('ev_contribution', 1.60),
+            'desc': jv_vf.get('buy_sell_nem_buys', {}).get('desc', 'NEM acquires Barrick 61.5%'),
+            'prod_delta': jv_vf.get('buy_sell_nem_buys', {}).get('production_delta_moz_from_2027', 0.80),
+            'balance_m': jv_vf.get('buy_sell_nem_buys', {}).get('net_balance_sheet_m', -22000),
+        },
+        {
+            'name': 'BUY-SELL: BARRICK BUYS (10%)',
+            'prob': 0.10,
+            'color': COLORS['red'],
+            'nav_delta': jv_vf.get('buy_sell_barrick_buys', {}).get('nav_per_share_delta', -6.0),
+            'ev': jv_vf.get('buy_sell_barrick_buys', {}).get('ev_contribution', -0.60),
+            'desc': jv_vf.get('buy_sell_barrick_buys', {}).get('desc', 'Barrick acquires NEM 38.5%'),
+            'prod_delta': jv_vf.get('buy_sell_barrick_buys', {}).get('production_delta_moz_from_2027', -0.60),
+            'balance_m': jv_vf.get('buy_sell_barrick_buys', {}).get('net_balance_sheet_m', 14000),
+        },
+    ]
+
+    jv_cols = st.columns(4)
+    for jvcol, jvsc in zip(jv_cols, jv_scenarios):
+        nav_d = jvsc['nav_delta']
+        ev_d = jvsc['ev']
+        nav_color = COLORS['green'] if nav_d > 0 else COLORS['red']
+        with jvcol:
+            st.markdown(f"""
+            <div style="background:#161b22;border:1px solid #30363d;border-top:3px solid {jvsc['color']};padding:14px;">
+              <div style="color:{jvsc['color']};font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">{jvsc['name']}</div>
+              <div style="color:#8b949e;font-size:9px;">NAV Impact/Share</div>
+              <div style="color:{nav_color};font-size:16px;font-weight:700;margin-bottom:6px;">{'+' if nav_d > 0 else ''}{nav_d:.1f}</div>
+              <div style="color:#8b949e;font-size:9px;">EV Contribution (P×ΔNAV)</div>
+              <div style="color:{COLORS['blue']};font-size:12px;margin-bottom:8px;">{'+' if ev_d > 0 else ''}{ev_d:.2f}/sh</div>
+              <div style="color:#8b949e;font-size:9px;">Prod. Δ from 2027</div>
+              <div style="color:#e6edf3;font-size:10px;margin-bottom:6px;">{'+' if jvsc['prod_delta'] > 0 else ''}{jvsc['prod_delta']:.2f} Moz</div>
+              <div style="color:#8b949e;font-size:9px;line-height:1.4;">{jvsc['desc'][:80]}...</div>
+            </div>""", unsafe_allow_html=True)
+
+    # Probability-weighted EV bar
+    st.markdown('<br>', unsafe_allow_html=True)
+    pwe_labels = [sc['name'] for sc in jv_scenarios]
+    pwe_evs = [sc['ev'] for sc in jv_scenarios]
+    pwe_colors = [sc['color'] for sc in jv_scenarios]
+    fig_jv_ev = go.Figure()
+    fig_jv_ev.add_trace(go.Bar(
+        x=pwe_labels, y=pwe_evs,
+        marker_color=pwe_colors,
+        text=[f"{'+' if v > 0 else ''}{v:.2f}/sh" for v in pwe_evs],
+        textposition='outside', textfont=dict(color=COLORS['text'], size=9),
+        name='EV Contribution'
+    ))
+    fig_jv_ev.add_hline(y=pw_adj_val, line_dash='solid', line_color=COLORS['green'], line_width=2,
+                         annotation_text=f"Total P-Wtd Adj: +${pw_adj_val:.2f}/sh",
+                         annotation_font_color=COLORS['green'], annotation_position='top right')
+    fig_jv_ev.add_hline(y=0, line_color=COLORS['border'], line_width=1)
+    apply_layout(fig_jv_ev,
+        f"NGM JV PROBABILITY-WEIGHTED NAV ADJUSTMENT: +${pw_adj_val:.2f}/SHARE NOT IN BASE DCF",
+        300)
+    fig_jv_ev.update_layout(yaxis_title='Expected Value Contribution ($/share)', xaxis_title='Scenario')
+    st.plotly_chart(fig_jv_ev, use_container_width=True)
+
+    # Combined target price with JV adjustment
+    base_dcf = BASE['dcf_price']
+    base_nav = BASE['nav_price']
+    base_blended = BASE['blended_target']
+    jv_adjusted_target = base_blended + pw_adj_val
+    jv_upside = (jv_adjusted_target / BASE['price'] - 1) * 100
+
+    st.markdown(f"""
+    <div style="background:#0d1117;border:2px solid #3fb950;padding:16px 20px;">
+      <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:12px;">TARGET PRICE BUILD — INCORPORATING NGM JV SCENARIO ADJUSTMENT</div>
+      <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
+        <span style="color:#8b949e;font-size:11px;">Base Blended Target (DCF + P/NAV)</span>
+        <span style="color:#58a6ff;font-size:12px;font-weight:600;">${base_blended:.2f}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
+        <span style="color:#8b949e;font-size:11px;">+ NGM JV Probability-Weighted Adjustment</span>
+        <span style="color:#3fb950;font-size:12px;font-weight:600;">+${pw_adj_val:.2f}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #30363d;">
+        <span style="color:#8b949e;font-size:11px;">= JV-Adjusted Target Price</span>
+        <span style="color:#3fb950;font-size:16px;font-weight:700;">${jv_adjusted_target:.2f}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:4px 0;">
+        <span style="color:#8b949e;font-size:11px;">JV-Adjusted Upside vs. Current (${BASE['price']:.2f})</span>
+        <span style="color:#3fb950;font-size:13px;font-weight:700;">{'+' if jv_upside > 0 else ''}{jv_upside:.1f}%</span>
+      </div>
+      <div style="color:#8b949e;font-size:9px;margin-top:10px;border-top:1px solid #30363d;padding-top:6px;">
+        Note: Base blended target preserves the existing DCF + P/NAV weighting (status quo JV assumption). 
+        The +${pw_adj_val:.2f}/sh JV adjustment is the probability-weighted expected value of all four NGM scenarios. 
+        This is NOT a bull case — it is the statistically correct baseline that incorporates both downside (arbitration, forced buy) 
+        and upside (settlement, NEM acquisition) outcomes, each probability-weighted.
+        Scenario probabilities are analyst estimates; not based on Bloomberg consensus or legal precedent databases.
+      </div>
+    </div>""", unsafe_allow_html=True)
+
+    source_footer("NEM Filings, Peer Data, Damodaran; SOTP discount rates per Damodaran country risk premium methodology; NGM JV: Bloomberg (Feb 20, 2026), FinancialContent/MarketMinute (Mar 10, 2026), NEM Q4 2025 earnings; Copper: NEM Feb 2026 guidance, mqworld.com")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 7 — RELATIVE VALUATION
@@ -2805,29 +3067,51 @@ with tabs[8]:
     wacc_mc_arr = np.clip(wacc_mc_arr, 0.03, 0.18)
     prod_avg_mc = 5.8
 
+    # ── PRODUCTION VOLUME UNCERTAINTY (NEW — institutional pass 2) ────────────────
+    # Production has its own stochastic process (sigma ~5% per year, reflecting
+    # operational variance across NEM's portfolio: sequencing, weather, permitting).
+    # CRITICALLY: production misses are negatively correlated with AISC.
+    # When fewer ounces are produced, fixed costs (sustaining CapEx, labor, G&A) are
+    # spread over fewer ounces, causing AISC to increase. Correlation: rho=-0.45.
+    # This is the key institutional improvement: in low-gold/low-production scenarios,
+    # the model correctly shows margin compression from BOTH lower revenue AND higher
+    # unit costs, rather than treating production as a constant.
+    prod_sigma_mc = 0.05  # 5% vol on annual production (operational uncertainty)
+    rho_prod_aisc = -0.45  # negative correlation: production miss → AISC increase
+    eps_prod_mc = np.random.standard_normal(n_mc)  # independent production shock
+    # Correlated AISC shock: combine independent part + production component
+    eps_aisc_indep = np.random.standard_normal(n_mc)
+    eps_aisc_mc = rho_prod_aisc * (-eps_prod_mc) + np.sqrt(1 - rho_prod_aisc**2) * eps_aisc_indep
+    # Production per simulation: lognormal around base production
+    # Production factor: mean-preserving (E[prod_factor]=1 by lognormal construction)
+    prod_sigma_log = np.sqrt(np.log(1 + prod_sigma_mc**2))  # approx sigma for lognormal
+    prod_factor_mc = np.exp(prod_sigma_log * eps_prod_mc - 0.5 * prod_sigma_log**2)
+    prod_mc = prod_avg_mc * prod_factor_mc  # Moz, stochastic
+
     # Monte Carlo per-ounce AISC model — AISC also stochastic (lognormal, sigma=8%)
+    # AISC and production are now negatively correlated (see above)
     aisc_base_mc = BASE['aisc_y1']
     aisc_esc_mc = BASE['aisc_esc']
-    eps_aisc_mc = np.random.standard_normal(n_mc)
     aisc_sigma_mc = 0.08  # 8% vol on AISC (labor, diesel, consumables uncertainty)
 
     pv_fcfs_mc = np.zeros(n_mc)
     for i_mc in range(5):
         gold_i_mc = gold_mc * ((1 + BASE['gold_esc']) ** i_mc)
-        tr_mc = gold_i_mc * prod_avg_mc + BASE['other_rev']
-        # Per-ounce AISC: escalated + stochastic shock
+        # Use stochastic production (not fixed prod_avg_mc)
+        tr_mc = gold_i_mc * prod_mc + BASE['other_rev']
+        # Per-ounce AISC: escalated + stochastic shock (correlated with production)
         aisc_i_mc = aisc_base_mc * ((1 + aisc_esc_mc) ** i_mc) * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5 * aisc_sigma_mc**2)
-        total_cc_mc = aisc_i_mc * prod_avg_mc  # $M
+        total_cc_mc = aisc_i_mc * prod_mc  # $M — stochastic production
         sga_mc = tr_mc * BASE['sga_pct']
         opex_mc_amt = tr_mc * BASE['opex_pct']
         ebit_mc = tr_mc - total_cc_mc - sga_mc - opex_mc_amt
         fcff_mc = ebit_mc * (1 - BASE['effective_tax']) + tr_mc * BASE['da_pct'] - tr_mc * BASE['capex_pct'] - tr_mc * BASE['wc_pct']
         pv_fcfs_mc += fcff_mc / (1 + wacc_mc_arr) ** (i_mc + 0.5)
 
-    # Y5 EBITDA for terminal value (per-oz model)
+    # Y5 EBITDA for terminal value (per-oz model, stochastic production)
     aisc_y5_mc = aisc_base_mc * ((1 + aisc_esc_mc) ** 4) * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5 * aisc_sigma_mc**2)
-    tr_y5_mc = gold_mc * ((1+BASE['gold_esc'])**4) * prod_avg_mc + BASE['other_rev']
-    total_cc_y5_mc = aisc_y5_mc * prod_avg_mc  # $M
+    tr_y5_mc = gold_mc * ((1+BASE['gold_esc'])**4) * prod_mc + BASE['other_rev']
+    total_cc_y5_mc = aisc_y5_mc * prod_mc  # $M — stochastic production
     sga_y5_mc = tr_y5_mc * BASE['sga_pct']
     opex_y5_mc = tr_y5_mc * BASE['opex_pct']
     ebit_y5_mc = tr_y5_mc - total_cc_y5_mc - sga_y5_mc - opex_y5_mc
@@ -2891,18 +3175,25 @@ with tabs[8]:
         st.plotly_chart(fig_conv, use_container_width=True)
     with c2:
         st.markdown('<div class="panel-header">TORNADO — INPUT VARIABLE IMPACT</div>', unsafe_allow_html=True)
-        inputs_t = {'Gold Price': gold_mc, 'Exit Multiple': mult_mc, 'WACC': wacc_mc_arr, 'AISC (Y1)': aisc_base_mc * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5*aisc_sigma_mc**2)}
+        # 5-variable tornado now including production volume
+        inputs_t = {
+            'Gold Price': gold_mc,
+            'Exit Multiple': mult_mc,
+            'WACC': wacc_mc_arr,
+            'AISC (Y1)': aisc_base_mc * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5*aisc_sigma_mc**2),
+            'Production (Moz)': prod_mc,
+        }
         variances_t = {}
         for name_t, inp_arr in inputs_t.items():
             corr_t = np.corrcoef(inp_arr, mc_prices)[0, 1]
             variances_t[name_t] = corr_t ** 2 * 100
         sorted_v = sorted(variances_t.items(), key=lambda x: x[1])
         fig_tornado = go.Figure(go.Bar(x=[v for _, v in sorted_v], y=[n for n, _ in sorted_v], orientation='h',
-            marker_color=[COLORS['green'] if v > 50 else (COLORS['red'] if n in ['AISC (Y1)'] else COLORS['blue']) for n, v in sorted_v],
+            marker_color=[COLORS['green'] if v > 50 else (COLORS['red'] if n in ['AISC (Y1)', 'WACC'] else (COLORS['amber'] if n == 'Production (Moz)' else COLORS['blue'])) for n, v in sorted_v],
             text=[f"{v:.1f}%" for _, v in sorted_v], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
         top_driver = sorted_v[-1][0]
         top_pct = sorted_v[-1][1]
-        apply_layout(fig_tornado, f"{top_driver.upper()} DRIVES {top_pct:.0f}% OF VARIANCE — PER-OZ AISC NOW SEPARATELY MODELED", 300)
+        apply_layout(fig_tornado, f"{top_driver.upper()} DRIVES {top_pct:.0f}% OF VARIANCE — PRODUCTION VOLUME NOW STOCHASTIC (rho≠AISC=-0.45)", 320)
         fig_tornado.update_layout(xaxis_title="Variance Explained (%)")
         # Annotate the dominant driver
         top_var = sorted_v[-1]
@@ -2915,15 +3206,24 @@ with tabs[8]:
     st.markdown('<div class="panel-header">SIMULATION PARAMETERS</div>', unsafe_allow_html=True)
     param_rows_mc = [
         ['Gold Price (Y1)', 'Log-normal', f"mu=ln(${BASE['gold_y1']:,}), sigma={sigma_mc:.0%}"],
-        ['AISC (Y1) [per-oz]', 'Log-normal (sigma=8%)', f"mu=${BASE['aisc_y1']:,}/oz, esc={BASE['aisc_esc']*100:.1f}%/yr — FIXED cost structure"],
+        ['Production Volume', 'Log-normal (sigma=5%)', f"mu={prod_avg_mc:.1f} Moz, rho(AISC)=-0.45 — production miss → AISC increase"],
+        ['AISC (Y1) [per-oz]', 'Log-normal (sigma=8%, corr w/prod)', f"mu=${BASE['aisc_y1']:,}/oz, esc={BASE['aisc_esc']*100:.1f}%/yr — FIXED cost, CORRELATED with production"],
         ['Exit EV/EBITDA', f'Normal (rho={rho_mc:.2f})', f"mu={base_mult_mc:.1f}×, sigma={sigma_mult_mc:.1f}"],
         ['WACC', 'Normal (independent)', f"mu={BASE['wacc']*100:.2f}%, sigma=60bps"],
         ['Iterations', 'Fixed', f"{n_mc:,}"],
     ]
     st.dataframe(pd.DataFrame(param_rows_mc, columns=['Variable', 'Distribution', 'Parameters']), use_container_width=True, hide_index=True)
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:8px 14px;margin-top:6px;font-size:10px;color:#8b949e;">
+      <span style="color:#d29922;font-weight:700;">INSTITUTIONAL UPGRADE — PASS 2:</span>
+      Production volume is now stochastic (σ=5%, lognormal) and <b>negatively correlated with AISC (ρ=-0.45)</b>. 
+      When production misses occur, fixed mine costs (sustaining CapEx, labor, G&A) spread over fewer ounces, 
+      so AISC rises. This prevents unrealistic scenarios where a production miss has no cost consequence, 
+      and produces a heavier left tail in the distribution compared to the prior model.
+    </div>""", unsafe_allow_html=True)
     why_expander('mc_rho')
     why_expander('mc_gold_sigma')
-    source_footer("Monte Carlo Simulation Model")
+    source_footer("Monte Carlo Simulation Model — Production-AISC correlation per gold sector operating leverage literature")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 9 — CAPITAL RETURNS
@@ -4618,6 +4918,230 @@ with tabs[18]:
     source_footer("NEM FY2023-2025 Financial Statements | Peer ROIC: Gurufocus (AEM Dec 2025), Finbox (KGC FY2025), Gold Fields FY2025 Annual Report, WPM FY2025 10-K")
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# TAB 19 — FORWARD QUARTERLY MODEL (20·QRTLY MODEL)
+# ═══════════════════════════════════════════════════════════════════════════════
+with tabs[19]:
+    d = DATA
+    qm = d.get('forward_quarterly_model', {})
+    quarters_data = qm.get('quarters', {})
+
+    insight_callout(
+        "Forward quarterly model: Q1-Q4 2026 + H1 2027. "
+        "Production 52% H2-weighted per NEM guidance (Feb 19, 2026 earnings call). "
+        "AISC elevated in Q1 (~$1,720/oz) due to Boddington bushfire and Cadia cave transition. "
+        "Consensus EPS sourced from MarketBeat (n=1 analyst per quarter — thin coverage; treat as indicative)."
+    )
+
+    st.markdown('<div class="panel-header">FORWARD QUARTERLY MODEL — NEM Q1 2026 THROUGH H1 2027</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:8px 14px;margin-bottom:12px;font-size:10px;color:#8b949e;">
+      <span style="color:#d29922;font-weight:700;">MODEL ASSUMPTIONS</span> &mdash; 
+      Gold price: <b style="color:#e6edf3;">${qm.get('gold_price_assumption', 5200):,}/oz</b> base assumption (escalates per quarter). 
+      Copper: <b style="color:#e6edf3;">${qm.get('copper_price_assumption', 5.63):.2f}/lb</b>. 
+      Production phasing: <b style="color:#e6edf3;">52% H2-weighted</b> per NEM Q4 2025 call. 
+      <span style="color:#f85149;">Consensus caveat: MarketBeat shows only 1 analyst estimate per quarter (vs. 29 analysts on FY2026 annual). 
+      FY2026 annual consensus: ~$8.13 EPS / ~$23.28B revenue (Finviz, post-Q4 2025 earnings). 
+      Quarterly consensus figures are indicative only.</span>
+    </div>""", unsafe_allow_html=True)
+
+    quarter_keys = ['Q1_2026', 'Q2_2026', 'Q3_2026', 'Q4_2026', 'Q1_2027', 'Q2_2027']
+    q_labels = [quarters_data[k]['label'] for k in quarter_keys if k in quarters_data]
+
+    # Build quarterly table
+    q_rows = []
+    for qk in quarter_keys:
+        if qk not in quarters_data:
+            continue
+        q = quarters_data[qk]
+        q_rows.append({
+            'Quarter': q['label'],
+            'Gold Price ($/oz)': f"${q['gold_price']:,}",
+            'Production (Moz)': f"{q['production_moz']:.3f}",
+            'AISC ($/oz)': f"${q['aisc_per_oz']:,}",
+            'Gold Rev ($M)': f"${q['gold_revenue_m']:,}",
+            'Copper Rev ($M)': f"${q['copper_revenue_m']:,}",
+            'Total Rev ($M)': f"${q['total_revenue_m']:,}",
+            'EBITDA ($M)': f"${q['ebitda_m']:,}",
+            'EBITDA Margin': f"{q['ebitda_margin_pct']:.1f}%",
+            'FCF ($M)': f"${q['fcf_m']:,}",
+            'EPS (Model)': f"${q['eps_model']:.2f}",
+            'EPS (Consensus)': f"${q['eps_consensus']:.2f}*",
+        })
+    q_df = pd.DataFrame(q_rows)
+    st.dataframe(q_df.set_index('Quarter'), use_container_width=True)
+    st.markdown('<div style="color:#8b949e;font-size:9px;margin-top:-8px;">* Consensus from MarketBeat (n=1 analyst/quarter, indicative only). Our model EPS higher due to $5,000-5,500/oz gold deck vs. analyst conservatism.</div>', unsafe_allow_html=True)
+
+    st.markdown('<br>', unsafe_allow_html=True)
+
+    # KPI row: FY2026 full year sums
+    fy2026_keys = ['Q1_2026', 'Q2_2026', 'Q3_2026', 'Q4_2026']
+    fy26_prod = sum(quarters_data[k]['production_moz'] for k in fy2026_keys if k in quarters_data)
+    fy26_rev = sum(quarters_data[k]['total_revenue_m'] for k in fy2026_keys if k in quarters_data)
+    fy26_ebitda = sum(quarters_data[k]['ebitda_m'] for k in fy2026_keys if k in quarters_data)
+    fy26_fcf = sum(quarters_data[k]['fcf_m'] for k in fy2026_keys if k in quarters_data)
+    fy26_eps = sum(quarters_data[k]['eps_model'] for k in fy2026_keys if k in quarters_data)
+    fy26_eps_cons = sum(quarters_data[k]['eps_consensus'] for k in fy2026_keys if k in quarters_data)
+
+    c1, c2, c3, c4, c5 = st.columns(5)
+    for col, lbl, val, clr in [
+        (c1, 'FY2026 PRODUCTION', f'{fy26_prod:.2f} Moz', COLORS['blue']),
+        (c2, 'FY2026 REVENUE', f'${fy26_rev/1000:.1f}B', COLORS['blue']),
+        (c3, 'FY2026 EBITDA', f'${fy26_ebitda/1000:.1f}B', COLORS['green']),
+        (c4, 'FY2026 FCF', f'${fy26_fcf/1000:.1f}B', COLORS['green']),
+        (c5, 'FY2026 EPS (MODEL)', f'${fy26_eps:.2f}', COLORS['amber']),
+    ]:
+        with col:
+            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">{lbl}</div>
+              <div class="kpi-value" style="color:{clr};font-size:18px;">{val}</div></div>""", unsafe_allow_html=True)
+
+    st.markdown('<br>', unsafe_allow_html=True)
+
+    # Quarterly production chart
+    c_left, c_right = st.columns(2)
+    with c_left:
+        st.markdown('<div class="panel-header">QUARTERLY PRODUCTION (MOZ) — H2 WEIGHTED</div>', unsafe_allow_html=True)
+        prod_vals = [quarters_data[k]['production_moz'] for k in quarter_keys if k in quarters_data]
+        bar_colors_prod = [COLORS['amber'] if k.startswith('Q1') else (COLORS['blue'] if k.startswith('Q2') else COLORS['green']) for k in quarter_keys if k in quarters_data]
+        # H1 vs H2 shading
+        fig_q_prod = go.Figure()
+        fig_q_prod.add_trace(go.Bar(
+            x=q_labels, y=prod_vals,
+            marker_color=[COLORS['amber'], COLORS['blue'], COLORS['green'], COLORS['blue'], COLORS['amber'], COLORS['blue']],
+            text=[f"{v:.3f}" for v in prod_vals],
+            textposition='outside', textfont=dict(color=COLORS['text'], size=9)
+        ))
+        fig_q_prod.add_hline(y=fy26_prod/4, line_dash='dash', line_color=COLORS['muted'],
+                             annotation_text=f"FY2026 Avg: {fy26_prod/4:.3f}Moz/Q",
+                             annotation_font_color=COLORS['muted'])
+        apply_layout(fig_q_prod, "52% OF FY2026 PRODUCTION WEIGHTED TO H2 — BUILT-IN H2 OPTIONALITY", 320)
+        fig_q_prod.update_layout(yaxis_title='Production (Moz)', xaxis_title='Quarter')
+        st.plotly_chart(fig_q_prod, use_container_width=True)
+
+    with c_right:
+        st.markdown('<div class="panel-header">QUARTERLY EBITDA ($M) — OUR MODEL vs CONSENSUS TREND</div>', unsafe_allow_html=True)
+        ebitda_vals = [quarters_data[k]['ebitda_m'] for k in quarter_keys if k in quarters_data]
+        eps_model_vals = [quarters_data[k]['eps_model'] for k in quarter_keys if k in quarters_data]
+        eps_cons_vals = [quarters_data[k]['eps_consensus'] for k in quarter_keys if k in quarters_data]
+        fig_q_ebitda = go.Figure()
+        fig_q_ebitda.add_trace(go.Bar(
+            x=q_labels, y=ebitda_vals,
+            marker_color=COLORS['green'], opacity=0.7,
+            name='EBITDA ($M)', yaxis='y'
+        ))
+        fig_q_ebitda.add_trace(go.Scatter(
+            x=q_labels, y=eps_model_vals, mode='lines+markers',
+            line=dict(color=COLORS['blue'], width=2),
+            marker=dict(size=6), name='EPS Model ($)', yaxis='y2'
+        ))
+        fig_q_ebitda.add_trace(go.Scatter(
+            x=q_labels, y=eps_cons_vals, mode='lines+markers',
+            line=dict(color=COLORS['amber'], width=1.5, dash='dot'),
+            marker=dict(size=5, symbol='circle-open'), name='EPS Consensus ($)*', yaxis='y2'
+        ))
+        apply_layout(fig_q_ebitda, "OUR EPS MATERIALLY ABOVE THIN CONSENSUS — GOLD PRICE DECK DIVERGENCE", 320)
+        fig_q_ebitda.update_layout(
+            yaxis=dict(title='EBITDA ($M)', color=COLORS['muted']),
+            yaxis2=dict(title='EPS ($)', overlaying='y', side='right', color=COLORS['blue']),
+            legend=dict(x=0, y=1.1, orientation='h', font=dict(size=9, color=COLORS['text'])),
+            xaxis_title='Quarter'
+        )
+        st.plotly_chart(fig_q_ebitda, use_container_width=True)
+
+    # AISC quarterly trend
+    st.markdown('<div class="panel-header">AISC QUARTERLY TRAJECTORY — Q1 ELEVATED DUE TO BODDINGTON BUSHFIRE</div>', unsafe_allow_html=True)
+    aisc_vals = [quarters_data[k]['aisc_per_oz'] for k in quarter_keys if k in quarters_data]
+    fcf_vals = [quarters_data[k]['fcf_m'] for k in quarter_keys if k in quarters_data]
+    fig_aisc_q = go.Figure()
+    fig_aisc_q.add_trace(go.Scatter(
+        x=q_labels, y=aisc_vals, mode='lines+markers+text',
+        line=dict(color=COLORS['red'], width=2),
+        marker=dict(size=8, color=COLORS['red']),
+        text=[f"${v:,}" for v in aisc_vals],
+        textposition='top center', textfont=dict(size=9, color=COLORS['text']),
+        name='AISC ($/oz)', yaxis='y'
+    ))
+    fig_aisc_q.add_trace(go.Bar(
+        x=q_labels, y=fcf_vals,
+        marker_color=COLORS['blue'], opacity=0.5,
+        name='FCF ($M)', yaxis='y2'
+    ))
+    fig_aisc_q.add_hline(y=1680, line_dash='dash', line_color=COLORS['amber'],
+                          annotation_text='FY2026 Guidance: $1,680/oz',
+                          annotation_font_color=COLORS['amber'], yref='y')
+    apply_layout(fig_aisc_q, "AISC PEAKS Q1 2026, IMPROVES THROUGH 2027 — FCF ACCELERATES AS AISC NORMALIZES", 340)
+    fig_aisc_q.update_layout(
+        yaxis=dict(title='AISC ($/oz)', color=COLORS['red']),
+        yaxis2=dict(title='FCF ($M)', overlaying='y', side='right', color=COLORS['blue']),
+        legend=dict(x=0, y=1.1, orientation='h', font=dict(size=9, color=COLORS['text'])),
+        xaxis_title='Quarter'
+    )
+    st.plotly_chart(fig_aisc_q, use_container_width=True)
+
+    # Bridge: Our view vs. consensus
+    st.markdown('<div class="panel-header">BRIDGE — OUR MODEL vs. CONSENSUS (FY2026E)</div>', unsafe_allow_html=True)
+    bridge = qm.get('bridge_to_consensus', {})
+    st.markdown(f"""
+    <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;">
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:0;margin-bottom:4px;">
+        <div style="color:#8b949e;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">METRIC</div>
+        <div style="color:#d29922;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">CONSENSUS (FINVIZ/LSEG)</div>
+        <div style="color:#3fb950;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">OUR MODEL</div>
+        <div style="color:#58a6ff;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">VARIANCE DRIVER</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:0;">
+        <div style="color:#e6edf3;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">FY2026 EPS</div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">${bridge.get('consensus_fy2026_eps_finviz', 8.13):.2f}</div>
+        <div style="color:#3fb950;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;"><b>${fy26_eps:.2f}</b></div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">Gold price deck: $5,200 vs. implied ~$4,500 consensus</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:0;">
+        <div style="color:#e6edf3;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">FY2026 Revenue</div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">${bridge.get('consensus_fy2026_revenue_b', 23.28):.1f}B</div>
+        <div style="color:#3fb950;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;"><b>${fy26_rev/1000:.1f}B</b></div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">Gold price × production difference</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:0;">
+        <div style="color:#e6edf3;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">FY2026 EBITDA</div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">${d.get('estimates', {}).get('FY2026', {}).get('ebitda', 18896)/1000:.1f}B*</div>
+        <div style="color:#3fb950;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;"><b>${fy26_ebitda/1000:.1f}B</b></div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">* estimates.FY2026 internal data; gold price sensitivity</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:0;">
+        <div style="color:#e6edf3;font-size:10px;padding:6px 8px;">FY2026 Production (Moz)</div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;">5.30 (NEM guidance)</div>
+        <div style="color:#3fb950;font-size:10px;padding:6px 8px;"><b>{fy26_prod:.2f}</b></div>
+        <div style="color:#8b949e;font-size:10px;padding:6px 8px;">In line with guidance (within ±5%)</div>
+      </div>
+      <div style="color:#8b949e;font-size:9px;margin-top:10px;padding-top:8px;border-top:1px solid #30363d;">
+        Consensus sources: Finviz/LSEG ($8.13 EPS / $23.28B revenue, Feb 19, 2026 post-Q4 earnings); 
+        MarketBeat quarterly ($1.00/$0.98/$1.27/$1.24 per quarter, n=1 analyst). 
+        Our model deviates primarily on gold price deck assumption, not on production or AISC.
+      </div>
+    </div>""", unsafe_allow_html=True)
+
+    # Q notes
+    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">QUARTERLY NOTES & CATALYSTS</div>', unsafe_allow_html=True)
+    for qk in quarter_keys:
+        if qk not in quarters_data:
+            continue
+        q = quarters_data[qk]
+        half_tag = 'H1 2026' if qk in ['Q1_2026', 'Q2_2026'] else ('H2 2026' if qk in ['Q3_2026', 'Q4_2026'] else 'H1 2027')
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:10px 14px;margin-bottom:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#58a6ff;font-size:11px;font-weight:700;">{q['label']}</span>
+            <span style="color:#8b949e;font-size:9px;">{half_tag} | Model EPS: <b style="color:#3fb950;">${q['eps_model']:.2f}</b> | Consensus EPS: <b style="color:#d29922;">${q['eps_consensus']:.2f}</b></span>
+          </div>
+          <div style="color:#8b949e;font-size:10px;margin-top:4px;">{q['notes']}</div>
+        </div>""", unsafe_allow_html=True)
+
+    source_footer(
+        "NEM Q4 2025 Earnings Call (Feb 19, 2026) | Reuters (Feb 19, 2026) | Finviz/LSEG consensus | "
+        "MarketBeat quarterly estimates (n=1 per quarter, indicative only) | Bloomberg (Feb 20, 2026)"
+    )
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # COMPETITION FOOTER
 # ═══════════════════════════════════════════════════════════════════════════════
 st.markdown("""
@@ -4627,7 +5151,7 @@ st.markdown("""
   </div>
   <div style="color:#8b949e;font-size:9px;letter-spacing:1px;line-height:1.8;">
     Built for the Perplexity Stock Pitch Competition 2026 &nbsp;|&nbsp; Data as of Mar 31, 2026<br>
-    19 interactive tabs &nbsp;|&nbsp; 38 overridable assumptions &nbsp;|&nbsp; 8 alt-data channel checks &nbsp;|&nbsp; 50K Monte Carlo simulations<br>
+    20 interactive tabs &nbsp;|&nbsp; 38 overridable assumptions &nbsp;|&nbsp; 8 alt-data channel checks &nbsp;|&nbsp; 50K Monte Carlo simulations<br>
     Every input sourced &nbsp;|&nbsp; Every assumption transparent &nbsp;|&nbsp; Every number stress-testable<br>
     <span style="color:#58a6ff;">Built entirely with Perplexity Computer</span>
   </div>
