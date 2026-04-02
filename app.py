@@ -1129,12 +1129,12 @@ with tabs[0]:
     <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;">
       <div style="color:#8b949e;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">WHERE TO GO FROM HERE</div>
       <div style="color:#e6edf3;font-size:10px;line-height:1.8;">
-        <b style="color:#58a6ff;">01&middot;CMD</b> &mdash; The dashboard. Key metrics, thesis statement, what the market is missing.<br>
-        <b style="color:#58a6ff;">05&middot;DCF</b> &mdash; Full 5-year FCFF model. Every assumption is overridable.<br>
-        <b style="color:#58a6ff;">07&middot;RISK</b> &mdash; Scenario analysis including the alt-data risks I found.<br>
-        <b style="color:#58a6ff;">11&middot;ALT DATA</b> &mdash; All 8 channel checks with raw findings and signal ratings.<br>
-        <b style="color:#58a6ff;">13&middot;CREDIBILITY</b> &mdash; The 10-year guidance study. The charts that almost killed the thesis.<br>
-        <b style="color:#58a6ff;">14&middot;VERDICT</b> &mdash; Convergence framework. Four independent methods, one conclusion.
+        <b style="color:#58a6ff;">02&middot;CMD</b> &mdash; The dashboard. Key metrics, thesis statement, what the market is missing.<br>
+        <b style="color:#58a6ff;">06&middot;DCF</b> &mdash; Full 5-year FCFF model. Every assumption is overridable.<br>
+        <b style="color:#58a6ff;">08&middot;RISK</b> &mdash; Scenario analysis including the alt-data risks I found.<br>
+        <b style="color:#58a6ff;">12&middot;ALT DATA</b> &mdash; All 8 channel checks with raw findings and signal ratings.<br>
+        <b style="color:#58a6ff;">14&middot;CREDIBILITY</b> &mdash; The 10-year guidance study. The charts that almost killed the thesis.<br>
+        <b style="color:#58a6ff;">15&middot;VERDICT</b> &mdash; Convergence framework. Four independent methods, one conclusion.
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -1199,7 +1199,7 @@ with tabs[1]:
         <b style="color:#f85149;">${BASE['implied_gold']:,.0f}/oz</b> —
         <b style="color:#f85149;">{BASE['gold_gap_pct']:.0f}% below spot</b>.
         But three things the sell-side isn't modeling: (1) zero major gold discoveries in 2023-2024 with 17.8-year
-        mine development lead times means supply <i>cannot</i> respond — NEM's 96 Moz reserve base becomes a structural
+        mine development lead times means supply <i>cannot</i> respond — NEM's {d['nem_operational']['reserves_moz']:.0f} Moz reserve base becomes a structural
         moat; (2) copper optionality from Cadia (expanding to 150 kt Cu/yr) is a backdoor AI data center play
         worth ~$8-10/share that pure gold miners can't replicate; (3) management's guidance miss has compressed
         from -11.8% to -0.2%, but 0 of 18 sell-side models we reviewed apply a credibility haircut.
@@ -3719,7 +3719,37 @@ with tabs[14]:
     # --- CONVERGENCE BAR CHART ---
     st.markdown('<div class="panel-header">FOUR METHODS CONVERGE ON UNDERVALUATION</div>', unsafe_allow_html=True)
     val_methods = ['DCF', 'P/NAV', 'MC Sim Median', 'Rel Val Est.']
-    val_prices = [B['dcf_price'], B['nav_price'], 135.28, 130.0]
+    # MC Sim Median: approximate via quick scenario pricing
+    def _quick_sc_price(gold_y1_sc, prod_sc, cogs_mult, mult_sc, wacc_sc):
+        rows_sc = []
+        for i in range(5):
+            g_px = gold_y1_sc * (1.03 ** i)
+            tr = g_px * prod_sc + B['other_rev']
+            ebit_sc = tr * (1 - B['cogs_pct'] * cogs_mult - B['sga_pct'] - B['opex_pct'])
+            ebitda_sc = ebit_sc + tr * B['da_pct']
+            nopat_sc = ebit_sc * (1 - B['effective_tax'])
+            fcff_sc = nopat_sc + tr * B['da_pct'] - tr * B['capex_pct'] - tr * B['wc_pct']
+            rows_sc.append({'ebitda': ebitda_sc, 'pv_fcff': fcff_sc / (1 + wacc_sc) ** (i + 0.5)})
+        df_sc = pd.DataFrame(rows_sc)
+        tv_sc = df_sc.iloc[-1]['ebitda'] * mult_sc
+        pv_tv_sc = tv_sc / (1 + wacc_sc) ** 4.5
+        ev_sc = df_sc['pv_fcff'].sum() + pv_tv_sc
+        return (ev_sc - B['total_debt_val'] - B['minority'] + B['cash']) / B['shares_m']
+    _bull_px = _quick_sc_price(st.session_state.get('bull_gold', 6300), 6.2, 0.95, 12.0, B['wacc'] - 0.01)
+    _base_px = _quick_sc_price(B['gold_y1'], 5.9, 1.0, st.session_state.get('exit_multiple', 9.5), B['wacc'])
+    _bear_px = _quick_sc_price(st.session_state.get('bear_gold', 3500), 5.3, 1.20, 7.0, B['wacc'] + 0.02)
+    _stress_px = _quick_sc_price(st.session_state.get('stress_gold', 2500), 4.8, 1.35, 5.0, B['wacc'] + 0.03)
+    _mc_median_approx = (
+        _bull_px * st.session_state.get('prob_bull', 20) / 100 +
+        _base_px * st.session_state.get('prob_base', 50) / 100 +
+        _bear_px * st.session_state.get('prob_bear', 25) / 100 +
+        _stress_px * st.session_state.get('prob_stress', 5) / 100
+    )
+    # Rel Val Implied: NEM at peer median EV/EBITDA
+    _peer_med_eveb = np.median([d['peer_ratios_latest'][p].get('ev_ebitda', 0) for p in ['AEM', 'KGC', 'GFI', 'WPM'] if d['peer_ratios_latest'][p].get('ev_ebitda')])
+    _nem_eveb = d['peer_ratios_latest']['NEM'].get('ev_ebitda', 1)
+    _rel_val_implied = B['price'] * (_peer_med_eveb / _nem_eveb) if _nem_eveb > 0 else B['price']
+    val_prices = [B['dcf_price'], B['nav_price'], _mc_median_approx, _rel_val_implied]
     val_colors_conv = [COLORS['green']] * len(val_methods)
     fig_convergence = go.Figure(go.Bar(
         x=val_methods, y=val_prices, marker_color=val_colors_conv,
