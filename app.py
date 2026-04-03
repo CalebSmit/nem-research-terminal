@@ -1174,6 +1174,9 @@ tabs = st.tabs([
 with tabs[0]:
     B = BASE
 
+    # ── PROMPT 3: Headline ──
+    st.markdown(f"**The market is pricing NEM as if gold falls to ${BASE['implied_gold']:,.0f}/oz — {BASE['gold_gap_pct']:.0f}% below spot. Four independent methods converge: this is the widest valuation gap among senior gold peers.**")
+
     # ── UX IMPROVEMENT: Hero KPI strip — immediate at-a-glance thesis summary ──
     _rec_bg = '#3fb950' if B['upside'] > 20 else ('#d29922' if B['upside'] > -20 else '#f85149')
     st.markdown(f"""
@@ -1560,7 +1563,8 @@ with tabs[0]:
 
     # --- CRITERION 4: BEFORE vs AFTER PERPLEXITY comparison (explicit evidence of iterative research) ---
     st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">BEFORE vs AFTER PERPLEXITY — HOW EACH TOOL CHANGED THE ANALYSIS</div>', unsafe_allow_html=True)
+    with st.expander("▶ Supporting Data — Perplexity Research Log & Tool Comparison", expanded=False):
+        st.markdown('<div class="panel-header">BEFORE vs AFTER PERPLEXITY — HOW EACH TOOL CHANGED THE ANALYSIS</div>', unsafe_allow_html=True)
     st.markdown("""
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #bc8cff;padding:8px 14px;margin-bottom:10px;font-size:10px;color:#8b949e;">
       <span style="color:#bc8cff;font-weight:700;">CRITERION 4 EVIDENCE:</span> The table below shows exactly what a <b>baseline analyst would have produced</b>
@@ -1652,7 +1656,12 @@ with tabs[0]:
       </div>
     </div>""", unsafe_allow_html=True)
 
+    # ── end of Perplexity Research Log expander ──
+
     source_footer("Primary Research: NEM 10-K/10-Q/8-K Filings, SEC Form 4, Earnings Transcripts Q1-Q4 2025, jobs.newmont.com, LinkedIn, Perplexity Finance, BHP, McKinsey, JPMorgan, IEA, ICSG, S&P Global, Ghana Minerals Commission, NSW Supreme Court | Mar 31, 2026", tier=1)
+
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Four analytical drivers established — the macro backdrop for gold determines whether the thesis stands →*")
 
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 2 — COMMAND CENTER
@@ -1666,6 +1675,9 @@ with tabs[1]:
     rec_color = BASE['rec_color']
     f25 = d['nem_annual_financials']['2025']
     gold_spot = BASE['gold_spot']
+
+    # ── PROMPT 3: Headline ──
+    st.markdown(f"**NEM: {BASE['recommendation']} — blended target ${BASE['blended_target']:.2f} ({BASE['upside']:+.1f}% upside). Three non-consensus drivers, four converging methods, one mispricing the market has not yet closed.**")
 
     # THESIS STATEMENT — OUR VIEW VS. CONSENSUS
     st.markdown(f"""
@@ -1931,7 +1943,8 @@ with tabs[1]:
     st.plotly_chart(fig_bridge, use_container_width=True)
 
     # Sparklines
-    st.markdown('<div class="panel-header">HISTORICAL TRENDS</div>', unsafe_allow_html=True)
+    with st.expander("▶ Supporting Data — Historical Trends & Falsifiable Scorecard", expanded=False):
+        st.markdown('<div class="panel-header">HISTORICAL TRENDS</div>', unsafe_allow_html=True)
     yrs_hist = ['2021', '2022', '2023', '2024', '2025']
     fcf_vals_h = [d['nem_annual_financials'][y]['fcf'] for y in yrs_hist]
     rev_vals_h = [d['nem_annual_financials'][y]['revenue'] for y in yrs_hist]
@@ -2030,7 +2043,12 @@ with tabs[1]:
       <div style="color:#8b949e;font-size:9px;">Assumes conditional independence (conservative; risks positively correlated in stress).</div>
     </div>""", unsafe_allow_html=True)
 
+    # ── end of historical trends & scorecard expander ──
+
     source_footer("NEM FY2021-2025 10-K Filings, Market Data", tier=1)
+
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*The thesis rests on gold staying above $3,000 — the macro evidence for that structural floor is on the next tab →*")
 
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 3 — GOLD MACRO
@@ -2038,6 +2056,9 @@ with tabs[1]:
 with tabs[2]:
     d = DATA
     gold_spot = BASE['gold_spot']
+
+    # ── PROMPT 3: Headline ──
+    st.markdown(f"**Gold demand reached a record 4,974 tonnes in 2024, central banks are buying at 2× pre-2022 rates, and zero major discoveries were made in 2023–2024 — structural supply-demand dynamics cannot support a return to ${BASE['implied_gold']:,.0f}/oz.**")
 
     insight_callout(f"The market prices NEM as if gold reverts to ${BASE['implied_gold']:,.0f}/oz. Central banks are buying 2× pre-2022 rates, zero major discoveries in 2023-2024, and bank consensus is ${int(np.mean([v['target'] for v in DATA['gold_macro']['bank_forecasts'].values()])):,}/oz. This tab answers one question: can gold actually fall {BASE['gold_gap_pct']:.0f}%? The evidence says no.")
 
@@ -2206,9 +2227,10 @@ with tabs[2]:
         Every $100/oz → <b style="color:#3fb950;">~${incremental_fcf_net:,.0f}M</b> after-tax FCF
       </span>
     </div>""", unsafe_allow_html=True)
-    # ══ PERPLEXITY PREMIUM DATA: ETF FLOW ANALYSIS ══════════════════════════
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">GOLD ETF FLOWS — INSTITUTIONAL DEMAND SIGNAL (WORLD GOLD COUNCIL)</div>', unsafe_allow_html=True)
+    with st.expander("▶ Supporting Data — Demand Drivers Detail (ETF Flows, Central Bank)", expanded=False):
+        # ══ PERPLEXITY PREMIUM DATA: ETF FLOW ANALYSIS ══════════════════════════
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">GOLD ETF FLOWS — INSTITUTIONAL DEMAND SIGNAL (WORLD GOLD COUNCIL)</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="background:#1a1f2e;border:2px solid #58a6ff;padding:0;margin-bottom:12px;overflow:hidden;">
       <div style="background:#58a6ff;padding:6px 16px;">
@@ -2293,9 +2315,12 @@ with tabs[2]:
         fig_cb_buyers.update_layout(yaxis_title='Gold Purchased (tonnes)')
         st.plotly_chart(fig_cb_buyers, use_container_width=True)
 
-    # ══ GOLD SUPPLY DISCOVERY CRISIS ══════════════════════════════════════════
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">SUPPLY-SIDE CRISIS — THE DISCOVERY DROUGHT CONTEXT FOR GOLD PRICE</div>', unsafe_allow_html=True)
+    # ── end of demand drivers expander ──
+
+    with st.expander("▶ Supporting Data — Why Supply Cannot Respond (Discovery Drought)", expanded=False):
+        # ══ GOLD SUPPLY DISCOVERY CRISIS ══════════════════════════════════════════
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">SUPPLY-SIDE CRISIS — THE DISCOVERY DROUGHT CONTEXT FOR GOLD PRICE</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="background:#1a1f2e;border:2px solid #f85149;padding:0;overflow:hidden;">
       <div style="background:#f85149;padding:6px 16px;">
@@ -2575,7 +2600,12 @@ with tabs[2]:
       <div style="color:#8b949e;font-size:9px;margin-top:8px;">Source: NEM FY2025 10-K, S&P Global Mining AISC Report (Oct 2025), Peer Filings (AEM, GOLD, KGC, GFI)</div>
     </div>""", unsafe_allow_html=True)
 
+    # ── end of supply crisis expander ──
+
     source_footer("World Gold Council Gold Demand Trends 2025 (Jan 2026); WGC Central Bank Survey 2025; S&P Global Market Intelligence (Jul & Oct 2025); Metals & Miners Substack (Feb 2026); LBMA; NEM FY2025 Filings — cross-referenced via Perplexity Premium search", tier=2)
+
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Gold's structural floor is established — the question becomes which miner captures the most operating leverage from it →*")
 
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 4 — COMPANY PROFILE (PROFILE + RETURNS + ROIC)
@@ -2584,6 +2614,9 @@ with tabs[3]:
     d = DATA
     f = d['nem_annual_financials']
     yrs_p = ['2021', '2022', '2023', '2024', '2025']
+
+    # ── PROMPT 3: Headline ──
+    st.markdown("**NEM recorded $7.3B in free cash flow in 2025 — a Piotroski 9/9 perfect score — while carrying net cash. The market still prices it as if the Goldcorp integration crisis never resolved.**")
 
     insight_callout("Two years ago this was a bloated, post-acquisition mess: 10% gross margin, negative FCF, a credibility crisis. Today: 50% gross margin, $7.3B record FCF, Piotroski 9/9, net cash. The question isn't whether NEM has improved — it's whether the market has noticed. Next: the mine-level data that explains how Driver 2 (Portfolio Transformation) actually happened.")
 
@@ -2647,23 +2680,24 @@ with tabs[3]:
         st.plotly_chart(fig_earn, use_container_width=True)
 
     # Piotroski + Altman
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="panel-header">PIOTROSKI F-SCORE BREAKDOWN</div>', unsafe_allow_html=True)
-        pio_scores = BASE['piotroski_scores']
-        total_pio = sum(pio_scores.values())
-        total_color_pio = COLORS['green'] if total_pio >= 7 else (COLORS['amber'] if total_pio >= 5 else COLORS['red'])
-        st.markdown(f'<div style="text-align:center;margin-bottom:12px;"><span style="font-size:28px;font-weight:700;color:{total_color_pio};">{total_pio}/9</span></div>', unsafe_allow_html=True)
-        for c_name, pf in pio_scores.items():
-            color_pf = COLORS['green'] if pf else COLORS['red']
-            bg_pf = 'rgba(63,185,80,0.08)' if pf else 'rgba(248,81,73,0.08)'
-            st.markdown(f"""
+    with st.expander("▶ Supporting Data — Piotroski F-Score & Altman Z-Score Detail", expanded=False):
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown('<div class="panel-header">PIOTROSKI F-SCORE BREAKDOWN</div>', unsafe_allow_html=True)
+            pio_scores = BASE['piotroski_scores']
+            total_pio = sum(pio_scores.values())
+            total_color_pio = COLORS['green'] if total_pio >= 7 else (COLORS['amber'] if total_pio >= 5 else COLORS['red'])
+            st.markdown(f'<div style="text-align:center;margin-bottom:12px;"><span style="font-size:28px;font-weight:700;color:{total_color_pio};">{total_pio}/9</span></div>', unsafe_allow_html=True)
+            for c_name, pf in pio_scores.items():
+                color_pf = COLORS['green'] if pf else COLORS['red']
+                bg_pf = 'rgba(63,185,80,0.08)' if pf else 'rgba(248,81,73,0.08)'
+                st.markdown(f"""
             <div style="display:flex;justify-content:space-between;padding:5px 10px;border-bottom:1px solid #30363d;background:{bg_pf};">
               <span style="color:#e6edf3;font-size:10px;flex:1;">{c_name}</span>
               <span style="color:{color_pf};font-size:10px;font-weight:600;">{'PASS' if pf else 'FAIL'}</span>
             </div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="panel-header">ALTMAN Z-SCORE</div>', unsafe_allow_html=True)
+        with c2:
+            st.markdown('<div class="panel-header">ALTMAN Z-SCORE</div>', unsafe_allow_html=True)
         az_v = BASE['altman_z']
         az_color_v = COLORS['green'] if az_v > 2.99 else (COLORS['amber'] if az_v > 1.81 else COLORS['red'])
         az_zone_v = "SAFE ZONE" if az_v > 2.99 else ("GREY ZONE" if az_v > 1.81 else "DISTRESS ZONE")
@@ -2929,12 +2963,18 @@ with tabs[3]:
         </div>""", unsafe_allow_html=True)
         source_footer("NEM FY2023-2025 Financial Statements | Peer ROIC: Gurufocus (AEM Dec 2025), Finbox (KGC FY2025), Gold Fields FY2025 Annual Report, WPM FY2025 10-K")
 
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Financial quality is now established — mine-level data reveals which assets are driving the transformation →*")
+
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 5 — MINE PORTFOLIO (MINES + COPPER)
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[4]:
     d = DATA
     mines = d['nem_operational']['mine_data']
+
+    # ── PROMPT 3: Headline ──
+    st.markdown("**Cadia operates at ~$400/oz AISC — the lowest cost major gold mine globally — while Lihir adds 700 Koz/year scale. Three Tier-1 assets underpin over 60% of portfolio NAV.**")
 
     insight_callout("Three mines generate over 60% of NEM's NAV: Cadia ($400/oz AISC), Lihir (700 Koz scale), and Boddington (reliable cash cow). The rest of the portfolio is optionality. Understanding which mines carry the thesis — and which are noise — is the difference between a conviction call and a hope trade.")
 
@@ -3008,23 +3048,24 @@ with tabs[4]:
       </div>
     </div>""", unsafe_allow_html=True)
 
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="panel-header">MINE-LEVEL AISC (SORTED)</div>', unsafe_allow_html=True)
-        sorted_mines = sorted(zip(mine_names, mine_aisc, mine_prod), key=lambda x: x[1])
-        sm_names = [x[0] for x in sorted_mines]
-        sm_aisc = [x[1] for x in sorted_mines]
-        aisc_bar_colors = [COLORS['green'] if a < 1000 else (COLORS['amber'] if a < 1400 else COLORS['red']) for a in sm_aisc]
-        fig_aisc_mine = go.Figure(go.Bar(x=sm_aisc, y=sm_names, orientation='h', marker_color=aisc_bar_colors,
-            text=[f'${a:,}' for a in sm_aisc], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
-        portfolio_avg = sum(m_a * p_a for m_a, p_a in zip(mine_aisc, mine_prod)) / sum(mine_prod)
-        fig_aisc_mine.add_vline(x=portfolio_avg, line_dash='dash', line_color=COLORS['blue'],
-                                annotation_text=f"Portfolio avg: ${portfolio_avg:.0f}", annotation_font_color=COLORS['blue'])
-        apply_layout(fig_aisc_mine, "CADIA AT $400/oz ANCHORS THE PORTFOLIO — 4 MINES BELOW $1,200", 380)
-        fig_aisc_mine.update_layout(xaxis_title='All-In Sustaining Cost ($/oz)')
-        st.plotly_chart(fig_aisc_mine, use_container_width=True)
-    with c2:
-        st.markdown('<div class="panel-header">PRODUCTION TREEMAP</div>', unsafe_allow_html=True)
+    with st.expander("▶ Supporting Data — AISC Rankings, Production Treemap & Tier-1 Spotlights", expanded=False):
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown('<div class="panel-header">MINE-LEVEL AISC (SORTED)</div>', unsafe_allow_html=True)
+            sorted_mines = sorted(zip(mine_names, mine_aisc, mine_prod), key=lambda x: x[1])
+            sm_names = [x[0] for x in sorted_mines]
+            sm_aisc = [x[1] for x in sorted_mines]
+            aisc_bar_colors = [COLORS['green'] if a < 1000 else (COLORS['amber'] if a < 1400 else COLORS['red']) for a in sm_aisc]
+            fig_aisc_mine = go.Figure(go.Bar(x=sm_aisc, y=sm_names, orientation='h', marker_color=aisc_bar_colors,
+                text=[f'${a:,}' for a in sm_aisc], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
+            portfolio_avg = sum(m_a * p_a for m_a, p_a in zip(mine_aisc, mine_prod)) / sum(mine_prod)
+            fig_aisc_mine.add_vline(x=portfolio_avg, line_dash='dash', line_color=COLORS['blue'],
+                                    annotation_text=f"Portfolio avg: ${portfolio_avg:.0f}", annotation_font_color=COLORS['blue'])
+            apply_layout(fig_aisc_mine, "CADIA AT $400/oz ANCHORS THE PORTFOLIO — 4 MINES BELOW $1,200", 380)
+            fig_aisc_mine.update_layout(xaxis_title='All-In Sustaining Cost ($/oz)')
+            st.plotly_chart(fig_aisc_mine, use_container_width=True)
+        with c2:
+            st.markdown('<div class="panel-header">PRODUCTION TREEMAP</div>', unsafe_allow_html=True)
         fig_tree = go.Figure(go.Treemap(
             labels=mine_names, parents=['Portfolio'] * len(mine_names), values=mine_prod,
             customdata=mine_aisc,
@@ -3041,8 +3082,8 @@ with tabs[4]:
             showarrow=False, font=dict(size=9, color=COLORS['muted']), xanchor='center')
         st.plotly_chart(fig_tree, use_container_width=True)
 
-    # Tier 1 spotlights
-    st.markdown('<div class="panel-header">TIER 1 ASSET SPOTLIGHTS</div>', unsafe_allow_html=True)
+        # Tier 1 spotlights
+        st.markdown('<div class="panel-header">TIER 1 ASSET SPOTLIGHTS</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
         st.markdown(f"""
@@ -3366,10 +3407,16 @@ with tabs[4]:
 
         source_footer("NEM FY2025 Annual Report, CME Copper Futures, IEA Copper Outlook, JPMorgan Commodities Research (Q2 2026), Bank of America Global Research (Feb 2026), S&P Global Market Intelligence (Jan 8, 2026), Microsoft Chicago AI Data Center Study — compiled via Perplexity Search + Finance", tier=2)
 
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Portfolio quality sets the ceiling — valuation determines whether the market has priced it in →*")
+
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 6 — VALUATION ENGINE (DCF + GLD COMPARISON)
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[5]:
+    # ── PROMPT 3: Headline ──
+    st.markdown(f"**DCF and P/NAV models converge: intrinsic value range ${BASE['dcf_price']:.0f}–${BASE['nav_price']:.0f}/share, blended ${BASE['blended_target']:.0f}. At NEM's current price of ${BASE['price']:.2f}, the market implies gold at ~${BASE['implied_gold']:,.0f}/oz — {BASE['gold_gap_pct']:.0f}% below spot.**")
+
     insight_callout(f"Even at a conservative $5,200/oz gold — 10% below spot — our DCF implies ${BASE['dcf_price']:.0f}/share ({((BASE['dcf_price'] / BASE['price']) - 1) * 100:+.0f}% vs. current ${BASE['price']:.2f}). The model does not depend on aggressive gold assumptions.")
 
 
@@ -3522,7 +3569,8 @@ with tabs[5]:
 
     # ══ ASSUMPTION TRANSPARENCY SCORECARD ══════════════════════════════════════
     st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">ASSUMPTION TRANSPARENCY SCORECARD — EVERY INPUT SOURCED</div>', unsafe_allow_html=True)
+    with st.expander("▶ Assumptions & Inputs — Full Transparency Scorecard (38 items)", expanded=False):
+        st.markdown('<div class="panel-header">ASSUMPTION TRANSPARENCY SCORECARD — EVERY INPUT SOURCED</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #3fb950;padding:8px 14px;margin-bottom:10px;font-size:9px;color:#8b949e;">
       <span style="color:#3fb950;font-weight:700;">RUBRIC: TRANSPARENCY & DEFENSIBILITY</span> — 
@@ -3795,6 +3843,8 @@ with tabs[5]:
         why_expander('ggm_growth')
 
     # P/NAV
+    # ── end of assumption scorecard expander ──
+
     st.markdown('<div class="panel-header">P/NAV MODEL — FULL BUILD</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
@@ -4603,6 +4653,9 @@ with tabs[5]:
         </div>""", unsafe_allow_html=True)
         source_footer("NEM Filings, GLD ETF Data, Model Calculations")
 
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Intrinsic value established — peer context quantifies how large the re-rating opportunity is versus comparable miners →*")
+
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 7 — PEER ANALYSIS
 # ═════════════════════════════════════════════════════════════════════════════
@@ -4630,6 +4683,9 @@ with tabs[6]:
     pe_discount_pct = ((nem_pe / median_pe) - 1) * 100 if median_pe else 0
     implied_price_rv = B['price'] * (median_ev / nem_ev) if nem_ev else B['price']
     rv_upside = ((implied_price_rv / B['price']) - 1) * 100
+
+    # ── PROMPT 3: Headline ──
+    st.markdown(f"**NEM trades at {nem_ev:.1f}× EV/EBITDA vs. a peer median of {median_ev:.1f}× — a {abs(ev_discount_pct):.0f}% discount despite a superior AISC trajectory. Full re-rating implies ${implied_price_rv:.2f}/share.**")
 
     insight_callout(f"NEM trades at {nem_ev:.1f}× EV/EBITDA — a {abs(ev_discount_pct):.0f}% {'discount' if ev_discount_pct < 0 else 'premium'} to the peer median of {median_ev:.1f}×. If NEM re-rated to the peer median, the implied share price is ${implied_price_rv:.2f} — {rv_upside:+.0f}% from today.")
 
@@ -4770,9 +4826,10 @@ with tabs[6]:
     fig_pe.update_layout(xaxis_title='P/E Ratio (x)', yaxis=dict(autorange='reversed'))
     st.plotly_chart(fig_pe, use_container_width=True)
 
-    # ══ B: FULL EQUITY RESEARCH COMP SHEET ══════════════════════════════════════
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">EQUITY RESEARCH COMP SHEET — 8 METRICS × 6 PEERS</div>', unsafe_allow_html=True)
+    with st.expander("▶ Peer Detail — Full Comp Sheet, Strategy Comparison & M&A Precedents", expanded=False):
+        # ══ B: FULL EQUITY RESEARCH COMP SHEET ══════════════════════════════════════
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">EQUITY RESEARCH COMP SHEET — 8 METRICS × 6 PEERS</div>', unsafe_allow_html=True)
 
     # Comprehensive peer data (realistic hardcoded — source: company filings, consensus estimates)
     comp_data = {
@@ -5369,7 +5426,12 @@ with tabs[6]:
       Sources: MarketScreener consensus (Apr 2026); forward estimates cross-referenced via Perplexity Finance.
     </div>""", unsafe_allow_html=True)
 
+    # ── end of peer detail expander ──
+
     source_footer("Yahoo Finance; Koyfin; NEM/AEM/KGC/GFI/WPM/GOLD Filings; JPMorgan NEM Initiation Mar 2026; Barrick GOLD FY2025 earnings; MarketScreener Consensus (Apr 2026); MarketBeat analyst ratings — cross-referenced via Perplexity Finance", tier=2)
+
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*The valuation discount is real and measurable — risk analysis quantifies how much gold would need to fall to eliminate it →*")
 
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 8 — RISK & SCENARIOS (RISK + MONTE CARLO)
@@ -5377,6 +5439,9 @@ with tabs[6]:
 with tabs[7]:
     d = DATA
     price_r = BASE['price']
+
+    # ── PROMPT 3: Headline ──
+    st.markdown("**Scenario analysis shows asymmetric risk-reward: NEM generates positive FCF at any gold price above ~$1,700/oz, while the bull case carries 60%+ upside. The probability-weighted expected value favors a long position across all realistic scenarios.**")
 
     insight_callout("Risk-reward is asymmetric: bull upside far exceeds bear downside because NEM has a hard cost floor — cash flow stays positive at any gold above ~$1,700/oz.")
 
@@ -5515,7 +5580,8 @@ with tabs[7]:
         </div>""", unsafe_allow_html=True)
     # RISK QUANTIFICATION TABLE — FCF impact of each risk (new analytical layer, not a repeat of Tab 01 narratives)
     st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">RISK QUANTIFICATION — WHAT EACH HEADWIND COSTS THE THESIS</div>', unsafe_allow_html=True)
+    with st.expander("▶ Supporting Data — Risk Quantification Table", expanded=False):
+        st.markdown('<div class="panel-header">RISK QUANTIFICATION — WHAT EACH HEADWIND COSTS THE THESIS</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="color:#8b949e;font-size:10px;margin-bottom:12px;line-height:1.5;">
       Tab 01 told the story. Tab 12 has the raw findings. This table answers the only question that matters:
@@ -5567,6 +5633,8 @@ with tabs[7]:
         </div>""", unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── end of risk quantification expander ──
 
     source_footer("Model Calculations, NEM Filings, Alternative Data Channel Checks (see ALT DATA tab)", tier=2)
 
@@ -5804,10 +5872,16 @@ with tabs[7]:
         why_expander('mc_gold_sigma')
         source_footer("Monte Carlo Simulation Model — Production-AISC correlation per gold sector operating leverage literature")
 
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Risk-reward confirmed as asymmetric — upcoming catalysts quantify the timeline for the discount to close →*")
+
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 9 — CATALYST MAP
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[8]:
+    # ── PROMPT 3: Headline ──
+    st.markdown("**Ten identified catalysts add ~$30/share in probability-weighted expected value through Q1 2027 — without any additional gold price appreciation required.**")
+
     insight_callout("Forward catalysts add ~$30/share in probability-weighted expected value — WITHOUT requiring gold price appreciation from current levels.")
 
 
@@ -5873,6 +5947,9 @@ with tabs[8]:
         st.plotly_chart(fig_cat_wf, use_container_width=True)
 
     with c2:
+        st.markdown('<div style="color:#8b949e;font-size:11px;padding:20px;text-align:center;">Catalyst timeline chart — expand below</div>', unsafe_allow_html=True)
+
+    with st.expander("▶ Supporting Data — Catalyst Timeline Chart", expanded=False):
         st.markdown('<div class="panel-header">CATALYST TIMELINE (Q1 2026 &ndash; Q1 2027)</div>', unsafe_allow_html=True)
         quarter_order = ['Q1 2026', 'Q2 2026', 'Q3 2026', 'Q4 2026', 'Q1 2027']
         quarter_map = {q: i for i, q in enumerate(quarter_order)}
@@ -5894,16 +5971,22 @@ with tabs[8]:
                        title=dict(text='Timeline', font=dict(color=COLORS['muted'], size=10))),
             yaxis=dict(gridcolor='rgba(0,0,0,0)'))
         fig_tl.add_vline(x=0, line_dash='solid', line_color=COLORS['amber'], line_width=1.5,
-            annotation_text='WE ARE HERE', annotation_position='top',
+            annotation_text='NOW', annotation_position='top',
             annotation_font=dict(size=9, color=COLORS['amber'], family='monospace'))
         st.plotly_chart(fig_tl, use_container_width=True)
 
     source_footer("NEM Investor Presentations, Earnings Calls")
 
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Catalyst timeline established — alternative data provides independent verification of the operational thesis →*")
+
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 10 — CHANNEL CHECKS
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[9]:
+    # ── PROMPT 3: Headline ──
+    st.markdown("**8 proprietary channel checks: 5 bullish signals, 1 neutral, 2 bearish. The bearish findings — insider selling and Ghana royalty hike — are documented and rebutted. Net signal: strongly bullish with identified downside triggers.**")
+
     insight_callout("8 independent alternative data channels researched. 5 bullish, 1 neutral, 2 bearish. The bearish findings (insider selling, Ghana royalty) are included because intellectual honesty scores higher than cheerleading.")
 
     # ══ NON-OBVIOUS INSIGHTS HERO BANNER ══════════════════════════════════════
@@ -6195,7 +6278,8 @@ with tabs[9]:
     </div>""", unsafe_allow_html=True)
     # --- CRITERION 3: DISCOVERY DROUGHT VISUAL + COMPETITIVE MOAT COMPARISON ---
     st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">SUPPLY-SIDE STRUCTURAL THESIS — THE DISCOVERY DROUGHT (NON-OBVIOUS INSIGHT)</div>', unsafe_allow_html=True)
+    with st.expander("▶ Supporting Data — Supply Drought Analysis & Competitive Moat", expanded=False):
+        st.markdown('<div class="panel-header">SUPPLY-SIDE STRUCTURAL THESIS — THE DISCOVERY DROUGHT (NON-OBVIOUS INSIGHT)</div>', unsafe_allow_html=True)
     st.markdown("""
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f85149;padding:8px 14px;margin-bottom:10px;font-size:10px;color:#8b949e;">
       <span style="color:#f85149;font-weight:700;">KEY NON-CONSENSUS INSIGHT:</span> Zero major gold discoveries (&ge;2 Moz) in 2023 AND 2024 —
@@ -6280,7 +6364,12 @@ with tabs[9]:
       </div>
     </div>""", unsafe_allow_html=True)
 
+    # ── end of supply drought expander ──
+
     source_footer("Channel checks compiled Mar 31, 2026. Primary sources: SEC EDGAR Form 4, S&P Global Market Intelligence, BHP Insights, Goldman Sachs Research, IEA, WGC, NSW Supreme Court, NSW EPA, Ghana Minerals Commission, NEM/AEM/GOLD/GFI/AU earnings releases, NEM Q1-Q4 2025 earnings transcripts. Full research: 8 reports, 40+ primary sources.", tier=3)
+
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Channel checks confirm the operational picture — ESG leadership provides the structural cost-of-capital advantage that supports the valuation →*")
 
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 11 — ESG & STEWARDSHIP
@@ -6288,6 +6377,9 @@ with tabs[9]:
 with tabs[10]:
     d = DATA
     esg = d['esg']
+
+    # ── PROMPT 3: Headline ──
+    st.markdown("**NEM ranks in the 99th percentile of the S&P CSA and holds an MSCI AA rating — qualifying for $30T+ in ESG-mandated index flows and ~15bp of debt spread compression that competitors cannot replicate.**")
 
     insight_callout("ESG isn't a feel-good sidebar — it's a cost-of-capital advantage. NEM's 99th percentile S&P CSA score and MSCI AA rating qualify it for $30T+ in ESG-mandated index flows. That means structural buying demand that Barrick (72nd pct) and Gold Fields don't get. It also shaves ~15bp off the cost of debt via credit spread compression. ESG leadership is priced into the WACC overlay in Tab 06.")
 
@@ -6355,7 +6447,8 @@ with tabs[10]:
     st.plotly_chart(fig_radar, use_container_width=True)
 
     # --- ESG PEER COMPARISON ---
-    st.markdown('<div class="panel-header">ESG PEER COMPARISON</div>', unsafe_allow_html=True)
+    with st.expander("▶ Peer Detail — ESG Peer Comparison & Honest Tensions", expanded=False):
+        st.markdown('<div class="panel-header">ESG PEER COMPARISON</div>', unsafe_allow_html=True)
     esg_peers = ['NEM', 'Barrick (GOLD)', 'Agnico Eagle (AEM)']
     esg_peer_scores = {
         'MSCI': [7, 5.5, 6],  # AA=7, A=5.5, AA=6
@@ -6406,12 +6499,20 @@ with tabs[10]:
         st.markdown(f"""<div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {clr_t};padding:16px 20px;margin-bottom:10px;">
           <div style="color:{clr_t};font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">{title_t}</div>
           <div style="color:#e6edf3;font-size:12px;line-height:1.6;">{text_t}</div></div>""", unsafe_allow_html=True)
+    # ── end of ESG peer comparison expander ──
+
     source_footer("NEM 2025 Sustainability Report, MSCI, Sustainalytics, S&P Global")
+
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*ESG leadership lowers cost of capital — management track record determines whether that advantage is sustainable →*")
 
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 12 — MANAGEMENT CREDIBILITY (CREDIBILITY + MGMT)
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[11]:
+    # ── PROMPT 3: Headline ──
+    st.markdown("**FY2025 AISC guidance: $1,620/oz. Actual: $1,358/oz — a $262/oz beat (16%). The street still prices the Goldcorp-era miss record; it has not priced the credibility flip.**")
+
     insight_callout("10-year study (2015-2025, excl. 2019 structural break): NEM beat production guidance in only 2 of 10 years. Average miss: -3.5%. But two distinct eras emerge — pre-Goldcorp accuracy was ±1%, post-Goldcorp was -5.4%. The 2024-2025 convergence to -0.4% suggests the integration tax is finally paid. This is Driver 3 — the Credibility Flip. With the case now built across three independent drivers, the final verdict is in 15·VERDICT.")
 
     # ══ AISC CREDIBILITY NON-CONSENSUS CALLOUT ═════════════════════════════════════
@@ -6637,7 +6738,8 @@ with tabs[11]:
     st.plotly_chart(fig_cred, use_container_width=True)
 
     # ── PEER CREDIBILITY COMPARISON — with year-by-year data ──
-    st.markdown('''<div class="panel-header">PEER CREDIBILITY COMPARISON (2020-2025)</div>''', unsafe_allow_html=True)
+    with st.expander("▶ Peer Detail — Peer Credibility Comparison (2020–2025)", expanded=False):
+        st.markdown('''<div class="panel-header">PEER CREDIBILITY COMPARISON (2020-2025)</div>''', unsafe_allow_html=True)
 
     # AEM row
     st.markdown(f'''
@@ -6813,6 +6915,8 @@ with tabs[11]:
 
     # ── GUIDANCE VS ACTUALS — PRODUCTION & AISC (merged from MGMT tab) ──
     st.markdown('<br>', unsafe_allow_html=True)
+    # ── end of peer credibility expander ──
+
     st.markdown('<div class="panel-header">GUIDANCE VS ACTUALS — PRODUCTION & AISC</div>', unsafe_allow_html=True)
     guide_data_c = [
         {'Year': 'FY2024', 'Metric': 'Production (Moz)', 'Guidance': '6.9', 'Actual': '6.8', 'Diff': '-0.1', 'Color': COLORS['amber']},
@@ -7020,12 +7124,18 @@ with tabs[11]:
 
         source_footer("NEM Proxy Statements, Earnings Calls, Annual Reports, Investor Presentations 2023-2025")
 
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Three independent drivers documented — the verdict synthesizes all methods into a single investment conclusion →*")
+
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 13 — THESIS VERDICT
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[12]:
     B = BASE
     d = DATA
+
+    # ── PROMPT 3: Headline ──
+    st.markdown(f"**{BASE['recommendation']} — blended target ${BASE['blended_target']:.2f} ({BASE['upside']:+.1f}% upside). The market is pricing NEM as if gold falls {BASE['gold_gap_pct']:.0f}% from spot. Eight independent methods converge: the stock is materially mispriced.**")
 
     # ═══════════════════════════════════════════════════════════════════════════
     # HERO SECTION — REVERSE DCF GAP (THE SINGLE MOST IMPORTANT INSIGHT)
@@ -7416,8 +7526,9 @@ with tabs[12]:
       </div>
     </div>""", unsafe_allow_html=True)
 
-    # ── GOLD PRICE SENSITIVITY: How target moves with gold ──
-    st.markdown('<div class="panel-header">GOLD PRICE SENSITIVITY — BLENDED TARGET AT DIFFERENT GOLD ASSUMPTIONS</div>', unsafe_allow_html=True)
+    with st.expander("▶ Scenario Breakdown — Gold Price Sensitivity Table", expanded=False):
+        # ── GOLD PRICE SENSITIVITY: How target moves with gold ──
+        st.markdown('<div class="panel-header">GOLD PRICE SENSITIVITY — BLENDED TARGET AT DIFFERENT GOLD ASSUMPTIONS</div>', unsafe_allow_html=True)
     _gold_scenarios = [3500, 4000, 4500, 5000, 5200, 5500, 6000]
     _sens_dcf_prices = []
     _sens_blended = []
@@ -7573,6 +7684,8 @@ with tabs[12]:
       </div>
     </div>""", unsafe_allow_html=True)
 
+    # ── end of gold sensitivity expander ──
+
     # KILL CRITERIA — pulled forward from Tab 01 for decision completeness
     st.markdown(f"""
     <div style="background:#0d1117;border:2px solid #f85149;padding:16px 20px;margin-top:16px;">
@@ -7587,8 +7700,9 @@ with tabs[12]:
         If any trigger fires, recommendation changes to SELL regardless of other factors. These are pre-committed, not discretionary.</div>
     </div>""", unsafe_allow_html=True)
 
-    # ── PERPLEXITY RESEARCH ADVANTAGE ──
-    st.markdown(f"""
+    with st.expander("▶ Methodology — Perplexity Research Advantage", expanded=False):
+        # ── PERPLEXITY RESEARCH ADVANTAGE ──
+        st.markdown(f"""
     <div style="background:#0d1117;border:3px solid {COLORS['blue']};padding:0;margin-top:24px;overflow:hidden;">
       <div style="background:linear-gradient(90deg, {COLORS['blue']} 0%, #1a2a4a 100%);padding:10px 22px;">
         <span style="color:#ffffff;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">
@@ -7724,7 +7838,12 @@ with tabs[12]:
         Copper optionality $12-15/share unpriced
       </div>
     </div>""", unsafe_allow_html=True)
+    # ── end of Perplexity Research Advantage expander ──
+
     source_footer("NEM Filings, Model Calculations", tier=1)
+
+    # ── PROMPT 3: Story connector ──
+    st.markdown("*Verdict delivered — the quarterly model maps the specific earnings dates at which the market is expected to reprice this gap →*")
 
 # ═════════════════════════════════════════════════════════════════════════════
 # TAB 14 — QUARTERLY MODEL
@@ -7733,6 +7852,9 @@ with tabs[13]:
     d = DATA
     qm = d.get('forward_quarterly_model', {})
     quarters_data = qm.get('quarters', {})
+
+    # ── PROMPT 3: Headline ──
+    st.markdown("**Production is 52% H2-weighted: Q1 2026 is the lowest point. Model EPS of ~$8.13 for FY2026 materially exceeds thin consensus — each quarterly print is a re-rating trigger.**")
 
     insight_callout(
         "Forward quarterly model: Q1-Q4 2026 + H1 2027. "
@@ -7947,7 +8069,8 @@ with tabs[13]:
 
     # ══ MINE-LEVEL QUARTERLY PHASING CONTEXT ════════════════════════════════
     st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">MINE-LEVEL PRODUCTION PHASING CONTEXT — FY2026 DRIVERS</div>', unsafe_allow_html=True)
+    with st.expander("▶ Supporting Data — Mine-Level Production Phasing & Reserve Replacement", expanded=False):
+        st.markdown('<div class="panel-header">MINE-LEVEL PRODUCTION PHASING CONTEXT — FY2026 DRIVERS</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #8b949e;padding:8px 14px;margin-bottom:12px;font-size:10px;color:#8b949e;">
       <span style="color:#d29922;font-weight:700;">PHASING NOTE</span> &mdash;
@@ -8185,6 +8308,9 @@ with tabs[13]:
         "NEM 2025 Mineral Reserves Release (Feb 19, 2026) | NEM 2024 Mineral Reserves Release (Feb 20, 2025) | "
         "Barrick 2024 Reserves Release (Feb 6, 2025)"
     )
+
+    # ── PROMPT 3: Story connector (final tab — loops back to thesis) ──
+    st.markdown("*The quarterly model closes the loop — return to the Thesis Narrative tab to see how every finding connects to the investment conclusion →*")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # COMPETITION FOOTER
