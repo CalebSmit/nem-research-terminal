@@ -4076,6 +4076,7 @@ with tabs[5]:
     </div>""", unsafe_allow_html=True)
     # ══ SECTION: COPPER STANDALONE NAV (NEW) ═════════════════════════════════
     st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: COPPER OPTION</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="background:#161b22;border:3px solid #d29922;padding:0;margin-bottom:16px;overflow:hidden;">
       <div style="background:#d29922;padding:8px 20px;">
@@ -4504,6 +4505,7 @@ with tabs[5]:
     source_footer("NEM Filings, Peer Data, Damodaran; SOTP discount rates per Damodaran country risk premium methodology; NGM JV: Bloomberg (Feb 20, 2026), FinancialContent/MarketMinute (Mar 10, 2026), NEM Q4 2025 earnings; Copper: NEM Feb 2026 guidance, mqworld.com; Pro-forma balance sheet: NEM Q4 2025 10-K (SEC, Feb 19, 2026); Reuters (Jan 23, 2026); Globe & Mail (Dec 1, 2025)")
 
     with st.expander("NEM vs GLD Comparison", expanded=False):
+        st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: OPERATING LEVERAGE</div>', unsafe_allow_html=True)
         d = DATA
         insight_callout("NEM is not a gold bet — it is a gold OPERATING LEVERAGE bet with a dividend, a cost floor, and copper optionality. GLD provides none of these.")
 
@@ -6976,6 +6978,7 @@ with tabs[11]:
     source_footer("NEM Annual Reports & Investor Day Presentations 2015-2025, AEM Q4 Reports 2020-2025, Barrick Q4 Reports 2020-2025, SEC EDGAR, Newmont.com, Barrick.com, AgnicoEagle.com, NEM Earnings Calls", tier=1)
 
     with st.expander("Leadership Profile", expanded=False):
+        st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: CREDIBILITY FLIP</div>', unsafe_allow_html=True)
         d = DATA
 
         insight_callout("New CEO Natascha Viljoen inherits NEM's best balance sheet since at least 2010 — net cash $7.2B, Piotroski 9/9. Her Anglo American Platinum track record (22% LTI reduction, 2019-2022) demonstrates operational execution. For guidance/EPS credibility data, see the 14-CREDIBILITY tab.")
