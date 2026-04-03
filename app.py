@@ -70,8 +70,8 @@ st.markdown("""
 
   .stTabs [aria-selected="true"] {
     background-color: #0d1117 !important;
-    color: #58a6ff !important;
-    border-bottom: 2px solid #58a6ff !important;
+    color: #f0b429 !important;
+    border-bottom: 2px solid #f0b429 !important;
   }
 
   .stTabs [data-baseweb="tab-panel"] {
@@ -83,12 +83,13 @@ st.markdown("""
     background-color: #30363d !important;
   }
   .stSlider > div > div > div > div {
-    background-color: #58a6ff !important;
+    background-color: #f0b429 !important;
   }
 
   [data-testid="metric-container"] {
     background-color: #161b22 !important;
     border: 1px solid #30363d !important;
+    border-left: 3px solid #f0b429 !important;
     padding: 12px 16px !important;
   }
 
@@ -100,9 +101,18 @@ st.markdown("""
   }
 
   [data-testid="metric-container"] > div > div:nth-child(2) > div {
-    color: #58a6ff !important;
+    color: #e6edf3 !important;
+    font-family: 'Courier New', Consolas, monospace !important;
     font-size: 24px !important;
     font-weight: 700 !important;
+  }
+
+  [data-testid="metric-container"] [data-testid="stMetricDelta"] svg {
+    display: none !important;
+  }
+  [data-testid="metric-container"] [data-testid="stMetricDelta"] > div {
+    font-family: 'Courier New', Consolas, monospace !important;
+    font-size: 12px !important;
   }
 
   .stDataFrame {
@@ -111,7 +121,8 @@ st.markdown("""
 
   .stDataFrame thead th {
     background-color: #161b22 !important;
-    color: #8b949e !important;
+    color: #f0b429 !important;
+    font-family: 'Courier New', Consolas, monospace !important;
     font-size: 10px !important;
     letter-spacing: 1px !important;
     text-transform: uppercase !important;
@@ -143,8 +154,8 @@ st.markdown("""
   }
 
   .stButton > button:hover {
-    border-color: #58a6ff !important;
-    color: #58a6ff !important;
+    border-color: #f0b429 !important;
+    color: #f0b429 !important;
   }
 
   .streamlit-expanderHeader {
@@ -177,14 +188,40 @@ st.markdown("""
 
   .css-1d391kg, [data-testid="stSidebar"] {
     background-color: #161b22 !important;
+    border-right: 1px solid #30363d !important;
   }
 
   [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
     color: #e6edf3 !important;
   }
 
+  /* Headings — gold accent */
+  h1, h2, h3 {
+    color: #f0b429 !important;
+    font-family: 'Consolas', 'SF Mono', 'Fira Code', monospace !important;
+  }
+
+  /* Form inputs */
+  input, select, textarea, [data-baseweb="input"], [data-baseweb="select"] {
+    background-color: #161b22 !important;
+    color: #e6edf3 !important;
+    border: 1px solid #30363d !important;
+  }
+
+  /* Alert / info boxes — dark backgrounds */
   .stInfo, .stWarning, .stError, .stSuccess {
     border-radius: 0 !important;
+    background-color: #161b22 !important;
+  }
+  .stAlert, [data-testid="stNotification"] {
+    background-color: #161b22 !important;
+    border: 1px solid #30363d !important;
+    color: #e6edf3 !important;
+  }
+
+  /* Monospace for all numbers in tables */
+  .stDataFrame td {
+    font-family: 'Courier New', Consolas, monospace !important;
   }
 
   ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -205,6 +242,7 @@ st.markdown("""
   .kpi-tile {
     background-color: #161b22;
     border: 1px solid #30363d;
+    border-left: 3px solid #f0b429;
     padding: 16px;
     text-align: center;
   }
@@ -220,7 +258,8 @@ st.markdown("""
   .kpi-value {
     font-size: 26px;
     font-weight: 700;
-    color: #58a6ff;
+    color: #e6edf3;
+    font-family: 'Courier New', Consolas, monospace;
     line-height: 1;
   }
 
@@ -241,7 +280,7 @@ st.markdown("""
   .terminal-header {
     background-color: #161b22;
     border: 1px solid #30363d;
-    border-bottom: 2px solid #58a6ff;
+    border-bottom: 2px solid #f0b429;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
@@ -256,19 +295,19 @@ st.markdown("""
   .driver-card {
     background-color: #161b22;
     border: 1px solid #30363d;
-    border-top: 2px solid #58a6ff;
+    border-top: 2px solid #f0b429;
     padding: 16px;
   }
 
   .num-green { color: #3fb950 !important; }
   .num-red   { color: #f85149 !important; }
   .num-amber { color: #d29922 !important; }
-  .num-blue  { color: #58a6ff !important; }
+  .num-gold  { color: #f0b429 !important; }
 
   .insight-callout {
     background: #161b22;
     border: 1px solid #30363d;
-    border-left: 3px solid #58a6ff;
+    border-left: 3px solid #f0b429;
     padding: 10px 16px;
     margin-bottom: 16px;
     font-size: 12px;
@@ -291,7 +330,7 @@ st.markdown("""
     color: #e6edf3 !important;
   }
   [data-testid="stSlider"] [role="slider"] {
-    background-color: #58a6ff !important;
+    background-color: #f0b429 !important;
   }
 
   /* ─── UX: STORY ARC NAVIGATION BAR ──────────────────────────────── */
@@ -320,7 +359,7 @@ st.markdown("""
   .story-arc .arc-phase:last-child { border-right: none; }
   .story-arc .arc-phase .arc-label { font-weight: 700; margin-bottom: 2px; }
   .story-arc .arc-phase .arc-tabs { font-size: 8px; color: #6e7681; letter-spacing: 1px; }
-  .story-arc .arc-phase.arc-setup { border-bottom: 2px solid #58a6ff; color: #58a6ff; }
+  .story-arc .arc-phase.arc-setup { border-bottom: 2px solid #f0b429; color: #f0b429; }
   .story-arc .arc-phase.arc-context { border-bottom: 2px solid #d29922; color: #d29922; }
   .story-arc .arc-phase.arc-valuation { border-bottom: 2px solid #3fb950; color: #3fb950; }
   .story-arc .arc-phase.arc-evidence { border-bottom: 2px solid #bc8cff; color: #bc8cff; }
@@ -344,7 +383,7 @@ st.markdown("""
     justify-content: center;
     gap: 0;
     background: #161b22;
-    border: 2px solid #58a6ff;
+    border: 2px solid #f0b429;
     margin-bottom: 20px;
     overflow: hidden;
   }
@@ -361,6 +400,7 @@ st.markdown("""
   }
   .hero-kpi-strip .hero-kpi .hk-value {
     font-size: 28px; font-weight: 700; line-height: 1;
+    font-family: 'Courier New', Consolas, monospace; color: #e6edf3;
   }
   .hero-kpi-strip .hero-kpi .hk-sub {
     font-size: 9px; color: #8b949e; margin-top: 4px;
@@ -386,7 +426,7 @@ PLOT_LAYOUT = dict(
     template='plotly_dark',
     paper_bgcolor='#161b22',
     plot_bgcolor='#161b22',
-    font=dict(family='Consolas, SF Mono, Fira Code, monospace', color='#8b949e', size=11),
+    font=dict(family='Courier New, Consolas, SF Mono, Fira Code, monospace', color='#8b949e', size=11),
     title_font=dict(color='#e6edf3', size=12),
     margin=dict(l=50, r=20, t=50, b=40),
     xaxis=dict(
@@ -407,7 +447,7 @@ PLOT_LAYOUT = dict(
 COLORS = {
     'bg': '#0d1117', 'panel': '#161b22', 'border': '#30363d',
     'text': '#e6edf3', 'muted': '#8b949e',
-    'blue': '#58a6ff', 'green': '#3fb950', 'red': '#f85149', 'amber': '#d29922',
+    'gold': '#f0b429', 'teal': '#00b4d8', 'green': '#3fb950', 'red': '#f85149', 'amber': '#d29922',
 }
 
 def apply_layout(fig, title='', height=400):
@@ -649,7 +689,7 @@ def slider_feedback(key, current_val, fmt=",.0f", prefix="$", suffix=""):
                     unsafe_allow_html=True)
 
 def insight_callout(text):
-    st.markdown(f'<div class="insight-callout"><span style="color:#58a6ff;font-weight:700;font-size:10px;letter-spacing:2px;">WHAT THE MARKET IS MISSING </span>{text}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="insight-callout"><span style="color:#f0b429;font-weight:700;font-size:10px;letter-spacing:2px;">WHAT THE MARKET IS MISSING </span>{text}</div>', unsafe_allow_html=True)
 
 def source_footer(source, date="Mar 31, 2026", tier=None):
     tier_badge = ""
@@ -912,7 +952,7 @@ BASE = run_base_calculations()
 
 # ─── SIDEBAR: MASTER CONTROL PANEL ───────────────────────────────────────────
 with st.sidebar:
-    st.markdown('<div style="color:#58a6ff;font-size:16px;font-weight:700;letter-spacing:3px;margin-bottom:4px;">⬛ NEM TERMINAL</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#f0b429;font-size:16px;font-weight:700;letter-spacing:3px;margin-bottom:4px;">⬛ NEM TERMINAL</div>', unsafe_allow_html=True)
     st.markdown('<div style="color:#8b949e;font-size:9px;letter-spacing:2px;">MASTER CONTROLS</div>', unsafe_allow_html=True)
     st.markdown("---")
 
@@ -1030,10 +1070,10 @@ mod_text = f'{mod_count} of {total_count} modified' if mod_count > 0 else f'All 
 mod_color_h = '#d29922' if mod_count > 0 else '#3fb950'
 
 st.markdown(f"""
-<div style="background:#161b22;border:1px solid #30363d;border-bottom:2px solid #58a6ff;
+<div style="background:#161b22;border:1px solid #30363d;border-bottom:2px solid #f0b429;
      padding:12px 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
   <div>
-    <span style="color:#58a6ff;font-size:14px;font-weight:700;letter-spacing:2px;">
+    <span style="color:#f0b429;font-size:14px;font-weight:700;letter-spacing:2px;">
       NEWMONT CORPORATION</span>
     <span style="color:#30363d;margin:0 10px;">│</span>
     <span style="color:#e6edf3;font-size:12px;">NYSE: NEM</span>
@@ -1063,7 +1103,7 @@ st.markdown(f"""
   <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-bottom:1px solid #30363d;">
     <div style="text-align:center;padding:12px 8px;border-right:1px solid #30363d;">
       <div style="color:#8b949e;font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Ticker</div>
-      <div style="color:#58a6ff;font-size:16px;font-weight:700;">NEM</div>
+      <div style="color:#f0b429;font-size:16px;font-weight:700;">NEM</div>
       <div style="color:#8b949e;font-size:8px;">NYSE</div>
     </div>
     <div style="text-align:center;padding:12px 8px;border-right:1px solid #30363d;">
@@ -1073,7 +1113,7 @@ st.markdown(f"""
     </div>
     <div style="text-align:center;padding:12px 8px;border-right:1px solid #30363d;">
       <div style="color:#8b949e;font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Price Target</div>
-      <div style="color:#58a6ff;font-size:16px;font-weight:700;">${BASE['blended_target']:.2f}</div>
+      <div style="color:#f0b429;font-size:16px;font-weight:700;">${BASE['blended_target']:.2f}</div>
       <div style="color:#8b949e;font-size:8px;">70% DCF / 30% P/NAV</div>
     </div>
     <div style="text-align:center;padding:12px 8px;border-right:1px solid #30363d;">
@@ -1100,7 +1140,7 @@ st.markdown(f"""
   <!-- Judge nav guide -->
   <div style="padding:10px 20px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:8px;">
     <div style="font-size:9px;color:#8b949e;line-height:1.5;">
-      <span style="color:#58a6ff;font-weight:700;">📖 01·STORY</span><br>
+      <span style="color:#f0b429;font-weight:700;">📖 01·STORY</span><br>
       How Perplexity shaped the thesis. Start here for Criterion 4.
     </div>
     <div style="font-size:9px;color:#8b949e;line-height:1.5;">
@@ -1187,8 +1227,8 @@ with tabs[0]:
         <div class="hk-sub">NYSE &middot; Mar 31 2026</div>
       </div>
       <div class="hero-kpi">
-        <div class="hk-label">Our Target</div>
-        <div class="hk-value" style="color:#58a6ff;">${B['blended_target']:.2f}</div>
+        <div class="hk-label">Price Target</div>
+        <div class="hk-value" style="color:#f0b429;">${B['blended_target']:.2f}</div>
         <div class="hk-sub">DCF / P/NAV Blend</div>
       </div>
       <div class="hero-kpi">
@@ -1207,7 +1247,7 @@ with tabs[0]:
     with st.expander("▶ Research Narrative — Thesis Construction, Channel Checks & Bear Case", expanded=False):
         st.markdown(f"""
         <div style="background:#161b22;border:1px solid #30363d;padding:28px 24px 20px 24px;margin-bottom:20px;">
-          <div style="color:#58a6ff;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">HOW WE GOT HERE</div>
+          <div style="color:#f0b429;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">HOW THE THESIS WAS BUILT</div>
           <div style="color:#e6edf3;font-size:20px;font-weight:700;line-height:1.4;margin-bottom:8px;">
             Market prices NEM as if gold falls to ${B['implied_gold']:,.0f}/oz — {B['gold_gap_pct']:.0f}% below spot. Four methods converge: widest valuation gap among senior gold peers.</div>
         </div>
@@ -1215,8 +1255,8 @@ with tabs[0]:
 
         # The Starting Point
         st.markdown(f"""
-        <div style="background:#0d1117;border-left:3px solid #58a6ff;padding:16px 20px;margin-bottom:16px;">
-          <div style="color:#58a6ff;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE STARTING POINT</div>
+        <div style="background:#0d1117;border-left:3px solid #f0b429;padding:16px 20px;margin-bottom:16px;">
+          <div style="color:#f0b429;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE STARTING POINT</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
         I started where everyone starts: a DCF model that said Newmont was cheap. $149.24 implied value
         versus ${B['price']:.2f} market price. Fine. Every team in this competition will have a DCF that says NEM
@@ -1274,7 +1314,7 @@ with tabs[0]:
         <b style="color:#3fb950;">Analyst revisions.</b> 4 upgrades, 0 downgrades in 6 months. Bernstein's Bob Brackett
         upgraded to Outperform on Feb 27, target $121&rarr;$157. Citigroup's Alexander Hacking raised to $150
         on Mar 3. Scotiabank's Tanya Jakusconek went from $71.50 to $151. Of 9 covering analysts, 8 say Buy.
-        Consensus mean (${DATA['analyst_consensus']['avg_target']:.2f}) still trails our model (${B['blended_target']:.2f}) by {((B['blended_target']/DATA['analyst_consensus']['avg_target'])-1)*100:.0f}%.
+        Consensus mean (${DATA['analyst_consensus']['avg_target']:.2f}) still trails the model target (${B['blended_target']:.2f}) by {((B['blended_target']/DATA['analyst_consensus']['avg_target'])-1)*100:.0f}%.
         <br><br>
         <b style="color:#3fb950;">Earnings call tone.</b> Daniel Morgan (Barrenjoey) asked on Q2 if guidance was
         "pitched conservatively." Adam Baker (Macquarie) asked on Q4 if the $2,000/oz reserve price was
@@ -1327,8 +1367,8 @@ with tabs[0]:
 
             # The Credibility Question
         st.markdown(f"""
-        <div style="background:#0d1117;border-left:3px solid #58a6ff;padding:16px 20px;margin-bottom:16px;">
-          <div style="color:#58a6ff;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE CREDIBILITY QUESTION</div>
+        <div style="background:#0d1117;border-left:3px solid #f0b429;padding:16px 20px;margin-bottom:16px;">
+          <div style="color:#f0b429;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE CREDIBILITY QUESTION</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
         Before I put any weight on forward guidance, I tested whether NEM management deserves the
         benefit of the doubt. I pulled 10 years of initial guidance vs. actual results (2015&ndash;2025,
@@ -1406,20 +1446,20 @@ with tabs[0]:
     with st.expander("▶ Perplexity Computer — Research Methodology, Log & Before/After Impact", expanded=False):
 
         st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #58a6ff;padding:16px 20px;margin-top:8px;">
-          <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">HOW PERPLEXITY COMPUTER BUILT THIS RESEARCH</div>
+        <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #f0b429;padding:16px 20px;margin-top:8px;">
+          <div style="color:#f0b429;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">HOW PERPLEXITY COMPUTER BUILT THIS RESEARCH</div>
           <div style="color:#e6edf3;font-size:10px;line-height:1.7;">
             Built with Perplexity Computer in a single research sprint. Five capabilities traditional workflows cannot replicate:
             <br><br>
-            <b style="color:#58a6ff;">1. Reverse DCF Framework.</b> Solved for the gold price the market implies at ${B['price']:.2f} — ${B['implied_gold']:,.0f}/oz. Every check tested whether that implied price was defensible.<br>
-            <b style="color:#58a6ff;">2. 8 Parallel Alt-Data Checks.</b> SEC EDGAR (81 Form 4s), careers page, earnings transcripts, copper demand studies, Ghana regulatory filings — simultaneously.<br>
-            <b style="color:#58a6ff;">3. Credibility Scoring.</b> 10yr guidance vs. actual, identified Goldcorp structural break, benchmarked vs. Barrick and AEM — credibility haircut of -2.9%.<br>
-            <b style="color:#58a6ff;">4. Transparency Engine.</b> All 38 assumptions sourced and overridable. Interactive stress-test panel.<br>
-            <b style="color:#58a6ff;">5. Cross-Validation.</b> 4 independent methods (DCF, P/NAV, Monte Carlo, Scenario) must converge. Divergence is flagged.
+            <b style="color:#f0b429;">1. Reverse DCF Framework.</b> Solved for the gold price the market implies at ${B['price']:.2f} — ${B['implied_gold']:,.0f}/oz. Every check tested whether that implied price was defensible.<br>
+            <b style="color:#f0b429;">2. 8 Parallel Alt-Data Checks.</b> SEC EDGAR (81 Form 4s), careers page, earnings transcripts, copper demand studies, Ghana regulatory filings — simultaneously.<br>
+            <b style="color:#f0b429;">3. Credibility Scoring.</b> 10yr guidance vs. actual, identified Goldcorp structural break, benchmarked vs. Barrick and AEM — credibility haircut of -2.9%.<br>
+            <b style="color:#f0b429;">4. Transparency Engine.</b> All 38 assumptions sourced and overridable. Interactive stress-test panel.<br>
+            <b style="color:#f0b429;">5. Cross-Validation.</b> 4 independent methods (DCF, P/NAV, Monte Carlo, Scenario) must converge. Divergence is flagged.
           </div>
         </div>
-        <div style="background:#0d1117;border:1px solid #58a6ff;padding:10px 16px;margin-top:8px;">
-          <div style="color:#58a6ff;font-size:9px;letter-spacing:2px;margin-bottom:6px;">WHY PERPLEXITY, NOT BLOOMBERG</div>
+        <div style="background:#0d1117;border:1px solid #f0b429;padding:10px 16px;margin-top:8px;">
+          <div style="color:#f0b429;font-size:9px;letter-spacing:2px;margin-bottom:6px;">WHY PERPLEXITY, NOT BLOOMBERG</div>
           <div style="color:#e6edf3;font-size:10px;line-height:1.6;">
             Bloomberg gives data. Perplexity gives <b>research workflow</b> — cross-referencing SEC filings, regulatory databases, careers pages, and transcripts in a single session. Ghana royalty (Thread 2) and 10b5-1 parsing (Thread 3) would take a human analyst days; Perplexity did both in minutes.
           </div>
@@ -1498,7 +1538,7 @@ with tabs[0]:
             st.markdown(f"""
             <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {t['color']};padding:12px 16px;margin-bottom:6px;">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <span style="color:#58a6ff;font-size:10px;font-weight:700;">THREAD {i+1}: {t['tool']}</span>
+                <span style="color:#f0b429;font-size:10px;font-weight:700;">THREAD {i+1}: {t['tool']}</span>
                 <span style="color:#8b949e;font-size:9px;">{_arrow} {t['feeds']}</span>
               </div>
               <div style="color:#d29922;font-size:10px;margin-bottom:4px;">
@@ -1513,8 +1553,8 @@ with tabs[0]:
             </div>""", unsafe_allow_html=True)
 
         st.markdown(f"""
-        <div style="background:#0d1117;border:1px solid #58a6ff;padding:14px 18px;margin-top:8px;">
-          <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:8px;">WHY PERPLEXITY, NOT BLOOMBERG</div>
+        <div style="background:#0d1117;border:1px solid #f0b429;padding:14px 18px;margin-top:8px;">
+          <div style="color:#f0b429;font-size:10px;letter-spacing:2px;margin-bottom:8px;">WHY PERPLEXITY, NOT BLOOMBERG</div>
           <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
             Bloomberg gives data. Perplexity gives <b>research workflow</b> — cross-referencing SEC filings, regulatory databases, careers pages, and transcripts in a single session. Ghana royalty (Thread 2) and 10b5-1 parsing (Thread 3) would take a human analyst days; Perplexity did both in minutes.
           </div>
@@ -1567,7 +1607,7 @@ with tabs[0]:
             after = after.replace('[gap]', f'{B_local["gold_gap_pct"]:.0f}')
             after = after.replace('[spot]', f'{B_local["gold_spot"]:,}')
             impact_color = '#f85149' if impact == 'VERY HIGH' else ('#d29922' if impact == 'HIGH' else '#8b949e')
-            tool_color = '#bc8cff' if 'Computer' in tool else ('#58a6ff' if 'Premium' in tool else '#3fb950')
+            tool_color = '#bc8cff' if 'Computer' in tool else ('#f0b429' if 'Premium' in tool else '#3fb950')
             bg = '#0d1117' if i_ba % 2 == 0 else '#161b22'
             st.markdown(f"""<div style="display:grid;grid-template-columns:140px 70px 1fr 1fr 80px;padding:8px 12px;border-bottom:1px solid #30363d;align-items:start;min-width:700px;background:{bg};">
             <span style="color:#e6edf3;font-size:9px;font-weight:700;line-height:1.4;">{topic}</span>
@@ -1626,43 +1666,43 @@ with tabs[1]:
     # ── PROMPT 3: Headline ──
     st.markdown(f"**NEM: {BASE['recommendation']} — blended target ${BASE['blended_target']:.2f} ({BASE['upside']:+.1f}% upside). Three non-consensus drivers, four converging methods, one mispricing the market has not yet closed.**")
 
-    # THESIS STATEMENT — OUR VIEW VS. CONSENSUS
+    # THESIS STATEMENT — MODEL VIEW VS. CONSENSUS
     with st.expander("▶ Non-Consensus Calls — Three Falsifiable Drivers vs. Street", expanded=False):
      st.markdown(f"""
-    <div style="background:#161b22;border:2px solid #58a6ff;padding:16px 20px;margin-bottom:16px;">
-      <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">OUR VIEW VS. CONSENSUS — THREE FALSIFIABLE NON-CONSENSUS CALLS</div>
+    <div style="background:#161b22;border:2px solid #f0b429;padding:16px 20px;margin-bottom:16px;">
+      <div style="color:#f0b429;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">MODEL VIEW VS. CONSENSUS — THREE FALSIFIABLE NON-CONSENSUS CALLS</div>
       <div style="display:grid;grid-template-columns:100px 1fr 1fr 150px 1fr;gap:0;">
         <div style="color:#8b949e;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">DIMENSION</div>
         <div style="color:#d29922;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">CONSENSUS VIEW</div>
-        <div style="color:#3fb950;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">OUR VIEW (DIFFERENTIATED)</div>
+        <div style="color:#3fb950;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">MODEL VIEW (DIFFERENTIATED)</div>
         <div style="color:#f85149;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">CATALYST / DATE</div>
-        <div style="color:#58a6ff;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">DECISION RULE (IF/THEN)</div>
+        <div style="color:#f0b429;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">DECISION RULE (IF/THEN)</div>
       </div>
       <div style="display:grid;grid-template-columns:100px 1fr 1fr 150px 1fr;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">FY2026 AISC</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">$1,680/oz — in line with guidance; Ghana royalty impact modeled as zero because NEM excluded it from guidance</div>
         <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;"><b>$1,730–1,780/oz</b> — Ghana royalty (+$50/oz, per NEM Q4 2025 filing) is real, enacted Mar 9, 2026, and excluded from guidance. <i>Source: NEM Q4 2025 10-K; Ghana Minerals and Mining Royalties Regulations, 2025.</i></div>
         <div style="color:#f85149;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;border-right:1px solid #30363d;"><b>Q1 2026 earnings</b><br>Apr 23, 2026</div>
-        <div style="color:#58a6ff;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;">IF AISC &lt; $1,800 &rarr; thesis confirmed, margin of safety intact.<br>IF AISC $1,800–1,850 &rarr; hold, trim target by $5.<br>IF AISC &gt; $1,850 &rarr; <b style="color:#f85149;">KILL CRITERIA FIRES &rarr; SELL.</b></div>
+        <div style="color:#f0b429;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;">IF AISC &lt; $1,800 &rarr; thesis confirmed, margin of safety intact.<br>IF AISC $1,800–1,850 &rarr; hold, trim target by $5.<br>IF AISC &gt; $1,850 &rarr; <b style="color:#f85149;">KILL CRITERIA FIRES &rarr; SELL.</b></div>
       </div>
       <div style="display:grid;grid-template-columns:100px 1fr 1fr 150px 1fr;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">CADIA COPPER NAV</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;">Copper credited as a by-product credit against gold AISC; no standalone copper NAV assigned</div>
         <div style="color:#3fb950;font-size:10px;padding:8px;border-bottom:1px solid #30363d;border-right:1px solid #30363d;"><b>$12–15/share of unpriced copper optionality</b>. Cadia's 2.9Mt Cu reserve at $4.50/lb long-run copper warrants a standalone NAV. <i>Source: NEM Feb 2026 guidance; mqworld.com.</i></div>
         <div style="color:#f85149;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;border-right:1px solid #30363d;"><b>H1 2026 initiations</b><br>Apr–Jun 2026</div>
-        <div style="color:#58a6ff;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;">IF any sell-side initiates Cu NAV &rarr; re-rate catalyst begins, add $8-12 to target.<br>IF no recognition by Q3 2026 &rarr; optionality remains unpriced, thesis unchanged but catalyst delayed.</div>
+        <div style="color:#f0b429;font-size:10px;padding:8px;border-bottom:1px solid #30363d;line-height:1.5;">IF any sell-side initiates Cu NAV &rarr; re-rate catalyst begins, add $8-12 to target.<br>IF no recognition by Q3 2026 &rarr; optionality remains unpriced, thesis unchanged but catalyst delayed.</div>
       </div>
       <div style="display:grid;grid-template-columns:100px 1fr 1fr 150px 1fr;gap:0;">
         <div style="color:#e6edf3;font-size:10px;font-weight:700;padding:8px;border-right:1px solid #30363d;">NGM/BARRICK JV</div>
         <div style="color:#8b949e;font-size:10px;padding:8px;border-right:1px solid #30363d;">Not modeled; treated as a going-concern JV with status quo operations</div>
         <div style="color:#3fb950;font-size:10px;padding:8px;border-right:1px solid #30363d;"><b>20% probability of buy-sell clause trigger</b> that forces a $20–40B Nevada transaction. Favorable resolution adds +$8–12/share. <i>Falsifiable at Q2 2026 JV review.</i></div>
         <div style="color:#f85149;font-size:10px;padding:8px;line-height:1.5;border-right:1px solid #30363d;"><b>Q2 2026 JV review</b><br>Jun–Jul 2026</div>
-        <div style="color:#58a6ff;font-size:10px;padding:8px;line-height:1.5;">IF settlement announced &rarr; add $8-12/share, upgrade target to $145+.<br>IF arbitration filed &rarr; subtract $3/share for legal overhang, hold.<br>IF no action by Sep 2026 &rarr; remove JV optionality from thesis entirely.</div>
+        <div style="color:#f0b429;font-size:10px;padding:8px;line-height:1.5;">IF settlement announced &rarr; add $8-12/share, upgrade target to $145+.<br>IF arbitration filed &rarr; subtract $3/share for legal overhang, hold.<br>IF no action by Sep 2026 &rarr; remove JV optionality from thesis entirely.</div>
       </div>
       <div style="color:#8b949e;font-size:9px;margin-top:10px;padding-top:8px;border-top:1px solid #30363d;">
         Reverse DCF anchor: at ${BASE['price']:.2f}, market implies long-run gold of <b style="color:#f85149;">${BASE['implied_gold']:,.0f}/oz</b> — 
         <b style="color:#f85149;">{BASE['gold_gap_pct']:.0f}% below current spot (${BASE['gold_spot']:,}/oz)</b>. 
-        Consensus mean ${DATA['analyst_consensus']['avg_target']:.0f} | Our target ${BASE['blended_target']:.2f} | 
+        Consensus mean ${DATA['analyst_consensus']['avg_target']:.0f} | Model target ${BASE['blended_target']:.2f} |
         {DATA['analyst_consensus']['total_ratings']} analysts, {int(DATA['analyst_consensus']['bullish_pct'])}% Buy.
       </div>
     </div>
@@ -1794,10 +1834,10 @@ with tabs[1]:
           </div>
         </div>
         <div style="color:#e6edf3;font-size:11px;line-height:1.6;border-top:1px solid #30363d;padding-top:10px;">
-          If you believe gold stays above <b style="color:{COLORS['red']};font-weight:700;">${BASE['implied_gold']:,.0f}/oz</b>,
+          If gold stays above <b style="color:{COLORS['red']};font-weight:700;">${BASE['implied_gold']:,.0f}/oz</b>,
           NEM is fundamentally undervalued. This Reverse DCF framework &mdash; solving backward from stock price to
           implied gold &mdash; required synthesizing NEM&rsquo;s AISC, production schedule, and peer multiples across
-          6+ primary sources in a single Perplexity research thread. Full visual and methodology: <b style="color:{COLORS['blue']};">15·VERDICT</b>.
+          6+ primary sources in a single Perplexity research thread. Full visual and methodology: <b style="color:{COLORS['gold']};">15·VERDICT</b>.
         </div>
       </div>
     </div>""", unsafe_allow_html=True)
@@ -1814,7 +1854,7 @@ with tabs[1]:
         <div class="driver-card">
           <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">
             DRIVER 1 — GOLD MACRO TAILWINDS</div>
-          <div style="color:#58a6ff;font-size:20px;font-weight:700;margin-bottom:6px;">
+          <div style="color:#f0b429;font-size:20px;font-weight:700;margin-bottom:6px;">
             ${gold_spot:,}/oz</div>
           <div style="color:#e6edf3;font-size:11px;margin-bottom:8px;">
             Gold spot vs. bank avg forecast ${avg_bank:,.0f}</div>
@@ -1880,7 +1920,7 @@ with tabs[1]:
               f"${dcf_p*dcf_wt_v + nav_p*(1-dcf_wt_v):.2f}"],
         textposition="outside",
         connector={"line": {"color": "#30363d", "width": 1}},
-        increasing={"marker": {"color": COLORS['blue']}},
+        increasing={"marker": {"color": COLORS['gold']}},
         totals={"marker": {"color": COLORS['green']}},
     ))
     fig_bridge.add_hline(y=price, line_color=COLORS['amber'], line_dash='dash', line_width=1.5,
@@ -1915,10 +1955,10 @@ with tabs[1]:
     with c2:
         fig_s2 = go.Figure()
         fig_s2.add_trace(go.Scatter(x=yrs_hist, y=rev_vals_h, mode='lines+markers',
-                                    line=dict(color=COLORS['blue'], width=2), marker=dict(size=6)))
+                                    line=dict(color=COLORS['gold'], width=2), marker=dict(size=6)))
         fig_s2.add_annotation(x=yrs_hist[-1], y=rev_vals_h[-1],
                               text=f"${rev_vals_h[-1]/1000:.1f}B", showarrow=False,
-                              font=dict(color=COLORS['blue'], size=11),
+                              font=dict(color=COLORS['gold'], size=11),
                               xanchor='right', yanchor='bottom')
         apply_layout(fig_s2, "REVENUE NEARLY DOUBLED IN 2 YEARS", 200)
         fig_s2.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20),
@@ -1985,7 +2025,7 @@ with tabs[1]:
         <span style="color:#8b949e;font-size:9px;letter-spacing:1px;">JOINT PROBABILITY ALL 5 CONDITIONS: </span>
         <span style="color:#3fb950;font-size:14px;font-weight:700;">{_cp*100:.1f}%</span>
         <span style="color:#8b949e;font-size:9px;margin-left:16px;">PROB-WEIGHTED EV: </span>
-        <span style="color:#58a6ff;font-size:14px;font-weight:700;">${_pwev:.2f}</span>
+        <span style="color:#f0b429;font-size:14px;font-weight:700;">${_pwev:.2f}</span>
         <span style="color:#8b949e;font-size:9px;margin-left:6px;">(vs ${BASE['price']:.2f} current = {((_pwev/BASE['price'])-1)*100:+.1f}% risk-adjusted expected return)</span>
       </div>
       <div style="color:#8b949e;font-size:9px;">Assumes conditional independence (conservative; risks positively correlated in stress).</div>
@@ -2077,7 +2117,7 @@ with tabs[2]:
         cb_years = ['2022', '2023', '2024', '2025E']
         cb_vals = [cb_data['2022'], cb_data['2023'], cb_data['2024'], cb_data['2025_ytd'] * 2]
         fig_cb = go.Figure()
-        colors_cb = [COLORS['blue'], COLORS['blue'], COLORS['blue'], COLORS['green']]
+        colors_cb = [COLORS['gold'], COLORS['gold'], COLORS['gold'], COLORS['green']]
         fig_cb.add_trace(go.Bar(x=cb_years, y=cb_vals, marker_color=colors_cb,
                                 text=[f"{v:.0f}t" for v in cb_vals], textposition='outside',
                                 textfont=dict(color=COLORS['text'], size=10)))
@@ -2099,7 +2139,7 @@ with tabs[2]:
         banks_s = [banks[i] for i in sorted_idx]
         targets_s = [targets_b[i] for i in sorted_idx]
         tfs = [timeframes[i] for i in sorted_idx]
-        bar_colors_b = [COLORS['green'] if t >= 5500 else COLORS['blue'] for t in targets_s]
+        bar_colors_b = [COLORS['green'] if t >= 5500 else COLORS['gold'] for t in targets_s]
         fig_banks = go.Figure(go.Bar(x=targets_s, y=banks_s, orientation='h', marker_color=bar_colors_b,
             text=[f"${t:,} ({tf})" for t, tf in zip(targets_s, tfs)],
             textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
@@ -2107,7 +2147,7 @@ with tabs[2]:
                             annotation_text=f"Spot: ${gold_spot:,}", annotation_position="top", annotation_font_color=COLORS['amber'])
         fig_banks.add_vline(x=BASE['gold_y1'], line_dash='dash', line_color=COLORS['muted'], line_width=1,
                             annotation_text=f"Model: ${BASE['gold_y1']:,}", annotation_position="bottom", annotation_font_color=COLORS['muted'])
-        apply_layout(fig_banks, "OUR $5,200 GOLD DECK IS CONSERVATIVE vs BANK FORECASTS ($5,720 AVG)", 300)
+        apply_layout(fig_banks, "$5,200 GOLD DECK IS CONSERVATIVE vs BANK FORECASTS ($5,720 AVG)", 300)
         fig_banks.update_layout(xaxis_title='Gold Forecast ($/oz)', yaxis_title='Bank / Forecast Source', xaxis_range=[4000, 7000])
         st.plotly_chart(fig_banks, use_container_width=True)
     with c2:
@@ -2128,7 +2168,7 @@ with tabs[2]:
             regime_desc = f"Central bank buying at {cb_ratio:.1f}× pre-2022 rate. Gold +{spot_vs_5yr:.0f}% above 5yr avg. Structural demand exceeds supply."
         elif cb_ratio > 1.5:
             regime = "UPTREND / ACCUMULATION"
-            regime_color = COLORS['blue']
+            regime_color = COLORS['gold']
             regime_desc = "Elevated CB buying. Constructive fundamental setup."
         else:
             regime = "CONSOLIDATION"
@@ -2150,7 +2190,7 @@ with tabs[2]:
             </div>
             <div style="background:#0d1117;padding:8px;border:1px solid #30363d;">
               <div style="color:#8b949e;font-size:9px;">BANK CONSENSUS</div>
-              <div style="color:#58a6ff;font-size:13px;font-weight:600;">${avg_bank_forecast:,.0f}/oz</div>
+              <div style="color:#f0b429;font-size:13px;font-weight:600;">${avg_bank_forecast:,.0f}/oz</div>
             </div>
             <div style="background:#0d1117;padding:8px;border:1px solid #30363d;">
               <div style="color:#8b949e;font-size:9px;">CONSENSUS UPSIDE</div>
@@ -2167,7 +2207,7 @@ with tabs[2]:
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #3fb950;padding:14px 20px;margin-top:8px;">
       <span style="color:#8b949e;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;">OPERATING LEVERAGE  </span>
       <span style="color:#e6edf3;font-size:12px;">
-        AISC: <b style="color:#58a6ff;">${aisc_cur:,}/oz</b> |
+        AISC: <b style="color:#f0b429;">${aisc_cur:,}/oz</b> |
         Gold: <b style="color:#d29922;">${gold_spot:,}/oz</b> |
         Margin: <b style="color:#3fb950;">${margin_oz:,}/oz</b> |
         Every $100/oz → <b style="color:#3fb950;">~${incremental_fcf_net:,.0f}M</b> after-tax FCF
@@ -2178,8 +2218,8 @@ with tabs[2]:
         st.markdown('<br>', unsafe_allow_html=True)
         st.markdown('<div class="panel-header">GOLD ETF FLOWS — INSTITUTIONAL DEMAND SIGNAL (WORLD GOLD COUNCIL)</div>', unsafe_allow_html=True)
     st.markdown(f"""
-    <div style="background:#1a1f2e;border:2px solid #58a6ff;padding:0;margin-bottom:12px;overflow:hidden;">
-      <div style="background:#58a6ff;padding:6px 16px;">
+    <div style="background:#161b22;border:2px solid #f0b429;padding:0;margin-bottom:12px;overflow:hidden;">
+      <div style="background:#f0b429;padding:6px 16px;">
         <span style="color:#0d1117;font-size:9px;letter-spacing:3px;font-weight:700;">PERPLEXITY PREMIUM DATA — WORLD GOLD COUNCIL (JAN 2026)</span>
       </div>
       <div style="padding:16px 20px;">
@@ -2196,7 +2236,7 @@ with tabs[2]:
           </div>
           <div style="background:#0d1117;padding:10px;border:1px solid #30363d;">
             <div style="color:#8b949e;font-size:9px;margin-bottom:4px;">GLOBAL ETF INFLOWS 2025</div>
-            <div style="color:#58a6ff;font-size:18px;font-weight:700;">801 tonnes / $89B</div>
+            <div style="color:#f0b429;font-size:18px;font-weight:700;">801 tonnes / $89B</div>
             <div style="color:#8b949e;font-size:9px;">2nd highest ever by volume</div>
           </div>
           <div style="background:#0d1117;padding:10px;border:1px solid #30363d;">
@@ -2206,7 +2246,7 @@ with tabs[2]:
           </div>
         </div>
         <div style="color:#8b949e;font-size:10px;line-height:1.6;border-top:1px solid #30363d;padding-top:10px;">
-          <b style="color:#58a6ff;">WHY THIS MATTERS FOR NEM:</b> Gold ETF inflows represent institutional and retail investors converting to gold exposure.
+          <b style="color:#f0b429;">WHY THIS MATTERS FOR NEM:</b> Gold ETF inflows represent institutional and retail investors converting to gold exposure.
           Each ETF inflow of 437t at current prices implies roughly ${int(437 * gold_spot * 32.15):,}M in additional demand from the US alone — a demand signal
           that structurally supports the gold price above NEM's implied-gold floor of ${BASE['implied_gold']:,.0f}/oz.<br>
           The 2025 ETF demand wave is <b style="color:#3fb950;">NOT a one-quarter spike</b> — it lasted all four quarters of 2025,
@@ -2250,7 +2290,7 @@ with tabs[2]:
         # Bar chart of top CB buyers
         cb_buyers = ['China', 'India', 'Turkey', 'Poland', 'Others']
         cb_buyer_vals = [225, 100, 95, 80, 363]  # 863t total
-        buyer_colors = [COLORS['blue'], COLORS['amber'], COLORS['red'], COLORS['green'], COLORS['muted']]
+        buyer_colors = [COLORS['gold'], COLORS['amber'], COLORS['red'], COLORS['green'], COLORS['muted']]
         fig_cb_buyers = go.Figure(go.Bar(
             x=cb_buyers, y=cb_buyer_vals,
             marker_color=buyer_colors,
@@ -2268,7 +2308,7 @@ with tabs[2]:
         st.markdown('<br>', unsafe_allow_html=True)
         st.markdown('<div class="panel-header">SUPPLY-SIDE CRISIS — THE DISCOVERY DROUGHT CONTEXT FOR GOLD PRICE</div>', unsafe_allow_html=True)
     st.markdown(f"""
-    <div style="background:#1a1f2e;border:2px solid #f85149;padding:0;overflow:hidden;">
+    <div style="background:#161b22;border:2px solid #f85149;padding:0;overflow:hidden;">
       <div style="background:#f85149;padding:6px 16px;">
         <span style="color:#ffffff;font-size:9px;letter-spacing:3px;font-weight:700;">PERPLEXITY PREMIUM DATA — S&amp;P GLOBAL MARKET INTELLIGENCE (2025)</span>
       </div>
@@ -2350,7 +2390,7 @@ with tabs[2]:
 
     fig_sd = make_subplots(specs=[[{"secondary_y": True}]])
     fig_sd.add_trace(go.Bar(x=sd_years, y=mine_supply, name='Mine Supply',
-        marker_color=COLORS['blue'], opacity=0.7), secondary_y=False)
+        marker_color=COLORS['gold'], opacity=0.7), secondary_y=False)
     fig_sd.add_trace(go.Bar(x=sd_years, y=recycled_supply, name='Recycled Supply',
         marker_color='#6e7681', opacity=0.7), secondary_y=False)
     fig_sd.add_trace(go.Scatter(x=sd_years, y=total_demand, name='Total Demand',
@@ -2469,7 +2509,7 @@ with tabs[2]:
     # Build cost curve: cumulative production (x) vs AISC (y) for global producers
     cost_curve_producers = [
         ('AEM', 1200, 3.45, COLORS['muted']),
-        ('NEM', 1358, 5.90, COLORS['blue']),
+        ('NEM', 1358, 5.90, COLORS['gold']),
         ('Barrick', 1637, 3.26, COLORS['muted']),
         ('Gold Fields', 1645, 2.44, COLORS['muted']),
         ('AngloGold', 1709, 3.09, COLORS['muted']),
@@ -2496,7 +2536,7 @@ with tabs[2]:
     fig_cc = go.Figure()
     for name_cc, aisc_cc, x_start, x_end, color_cc in cum_prod:
         is_nem_cc = name_cc == 'NEM'
-        bar_color = COLORS['blue'] if is_nem_cc else '#30363d'
+        bar_color = COLORS['gold'] if is_nem_cc else '#30363d'
         border_w = 2 if is_nem_cc else 0.5
         fig_cc.add_shape(type='rect', x0=x_start, x1=x_end, y0=0, y1=aisc_cc,
             fillcolor=bar_color if is_nem_cc else 'rgba(48,54,61,0.6)',
@@ -2505,7 +2545,7 @@ with tabs[2]:
             fig_cc.add_annotation(x=(x_start + x_end) / 2, y=aisc_cc + 60,
                 text=f"<b>{name_cc}</b><br>${aisc_cc:,}/oz",
                 showarrow=False, font=dict(size=9 if is_nem_cc else 8,
-                color=COLORS['blue'] if is_nem_cc else '#8b949e'))
+                color=COLORS['gold'] if is_nem_cc else '#8b949e'))
 
     # Add gold price line
     fig_cc.add_hline(y=gold_spot, line_dash='solid', line_color=COLORS['amber'], line_width=2,
@@ -2536,7 +2576,7 @@ with tabs[2]:
         <span style="color:#e6edf3;font-size:12px;font-weight:700;">NEM's Cost Curve Position = Massive Margin Expansion</span>
       </div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        At <b style="color:#58a6ff;">${{d['nem_operational']['aisc_2025']:,}}/oz AISC</b> and
+        At <b style="color:#f0b429;">${{d['nem_operational']['aisc_2025']:,}}/oz AISC</b> and
         <b style="color:#d29922;">${gold_spot:,}/oz gold</b>, NEM operates with a
         <b style="color:#3fb950;">${nem_margin:,}/oz margin</b> — one of the widest in the sector.
         NEM's AISC is declining toward a $1,200/oz target (Newcrest synergies), while peers are flat or rising.
@@ -2596,7 +2636,7 @@ with tabs[3]:
             text=[f'${v/1000:.1f}B' for v in fcf_vals_p], textposition='outside',
             textfont=dict(color=COLORS['text'], size=10), name='Actual'))
         fig_fcf.add_trace(go.Bar(x=['FY2026E', 'FY2027E'], y=fcf_est,
-            marker_color='rgba(88,166,255,0.5)', marker_line=dict(color=COLORS['blue'], width=1),
+            marker_color='rgba(240,180,41,0.5)', marker_line=dict(color=COLORS['gold'], width=1),
             text=[f'${v/1000:.1f}B' for v in fcf_est], textposition='outside',
             textfont=dict(color=COLORS['text'], size=10), name='Estimate'))
         apply_layout(fig_fcf, "FCF TRIPLED: $2.3B → $7.3B IN 2 YEARS", 300)
@@ -2658,7 +2698,7 @@ with tabs[3]:
     with st.expander("Capital Returns", expanded=False):
         d = DATA
         f = d['nem_annual_financials']
-        insight_callout(f"Here's the asymmetry in one number: NEM returned $3.4B to shareholders in 2025 while sitting on net cash of $7.2B. If the stock is mispriced, you're getting paid to wait — {DATA['market_data']['nem_div_yield']*100:.0f}% dividend yield + {DATA['nem_annual_financials']['2025']['buybacks']/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% buyback yield = {(DATA['nem_annual_financials']['2025']['dividends']+DATA['nem_annual_financials']['2025']['buybacks'])/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% total shareholder yield, with shrinking share count. The downside is cushioned by $7.2B net cash; the upside is leveraged to gold.")
+        insight_callout(f"The asymmetry in one number: NEM returned $3.4B to shareholders in 2025 while sitting on net cash of $7.2B. If the stock is mispriced, holders are paid to wait — {DATA['market_data']['nem_div_yield']*100:.0f}% dividend yield + {DATA['nem_annual_financials']['2025']['buybacks']/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% buyback yield = {(DATA['nem_annual_financials']['2025']['dividends']+DATA['nem_annual_financials']['2025']['buybacks'])/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% total shareholder yield, with shrinking share count. Downside is cushioned by $7.2B net cash; the upside is leveraged to gold.")
 
 
         st.markdown('<div class="panel-header">CAPITAL ALLOCATION & SHAREHOLDER RETURNS</div>', unsafe_allow_html=True)
@@ -2674,7 +2714,7 @@ with tabs[3]:
             fig_fcf_bar = go.Figure()
             fcf_cats = ['Dividends', 'Buybacks', 'Retained']
             fcf_vals = [divs_cr, buybacks_cr, max(retained_cr, 0)]
-            fcf_colors = [COLORS['blue'], COLORS['green'], COLORS['amber']]
+            fcf_colors = [COLORS['gold'], COLORS['green'], COLORS['amber']]
             fcf_total = sum(fcf_vals)
             for cat, val, clr in zip(fcf_cats, fcf_vals, fcf_colors):
                 pct = val / fcf_total * 100 if fcf_total > 0 else 0
@@ -2692,9 +2732,9 @@ with tabs[3]:
             mktcap_m_cr = BASE['mktcap'] / 1e6
             metrics_cr = [
                 ('FCF / Market Cap Yield', f"{fcf_2025 / mktcap_m_cr * 100:.1f}%", COLORS['green']),
-                ('Dividend Coverage (FCF/Divs)', f"{fcf_2025/divs_cr:.1f}×", COLORS['blue']),
+                ('Dividend Coverage (FCF/Divs)', f"{fcf_2025/divs_cr:.1f}×", COLORS['gold']),
                 ('Total Shareholder Yield', f"{(divs_cr+buybacks_cr)/mktcap_m_cr*100:.1f}%", COLORS['green']),
-                ('Buyback Yield', f"{buybacks_cr/mktcap_m_cr*100:.1f}%", COLORS['blue']),
+                ('Buyback Yield', f"{buybacks_cr/mktcap_m_cr*100:.1f}%", COLORS['gold']),
                 ('Net Cash Position', f"${abs(f25_cr['net_debt'])/1000:.1f}B", COLORS['green']),
             ]
             for label_cr, val_cr, color_cr in metrics_cr:
@@ -2748,7 +2788,7 @@ with tabs[3]:
             coverage = [fc / dv if dv > 0 else 0 for fc, dv in zip(fcf_data_cr, divs_data)]
             fig_div = make_subplots(specs=[[{"secondary_y": True}]])
             fig_div.add_trace(go.Bar(x=yrs_cr, y=divs_data, name='Dividends ($M)',
-                                      marker_color='rgba(88,166,255,0.5)', marker_line=dict(color=COLORS['blue'], width=1)))
+                                      marker_color='rgba(240,180,41,0.5)', marker_line=dict(color=COLORS['gold'], width=1)))
             fig_div.add_trace(go.Bar(x=yrs_cr, y=fcf_data_cr, name='FCF ($M)',
                                       marker_color='rgba(63,185,80,0.3)', marker_line=dict(color=COLORS['green'], width=1)))
             fig_div.add_trace(go.Scatter(x=yrs_cr, y=coverage, name='FCF Coverage',
@@ -2807,7 +2847,7 @@ with tabs[3]:
               <div class="kpi-sub">NOPAT / Invested Capital</div></div>""", unsafe_allow_html=True)
         with c2:
             st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">WACC</div>
-              <div class="kpi-value" style="color:{COLORS['blue']};font-size:24px;">{wacc_v*100:.2f}%</div>
+              <div class="kpi-value" style="color:{COLORS['gold']};font-size:24px;">{wacc_v*100:.2f}%</div>
               <div class="kpi-sub">Cost of Capital</div></div>""", unsafe_allow_html=True)
         with c3:
             st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">ROIC - WACC SPREAD</div>
@@ -2875,10 +2915,10 @@ with tabs[3]:
         st.markdown('<div class="panel-header">ROIC PEER COMPARISON (FY2025)</div>', unsafe_allow_html=True)
         peer_roic = [
             ('NEM', latest_roic * 100, COLORS['green']),
-            ('AEM', 17.9, COLORS['blue']),   # Gurufocus: annualized Dec 2025 = 17.94%
-            ('KGC', 23.6, COLORS['blue']),   # Finbox: FY2025 = 23.6%, record year
-            ('GFI', 16.5, COLORS['blue']),   # GFI 2024 normalized profit $1.23B / ~$8B IC, 2025 higher on gold
-            ('WPM', 9.2, COLORS['blue']),    # Streaming model: lower capital intensity but lower ROIC
+            ('AEM', 17.9, COLORS['gold']),   # Gurufocus: annualized Dec 2025 = 17.94%
+            ('KGC', 23.6, COLORS['gold']),   # Finbox: FY2025 = 23.6%, record year
+            ('GFI', 16.5, COLORS['gold']),   # GFI 2024 normalized profit $1.23B / ~$8B IC, 2025 higher on gold
+            ('WPM', 9.2, COLORS['gold']),    # Streaming model: lower capital intensity but lower ROIC
         ]
         sorted_pr = sorted(peer_roic, key=lambda x: x[1])
         fig_peer_roic = go.Figure(go.Bar(
@@ -2901,7 +2941,7 @@ with tabs[3]:
           <span style="color:#8b949e;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;">KEY INSIGHT  </span>
           <span style="color:#e6edf3;font-size:12px;">
             NEM earns <b style="color:#3fb950;">{latest_roic*100:.1f}%</b> on invested capital vs a
-            <b style="color:#58a6ff;">{wacc_v*100:.2f}%</b> cost of capital — creating
+            <b style="color:#f0b429;">{wacc_v*100:.2f}%</b> cost of capital — creating
             <b style="color:{spread_color};">${eva_v:,.0f}M</b> in economic value annually.
             This is rare in mining, where many companies destroy value through the cycle.
           </span>
@@ -3004,8 +3044,8 @@ with tabs[4]:
             fig_aisc_mine = go.Figure(go.Bar(x=sm_aisc, y=sm_names, orientation='h', marker_color=aisc_bar_colors,
                 text=[f'${a:,}' for a in sm_aisc], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
             portfolio_avg = sum(m_a * p_a for m_a, p_a in zip(mine_aisc, mine_prod)) / sum(mine_prod)
-            fig_aisc_mine.add_vline(x=portfolio_avg, line_dash='dash', line_color=COLORS['blue'],
-                                    annotation_text=f"Portfolio avg: ${portfolio_avg:.0f}", annotation_font_color=COLORS['blue'])
+            fig_aisc_mine.add_vline(x=portfolio_avg, line_dash='dash', line_color=COLORS['gold'],
+                                    annotation_text=f"Portfolio avg: ${portfolio_avg:.0f}", annotation_font_color=COLORS['gold'])
             apply_layout(fig_aisc_mine, "CADIA AT $400/oz ANCHORS THE PORTFOLIO — 4 MINES BELOW $1,200", 380)
             fig_aisc_mine.update_layout(xaxis_title='All-In Sustaining Cost ($/oz)')
             st.plotly_chart(fig_aisc_mine, use_container_width=True)
@@ -3041,7 +3081,7 @@ with tabs[4]:
             </div>
             <div style="background:#0d1117;padding:8px;border:1px solid #30363d;">
               <div style="color:#8b949e;font-size:9px;">Production</div>
-              <div style="color:#58a6ff;font-size:16px;font-weight:700;">650 Koz</div>
+              <div style="color:#f0b429;font-size:16px;font-weight:700;">650 Koz</div>
             </div>
             <div style="background:#0d1117;padding:8px;border:1px solid #30363d;">
               <div style="color:#8b949e;font-size:9px;">Reserves</div>
@@ -3059,8 +3099,8 @@ with tabs[4]:
         </div>""", unsafe_allow_html=True)
     with c2:
         st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #58a6ff;padding:20px;">
-          <div style="color:#58a6ff;font-size:14px;font-weight:700;margin-bottom:12px;">LIHIR — SCALE OPTIONALITY</div>
+        <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #f0b429;padding:20px;">
+          <div style="color:#f0b429;font-size:14px;font-weight:700;margin-bottom:12px;">LIHIR — SCALE OPTIONALITY</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
             <div style="background:#0d1117;padding:8px;border:1px solid #30363d;">
               <div style="color:#8b949e;font-size:9px;">AISC</div>
@@ -3068,7 +3108,7 @@ with tabs[4]:
             </div>
             <div style="background:#0d1117;padding:8px;border:1px solid #30363d;">
               <div style="color:#8b949e;font-size:9px;">Production</div>
-              <div style="color:#58a6ff;font-size:16px;font-weight:700;">700 Koz</div>
+              <div style="color:#f0b429;font-size:16px;font-weight:700;">700 Koz</div>
             </div>
             <div style="background:#0d1117;padding:8px;border:1px solid #30363d;">
               <div style="color:#8b949e;font-size:9px;">Reserves</div>
@@ -3089,7 +3129,7 @@ with tabs[4]:
 
     with st.expander("Copper Optionality", expanded=False):
         d = DATA
-        insight_callout("Copper from Cadia adds incremental value NOT captured in our gold-focused DCF or P/NAV. At long-run copper of $4.50/lb, this standalone NAV is worth ~$12-15/share — the same unpriced optionality called out in the Command Center.")
+        insight_callout("Copper from Cadia adds incremental value NOT captured in the gold-focused DCF or P/NAV. At long-run copper of $4.50/lb, this standalone NAV is worth ~$12-15/share — the same unpriced optionality called out in the Command Center.")
 
 
         st.markdown('<div class="panel-header">COPPER OPTIONALITY — CADIA VALLEY</div>', unsafe_allow_html=True)
@@ -3138,7 +3178,7 @@ with tabs[4]:
             fig_cu = go.Figure(go.Bar(
                 x=[f"${cp:.2f}/lb" for cp in copper_prices_s],
                 y=cu_val_per_share,
-                marker_color=[COLORS['blue'] if cp < 5.63 else COLORS['green'] for cp in copper_prices_s],
+                marker_color=[COLORS['gold'] if cp < 5.63 else COLORS['green'] for cp in copper_prices_s],
                 text=[f"${v:.1f}" for v in cu_val_per_share],
                 textposition='outside',
                 textfont=dict(color=COLORS['text'], size=10),
@@ -3185,9 +3225,9 @@ with tabs[4]:
         <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:14px 20px;margin-top:16px;">
           <span style="color:#8b949e;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;">KEY INSIGHT  </span>
           <span style="color:#e6edf3;font-size:12px;">
-            Our gold-focused DCF and P/NAV do NOT include copper upside. At current copper prices,
+            The gold-focused DCF and P/NAV do NOT include copper upside. At current copper prices,
             Cadia's copper production adds approximately <b style="color:#d29922;">${cu_val_per_share[-1]:.1f}/share</b> of
-            value beyond our target — this is free optionality not in the price.
+            value beyond the price target — this is free optionality not in the price.
           </span>
         </div>""", unsafe_allow_html=True)
         if st.button("Reset Copper Assumptions", key='reset_copper_tab'):
@@ -3206,7 +3246,7 @@ with tabs[4]:
             cu_deficit = [s - d for s, d in zip(cu_supply, cu_demand)]
             fig_cu_sd = make_subplots(specs=[[{"secondary_y": True}]])
             fig_cu_sd.add_trace(go.Scatter(x=cu_years, y=cu_supply, name='Cu Supply (Mt)',
-                line=dict(color=COLORS['blue'], width=2.5), mode='lines+markers',
+                line=dict(color=COLORS['gold'], width=2.5), mode='lines+markers',
                 marker=dict(size=7)), secondary_y=False)
             fig_cu_sd.add_trace(go.Scatter(x=cu_years, y=cu_demand, name='Cu Demand (Mt)',
                 line=dict(color=COLORS['amber'], width=2.5), mode='lines+markers',
@@ -3227,7 +3267,7 @@ with tabs[4]:
             # Copper intensity per MW — AI data centers
             dc_types = ['Standard DC\n(10-15 t/MW)', 'Hyperscale DC\n(27 t/MW)', 'AI Training\n(30-40 t/MW)', 'AI Training\nPeak (47 t/MW)']
             cu_per_mw = [12.5, 27, 35, 47]
-            dc_colors = [COLORS['muted'], COLORS['blue'], COLORS['amber'], COLORS['red']]
+            dc_colors = [COLORS['muted'], COLORS['gold'], COLORS['amber'], COLORS['red']]
             fig_cu_int = go.Figure(go.Bar(
                 x=dc_types, y=cu_per_mw,
                 marker_color=dc_colors,
@@ -3255,7 +3295,7 @@ with tabs[4]:
             data center CapEx through 2028 and Goldman Sachs projecting 122 GW of capacity by 2030,
             copper demand is set to surge by 3-5 Mt/yr above baseline.
             <br><br>
-            NEM's <b style="color:#58a6ff;">Cadia mine (2.9 Mt Cu reserves)</b> is the <b>only Tier-1 copper asset
+            NEM's <b style="color:#f0b429;">Cadia mine (2.9 Mt Cu reserves)</b> is the <b>only Tier-1 copper asset
             inside any major gold miner</b>. This creates a structural call option on AI infrastructure spending
             that generates $12-22/share of incremental value not captured in any consensus gold-sector model.
             <br><br>
@@ -3267,8 +3307,8 @@ with tabs[4]:
 
         # ── PERPLEXITY PREMIUM DATA: BANK PRICE FORECASTS + AI DEMAND ──
         st.markdown(f"""
-        <div style="background:#1a1f2e;border:2px solid {COLORS['blue']};margin-top:20px;overflow:hidden;">
-          <div style="background:{COLORS['blue']};padding:7px 18px;">
+        <div style="background:#161b22;border:2px solid {COLORS['gold']};margin-top:20px;overflow:hidden;">
+          <div style="background:{COLORS['gold']};padding:7px 18px;">
             <span style="color:#0d1117;font-size:10px;font-weight:700;letter-spacing:2px;">
               PERPLEXITY PREMIUM DATA &mdash; COPPER PRICE FORECASTS &amp; AI DEMAND THESIS (JAN–MAR 2026)
             </span>
@@ -3298,11 +3338,11 @@ with tabs[4]:
               </div>
             </div>
 
-            <div style="color:{COLORS['blue']};font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:12px;">
+            <div style="color:{COLORS['gold']};font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:12px;">
               AI DATA CENTER COPPER DEMAND &mdash; THE STRUCTURAL DRIVER WALL STREET UNDERESTIMATES</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
-              <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {COLORS['blue']};padding:14px;">
-                <div style="color:{COLORS['blue']};font-size:10px;font-weight:700;margin-bottom:8px;">COPPER PER MEGAWATT (DATA CENTERS)</div>
+              <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {COLORS['gold']};padding:14px;">
+                <div style="color:{COLORS['gold']};font-size:10px;font-weight:700;margin-bottom:8px;">COPPER PER MEGAWATT (DATA CENTERS)</div>
                 <div style="color:#e6edf3;font-size:20px;font-weight:700;margin-bottom:4px;">27&ndash;47 t/MW</div>
                 <div style="color:#8b949e;font-size:10px;line-height:1.5;">
                   Microsoft Chicago AI data center study (cross-referenced via Perplexity).
@@ -3315,13 +3355,13 @@ with tabs[4]:
               <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {COLORS['amber']};padding:14px;">
                 <div style="color:{COLORS['amber']};font-size:10px;font-weight:700;margin-bottom:8px;">WHY CADIA IS THE ONLY PLAY IN GOLD MINING</div>
                 <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
-                  Among all major gold miners, <b style="color:{COLORS['blue']};">only NEM (via Cadia)</b> has material,
+                  Among all major gold miners, <b style="color:{COLORS['gold']};">only NEM (via Cadia)</b> has material,
                   Tier-1 copper exposure at scale:<br><br>
                   &bull; Barrick (GOLD): No meaningful copper assets<br>
                   &bull; Agnico Eagle (AEM): No meaningful copper assets<br>
                   &bull; Kinross (KGC): No meaningful copper assets<br><br>
                   <b style="color:{COLORS['green']};">NEM&rsquo;s 2.9 Mt Cu reserve</b> at Cadia = 24+ year copper mine life.
-                  If copper hits $13,500/t (BofA 2027 target), our copper NAV estimate
+                  If copper hits $13,500/t (BofA 2027 target), the copper NAV estimate
                   rises from ~$12&ndash;15/share to <b>$18&ndash;22/share</b>.
                 </div>
               </div>
@@ -3361,7 +3401,7 @@ with tabs[5]:
     st.markdown(f"**DCF and P/NAV models converge: intrinsic value range ${BASE['dcf_price']:.0f}–${BASE['nav_price']:.0f}/share, blended ${BASE['blended_target']:.0f}. At NEM's current price of ${BASE['price']:.2f}, the market implies gold at ~${BASE['implied_gold']:,.0f}/oz — {BASE['gold_gap_pct']:.0f}% below spot.**")
 
     with st.expander("▶ Model Context — Conservative Gold Deck & No-Aggressive-Assumption Framework", expanded=False):
-        insight_callout(f"Even at a conservative $5,200/oz gold — 10% below spot — our DCF implies ${BASE['dcf_price']:.0f}/share ({((BASE['dcf_price'] / BASE['price']) - 1) * 100:+.0f}% vs. current ${BASE['price']:.2f}). The model does not depend on aggressive gold assumptions.")
+        insight_callout(f"Even at a conservative $5,200/oz gold — 10% below spot — the DCF implies ${BASE['dcf_price']:.0f}/share ({((BASE['dcf_price'] / BASE['price']) - 1) * 100:+.0f}% vs. current ${BASE['price']:.2f}). The model does not depend on aggressive gold assumptions.")
 
     st.markdown('<div class="panel-header">DCF ENGINE — INTERACTIVE FCFF MODEL</div>', unsafe_allow_html=True)
 
@@ -3399,8 +3439,8 @@ with tabs[5]:
 
     c1, c2, c3, c4, c5 = st.columns(5)
     for col, label, value, color in [
-        (c1, "DCF EQUITY VALUE", fmt_b(eq_live), COLORS['blue']),
-        (c2, "DCF PRICE / SHARE", fmt_price(price_live), COLORS['blue']),
+        (c1, "DCF EQUITY VALUE", fmt_b(eq_live), COLORS['gold']),
+        (c2, "DCF PRICE / SHARE", fmt_price(price_live), COLORS['gold']),
         (c3, "UPSIDE / DOWNSIDE", f"{'+' if upside_live > 0 else ''}{upside_live:.1f}%", up_color_live),
         (c4, "SIGNAL", rec_live, up_color_live),
         (c5, "TV % OF VALUE", f"{pv_tv_live / max(sum_pv_live + pv_tv_live, 1) * 100:.1f}%", COLORS['muted']),
@@ -3441,9 +3481,9 @@ with tabs[5]:
     ci_low = quick_dcf_price(wacc_base + 0.005, mult_base - 1.0)
     ci_high = quick_dcf_price(wacc_base - 0.005, mult_base + 1.0)
     st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:10px 16px;margin:8px 0;">
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f0b429;padding:10px 16px;margin:8px 0;">
       <span style="color:#8b949e;font-size:10px;letter-spacing:1px;">CONFIDENCE INTERVAL (WACC +/-50bps, Multiple +/-1x): </span>
-      <span style="color:#58a6ff;font-size:12px;font-weight:700;">${ci_low:.0f} – ${ci_high:.0f}</span>
+      <span style="color:#f0b429;font-size:12px;font-weight:700;">${ci_low:.0f} – ${ci_high:.0f}</span>
       <span style="color:#8b949e;font-size:10px;"> | Base: ${price_live:.2f}</span>
     </div>""", unsafe_allow_html=True)
 
@@ -3503,8 +3543,8 @@ with tabs[5]:
     base_mult_label = f"{_exit_m:.1f}\u00d7"
     fig_heat.add_annotation(x=base_mult_label, y=base_wacc_label,
         text='<b>BASE CASE</b>', showarrow=True, arrowhead=2,
-        font=dict(size=9, color=COLORS['blue']), arrowcolor=COLORS['blue'],
-        bgcolor='#0d1117', bordercolor=COLORS['blue'], borderwidth=1, ax=50, ay=-35)
+        font=dict(size=9, color=COLORS['gold']), arrowcolor=COLORS['gold'],
+        bgcolor='#0d1117', bordercolor=COLORS['gold'], borderwidth=1, ax=50, ay=-35)
     st.plotly_chart(fig_heat, use_container_width=True)
 
     # ══ ASSUMPTION TRANSPARENCY SCORECARD ══════════════════════════════════════
@@ -3616,14 +3656,14 @@ with tabs[5]:
             st.markdown(f"""
             <div style="display:flex;justify-content:space-between;padding:4px 8px;border-bottom:1px solid #30363d;">
               <span style="color:#8b949e;font-size:11px;">{label_w}</span>
-              <span style="color:#58a6ff;font-size:11px;">{val_w}</span>
+              <span style="color:#f0b429;font-size:11px;">{val_w}</span>
             </div>""", unsafe_allow_html=True)
         why_expander('rf')
         why_expander('beta')
         why_expander('erp')
         st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:6px 12px;margin-top:6px;font-size:9px;color:#8b949e;">
-          <b style="color:#58a6ff;">REGRESSION STATISTICS (5yr monthly, n=60):</b>
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f0b429;padding:6px 12px;margin-top:6px;font-size:9px;color:#8b949e;">
+          <b style="color:#f0b429;">REGRESSION STATISTICS (5yr monthly, n=60):</b>
           Equity β={BASE['beta']:.2f} — SE≈0.17, t≈3.6, p&lt;0.001, 95% CI [0.28, 0.94] |
           Gold β=0.95 — SE≈0.10, t≈9.5, p&lt;0.001, R²≈0.63, 95% CI [0.76, 1.14].
           Both significant at p&lt;0.05.
@@ -3654,7 +3694,7 @@ with tabs[5]:
              'G — Regulatory/Governance',
              '+10 bp',
              'Ghana increased mining royalties in 2025 Minerals Regulations. NEM explicitly excluded '
-             'from FY2026 AISC guidance ($50/oz incremental per our model). Regulatory risk premium justified '
+             'from FY2026 AISC guidance ($50/oz incremental per this model). Regulatory risk premium justified '
              'for assets in jurisdictions with shifting royalty frameworks.',
              'NEM Q4 2025 10-K; Ghana Minerals & Mining Royalties Regs 2025'),
             ('Tanami Fatality (2025)',
@@ -3702,7 +3742,7 @@ with tabs[5]:
               <span style="color:#e6edf3;font-size:10px;width:200px;">{risk_name}</span>
               <span style="color:#8b949e;font-size:9px;width:150px;">{pillar}</span>
               <span style="color:{adj_color};font-size:11px;font-weight:700;width:70px;">{adj_bp_str}</span>
-              <span style="color:#8b949e;font-size:9px;flex:1;line-height:1.4;">{rationale[:90]}... <i style='color:#58a6ff;'>Source: {source}</i></span>
+              <span style="color:#8b949e;font-size:9px;flex:1;line-height:1.4;">{rationale[:90]}... <i style='color:#f0b429;'>Source: {source}</i></span>
             </div>""", unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
@@ -3718,11 +3758,11 @@ with tabs[5]:
         approx_share_impact = -(net_esg_adj_bp / 50) * 15  # negative because WACC increase = lower value
 
         st.markdown(f"""
-        <div style="background:#0d1117;border:1px solid #30363d;border-top:2px solid #58a6ff;padding:14px 18px;margin-top:8px;">
-          <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:10px;">ESG-ADJUSTED WACC SUMMARY</div>
+        <div style="background:#0d1117;border:1px solid #30363d;border-top:2px solid #f0b429;padding:14px 18px;margin-top:8px;">
+          <div style="color:#f0b429;font-size:10px;letter-spacing:2px;margin-bottom:10px;">ESG-ADJUSTED WACC SUMMARY</div>
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
             <span style="color:#8b949e;font-size:11px;">Base WACC (CAPM + Damodaran ERP)</span>
-            <span style="color:#58a6ff;font-size:11px;font-weight:600;">{base_wacc_pct:.2f}%</span>
+            <span style="color:#f0b429;font-size:11px;font-weight:600;">{base_wacc_pct:.2f}%</span>
           </div>
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
             <span style="color:#8b949e;font-size:11px;">Gross ESG risk premium (Cadia + Ghana + Tanami + NGM)</span>
@@ -3764,15 +3804,15 @@ with tabs[5]:
           <div style="color:#8b949e;font-size:10px;letter-spacing:1px;margin-bottom:10px;">SANITY CHECK: DOES THE EXIT MULTIPLE MAKE SENSE?</div>
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
             <span style="color:#8b949e;font-size:11px;">GGM Terminal Value</span>
-            <span style="color:#58a6ff;font-size:11px;">${tv_ggm_v:,.0f}M</span>
+            <span style="color:#f0b429;font-size:11px;">${tv_ggm_v:,.0f}M</span>
           </div>
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
             <span style="color:#8b949e;font-size:11px;">GGM Implied EV/EBITDA</span>
-            <span style="color:#58a6ff;font-size:11px;">{ggm_mult_v:.1f}×</span>
+            <span style="color:#f0b429;font-size:11px;">{ggm_mult_v:.1f}×</span>
           </div>
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
             <span style="color:#8b949e;font-size:11px;">Your Exit Multiple</span>
-            <span style="color:#58a6ff;font-size:11px;">{st.session_state.get('exit_multiple', 9.5):.1f}×</span>
+            <span style="color:#f0b429;font-size:11px;">{st.session_state.get('exit_multiple', 9.5):.1f}×</span>
           </div>
           <div style="color:{'#3fb950' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else '#f85149'};font-size:10px;margin-top:8px;">
             {'✓ Exit multiple is within 3× of GGM-implied — reasonable.' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else f'⚠ Exit multiple diverges by {abs(ggm_mult_v - st.session_state.get("exit_multiple", 9.5)):.1f}× from GGM-implied — review assumptions.'}
@@ -3821,7 +3861,7 @@ with tabs[5]:
             st.markdown(f"""
             <div style="display:flex;justify-content:space-between;padding:4px 8px;border-bottom:1px solid #30363d;">
               <span style="color:#8b949e;font-size:11px;">{label_n}</span>
-              <span style="color:#58a6ff;font-size:11px;font-weight:600;">{val_n}</span>
+              <span style="color:#f0b429;font-size:11px;font-weight:600;">{val_n}</span>
             </div>""", unsafe_allow_html=True)
         why_expander('gold_deck')
         why_expander('nav_multiple')
@@ -3851,8 +3891,8 @@ with tabs[5]:
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">SUM-OF-THE-PARTS (SOTP) NAV — ASSET-BY-ASSET BUILD WITH MINE-SPECIFIC DISCOUNT RATES</div>', unsafe_allow_html=True)
     st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:8px 14px;margin-bottom:10px;font-size:10px;color:#8b949e;">
-      <span style="color:#58a6ff;font-weight:700;">INSTITUTIONAL SOTP</span> — 
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f0b429;padding:8px 14px;margin-bottom:10px;font-size:10px;color:#8b949e;">
+      <span style="color:#f0b429;font-weight:700;">INSTITUTIONAL SOTP</span> — 
       P/NAV uses mine-specific discount rates reflecting political risk by jurisdiction (Australia/Canada 5%, W.Africa/L.Am 7.5–10.5%). 
       Each mine NAV = (Gold Deck − Mine AISC) × Production × Annuity Factor(r, mine_life). 
       Gold deck: <b style="color:#e6edf3;">${BASE['gold_deck']:,}/oz</b> (2-yr trailing avg).
@@ -3923,7 +3963,7 @@ with tabs[5]:
       </div>
       <div style="display:flex;justify-content:space-between;padding:5px 0;">
         <span style="color:#e6edf3;font-weight:700;">= SOTP Equity NAV</span>
-        <span style="color:#58a6ff;font-size:14px;font-weight:700;">${sotp_equity_nav:,.0f}M (${sotp_nav_per_share:.2f}/sh)</span>
+        <span style="color:#f0b429;font-size:14px;font-weight:700;">${sotp_equity_nav:,.0f}M (${sotp_nav_per_share:.2f}/sh)</span>
       </div>
     </div>""", unsafe_allow_html=True)
 
@@ -3934,9 +3974,9 @@ with tabs[5]:
     # SOTP Summary row
     col_s1, col_s2, col_s3, col_s4 = st.columns(4)
     for col_s, lbl_s, val_s, clr_s in [
-        (col_s1, 'GROSS PORTFOLIO NAV', f'${total_gross_nav:,.0f}M', COLORS['blue']),
+        (col_s1, 'GROSS PORTFOLIO NAV', f'${total_gross_nav:,.0f}M', COLORS['gold']),
         (col_s2, 'CORP OVERHEAD DEDUCT', f'(${capitalized_overhead_sotp:,.0f}M)', COLORS['red']),
-        (col_s3, 'SOTP NAV/SHARE', f'${sotp_nav_per_share:.2f}', COLORS['blue']),
+        (col_s3, 'SOTP NAV/SHARE', f'${sotp_nav_per_share:.2f}', COLORS['gold']),
         (col_s4, f'SOTP @ {BASE["p_nav_multiple"]:.2f}× P/NAV', f'${sotp_nav_price:.2f}', COLORS['green']),
     ]:
         with col_s:
@@ -3968,11 +4008,11 @@ with tabs[5]:
         if disc <= 5.5:
             mine_colors_wf.append(COLORS['green'])
         elif disc <= 8.0:
-            mine_colors_wf.append(COLORS['blue'])
+            mine_colors_wf.append(COLORS['gold'])
         else:
             mine_colors_wf.append(COLORS['amber'])
     mine_colors_wf.append(COLORS['green'] if net_cash_sotp > 0 else COLORS['red'])
-    mine_colors_wf.append(COLORS['blue'])  # Equity NAV total
+    mine_colors_wf.append(COLORS['gold'])  # Equity NAV total
     # Build waterfall
     nav_vals_wf = [r['Mine NAV ($M)'] for r in sotp_sorted]
     running = [sum(nav_vals_wf[:i+1]) for i in range(len(nav_vals_wf))]
@@ -3988,7 +4028,7 @@ with tabs[5]:
     fig_sotp.add_bar(
         x=['Net Cash', 'Equity NAV'],
         y=[net_cash_sotp, sotp_equity_nav],
-        marker_color=[mine_colors_wf[-2], COLORS['blue']],
+        marker_color=[mine_colors_wf[-2], COLORS['gold']],
         text=[f"${net_cash_sotp:,.0f}M", f"${sotp_equity_nav:,.0f}M"],
         textposition='outside', textfont=dict(color=COLORS['text'], size=9),
         name='Balance Sheet'
@@ -4012,7 +4052,7 @@ with tabs[5]:
     st.markdown(f"""
     <div style="display:flex;gap:16px;font-size:9px;color:#8b949e;margin-top:-8px;margin-bottom:8px;">
       <span><span style="color:#3fb950;">&#9632;</span> OECD (Aus/Can) — 5.0% — stable jurisdiction</span>
-      <span><span style="color:#58a6ff;">&#9632;</span> Mid-tier (Af/L.Am) — 7.5–8.0% — moderate political risk</span>
+      <span><span style="color:#f0b429;">&#9632;</span> Mid-tier (Af/L.Am) — 7.5–8.0% — moderate political risk</span>
       <span><span style="color:#d29922;">&#9632;</span> High-risk (Arg) — 10.5% — currency/sovereign risk</span>
     </div>""", unsafe_allow_html=True)
     # ══ SECTION: COPPER STANDALONE NAV (NEW) ═════════════════════════════════
@@ -4128,7 +4168,7 @@ with tabs[5]:
         fig_cu_pie = go.Figure(go.Bar(
             x=['Cadia Gold', 'Cadia Copper', 'Boddington Gold', 'Boddington Copper'],
             y=[cadia_gold_rev_fy26, cadia_copper_rev_fy26, boding_gold_rev_fy26, boding_copper_rev_fy26],
-            marker_color=[COLORS['amber'], COLORS['blue'], COLORS['amber'], COLORS['blue']],
+            marker_color=[COLORS['amber'], COLORS['gold'], COLORS['amber'], COLORS['gold']],
             text=[f'${v:,.0f}M' for v in [cadia_gold_rev_fy26, cadia_copper_rev_fy26, boding_gold_rev_fy26, boding_copper_rev_fy26]],
             textposition='outside', textfont=dict(color=COLORS['text'], size=9)
         ))
@@ -4193,7 +4233,7 @@ with tabs[5]:
         {
             'name': 'BUY-SELL: NEM BUYS (10%)',
             'prob': 0.10,
-            'color': COLORS['blue'],
+            'color': COLORS['gold'],
             'nav_delta': jv_vf.get('buy_sell_nem_buys', {}).get('nav_per_share_delta', 16.0),
             'ev': jv_vf.get('buy_sell_nem_buys', {}).get('ev_contribution', 1.60),
             'desc': jv_vf.get('buy_sell_nem_buys', {}).get('desc', 'NEM acquires Barrick 61.5%'),
@@ -4224,7 +4264,7 @@ with tabs[5]:
               <div style="color:#8b949e;font-size:9px;">NAV Impact/Share</div>
               <div style="color:{nav_color};font-size:16px;font-weight:700;margin-bottom:6px;">{'+' if nav_d > 0 else ''}{nav_d:.1f}</div>
               <div style="color:#8b949e;font-size:9px;">EV Contribution (P×ΔNAV)</div>
-              <div style="color:{COLORS['blue']};font-size:12px;margin-bottom:8px;">{'+' if ev_d > 0 else ''}{ev_d:.2f}/sh</div>
+              <div style="color:{COLORS['gold']};font-size:12px;margin-bottom:8px;">{'+' if ev_d > 0 else ''}{ev_d:.2f}/sh</div>
               <div style="color:#8b949e;font-size:9px;">Prod. Δ from 2027</div>
               <div style="color:#e6edf3;font-size:10px;margin-bottom:6px;">{'+' if jvsc['prod_delta'] > 0 else ''}{jvsc['prod_delta']:.2f} Moz</div>
               <div style="color:#8b949e;font-size:9px;line-height:1.4;">{jvsc['desc'][:80]}...</div>
@@ -4262,10 +4302,10 @@ with tabs[5]:
 
     st.markdown(f"""
     <div style="background:#0d1117;border:2px solid #3fb950;padding:16px 20px;">
-      <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:12px;">TARGET PRICE BUILD — INCORPORATING NGM JV SCENARIO ADJUSTMENT</div>
+      <div style="color:#f0b429;font-size:10px;letter-spacing:2px;margin-bottom:12px;">TARGET PRICE BUILD — INCORPORATING NGM JV SCENARIO ADJUSTMENT</div>
       <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
         <span style="color:#8b949e;font-size:11px;">Base Blended Target (DCF + P/NAV)</span>
-        <span style="color:#58a6ff;font-size:12px;font-weight:600;">${base_blended:.2f}</span>
+        <span style="color:#f0b429;font-size:12px;font-weight:600;">${base_blended:.2f}</span>
       </div>
       <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
         <span style="color:#8b949e;font-size:11px;">+ NGM JV Probability-Weighted Adjustment</span>
@@ -4380,7 +4420,7 @@ with tabs[5]:
          f"${annual_interest_c:.0f}M/yr",
          f"${nav_delta_after_financing_c:.1f}/sh (most credit-sensitive)",
          f"Min. cash floor: ${pro_forma_cash_c/1000:.1f}B — tight through-cycle buffer",
-         COLORS['blue']),
+         COLORS['gold']),
     ]:
         with col_pf:
             st.markdown(f"""
@@ -4405,8 +4445,8 @@ with tabs[5]:
     financing_haircut_base = (annual_interest_a * (1 - 0.21)) / nem_shares_m_bs
     net_nav_uplift_base = gross_nav_uplift - financing_haircut_base
     st.markdown(f"""
-    <div style="background:#0d1117;border:1px solid #58a6ff;padding:14px 18px;">
-      <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:10px;">FINANCING REALITY CHECK — VP-LEVEL SUMMARY</div>
+    <div style="background:#0d1117;border:1px solid #f0b429;padding:14px 18px;">
+      <div style="color:#f0b429;font-size:10px;letter-spacing:2px;margin-bottom:10px;">FINANCING REALITY CHECK — VP-LEVEL SUMMARY</div>
       <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
         <span style="color:#8b949e;font-size:11px;">Gross NAV delta (NEM acquires Barrick 61.5%)</span>
         <span style="color:#3fb950;font-size:11px;font-weight:600;">+$16.0/share</span>
@@ -4474,14 +4514,14 @@ with tabs[5]:
         if spot_label in [f"${g:,}" for g in gold_levels]:
             spot_idx = [f"${g:,}" for g in gold_levels].index(spot_label)
             fig_olev.add_annotation(x=spot_label, y=nem_margins[spot_idx], text=f"◆ SPOT",
-                showarrow=True, arrowhead=2, arrowcolor=COLORS['blue'],
-                font=dict(color=COLORS['blue'], size=10), ax=0, ay=-30)
+                showarrow=True, arrowhead=2, arrowcolor=COLORS['gold'],
+                font=dict(color=COLORS['gold'], size=10), ax=0, ay=-30)
         else:
             # Add annotation at closest level
             closest_idx = min(range(len(gold_levels)), key=lambda i: abs(gold_levels[i] - gold_spot_gld))
             fig_olev.add_annotation(x=f"${gold_levels[closest_idx]:,}", y=nem_margins[closest_idx],
-                text=f"Spot ~${gold_spot_gld:,}", showarrow=True, arrowhead=2, arrowcolor=COLORS['blue'],
-                font=dict(color=COLORS['blue'], size=10), ax=0, ay=-30)
+                text=f"Spot ~${gold_spot_gld:,}", showarrow=True, arrowhead=2, arrowcolor=COLORS['gold'],
+                font=dict(color=COLORS['gold'], size=10), ax=0, ay=-30)
         apply_layout(fig_olev, "EVERY $100/oz GOLD INCREASE = ~$323M INCREMENTAL FCF", 350)
         fig_olev.update_layout(
             yaxis=dict(title="Margin $/oz"),
@@ -4541,7 +4581,7 @@ with tabs[5]:
             fig_div_adv.add_trace(go.Scatter(
                 x=[f"{y}yr" for y in hold_years], y=nem_total_return,
                 mode='lines+markers', name=f'NEM Dividend Yield Contribution ({nem_div_yield_pct:.1f}%/yr)',
-                line=dict(color=COLORS['blue'], width=1.5, dash='dash'), marker=dict(size=6)))
+                line=dict(color=COLORS['gold'], width=1.5, dash='dash'), marker=dict(size=6)))
             fig_div_adv.add_trace(go.Scatter(
                 x=[f"{y}yr" for y in hold_years], y=gld_total_return,
                 mode='lines', name='GLD Income Return ($0)',
@@ -4583,11 +4623,11 @@ with tabs[5]:
           <div style="color:#3fb950;font-size:14px;font-weight:700;letter-spacing:2px;margin-bottom:12px;">CONCLUSION</div>
           <div style="color:#e6edf3;font-size:13px;line-height:1.8;">
             NEM is not a gold bet — it is a <b style="color:#3fb950;">gold OPERATING LEVERAGE bet</b> with:<br>
-            <b style="color:#58a6ff;">1.</b> Expanding margins as gold rises (AISC ${aisc_gld:,} vs spot ${gold_spot_gld:,}) |
-            <b style="color:#58a6ff;">2.</b> Dividends ($1.00/yr base) that GLD cannot provide |
-            <b style="color:#58a6ff;">3.</b> Buybacks reducing share count |
-            <b style="color:#58a6ff;">4.</b> Copper optionality (12.5 Mt reserves) |
-            <b style="color:#58a6ff;">5.</b> A hard cost floor — NEM generates cash at any gold above ${breakeven_nem:,}/oz
+            <b style="color:#f0b429;">1.</b> Expanding margins as gold rises (AISC ${aisc_gld:,} vs spot ${gold_spot_gld:,}) |
+            <b style="color:#f0b429;">2.</b> Dividends ($1.00/yr base) that GLD cannot provide |
+            <b style="color:#f0b429;">3.</b> Buybacks reducing share count |
+            <b style="color:#f0b429;">4.</b> Copper optionality (12.5 Mt reserves) |
+            <b style="color:#f0b429;">5.</b> A hard cost floor — NEM generates cash at any gold above ${breakeven_nem:,}/oz
           </div>
         </div>""", unsafe_allow_html=True)
         source_footer("NEM Filings, GLD ETF Data, Model Calculations")
@@ -4632,19 +4672,19 @@ with tabs[6]:
           <div style="color:#d29922;font-size:9px;letter-spacing:3px;font-weight:700;margin-bottom:8px;">NON-OBVIOUS COMPETITIVE INSIGHTS</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
             <div>
-              <div style="color:#58a6ff;font-size:10px;font-weight:700;margin-bottom:4px;">1. AISC TRAJECTORY</div>
+              <div style="color:#f0b429;font-size:10px;font-weight:700;margin-bottom:4px;">1. AISC TRAJECTORY</div>
               <div style="color:#8b949e;font-size:10px;line-height:1.5;">
                 NEM: $1,620 → $1,358 (declining). Barrick: $1,026 → $1,637 (+60%). Divergence not priced.
               </div>
             </div>
             <div>
-              <div style="color:#58a6ff;font-size:10px;font-weight:700;margin-bottom:4px;">2. QUALITY-VALUE QUADRANT</div>
+              <div style="color:#f0b429;font-size:10px;font-weight:700;margin-bottom:4px;">2. QUALITY-VALUE QUADRANT</div>
               <div style="color:#8b949e;font-size:10px;line-height:1.5;">
                 NEM: low AISC + low EV/EBITDA. No peer offers both simultaneously.
               </div>
             </div>
             <div>
-              <div style="color:#58a6ff;font-size:10px;font-weight:700;margin-bottom:4px;">3. CADIA COPPER NAV</div>
+              <div style="color:#f0b429;font-size:10px;font-weight:700;margin-bottom:4px;">3. CADIA COPPER NAV</div>
               <div style="color:#8b949e;font-size:10px;line-height:1.5;">
                 2.9 Mt Cu = $8–12/share NAV. No sell-side model assigns standalone Cu value to NEM.
               </div>
@@ -4677,8 +4717,8 @@ with tabs[6]:
         is_nem = t == 'NEM'
         is_barrick = t == 'GOLD'
         bg = '#1a2233' if is_nem else ('#0d1117' if tickers_rv.index(t) % 2 == 0 else '#161b22')
-        border = f"border-left:3px solid {COLORS['blue']};" if is_nem else (f"border-left:2px solid {COLORS['amber']};" if is_barrick else "")
-        name_clr = COLORS['blue'] if is_nem else (COLORS['amber'] if is_barrick else '#e6edf3')
+        border = f"border-left:3px solid {COLORS['gold']};" if is_nem else (f"border-left:2px solid {COLORS['amber']};" if is_barrick else "")
+        name_clr = COLORS['gold'] if is_nem else (COLORS['amber'] if is_barrick else '#e6edf3')
         price_val = q.get('price', 0)
         st.markdown(f"""
         <div style="display:flex;padding:8px 16px;border-bottom:1px solid #30363d;background:{bg};{border}align-items:center;min-width:620px;">
@@ -4719,7 +4759,7 @@ with tabs[6]:
     st.markdown('<div class="panel-header">EV/EBITDA — PEER COMPARISON</div>', unsafe_allow_html=True)
     ev_chart_tickers = [t for t in tickers_rv if ev_ebitda_vals[t] is not None]
     ev_chart_vals = [ev_ebitda_vals[t] for t in ev_chart_tickers]
-    ev_bar_colors = [COLORS['blue'] if t == 'NEM' else COLORS['muted'] for t in ev_chart_tickers]
+    ev_bar_colors = [COLORS['gold'] if t == 'NEM' else COLORS['muted'] for t in ev_chart_tickers]
     fig_ev = go.Figure(go.Bar(
         y=ev_chart_tickers, x=ev_chart_vals, orientation='h',
         marker_color=ev_bar_colors,
@@ -4731,8 +4771,8 @@ with tabs[6]:
         annotation_font=dict(size=9, color=COLORS['amber']))
     fig_ev.add_annotation(x=nem_ev, y='NEM',
         text=f"<b>{ev_discount_pct:+.0f}%</b> vs median", showarrow=True, arrowhead=2,
-        font=dict(size=9, color=COLORS['blue']), arrowcolor=COLORS['blue'],
-        bgcolor='#0d1117', bordercolor=COLORS['blue'], borderwidth=1, ax=60, ay=-25)
+        font=dict(size=9, color=COLORS['gold']), arrowcolor=COLORS['gold'],
+        bgcolor='#0d1117', bordercolor=COLORS['gold'], borderwidth=1, ax=60, ay=-25)
     apply_layout(fig_ev, "NEM TRADES AT A DISCOUNT TO GOLD PEERS ON EV/EBITDA", 320)
     fig_ev.update_layout(xaxis_title='EV/EBITDA (x)', yaxis=dict(autorange='reversed'))
     st.plotly_chart(fig_ev, use_container_width=True)
@@ -4741,7 +4781,7 @@ with tabs[6]:
     st.markdown('<div class="panel-header">P/E RATIO — PEER COMPARISON</div>', unsafe_allow_html=True)
     pe_chart_tickers = [t for t in tickers_rv if pe_vals[t] is not None]
     pe_chart_vals = [pe_vals[t] for t in pe_chart_tickers]
-    pe_bar_colors = [COLORS['blue'] if t == 'NEM' else COLORS['muted'] for t in pe_chart_tickers]
+    pe_bar_colors = [COLORS['gold'] if t == 'NEM' else COLORS['muted'] for t in pe_chart_tickers]
     fig_pe = go.Figure(go.Bar(
         y=pe_chart_tickers, x=pe_chart_vals, orientation='h',
         marker_color=pe_bar_colors,
@@ -4753,8 +4793,8 @@ with tabs[6]:
         annotation_font=dict(size=9, color=COLORS['amber']))
     fig_pe.add_annotation(x=nem_pe, y='NEM',
         text=f"<b>{pe_discount_pct:+.0f}%</b> vs median", showarrow=True, arrowhead=2,
-        font=dict(size=9, color=COLORS['blue']), arrowcolor=COLORS['blue'],
-        bgcolor='#0d1117', bordercolor=COLORS['blue'], borderwidth=1, ax=60, ay=-25)
+        font=dict(size=9, color=COLORS['gold']), arrowcolor=COLORS['gold'],
+        bgcolor='#0d1117', bordercolor=COLORS['gold'], borderwidth=1, ax=60, ay=-25)
     apply_layout(fig_pe, "NEM IS ATTRACTIVELY VALUED ON P/E AMONG GOLD PEERS", 320)
     fig_pe.update_layout(xaxis_title='P/E Ratio (x)', yaxis=dict(autorange='reversed'))
     st.plotly_chart(fig_pe, use_container_width=True)
@@ -4795,8 +4835,8 @@ with tabs[6]:
         is_nem_c = ticker_c == 'NEM'
         is_wpm = ticker_c == 'WPM'
         bg_c = '#1a2233' if is_nem_c else ('#161b22' if list(comp_data.keys()).index(ticker_c) % 2 == 0 else '#0d1117')
-        border_c = f"border-left:3px solid {COLORS['blue']};" if is_nem_c else ""
-        name_color = COLORS['blue'] if is_nem_c else '#e6edf3'
+        border_c = f"border-left:3px solid {COLORS['gold']};" if is_nem_c else ""
+        name_color = COLORS['gold'] if is_nem_c else '#e6edf3'
         aisc_str = f"${cd['aisc']:,}" if cd['aisc'] > 0 else 'N/A'
         prod_str = f"{cd['production']:.2f}" if cd['production'] > 0.1 else f"{cd['production']:.2f}"
         st.markdown(f"""
@@ -4850,7 +4890,7 @@ with tabs[6]:
     for t_sa in scatter_aisc_tickers:
         cd_sa = comp_data[t_sa]
         is_nem_sa = t_sa == 'NEM'
-        color_sa = COLORS['blue'] if is_nem_sa else COLORS['muted']
+        color_sa = COLORS['gold'] if is_nem_sa else COLORS['muted']
         size_sa = 22 if is_nem_sa else 14
         fig_scatter_aisc.add_trace(go.Scatter(
             x=[cd_sa['aisc']], y=[cd_sa['ev_ebitda']],
@@ -4895,7 +4935,7 @@ with tabs[6]:
         'KGC':  [1138, 1240, 1300, 1350, 1350],  # Kinross: gradually rising
         'GFI':  [1297, 1310, 1425, 1530, 1645],  # Gold Fields: steadily rising
     }
-    aisc_colors = {'NEM': COLORS['blue'], 'GOLD': COLORS['amber'], 'AEM': COLORS['green'], 'KGC': '#8b949e', 'GFI': '#6e7681'}
+    aisc_colors = {'NEM': COLORS['gold'], 'GOLD': COLORS['amber'], 'AEM': COLORS['green'], 'KGC': '#8b949e', 'GFI': '#6e7681'}
     aisc_dashes = {'NEM': 'solid', 'GOLD': 'dot', 'AEM': 'dash', 'KGC': 'dot', 'GFI': 'dot'}
 
     fig_aisc_traj = go.Figure()
@@ -4924,9 +4964,9 @@ with tabs[6]:
     st.plotly_chart(fig_aisc_traj, use_container_width=True)
 
     st.markdown(f"""
-    <div style="background:#0d1117;border:3px solid #58a6ff;padding:0;margin-bottom:16px;overflow:hidden;">
-      <div style="background:#58a6ff;padding:7px 20px;display:flex;justify-content:space-between;align-items:center;">
-        <span style="background:#0d1117;color:#58a6ff;font-size:9px;font-weight:700;padding:2px 10px;letter-spacing:2px;">ALPHA INSIGHT</span>
+    <div style="background:#0d1117;border:3px solid #f0b429;padding:0;margin-bottom:16px;overflow:hidden;">
+      <div style="background:#f0b429;padding:7px 20px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="background:#0d1117;color:#f0b429;font-size:9px;font-weight:700;padding:2px 10px;letter-spacing:2px;">ALPHA INSIGHT</span>
         <span style="color:#0d1117;font-size:10px;font-weight:700;letter-spacing:2px;">NON-CONSENSUS VIEW — COMPETITIVE ANALYSIS</span>
         <span style="background:#0d1117;color:#3fb950;font-size:9px;font-weight:700;padding:2px 10px;letter-spacing:2px;">NOT IN ANY STREET MODEL</span>
       </div>
@@ -4943,7 +4983,7 @@ with tabs[6]:
         = <b style="color:#3fb950;">~$930M in incremental annual FCF</b>. No other major gold miner has this cost
         trajectory. This is the single most important driver of NEM's re-rating.
         <br><br>
-        <b style="color:#58a6ff;">The chart above is the money shot:</b> NEM is the only line going DOWN. Every peer is going UP or flat.
+        <b style="color:#f0b429;">The chart above is the money shot:</b> NEM is the only line going DOWN. Every peer is going UP or flat.
         At $3,000+ gold, the direction of that cost line is worth more than the starting level.
       </div>
       <div style="color:#8b949e;font-size:9px;margin-top:8px;">Source: NEM, GOLD, AEM, KGC, GFI FY2021-2025 Annual Reports, NEM Investor Day 2025. Verified against Q4 2025 press releases.</div>
@@ -4953,7 +4993,7 @@ with tabs[6]:
     # ── QUALITATIVE STRATEGY COMPARISON ──
     st.markdown('<div class="panel-header">PEER STRATEGY COMPARISON</div>', unsafe_allow_html=True)
     strategies = [
-        ('NEM', 'Newmont', COLORS['blue'], 'Scale + Diversification + Newcrest Copper Optionality',
+        ('NEM', 'Newmont', COLORS['gold'], 'Scale + Diversification + Newcrest Copper Optionality',
          'World\'s largest gold miner. Targeting AISC <$1,400 via Newcrest synergies + Project Catalyst. S&P 500 inclusion provides unmatched liquidity. Only major gold miner with Tier-1 copper exposure (Cadia, 2.9 Mt Cu reserves). 118 Moz P&P gold reserves — irreplaceable in a zero-discovery world.'),
         ('GOLD', 'Barrick Gold', COLORS['amber'], 'Copper-Focused Pivot, Tier 1 Assets, No Dividend Growth',
          'Pivoting toward copper (Reko Diq, Lumwana). Tier 1 asset portfolio but hampered by geopolitical risk (Loulo-Gounkoto suspended Jan 2025 by Mali govt). Rising AISC ($1,637/oz, +60% since 2021). No dividend growth priority — returns are secondary to portfolio building.'),
@@ -4982,7 +5022,7 @@ with tabs[6]:
     c1_rv, c2_rv, c3_rv = st.columns(3)
     with c1_rv:
         st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">NEM EV/EBITDA</div>
-          <div class="kpi-value" style="color:{COLORS['blue']};font-size:22px;">{nem_ev:.1f}×</div>
+          <div class="kpi-value" style="color:{COLORS['gold']};font-size:22px;">{nem_ev:.1f}×</div>
           <div class="kpi-sub">Current multiple</div></div>""", unsafe_allow_html=True)
     with c2_rv:
         st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">PEER MEDIAN</div>
@@ -5140,7 +5180,7 @@ with tabs[6]:
         <span style="color:#e6edf3;font-size:9px;line-height:1.4;{'font-weight:700;' if is_nem_deal else ''}">{name}</span>
         <span style="color:#8b949e;font-size:9px;">{date}</span>
         <span style="color:#e6edf3;font-size:9px;">${{ev_m:,}}M</span>
-        <span style="color:#58a6ff;font-size:9px;">{acqr}</span>
+        <span style="color:#f0b429;font-size:9px;">{acqr}</span>
         <span style="color:#e6edf3;font-size:9px;">{tgt}</span>
         <span style="color:#d29922;font-size:9px;font-weight:600;">{ev_eb_s}</span>
         <span style="color:#8b949e;font-size:9px;">{ev_res_s}</span>
@@ -5265,7 +5305,7 @@ with tabs[6]:
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">CONSENSUS EPS & PRICE TARGETS — PERPLEXITY FINANCE DATA</div>', unsafe_allow_html=True)
     st.markdown(f"""
-    <div style="background:#1a1f2e;border:2px solid #d29922;padding:0;overflow:hidden;margin-bottom:12px;">
+    <div style="background:#161b22;border:2px solid #d29922;padding:0;overflow:hidden;margin-bottom:12px;">
       <div style="background:#d29922;padding:6px 16px;">
         <span style="color:#0d1117;font-size:9px;letter-spacing:3px;font-weight:700;">PERPLEXITY FINANCE — MARKETSCREENER CONSENSUS (APR 2026)</span>
       </div>
@@ -5274,11 +5314,11 @@ with tabs[6]:
           <div style="background:#0d1117;padding:10px;border:1px solid #30363d;">
             <div style="color:#8b949e;font-size:9px;margin-bottom:4px;">FY2026 CONSENSUS EPS</div>
             <div style="color:#3fb950;font-size:20px;font-weight:700;">$5.806/sh</div>
-            <div style="color:#8b949e;font-size:9px;">vs our model; MarketScreener</div>
+            <div style="color:#8b949e;font-size:9px;">vs model estimate; MarketScreener</div>
           </div>
           <div style="background:#0d1117;padding:10px;border:1px solid #30363d;">
             <div style="color:#8b949e;font-size:9px;margin-bottom:4px;">FY2027 CONSENSUS EPS</div>
-            <div style="color:#58a6ff;font-size:20px;font-weight:700;">$5.685/sh</div>
+            <div style="color:#f0b429;font-size:20px;font-weight:700;">$5.685/sh</div>
             <div style="color:#8b949e;font-size:9px;">slight YoY dip (trough prod.)</div>
           </div>
           <div style="background:#0d1117;padding:10px;border:1px solid #30363d;">
@@ -5313,7 +5353,7 @@ with tabs[6]:
           <b style="color:#d29922;">KEY INSIGHT — ESTIMATES ARE A LOW BAR:</b> NEM beat Q4 2025 consensus EPS by 39% ($2.52 vs $1.81 estimated).
           Stifel raised its target to <b>$175</b> following results. Q3 2026 EPS consensus is $1.73 (raised from $1.56) and Q4 2026 is $1.84.
           The forward P/E of 13.5× on FY2026E EPS of $5.81 implies the street is pricing in a much lower gold environment than current spot.
-          Our model's $5.806 full-year EPS assumption is <b>in-line with MarketScreener consensus</b> — validating our assumptions as market-calibrated.<br>
+          The model's $5.806 full-year EPS assumption is <b>in-line with MarketScreener consensus</b> — validating the assumptions as market-calibrated.<br>
           <b>Sources: MarketScreener.com NEM Finances (Apr 2026); MarketBeat analyst ratings (Mar 2026) — retrieved via Perplexity Finance</b>
         </div>
       </div>
@@ -5328,7 +5368,7 @@ with tabs[6]:
     scatter_fcfy = {'NEM': 7.0, 'AEM': 3.5, 'GOLD': 4.5, 'KGC': 5.0, 'GFI': 6.0}
     fig_scatter_pv = go.Figure()
     for t_sc in scatter_tickers:
-        color_sc = COLORS['blue'] if t_sc == 'NEM' else COLORS['muted']
+        color_sc = COLORS['gold'] if t_sc == 'NEM' else COLORS['muted']
         size_sc = 20 if t_sc == 'NEM' else 12
         fig_scatter_pv.add_trace(go.Scatter(
             x=[scatter_pe[t_sc]], y=[scatter_fcfy[t_sc]],
@@ -5387,7 +5427,7 @@ with tabs[7]:
             'desc': f"Gold ${st.session_state.get('bull_gold', 6300):,}+, full ramp, multiple expansion"},
         'BASE': {'gold_y1': BASE['gold_y1'], 'gold_y5': BASE['gold_y1'] * (1+BASE['gold_esc'])**4,
             'prod': 5.9, 'aisc_delta': 0, 'mult': BASE['peer_median_evebda'],
-            'wacc': BASE['wacc'], 'prob': pba, 'color': COLORS['blue'],
+            'wacc': BASE['wacc'], 'prob': pba, 'color': COLORS['gold'],
             'desc': f"Gold ${BASE['gold_y1']:,}, consensus production, peer multiples"},
         'BEAR': {'gold_y1': st.session_state.get('bear_gold', 3500), 'gold_y5': 3800, 'prod': 5.3,
             'aisc_delta': 0.20, 'mult': 7.0, 'wacc': BASE['wacc'] + 0.02, 'prob': pbe, 'color': COLORS['amber'],
@@ -5470,7 +5510,7 @@ with tabs[7]:
             ('Currency Headwinds', 0.45, 35, 'FX'), ('Labor/Strike Risk', 0.30, 45, 'Operational'),
         ]
         risk_colors_m = {'Macro': COLORS['red'], 'Operational': COLORS['amber'], 'Political': COLORS['amber'],
-            'Financial': COLORS['blue'], 'ESG': COLORS['muted'], 'FX': COLORS['blue']}
+            'Financial': COLORS['gold'], 'ESG': COLORS['muted'], 'FX': COLORS['gold']}
         fig_risk = go.Figure()
         for name_rk, prob_rk, impact, cat in risks:
             size_rk = prob_rk * impact / 5 + 15
@@ -5494,7 +5534,7 @@ with tabs[7]:
         buffer_pct = buffer / breakeven_gold * 100
         asym_labels = ['STRESS', 'BEAR', 'BASE', 'BULL']
         asym_vals = [sc_results[s]['upside'] for s in asym_labels]
-        asym_colors = [COLORS['red'], COLORS['amber'], COLORS['blue'], COLORS['green']]
+        asym_colors = [COLORS['red'], COLORS['amber'], COLORS['gold'], COLORS['green']]
         fig_asym = go.Figure(go.Bar(x=asym_labels, y=asym_vals, marker_color=asym_colors,
             text=[f"{'+' if v > 0 else ''}{v:.1f}%" for v in asym_vals],
             textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
@@ -5516,7 +5556,7 @@ with tabs[7]:
     <div style="color:#8b949e;font-size:10px;margin-bottom:12px;line-height:1.5;">
       Tab 01 told the story. Tab 12 has the raw findings. This table answers the only question that matters:
       <b style="color:#e6edf3;">how many dollars does each risk subtract from the target price?</b>
-      Full narrative detail: see <b style="color:#58a6ff;">12&middot;ALT DATA</b>.
+      Full narrative detail: see <b style="color:#f0b429;">12&middot;ALT DATA</b>.
     </div>""", unsafe_allow_html=True)
 
     _risk_quant = [
@@ -5673,9 +5713,9 @@ with tabs[7]:
 
         c1, c2, c3, c4, c5 = st.columns(5)
         for col, (label_mc, val_mc, color_mc, sub_mc) in zip([c1, c2, c3, c4, c5], [
-            ('MEDIAN', f"${mc_stats['Median']:.2f}", COLORS['blue'],
+            ('MEDIAN', f"${mc_stats['Median']:.2f}", COLORS['gold'],
              f"95% CI: ${mc_ci_median[0]:.2f}–${mc_ci_median[1]:.2f}"),
-            ('MEAN', f"${mc_stats['Mean']:.2f}", COLORS['blue'],
+            ('MEAN', f"${mc_stats['Mean']:.2f}", COLORS['gold'],
              f"95% CI: ${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f}"),
             ('P(>CURRENT)', f"{prob_above_mc:.1f}%", COLORS['green'] if prob_above_mc > 60 else COLORS['amber'],
              f"95% CI: {mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%"),
@@ -5688,8 +5728,8 @@ with tabs[7]:
                   <div class="kpi-sub">{sub_mc}</div></div>""", unsafe_allow_html=True)
 
         st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:6px 14px;margin-top:6px;font-size:9px;color:#8b949e;">
-          <span style="color:#58a6ff;font-weight:700;">95% CIs (n={n_mc:,}):</span>
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f0b429;padding:6px 14px;margin-top:6px;font-size:9px;color:#8b949e;">
+          <span style="color:#f0b429;font-weight:700;">95% CIs (n={n_mc:,}):</span>
           Mean ${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f} |
           P(>Current) {mc_ci_prob[0]:.1f}–{mc_ci_prob[1]:.1f}% |
           Gold–Multiple ρ = {mc_realized_corr:.3f} (target {rho_mc:.2f})
@@ -5699,13 +5739,13 @@ with tabs[7]:
         st.markdown('<div class="panel-header">DISTRIBUTION OF SIMULATED PRICES</div>', unsafe_allow_html=True)
         clip_prices_mc = np.clip(mc_prices, -50, 1000)
         fig_hist = go.Figure()
-        fig_hist.add_trace(go.Histogram(x=clip_prices_mc, nbinsx=80, marker_color=COLORS['blue'], opacity=0.7, name='Simulations'))
+        fig_hist.add_trace(go.Histogram(x=clip_prices_mc, nbinsx=80, marker_color=COLORS['gold'], opacity=0.7, name='Simulations'))
         above_mask = clip_prices_mc[mc_prices > BASE['price']]
         if len(above_mask):
             fig_hist.add_trace(go.Histogram(x=above_mask, nbinsx=80, marker_color=COLORS['green'], opacity=0.7, name=f'Above Current ({prob_above_mc:.1f}%)'))
         for line_val, lbl, clr in [
             (BASE['price'], f"Current ${BASE['price']:.2f}", COLORS['amber']),
-            (mc_stats['Median'], f"Median ${mc_stats['Median']:.2f}", COLORS['blue']),
+            (mc_stats['Median'], f"Median ${mc_stats['Median']:.2f}", COLORS['gold']),
             (mc_stats['P10'], f"P10 ${mc_stats['P10']:.2f}", COLORS['red']),
             (mc_stats['P90'], f"P90 ${mc_stats['P90']:.2f}", COLORS['green']),
         ]:
@@ -5723,7 +5763,7 @@ with tabs[7]:
             running_medians = [np.median(mc_prices[:cp]) for cp in check_points]
             fig_conv = go.Figure()
             fig_conv.add_trace(go.Scatter(x=check_points, y=running_medians, mode='lines',
-                line=dict(color=COLORS['blue'], width=2), name='Running Median'))
+                line=dict(color=COLORS['gold'], width=2), name='Running Median'))
             fig_conv.add_hline(y=mc_stats['Median'], line_dash='dash', line_color=COLORS['green'],
                                annotation_text=f"Final Median: ${mc_stats['Median']:.2f}", annotation_font_color=COLORS['green'])
             # Find stabilization point (running median within ±1% of final)
@@ -5753,7 +5793,7 @@ with tabs[7]:
                 variances_t[name_t] = corr_t ** 2 * 100
             sorted_v = sorted(variances_t.items(), key=lambda x: x[1])
             fig_tornado = go.Figure(go.Bar(x=[v for _, v in sorted_v], y=[n for n, _ in sorted_v], orientation='h',
-                marker_color=[COLORS['green'] if v > 50 else (COLORS['red'] if n in ['AISC (Y1)', 'WACC'] else (COLORS['amber'] if n == 'Production (Moz)' else COLORS['blue'])) for n, v in sorted_v],
+                marker_color=[COLORS['green'] if v > 50 else (COLORS['red'] if n in ['AISC (Y1)', 'WACC'] else (COLORS['amber'] if n == 'Production (Moz)' else COLORS['gold'])) for n, v in sorted_v],
                 text=[f"{v:.1f}%" for _, v in sorted_v], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
             top_driver = sorted_v[-1][0]
             top_pct = sorted_v[-1][1]
@@ -5790,8 +5830,8 @@ with tabs[7]:
         </div>""", unsafe_allow_html=True)
         # Statistical robustness note
         st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:8px 14px;margin-top:6px;font-size:10px;color:#8b949e;">
-          <span style="color:#58a6ff;font-weight:700;">STATISTICAL ROBUSTNESS (n={n_mc:,}):</span>
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f0b429;padding:8px 14px;margin-top:6px;font-size:10px;color:#8b949e;">
+          <span style="color:#f0b429;font-weight:700;">STATISTICAL ROBUSTNESS (n={n_mc:,}):</span>
           Median 95% CI: <b>${mc_ci_median[0]:.2f}–${mc_ci_median[1]:.2f}</b> |
           Mean 95% CI: <b>${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f}</b> |
           P(>current) 95% CI: <b>{mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%</b> |
@@ -5845,7 +5885,7 @@ with tabs[8]:
         Net forward-looking expected value: <b style="color:#3fb950;">${forward_ev:.2f}/share</b>
         | Upside EVs: <b style="color:#3fb950;">${forward_ev_pos:.2f}</b> — 
         Risk EVs: <b style="color:#f85149;">${forward_ev_neg:.2f}</b> (NGM JV downside included).
-        Incremental catalyst upside <b style="color:#58a6ff;">WITHOUT requiring gold price appreciation</b>.
+        Incremental catalyst upside <b style="color:#f0b429;">WITHOUT requiring gold price appreciation</b>.
       </span>
     </div>""", unsafe_allow_html=True)
 
@@ -5857,9 +5897,9 @@ with tabs[8]:
         cat_names_wf = [c['Catalyst'] for c in catalysts if c['Status'] != 'COMPLETED']
         cat_evs_wf = [c['Impact'] * c['Prob'] for c in catalysts if c['Status'] != 'COMPLETED']
         cat_cats_wf = [c['Cat'] for c in catalysts if c['Status'] != 'COMPLETED']
-        cat_colors_map = {'Earnings': COLORS['blue'], 'Operations': COLORS['green'],
-                          'Financial': COLORS['amber'], 'Valuation': '#58a6ff'}
-        cat_bar_colors = [cat_colors_map.get(ct, COLORS['blue']) for ct in cat_cats_wf]
+        cat_colors_map = {'Earnings': COLORS['gold'], 'Operations': COLORS['green'],
+                          'Financial': COLORS['amber'], 'Valuation': '#f0b429'}
+        cat_bar_colors = [cat_colors_map.get(ct, COLORS['gold']) for ct in cat_cats_wf]
         sorted_cats = sorted(zip(cat_names_wf, cat_evs_wf, cat_bar_colors), key=lambda x: x[1])
         fig_cat_wf = go.Figure(go.Bar(
             x=[v for _, v, _ in sorted_cats], y=[n for n, _, _ in sorted_cats], orientation='h',
@@ -5883,8 +5923,8 @@ with tabs[8]:
         quarter_map = {q: i for i, q in enumerate(quarter_order)}
         tl_names = [c['Catalyst'] for c in catalysts]
         tl_x = [quarter_map.get(c['Q'], 0) for c in catalysts]
-        status_colors = {'COMPLETED': COLORS['green'], 'IN PROGRESS': COLORS['amber'], 'UPCOMING': COLORS['blue']}
-        tl_colors = [status_colors.get(c['Status'], COLORS['blue']) for c in catalysts]
+        status_colors = {'COMPLETED': COLORS['green'], 'IN PROGRESS': COLORS['amber'], 'UPCOMING': COLORS['gold']}
+        tl_colors = [status_colors.get(c['Status'], COLORS['gold']) for c in catalysts]
         tl_symbols = ['circle' if c['Status'] == 'COMPLETED' else 'diamond' if c['Status'] == 'IN PROGRESS' else 'circle-open' for c in catalysts]
         fig_tl = go.Figure()
         fig_tl.add_trace(go.Scatter(
@@ -5934,15 +5974,15 @@ with tabs[9]:
           </div>
           <div style="color:#3fb950;font-size:9px;margin-top:8px;font-weight:700;">→ SEE CREDIBILITY TAB</div>
         </div>
-        <div style="background:#161b22;border:1px solid #30363d;border-top:3px solid #58a6ff;padding:16px;">
-          <div style="color:#58a6ff;font-size:9px;letter-spacing:2px;font-weight:700;margin-bottom:8px;">NON-CONSENSUS #2</div>
+        <div style="background:#161b22;border:1px solid #30363d;border-top:3px solid #f0b429;padding:16px;">
+          <div style="color:#f0b429;font-size:9px;letter-spacing:2px;font-weight:700;margin-bottom:8px;">NON-CONSENSUS #2</div>
           <div style="color:#e6edf3;font-size:12px;font-weight:700;margin-bottom:6px;">Cadia = Hidden AI Infrastructure Play</div>
           <div style="color:#8b949e;font-size:10px;line-height:1.6;">
             NEM's Cadia mine has 2.9 Mt copper reserves — world's 4th largest. At AI data center copper intensity
             of 27–47 t/MW (S&P Global), Cadia is a direct AI infrastructure beneficiary worth
-            <b style="color:#58a6ff;">$8–12/share</b> in standalone NAV. No gold analyst model assigns this value.
+            <b style="color:#f0b429;">$8–12/share</b> in standalone NAV. No gold analyst model assigns this value.
           </div>
-          <div style="color:#58a6ff;font-size:9px;margin-top:8px;font-weight:700;">→ SEE CHANNEL CHECK #8 BELOW</div>
+          <div style="color:#f0b429;font-size:9px;margin-top:8px;font-weight:700;">→ SEE CHANNEL CHECK #8 BELOW</div>
         </div>
         <div style="background:#161b22;border:1px solid #30363d;border-top:3px solid #f85149;padding:16px;">
           <div style="color:#f85149;font-size:9px;letter-spacing:2px;font-weight:700;margin-bottom:8px;">NON-CONSENSUS #3</div>
@@ -5978,7 +6018,7 @@ with tabs[9]:
          '<br><br>'
          f'<b>Consensus:</b> {DATA["analyst_consensus"]["total_ratings"]} analysts &mdash; {int(DATA["analyst_consensus"]["bullish_pct"])}% Buy. Mean target ${DATA["analyst_consensus"]["avg_target"]:.2f}, median ${DATA["analyst_consensus"]["median_target"]:.0f}. '
          'High: $157 (Bernstein). Low: $84 (Raymond James, Brian MacArthur). '
-         f'Our model (${BASE["blended_target"]:.2f}) sits between consensus mean and Bernstein&rsquo;s high.',
+         f'The model target (${BASE["blended_target"]:.2f}) sits between consensus mean and Bernstein&rsquo;s high.',
          'Perplexity Finance analyst data, Yahoo Finance (Feb 27, 2026), SEC filings'),
 
         ('2. INSIDER TRADING', 'NEUTRAL-BEARISH', COLORS['amber'],
@@ -6170,13 +6210,13 @@ with tabs[9]:
     # Bear case: resolution timeline + what would change our mind (new layer, not repeat)
     st.markdown(f"""
     <div style="background:#161b22;border:2px solid {COLORS['red']};padding:18px;margin-top:8px;">
-      <div style="color:{COLORS['red']};font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">BEAR CASE RESOLUTION CALENDAR &mdash; WHEN WE'LL KNOW</div>
+      <div style="color:{COLORS['red']};font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">BEAR CASE RESOLUTION CALENDAR &mdash; KEY DATES</div>
       <div style="color:#8b949e;font-size:10px;margin-bottom:12px;line-height:1.5;">
         Each bearish signal above has a specific date when it either resolves or escalates.
         This calendar converts vague risk into a tradeable monitoring framework.</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
         <b style="color:#f85149;">Apr 23, 2026:</b> Q1 earnings. First AISC print under Ghana's new royalty regime.
-        If total AISC &lt; $1,800/oz, the Ghana impact is manageable. If &gt; $1,850, our kill criteria fires.<br>
+        If total AISC &lt; $1,800/oz, the Ghana impact is manageable. If &gt; $1,850, the kill criteria fires.<br>
         <b style="color:#f85149;">Jun-Jul 2026:</b> NGM JV review. Settlement or arbitration filing.
         Settlement = +$8-12/share. Arbitration = multi-year drag. Binary outcome for ~20% of NEM NAV.<br>
         <b style="color:#d29922;">Jul 16, 2026:</b> Cadia class action hearing (NSW Supreme Court).
@@ -6237,10 +6277,11 @@ with tabs[9]:
             bgcolor='#0d1117', bordercolor='#f85149', borderwidth=1, ax=60, ay=-20)
         fig_disc.add_trace(go.Scatter(
             x=[str(y) for y in disc_years], y=disc_count, mode='lines',
-            line=dict(color='#58a6ff', width=1.5, dash='dot'), showlegend=False
+            line=dict(color='#f0b429', width=1.5, dash='dot'), showlegend=False
         ))
         PLOT_LAYOUT_C3 = dict(template='plotly_dark', paper_bgcolor='#161b22', plot_bgcolor='#161b22',
-            font=dict(family='Consolas, monospace', color='#8b949e', size=10),
+            font=dict(family='Courier New, Consolas, monospace', color='#8b949e', size=10),
+            title_font=dict(color='#e6edf3', size=12),
             margin=dict(l=40, r=20, t=50, b=40))
         fig_disc.update_layout(**PLOT_LAYOUT_C3, title='DISCOVERY COLLAPSE — HISTORIC FIRST IN 35 YEARS',
             height=300, yaxis_title='# Major Discoveries (>=2 Moz)', xaxis_title='Year',
@@ -6258,8 +6299,8 @@ with tabs[9]:
         kgc_scores =  [3, 4, 7, 7, 5, 6]    # Kinross: smaller
         fig_moat = go.Figure()
         fig_moat.add_trace(go.Scatterpolar(r=nem_scores, theta=moat_categories, fill='toself',
-            name='NEM', line=dict(color='#58a6ff', width=2.5),
-            fillcolor='rgba(88,166,255,0.15)'))
+            name='NEM', line=dict(color='#f0b429', width=2.5),
+            fillcolor='rgba(240,180,41,0.15)'))
         fig_moat.add_trace(go.Scatterpolar(r=aem_scores, theta=moat_categories, fill='toself',
             name='AEM', line=dict(color='#3fb950', width=1.5, dash='dot'),
             fillcolor='rgba(63,185,80,0.05)'))
@@ -6350,7 +6391,7 @@ with tabs[10]:
                                     ('ESG-Linked Pay', '20%', 'Of incentive'), ('Say-on-Pay', '92%', '2025 vote')]:
             st.markdown(f"""<div style="background:#161b22;border:1px solid #30363d;padding:8px 12px;margin-bottom:4px;">
               <div style="color:#8b949e;font-size:9px;letter-spacing:1px;text-transform:uppercase;">{metric}</div>
-              <div style="color:#58a6ff;font-size:14px;font-weight:600;">{val}</div>
+              <div style="color:#f0b429;font-size:14px;font-weight:600;">{val}</div>
               <div style="color:#8b949e;font-size:10px;">{note}</div></div>""", unsafe_allow_html=True)
 
     # Radar
@@ -6387,7 +6428,7 @@ with tabs[10]:
         for i_m, (metric, scores) in enumerate(esg_peer_scores.items()):
             fig_esg_peer.add_trace(go.Bar(
                 name=metric, x=esg_peers, y=scores,
-                marker_color=[COLORS['green'], COLORS['blue'], COLORS['blue']],
+                marker_color=[COLORS['green'], COLORS['gold'], COLORS['gold']],
                 opacity=1.0 - i_m * 0.2,
                 text=[f"{s}" for s in scores], textposition='outside',
                 textfont=dict(color=COLORS['text'], size=10)))
@@ -6402,7 +6443,7 @@ with tabs[10]:
     with c_esg2:
         st.markdown(f"""
         <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
-          <div style="color:#58a6ff;font-size:11px;font-weight:700;letter-spacing:1.5px;margin-bottom:12px;">ESG CAPITAL FLOWS CONTEXT</div>
+          <div style="color:#f0b429;font-size:11px;font-weight:700;letter-spacing:1.5px;margin-bottom:12px;">ESG CAPITAL FLOWS CONTEXT</div>
           <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
             <b style="color:#3fb950;">$30T+</b> in ESG-mandated AUM globally (Bloomberg Intelligence, 2022). As the #1-ranked gold miner on Bloomberg ESG Transparency and 99th percentile on S&amp;P CSA, NEM is positioned for ESG-mandate inflows that peers (Barrick: 72nd pct) do not receive.
           </div>
@@ -6642,7 +6683,7 @@ with tabs[11]:
     fig_cred.add_trace(go.Scatter(
         x=['2020','2021','2022','2023','2024','2025'],
         y=[-11.8, -8.2, -3.9, -7.5, -0.7, -0.2],
-        mode='lines', line=dict(color=COLORS['blue'], width=2, dash='dot'),
+        mode='lines', line=dict(color=COLORS['gold'], width=2, dash='dot'),
         name='Post-Goldcorp Trend', showlegend=False
     ))
 
@@ -6673,13 +6714,13 @@ with tabs[11]:
       <div style="color:#8b949e;font-size:9px;line-height:1.5;">
         Industry gold standard. 5/6 years within or above guidance (only miss: 2020 COVID force majeure).<br>
         Post-Kirkland merger (2022-2025): avg deviation +0.1% — virtually perfect. Beat in 2023 (top of range), above midpoint in 2024-2025.<br>
-        <span style="color:#58a6ff;">Year-by-year vs midpoint:</span> 2020: -7.4% (COVID) | 2021: -0.9% | 2022: -5.0% | 2023: +3.0% | 2024: +1.0% | 2025: +1.4%
+        <span style="color:#f0b429;">Year-by-year vs midpoint:</span> 2020: -7.4% (COVID) | 2021: -0.9% | 2022: -5.0% | 2023: +3.0% | 2024: +1.0% | 2025: +1.4%
       </div>
     </div>''', unsafe_allow_html=True)
 
     # NEM row
     st.markdown(f'''
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:12px 16px;margin-bottom:8px;">
+    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f0b429;padding:12px 16px;margin-bottom:8px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <span style="color:#e6edf3;font-size:12px;font-weight:600;">Newmont (NEM)</span>
         <div>
@@ -6690,7 +6731,7 @@ with tabs[11]:
       <div style="color:#8b949e;font-size:9px;line-height:1.5;">
         Two distinct eras. Pre-Goldcorp (2015-2018): avg miss -0.8%, beat in 2 of 4 years — comparable to AEM quality.<br>
         Post-Goldcorp (2020-2025): avg miss -5.4%, 0 beats. But trajectory matters: -11.8% → -0.2% across 6 years.<br>
-        <span style="color:#58a6ff;">Year-by-year vs midpoint:</span> 2015: -3.6% | 2016: 0.0% | 2017: +1.3% | 2018: -1.0% | 2020: -11.8% | 2021: -8.2% | 2022: -3.9% | 2023: -7.5% | 2024: -0.7% | 2025: -0.2%
+        <span style="color:#f0b429;">Year-by-year vs midpoint:</span> 2015: -3.6% | 2016: 0.0% | 2017: +1.3% | 2018: -1.0% | 2020: -11.8% | 2021: -8.2% | 2022: -3.9% | 2023: -7.5% | 2024: -0.7% | 2025: -0.2%
       </div>
     </div>''', unsafe_allow_html=True)
 
@@ -6707,7 +6748,7 @@ with tabs[11]:
       <div style="color:#8b949e;font-size:9px;line-height:1.5;">
         Consistently lands low end of ranges. 2 outright misses (2022: -5.9%, 2023: -8.0%) from infrastructure disruptions.<br>
         Loulo-Gounkoto suspended Jan 2025 (govt action) — 2025 guidance excluded ~200-250 Koz. Flattering the 2025 in-range result.<br>
-        <span style="color:#58a6ff;">Year-by-year vs midpoint:</span> 2020: 0.0% | 2021: -2.4% | 2022: -5.9% | 2023: -8.0% | 2024: -4.6% | 2025: -1.9%
+        <span style="color:#f0b429;">Year-by-year vs midpoint:</span> 2020: 0.0% | 2021: -2.4% | 2022: -5.9% | 2023: -8.0% | 2024: -4.6% | 2025: -1.9%
       </div>
     </div>''', unsafe_allow_html=True)
 
@@ -6752,21 +6793,21 @@ with tabs[11]:
 
       <div style="color:#e6edf3;font-size:12px;line-height:1.6;max-width:900px;margin:0 auto;">
         At ${B['gold_spot']:,}/oz gold and $1,680/oz AISC, each 100 Koz of production variance = <span style="font-weight:700;">~${(B['gold_spot'] - 1680) * 100000 / 1e6:.0f}M in FCF</span>.
-        <br>Our base case applies a <span style="color:{COLORS['amber']};font-weight:700;">-2.9% haircut</span> (blending post-Goldcorp avg with recent trajectory),
+        <br>The base case applies a <span style="color:{COLORS['amber']};font-weight:700;">-2.9% haircut</span> (blending post-Goldcorp avg with recent trajectory),
         implying actual production of <span style="font-weight:700;">~5.11 Moz</span> — with <span style="color:{COLORS['amber']};font-weight:700;">$443M in FCF</span> at risk vs. guidance.
         <br><br>
         <span style="color:{COLORS['amber']};font-size:11px;">
           Grade: C+ (Improving) — Pre-Goldcorp NEM was a B+ operator (avg miss -0.8%). The Goldcorp integration destroyed
           that track record. But the -11.8% → -0.2% convergence over 2020-2025 suggests the integration tax is being paid down.
-          We use 5.11 Moz in our DCF, not the guided 5.26 Moz. If 2026 delivery matches the 2024-2025 trajectory, upgrade to B.
+          The model uses 5.11 Moz in the DCF, not the guided 5.26 Moz. If 2026 delivery matches the 2024-2025 trajectory, upgrade to B.
         </span>
       </div>
     </div>''', unsafe_allow_html=True)
 
     # ── PERPLEXITY-ENABLED INSIGHT: FCF RECOVERY ARC ──
     st.markdown(f'''
-    <div style="background:#0d1117;border:2px solid {COLORS['blue']};padding:0;margin-top:20px;overflow:hidden;">
-      <div style="background:{COLORS['blue']};padding:7px 18px;">
+    <div style="background:#0d1117;border:2px solid {COLORS['gold']};padding:0;margin-top:20px;overflow:hidden;">
+      <div style="background:{COLORS['gold']};padding:7px 18px;">
         <span style="color:#0d1117;font-size:10px;font-weight:700;letter-spacing:2px;">
           PERPLEXITY-ENABLED INSIGHT &mdash; THE FCF RECOVERY ARC (CROSS-REFERENCED FROM 7 PRIMARY SOURCES)
         </span>
@@ -6809,12 +6850,12 @@ with tabs[11]:
               <div style="color:{COLORS['amber']};font-size:24px;font-weight:700;">$443M</div>
               <div style="color:#8b949e;font-size:10px;">Base case applies -2.9% credibility haircut
                 (5.26 Moz guided &rarr; 5.11 Moz modeled)
-                = $443M FCF at risk vs. guidance. Built into our DCF.</div>
+                = $443M FCF at risk vs. guidance. Built into the DCF.</div>
             </div>
           </div>
         </div>
         <div style="color:#e6edf3;font-size:11px;line-height:1.7;border-top:1px solid #30363d;padding-top:12px;">
-          <b style="color:{COLORS['blue']};">Why no sell-side analyst has modeled this:</b> Standard consensus models apply a static discount
+          <b style="color:{COLORS['gold']};">Why no sell-side analyst has modeled this:</b> Standard consensus models apply a static discount
           to NEM guidance without tracking the <i>trajectory</i> of miss magnitude over time. By cross-referencing NEM
           Annual Reports (2015&ndash;2025), Goldcorp integration filings, and quarterly earnings transcripts,
           we identified that the integration tax is essentially paid down &mdash; and that 2026 guidance credibility is
@@ -6918,7 +6959,7 @@ with tabs[11]:
         st.markdown('<div class="panel-header">CEO PROFILE &mdash; NATASCHA VILJOEN</div>', unsafe_allow_html=True)
         st.markdown(f"""
         <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
-          <div style="color:#58a6ff;font-size:14px;font-weight:700;margin-bottom:8px;">Natascha Viljoen — President & CEO (since Jan 1, 2026)</div>
+          <div style="color:#f0b429;font-size:14px;font-weight:700;margin-bottom:8px;">Natascha Viljoen — President & CEO (since Jan 1, 2026)</div>
           <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
             <b>Tenure:</b> CEO since January 2026 | <b>Background:</b> Chemical Engineering, former COO of Anglo American Platinum<br>
             <b>Why This Matters:</b><br>
@@ -6935,7 +6976,7 @@ with tabs[11]:
         st.markdown('<br>', unsafe_allow_html=True)
         st.markdown('<div class="panel-header">PREDECESSOR — TOM PALMER (2019-2025)</div>', unsafe_allow_html=True)
         st.markdown(f"""
-        <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:16px 20px;">
+        <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid #f0b429;padding:16px 20px;">
           <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
             Led $26B Newcrest acquisition, $8.5B debt repayment, $2.3B buyback program, net cash position achieved.
             Palmer's legacy: transformed NEM from an overleveraged acquirer into a fortress balance sheet with Tier 1 assets only.
@@ -6946,8 +6987,8 @@ with tabs[11]:
         st.markdown('<br>', unsafe_allow_html=True)
         st.markdown('<div class="panel-header">BOARD COMPOSITION & GOVERNANCE</div>', unsafe_allow_html=True)
         board_members = [
-            {'Name': 'Gregory Boyce', 'Role': 'Chairman', 'Expertise': 'Mining CEO (Peabody Energy)', 'Color': COLORS['blue']},
-            {'Name': 'Natascha Viljoen', 'Role': 'President & CEO', 'Expertise': 'Mining operations, chemical engineering', 'Color': COLORS['blue']},
+            {'Name': 'Gregory Boyce', 'Role': 'Chairman', 'Expertise': 'Mining CEO (Peabody Energy)', 'Color': COLORS['gold']},
+            {'Name': 'Natascha Viljoen', 'Role': 'President & CEO', 'Expertise': 'Mining operations, chemical engineering', 'Color': COLORS['gold']},
             {'Name': 'Bruce Brook', 'Role': 'Independent Director', 'Expertise': 'Finance, audit (former EY partner)', 'Color': COLORS['muted']},
             {'Name': 'Maura Clark', 'Role': 'Independent Director', 'Expertise': 'Energy markets, commodity trading', 'Color': COLORS['muted']},
             {'Name': 'Harry M. Conger', 'Role': 'Independent Director', 'Expertise': 'Mining operations', 'Color': COLORS['muted']},
@@ -6986,7 +7027,7 @@ with tabs[11]:
         cap_events = [
             {'Date': '2023-Q4', 'Event': 'Newcrest Acquisition Closes', 'Type': 'M&A',
              'Impact': 'Added Cadia ($400/oz AISC), Lihir, Telfer. Doubled reserve base to 118 Moz.',
-             'Color': COLORS['blue']},
+             'Color': COLORS['gold']},
             {'Date': '2024-Q1', 'Event': 'Non-Core Divestitures Begin', 'Type': 'Divestiture',
              'Impact': 'Sold Eleonore, Musselwhite, Porcupine, CC&V, Akyem. Focus on Tier 1 only.',
              'Color': COLORS['amber']},
@@ -7092,7 +7133,7 @@ with tabs[12]:
         </div>
         <div style="text-align:center;border-top:1px solid #30363d;padding-top:16px;">
           <div style="color:#e6edf3;font-size:16px;line-height:1.6;">
-            If you believe gold stays above <b style="color:#f85149;">${implied_gold_v:,.0f}</b>, NEM is undervalued.</div>
+            If gold stays above <b style="color:#f85149;">${implied_gold_v:,.0f}</b>, NEM is undervalued.</div>
           <div style="color:#8b949e;font-size:10px;margin-top:8px;">
             Reverse DCF: solving backward for the gold price the market embeds in NEM's current stock price of ${B['price']:.2f}.</div>
         </div>
@@ -7157,7 +7198,7 @@ with tabs[12]:
         </div>
         <div>
           <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">PRICE TARGET</div>
-          <div style="color:#58a6ff;font-size:48px;font-weight:700;">${target_v:.2f}</div>
+          <div style="color:#f0b429;font-size:48px;font-weight:700;">${target_v:.2f}</div>
         </div>
         <div>
           <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">UPSIDE</div>
@@ -7166,10 +7207,10 @@ with tabs[12]:
       </div>
       <div style="border-top:1px solid #30363d;border-bottom:1px solid #30363d;padding:12px 0;margin-bottom:16px;">
         <div style="color:#e6edf3;font-size:13px;letter-spacing:1px;">
-          Current: <span style="color:#58a6ff;">${B['price']:.2f}</span> |
+          Current: <span style="color:#f0b429;">${B['price']:.2f}</span> |
           DCF: <span style="color:#3fb950;">${B['dcf_price']:.2f}</span> |
           P/NAV: <span style="color:#3fb950;">${B['nav_price']:.2f}</span> |
-          Blended: <span style="color:#58a6ff;">${target_v:.2f}</span>
+          Blended: <span style="color:#f0b429;">${target_v:.2f}</span>
         </div>
       </div>
       <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;">
@@ -7223,8 +7264,8 @@ with tabs[12]:
             'signal': '4 UPGRADES / 0 DOWNGRADES',
             'color': COLORS['green'],
             'icon': '▲',
-            'detail': f'Consensus target: ~${DATA["analyst_consensus"]["avg_target"]:.0f} → Our target: ${B["blended_target"]:.2f} (+{((B["blended_target"]/DATA["analyst_consensus"]["avg_target"])-1)*100:.0f}% above Street)',
-            'sub': 'Wall Street is moving our direction but hasn\'t fully caught up. Contrarian alpha remains.',
+            'detail': f'Consensus target: ~${DATA["analyst_consensus"]["avg_target"]:.0f} → Model target: ${B["blended_target"]:.2f} (+{((B["blended_target"]/DATA["analyst_consensus"]["avg_target"])-1)*100:.0f}% above Street)',
+            'sub': 'Wall Street is converging but has not fully caught up. Contrarian alpha remains.',
         },
         {
             'name': 'SUPPLY STRUCTURE',
@@ -7336,9 +7377,9 @@ with tabs[12]:
     fig_convergence.add_hline(y=B['price'], line_color=COLORS['red'], line_width=2, line_dash='dash',
         annotation_text=f"Current Price: ${B['price']:.2f}", annotation_position='bottom right',
         annotation_font=dict(size=10, color=COLORS['red']))
-    fig_convergence.add_hline(y=B['blended_target'], line_color=COLORS['blue'], line_width=1.5, line_dash='dot',
+    fig_convergence.add_hline(y=B['blended_target'], line_color=COLORS['gold'], line_width=1.5, line_dash='dot',
         annotation_text=f"Blended Target: ${B['blended_target']:.2f}", annotation_position='top right',
-        annotation_font=dict(size=10, color=COLORS['blue']))
+        annotation_font=dict(size=10, color=COLORS['gold']))
     _min_val = min(val_prices)
     _max_val = max(val_prices)
     apply_layout(fig_convergence, f"{_methods_above_all} OF 8 INDEPENDENT METHODS ABOVE CURRENT PRICE (${B['price']:.2f})", 420)
@@ -7427,7 +7468,7 @@ with tabs[12]:
       </div>
       <div style="color:#8b949e;font-size:10px;line-height:1.6;">
         Current price: <b style="color:#f85149;">${B['price']:.2f}</b> &nbsp;|&nbsp; 
-        Blended target: <b style="color:#58a6ff;">${_blended_v:.2f}</b> &nbsp;|&nbsp; 
+        Blended target: <b style="color:#f0b429;">${_blended_v:.2f}</b> &nbsp;|&nbsp; 
         Implied upside: <b style="color:#3fb950;">{(_blended_v/B['price']-1)*100:+.0f}%</b>
       </div>
       <div style="color:#636e7b;font-size:9px;margin-top:8px;">
@@ -7538,10 +7579,10 @@ with tabs[12]:
     _kgc_eveb = d['peer_ratios_latest'].get('KGC', {}).get('ev_ebitda', 7.5)
     st.markdown(f"""
     <div style="background:#0d1117;border:1px solid #30363d;padding:16px 20px;margin-top:16px;">
-      <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:10px;">COMPETITIVE ADVANTAGE MATRIX — HEAD-TO-HEAD</div>
+      <div style="color:#f0b429;font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:10px;">COMPETITIVE ADVANTAGE MATRIX — HEAD-TO-HEAD</div>
       <div style="display:grid;grid-template-columns:160px repeat(4, 1fr) 1fr;gap:0;">
         <div style="color:#8b949e;font-size:9px;font-weight:700;padding:6px 8px;border-bottom:2px solid #30363d;">DIMENSION</div>
-        <div style="color:#58a6ff;font-size:9px;font-weight:700;padding:6px 8px;border-bottom:2px solid #30363d;text-align:center;">NEM</div>
+        <div style="color:#f0b429;font-size:9px;font-weight:700;padding:6px 8px;border-bottom:2px solid #30363d;text-align:center;">NEM</div>
         <div style="color:#8b949e;font-size:9px;font-weight:700;padding:6px 8px;border-bottom:2px solid #30363d;text-align:center;">AEM</div>
         <div style="color:#8b949e;font-size:9px;font-weight:700;padding:6px 8px;border-bottom:2px solid #30363d;text-align:center;">GOLD (Barrick)</div>
         <div style="color:#8b949e;font-size:9px;font-weight:700;padding:6px 8px;border-bottom:2px solid #30363d;text-align:center;">KGC</div>
@@ -7563,7 +7604,7 @@ with tabs[12]:
         st.markdown(f"""
         <div style="display:grid;grid-template-columns:160px repeat(4, 1fr) 1fr;gap:0;">
           <div style="color:#e6edf3;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">{dim}</div>
-          <div style="{_nem_bg}color:#58a6ff;font-size:10px;font-weight:700;padding:6px 8px;border-bottom:1px solid #21262d;text-align:center;">{nem_v}</div>
+          <div style="{_nem_bg}color:#f0b429;font-size:10px;font-weight:700;padding:6px 8px;border-bottom:1px solid #21262d;text-align:center;">{nem_v}</div>
           <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;text-align:center;">{aem_v}</div>
           <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;text-align:center;">{gold_v}</div>
           <div style="color:#8b949e;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;text-align:center;">{kgc_v}</div>
@@ -7579,8 +7620,8 @@ with tabs[12]:
     # WHAT HAPPENS NEXT — forward momentum, not backward reflection
     # ═══════════════════════════════════════════════════════════════════════════
     st.markdown(f"""
-    <div style="background:#0d1117;border:2px solid #58a6ff;padding:20px;margin-top:20px;">
-      <div style="color:#58a6ff;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;text-align:center;">WHAT HAPPENS NEXT &mdash; THE FIRST 90 DAYS</div>
+    <div style="background:#0d1117;border:2px solid #f0b429;padding:20px;margin-top:20px;">
+      <div style="color:#f0b429;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;text-align:center;">WHAT HAPPENS NEXT &mdash; THE FIRST 90 DAYS</div>
       <div style="color:#e6edf3;font-size:11px;line-height:2.0;">
         <b style="color:#f85149;">Apr 23, 2026 &mdash; Q1 Earnings (DAY 1 CHECKPOINT).</b>
         First AISC print under Ghana royalty. If total AISC &lt; $1,800/oz, thesis confirmed. If &gt; $1,850, kill criteria fires &rarr; SELL.<br>
@@ -7588,7 +7629,7 @@ with tabs[12]:
         Settlement (+$8-12/share) or arbitration filing (&minus;$3/share). Binary event for 20% of NAV.<br>
         <b style="color:#3fb950;">Q2-Q3 2026 &mdash; Production Inflection.</b>
         Cadia PC2 ramp + Ahafo North + Boddington optimization. If H1 production tracks &ge; 2.55 Moz (annualized 5.1+), credibility upgrade to B.<br>
-        <b style="color:#58a6ff;">Jul 16, 2026 &mdash; Cadia Hearing.</b>
+        <b style="color:#f0b429;">Jul 16, 2026 &mdash; Cadia Hearing.</b>
         Scope of class action defined. Contained = bounded risk. Expanded = re-evaluate.
       </div>
     </div>""", unsafe_allow_html=True)
@@ -7612,8 +7653,8 @@ with tabs[12]:
     with st.expander("▶ Methodology — Perplexity Research Advantage", expanded=False):
         # ── PERPLEXITY RESEARCH ADVANTAGE ──
         st.markdown(f"""
-    <div style="background:#0d1117;border:3px solid {COLORS['blue']};padding:0;margin-top:24px;overflow:hidden;">
-      <div style="background:linear-gradient(90deg, {COLORS['blue']} 0%, #1a2a4a 100%);padding:10px 22px;">
+    <div style="background:#0d1117;border:3px solid {COLORS['gold']};padding:0;margin-top:24px;overflow:hidden;">
+      <div style="background:linear-gradient(90deg, {COLORS['gold']} 0%, #2a2010 100%);padding:10px 22px;">
         <span style="color:#ffffff;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">
           THE PERPLEXITY RESEARCH ADVANTAGE &mdash; WHY THIS ANALYSIS COULD NOT EXIST WITHOUT IT
         </span>
@@ -7658,11 +7699,11 @@ with tabs[12]:
             </div>
           </div>
 
-          <div style="background:#161b22;border:1px solid #30363d;border-left:4px solid {COLORS['blue']};padding:14px 18px;">
+          <div style="background:#161b22;border:1px solid #30363d;border-left:4px solid {COLORS['gold']};padding:14px 18px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-              <span style="color:{COLORS['blue']};font-size:10px;font-weight:700;letter-spacing:2px;">
+              <span style="color:{COLORS['gold']};font-size:10px;font-weight:700;letter-spacing:2px;">
                 3. FCF RECOVERY ARC &mdash; CONSENSUS IS DISCOUNTING THE WRONG COMPANY</span>
-              <span style="color:{COLORS['blue']};font-size:11px;font-weight:700;">
+              <span style="color:{COLORS['gold']};font-size:11px;font-weight:700;">
                 -11.8% miss (2020) &rarr; -0.2% (2025) = ~$985M FCF improvement</span>
             </div>
             <div style="color:#8b949e;font-size:10px;line-height:1.5;">
@@ -7716,7 +7757,7 @@ with tabs[12]:
             domains (corporate filings, commodity research, central bank data, engineering studies, equity consensus).
             The iterative multi-turn research process — searching, cross-referencing, and drilling deeper —
             compressed what would have been weeks of library work into focused research threads.
-            The result is an analysis where every <b style="color:{COLORS['blue']};">non-consensus claim is sourced</b>,
+            The result is an analysis where every <b style="color:{COLORS['gold']};">non-consensus claim is sourced</b>,
             every <b style="color:{COLORS['amber']};">FCF number is traceable</b>, and every
             <b style="color:{COLORS['green']};">structural thesis is cross-validated</b>.
           </div>
@@ -7734,7 +7775,7 @@ with tabs[12]:
         The market is pricing Newmont as if gold falls to
         <span style="color:#f85149;">${B['implied_gold']:,.0f}/oz</span>.
         Three things say it won't &mdash; and that the market is discounting the wrong company.<br><br>
-        <span style="color:#58a6ff;font-size:14px;font-weight:400;">&#9312;&nbsp; Gold macro: central banks buying 2&times; pre-2022, zero major discoveries in 2023&ndash;2024, spot at ${B['gold_spot']:,}.</span><br>
+        <span style="color:#f0b429;font-size:14px;font-weight:400;">&#9312;&nbsp; Gold macro: central banks buying 2&times; pre-2022, zero major discoveries in 2023&ndash;2024, spot at ${B['gold_spot']:,}.</span><br>
         <span style="color:#3fb950;font-size:14px;font-weight:400;">&#9313;&nbsp; Portfolio transformation: AISC $1,620 &rarr; $1,358 &mdash; lowest-cost trajectory among majors, Cadia at $400/oz.</span><br>
         <span style="color:#d29922;font-size:14px;font-weight:400;">&#9314;&nbsp; Credibility flip: guided ${aisc_guided_bk:,}, delivered ${aisc_d:,} &mdash; ${aisc_beat_bk:,}/oz beat. New NEM, old discount.</span>
       </div>
@@ -7806,7 +7847,7 @@ with tabs[13]:
         })
     q_df = pd.DataFrame(q_rows)
     st.dataframe(q_df.set_index('Quarter'), use_container_width=True)
-    st.markdown('<div style="color:#8b949e;font-size:9px;margin-top:-8px;">* Consensus from MarketBeat (n=1 analyst/quarter, indicative only). Our model EPS higher due to $5,000-5,500/oz gold deck vs. analyst conservatism.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#8b949e;font-size:9px;margin-top:-8px;">* Consensus from MarketBeat (n=1 analyst/quarter, indicative only). Model EPS higher due to $5,000-5,500/oz gold deck vs. analyst conservatism.</div>', unsafe_allow_html=True)
 
     st.markdown('<br>', unsafe_allow_html=True)
 
@@ -7821,8 +7862,8 @@ with tabs[13]:
 
     c1, c2, c3, c4, c5 = st.columns(5)
     for col, lbl, val, clr in [
-        (c1, 'FY2026 PRODUCTION', f'{fy26_prod:.2f} Moz', COLORS['blue']),
-        (c2, 'FY2026 REVENUE', f'${fy26_rev/1000:.1f}B', COLORS['blue']),
+        (c1, 'FY2026 PRODUCTION', f'{fy26_prod:.2f} Moz', COLORS['gold']),
+        (c2, 'FY2026 REVENUE', f'${fy26_rev/1000:.1f}B', COLORS['gold']),
         (c3, 'FY2026 EBITDA', f'${fy26_ebitda/1000:.1f}B', COLORS['green']),
         (c4, 'FY2026 FCF', f'${fy26_fcf/1000:.1f}B', COLORS['green']),
         (c5, 'FY2026 EPS (MODEL)', f'${fy26_eps:.2f}', COLORS['amber']),
@@ -7838,12 +7879,12 @@ with tabs[13]:
     with c_left:
         st.markdown('<div class="panel-header">QUARTERLY PRODUCTION (MOZ) — H2 WEIGHTED</div>', unsafe_allow_html=True)
         prod_vals = [quarters_data[k]['production_moz'] for k in quarter_keys if k in quarters_data]
-        bar_colors_prod = [COLORS['amber'] if k.startswith('Q1') else (COLORS['blue'] if k.startswith('Q2') else COLORS['green']) for k in quarter_keys if k in quarters_data]
+        bar_colors_prod = [COLORS['amber'] if k.startswith('Q1') else (COLORS['gold'] if k.startswith('Q2') else COLORS['green']) for k in quarter_keys if k in quarters_data]
         # H1 vs H2 shading
         fig_q_prod = go.Figure()
         fig_q_prod.add_trace(go.Bar(
             x=q_labels, y=prod_vals,
-            marker_color=[COLORS['amber'], COLORS['blue'], COLORS['green'], COLORS['blue'], COLORS['amber'], COLORS['blue']],
+            marker_color=[COLORS['amber'], COLORS['gold'], COLORS['green'], COLORS['gold'], COLORS['amber'], COLORS['gold']],
             text=[f"{v:.3f}" for v in prod_vals],
             textposition='outside', textfont=dict(color=COLORS['text'], size=9)
         ))
@@ -7855,7 +7896,7 @@ with tabs[13]:
         st.plotly_chart(fig_q_prod, use_container_width=True)
 
     with c_right:
-        st.markdown('<div class="panel-header">QUARTERLY EBITDA ($M) — OUR MODEL vs CONSENSUS TREND</div>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">QUARTERLY EBITDA ($M) — MODEL vs CONSENSUS TREND</div>', unsafe_allow_html=True)
         ebitda_vals = [quarters_data[k]['ebitda_m'] for k in quarter_keys if k in quarters_data]
         eps_model_vals = [quarters_data[k]['eps_model'] for k in quarter_keys if k in quarters_data]
         eps_cons_vals = [quarters_data[k]['eps_consensus'] for k in quarter_keys if k in quarters_data]
@@ -7867,7 +7908,7 @@ with tabs[13]:
         ))
         fig_q_ebitda.add_trace(go.Scatter(
             x=q_labels, y=eps_model_vals, mode='lines+markers',
-            line=dict(color=COLORS['blue'], width=2),
+            line=dict(color=COLORS['gold'], width=2),
             marker=dict(size=6), name='EPS Model ($)', yaxis='y2'
         ))
         fig_q_ebitda.add_trace(go.Scatter(
@@ -7875,10 +7916,10 @@ with tabs[13]:
             line=dict(color=COLORS['amber'], width=1.5, dash='dot'),
             marker=dict(size=5, symbol='circle-open'), name='EPS Consensus ($)*', yaxis='y2'
         ))
-        apply_layout(fig_q_ebitda, "OUR EPS MATERIALLY ABOVE THIN CONSENSUS — GOLD PRICE DECK DIVERGENCE", 320)
+        apply_layout(fig_q_ebitda, "MODEL EPS MATERIALLY ABOVE THIN CONSENSUS — GOLD PRICE DECK DIVERGENCE", 320)
         fig_q_ebitda.update_layout(
             yaxis=dict(title='EBITDA ($M)', color=COLORS['muted']),
-            yaxis2=dict(title='EPS ($)', overlaying='y', side='right', color=COLORS['blue']),
+            yaxis2=dict(title='EPS ($)', overlaying='y', side='right', color=COLORS['gold']),
             legend=dict(x=0, y=1.1, orientation='h', font=dict(size=9, color=COLORS['text'])),
             xaxis_title='Quarter'
         )
@@ -7899,7 +7940,7 @@ with tabs[13]:
     ))
     fig_aisc_q.add_trace(go.Bar(
         x=q_labels, y=fcf_vals,
-        marker_color=COLORS['blue'], opacity=0.5,
+        marker_color=COLORS['gold'], opacity=0.5,
         name='FCF ($M)', yaxis='y2'
     ))
     fig_aisc_q.add_hline(y=1680, line_dash='dash', line_color=COLORS['amber'],
@@ -7908,22 +7949,22 @@ with tabs[13]:
     apply_layout(fig_aisc_q, "AISC PEAKS Q1 2026, IMPROVES THROUGH 2027 — FCF ACCELERATES AS AISC NORMALIZES", 340)
     fig_aisc_q.update_layout(
         yaxis=dict(title='AISC ($/oz)', color=COLORS['red']),
-        yaxis2=dict(title='FCF ($M)', overlaying='y', side='right', color=COLORS['blue']),
+        yaxis2=dict(title='FCF ($M)', overlaying='y', side='right', color=COLORS['gold']),
         legend=dict(x=0, y=1.1, orientation='h', font=dict(size=9, color=COLORS['text'])),
         xaxis_title='Quarter'
     )
     st.plotly_chart(fig_aisc_q, use_container_width=True)
 
-    # Bridge: Our view vs. consensus
-    st.markdown('<div class="panel-header">BRIDGE — OUR MODEL vs. CONSENSUS (FY2026E)</div>', unsafe_allow_html=True)
+    # Bridge: Model view vs. consensus
+    st.markdown('<div class="panel-header">BRIDGE — MODEL vs. CONSENSUS (FY2026E)</div>', unsafe_allow_html=True)
     bridge = qm.get('bridge_to_consensus', {})
     st.markdown(f"""
     <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;">
       <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:0;margin-bottom:4px;">
         <div style="color:#8b949e;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">METRIC</div>
         <div style="color:#d29922;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">CONSENSUS (FINVIZ/LSEG)</div>
-        <div style="color:#3fb950;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">OUR MODEL</div>
-        <div style="color:#58a6ff;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">VARIANCE DRIVER</div>
+        <div style="color:#3fb950;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">MODEL ESTIMATE</div>
+        <div style="color:#f0b429;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 8px;border-bottom:1px solid #30363d;">VARIANCE DRIVER</div>
       </div>
       <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;gap:0;">
         <div style="color:#e6edf3;font-size:10px;padding:6px 8px;border-bottom:1px solid #21262d;">FY2026 EPS</div>
@@ -7952,7 +7993,7 @@ with tabs[13]:
       <div style="color:#8b949e;font-size:9px;margin-top:10px;padding-top:8px;border-top:1px solid #30363d;">
         Consensus sources: Finviz/LSEG ($8.13 EPS / $23.28B revenue, Feb 19, 2026 post-Q4 earnings); 
         MarketBeat quarterly ($1.00/$0.98/$1.27/$1.24 per quarter, n=1 analyst). 
-        Our model deviates primarily on gold price deck assumption, not on production or AISC.
+        The model deviates primarily on gold price deck assumption, not on production or AISC.
       </div>
     </div>""", unsafe_allow_html=True)
 
@@ -7965,9 +8006,9 @@ with tabs[13]:
         q = quarters_data[qk]
         half_tag = 'H1 2026' if qk in ['Q1_2026', 'Q2_2026'] else ('H2 2026' if qk in ['Q3_2026', 'Q4_2026'] else 'H1 2027')
         st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:10px 14px;margin-bottom:6px;">
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #f0b429;padding:10px 14px;margin-bottom:6px;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span style="color:#58a6ff;font-size:11px;font-weight:700;">{q['label']}</span>
+            <span style="color:#f0b429;font-size:11px;font-weight:700;">{q['label']}</span>
             <span style="color:#8b949e;font-size:9px;">{half_tag} | Model EPS: <b style="color:#3fb950;">${q['eps_model']:.2f}</b> | Consensus EPS: <b style="color:#d29922;">${q['eps_consensus']:.2f}</b></span>
           </div>
           <div style="color:#8b949e;font-size:10px;margin-top:4px;">{q['notes']}</div>
@@ -7990,7 +8031,7 @@ with tabs[13]:
         ('Cadia', 600, 45,
          'Cave transition (PC1→PC2). Conveyor ramp-up causes H1 drawdown → H2 recovery as block cave matures. '
          'Confirmed in Q4 2025 call (CTechO Hardy). AISC elevated in Q1 due to development capex.',
-         COLORS['blue']),
+         COLORS['gold']),
         ('Nevada Gold Mines (NEM 38.5%)', 935, 42,
          'NGM production declining per Barrick guidance (6th consecutive year of decline). H1 weak '
          'due to seasonal/sequencing at Carlin. H2 slight recovery from Phoenix. '
@@ -8012,7 +8053,7 @@ with tabs[13]:
         ('Tanami', 500, 50,
          'Relatively even distribution. Shaft sinking for T2 expansion ongoing but production stable. '
          'One fatality in 2025 — safety review adds minor uncertainty to H1 scheduling.',
-         COLORS['blue']),
+         COLORS['gold']),
         ('Penasquito', 350, 48,
          'Silver/zinc/lead by-products drive revenue mix. Gold production relatively flat quarterly. '
          'Stripping campaigns could create modest Q2/Q3 dip.',
@@ -8129,7 +8170,7 @@ with tabs[13]:
 
         fig_rr.add_trace(go.Bar(
             x=rr_years, y=organic_rrs, name='Organic RRR (exploration only)',
-            marker_color=COLORS['blue'],
+            marker_color=COLORS['gold'],
             text=[f"{v:.0f}%" for v in organic_rrs], textposition='outside',
             textfont=dict(color=COLORS['text'], size=9)
         ))
@@ -8158,7 +8199,7 @@ with tabs[13]:
             <div style="color:#8b949e;font-size:9px;font-weight:700;padding:4px 8px;border-bottom:1px solid #30363d;">NOTE</div>
           </div>
           <div style="display:grid;grid-template-columns:140px 120px 120px 120px 1fr;gap:0;">
-            <div style="color:{COLORS['blue']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">NEM (FY2025)</div>
+            <div style="color:{COLORS['gold']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">NEM (FY2025)</div>
             <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">118.2 Moz</div>
             <div style="color:#e6edf3;font-size:10px;padding:4px 8px;border-bottom:1px solid #21262d;">7.2 Moz</div>
             <div style="color:{COLORS['amber']};font-size:10px;font-weight:700;padding:4px 8px;border-bottom:1px solid #21262d;">{nem_fy25_gross_rr:.0f}%</div>
@@ -8183,8 +8224,8 @@ with tabs[13]:
         # Valuation context: reserve replacement and NAV
         st.markdown('<br>', unsafe_allow_html=True)
         st.markdown(f"""
-        <div style="background:#0d1117;border:1px solid #58a6ff;padding:14px 18px;">
-          <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;margin-bottom:10px;">RESERVE REPLACEMENT → VALUATION LINK</div>
+        <div style="background:#0d1117;border:1px solid #f0b429;padding:14px 18px;">
+          <div style="color:#f0b429;font-size:10px;letter-spacing:2px;margin-bottom:10px;">RESERVE REPLACEMENT → VALUATION LINK</div>
           <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
             <b style="color:#3fb950;">Benign interpretation:</b> NEM's FY2025 gross RRR of {nem_fy25_gross_rr:.0f}% (including price revision to $2,000/oz) is broadly 
             adequate. The 16 Moz reserve decline in FY2025 is overwhelmingly driven by divestitures (8.6 Moz), not operational depletion. 
@@ -8219,11 +8260,11 @@ st.markdown(f"""
   <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap;">
     <span style="color:#8b949e;font-size:10px;letter-spacing:1px;">NYSE: NEM</span>
     <span style="background:{BASE['rec_color']};color:#0d1117;font-size:10px;font-weight:700;padding:2px 10px;letter-spacing:2px;">{BASE['recommendation']}</span>
-    <span style="color:#58a6ff;font-size:13px;font-weight:700;">Target: ${BASE['blended_target']:.2f}</span>
+    <span style="color:#f0b429;font-size:13px;font-weight:700;">Target: ${BASE['blended_target']:.2f}</span>
     <span style="color:#3fb950;font-size:12px;font-weight:700;">{BASE['upside']:+.1f}% upside</span>
     <span style="color:#8b949e;font-size:9px;">4 methods converge</span>
   </div>
-  <div style="color:#58a6ff;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">
+  <div style="color:#f0b429;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">
     NEM EQUITY RESEARCH TERMINAL v2
   </div>
   <div style="color:#8b949e;font-size:9px;letter-spacing:1px;line-height:1.8;">
@@ -8232,7 +8273,7 @@ st.markdown(f"""
     Pro-forma balance sheet &nbsp;|&nbsp; ESG-adjusted WACC overlay &nbsp;|&nbsp; Reserve replacement analysis &nbsp;|&nbsp; Mine-level phasing context<br>
     Source confidence tiers &nbsp;|&nbsp; Kill criteria &nbsp;|&nbsp; Variant-perception framework with catalyst dates<br>
     Every input sourced &nbsp;|&nbsp; Every assumption transparent &nbsp;|&nbsp; Every number stress-testable<br>
-    <span style="color:#58a6ff;">Built entirely with Perplexity Computer</span>
+    <span style="color:#f0b429;">Built entirely with Perplexity Computer</span>
   </div>
 </div>
 """, unsafe_allow_html=True)
