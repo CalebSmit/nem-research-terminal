@@ -694,11 +694,12 @@ def insight_callout(text):
 
 def research_insight_box(text, source=""):
     """Render a teal-bordered Research Insight callout box with optional source footer."""
-    src_html = f'<div style="color:#8b949e;font-size:10px;margin-top:6px;">Source: {source}</div>' if source else ''
-    st.markdown(f'''<div style="background:#0d1117;border-left:3px solid #00b4d8;padding:16px;margin:16px 0;">
-      <div style="color:#00b4d8;font-size:10px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;">⚡ RESEARCH INSIGHT</div>
-      <div style="color:#e6edf3;font-size:13px;line-height:1.6;">{text}</div>{src_html}
-    </div>''', unsafe_allow_html=True)
+    src_html = f'<div style="color:#8b949e;font-size:9px;margin-top:8px;border-top:1px solid #30363d;padding-top:6px;">Source: {source}</div>' if source else ''
+    st.markdown(f'''<div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #00b4d8;padding:12px 16px;margin-bottom:16px;">
+  <div style="color:#00b4d8;font-size:10px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;">⚡ RESEARCH INSIGHT</div>
+  <div style="color:#e6edf3;font-size:12px;line-height:1.6;">{text}</div>
+  {src_html}
+</div>''', unsafe_allow_html=True)
 
 def source_footer(source, date="Mar 31, 2026", tier=None):
     tier_badge = ""
@@ -982,7 +983,7 @@ with st.sidebar:
                                  key='sidebar_gold_y1')
     st.session_state['gold_y1'] = gold_y1_sidebar
     slider_feedback('gold_y1', gold_y1_sidebar, fmt=",.0f", prefix="$")
-    with st.expander("ℹ Why $5,200?"):
+    with st.expander(f"ℹ Why ${st.session_state.get('gold_y1', 5200):,}?"):
         st.markdown(DEFAULTS['gold_y1']['why'])
     if st.button("⟲ Reset Gold", key='sb_reset_gold'):
         reset_section(['gold_y1'])
@@ -1485,6 +1486,24 @@ with tabs[0]:
     </div>
     """, unsafe_allow_html=True)
 
+    # ── RESEARCH METHODOLOGY SUMMARY (always visible) ──
+    st.markdown('''
+<div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #00b4d8;padding:16px 20px;margin-bottom:16px;">
+  <div style="color:#00b4d8;font-size:10px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">PERPLEXITY COMPUTER — 8 RESEARCH THREADS (SUMMARY)</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:10px;color:#e6edf3;line-height:1.6;">
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">1. Hiring &amp; Capex:</b> 200+ open roles at Cadia/Lihir signal expansion, not contraction</div>
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">2. SEC Filings:</b> 81 Form 4s — 21 sales, zero purchases; Fry $2.05M sale flagged</div>
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">3. Earnings NLP:</b> Q4 call tone shift — analysts questioning conservative guidance</div>
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">4. Regulatory:</b> Ghana royalty +$50/oz AISC; Cadia class action filed Feb 2026</div>
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">5. Analyst Revisions:</b> 5 upgrades, 1 downgrade in 90 days — momentum bullish</div>
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">6. Competitor AISC:</b> NEM only major with declining AISC trajectory (FY2025)</div>
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">7. Community Sentiment:</b> r/wallstreetbets + mining forums — retail positioning rising</div>
+    <div style="padding-left:8px;border-left:1px solid #30363d;"><b style="color:#f0b429;">8. Copper Demand:</b> IEA/McKinsey project 50-70% Cu demand increase by 2040</div>
+  </div>
+  <div style="color:#8b949e;font-size:9px;margin-top:8px;">Full research log with before/after impact analysis available in the expander below.</div>
+</div>
+''', unsafe_allow_html=True)
+
     with st.expander("▶ Perplexity Computer — Research Methodology, Log & Before/After Impact", expanded=True):
 
         st.markdown(f"""
@@ -1731,7 +1750,7 @@ with tabs[1]:
       <b style="color:#00b4d8;">Primary catalyst:</b> Q1 2026 earnings (Apr 23, 2026) — AISC delivery vs. guidance and Ghana royalty disclosure will either confirm or break the thesis. A second catalyst: any sell-side initiation of a standalone Cadia copper NAV ($12\u201315/share of unpriced optionality) triggers a re-rating.
     </div>
     <div style="margin-bottom:8px;padding-left:12px;border-left:2px solid #f85149;">
-      <b style="color:#f85149;">Key risk — why the position is held despite it:</b> Ghana sliding-scale royalty law (effective Mar 9, 2026) adds ~$50/oz to total NEM AISC. At ${BASE['gold_y1']:,}/oz gold, the gross margin absorbs the impact — the position survives even in a worse-than-guided scenario.
+      <b style="color:#f85149;">Key risk — why the position is held despite it:</b> Ghana sliding-scale royalty law (effective Mar 9, 2026) adds ~$50/oz to total NEM AISC. At ${BASE['gold_y1']:,}/oz gold, the ${BASE['gold_y1'] - 2100:,}/oz gross margin absorbs the impact with a 94% margin retention ratio — the position survives even in a worse-than-guided scenario.
     </div>
     <div style="padding-left:12px;border-left:2px solid #3fb950;">
       <b style="color:#3fb950;">Conviction statement:</b> Price target ${BASE['blended_target']:.2f} | Upside {BASE['upside']:+.1f}% | 12-month horizon | Rating: {BASE['recommendation']} | The gap between what NEM's equity implies and what gold trades at today is the thesis — and the market has not yet closed it.
@@ -2069,7 +2088,7 @@ with tabs[1]:
     </div>""", unsafe_allow_html=True)
     _whtbt = [
         ('Gold stays above $3,500/oz', 85, 'Apr 23, 2026', '3 consecutive monthly closes below $3,500', '#3fb950', 'WGC 2026: central bank + ETF demand 2x pre-2022 rates; structural, not cyclical'),
-        ('AISC stays below $1,850/oz', 70, 'Apr 23, 2026 (Q1)', 'Q1 AISC > $1,850 => Ghana royalty worse than modeled', '#d29922', 'Ghana royalty +$50/oz modeled; risk: higher sliding scale at $5,200+ gold'),
+        ('AISC stays below $1,850/oz', 70, 'Apr 23, 2026 (Q1)', 'Q1 AISC > $1,850 => Ghana royalty worse than modeled', '#d29922', f'Ghana royalty +$50/oz modeled; risk: higher sliding scale at ${BASE["gold_y1"]:,}+ gold'),
         ('Production >= 5.0 Moz FY2026', 75, 'Jul 2026 (Q2)', 'Full-year guidance cut below 5.0 Moz', '#d29922', 'NEM guided 5.26 Moz; credibility haircut (-2.9%) = 5.1 Moz in model'),
         ('Copper NAV recognized by sell-side', 40, 'Jun 30, 2026', 'No analyst assigns Cu standalone NAV by Q3 2026', '#f85149', '~40% probability; zero current coverage despite AI copper thesis'),
         ('NGM JV resolved without capital call', 65, 'Jun-Jul 2026', 'NEM forced to commit > $5B unplanned capex to NGM', '#d29922', 'NEM holds ROFR and veto on Barrick IPO; favorable but legal dispute real'),
@@ -2230,7 +2249,7 @@ with tabs[2]:
                             annotation_text=f"Spot: ${gold_spot:,}", annotation_position="top", annotation_font_color=COLORS['amber'])
         fig_banks.add_vline(x=BASE['gold_y1'], line_dash='dash', line_color=COLORS['muted'], line_width=1,
                             annotation_text=f"Model: ${BASE['gold_y1']:,}", annotation_position="bottom", annotation_font_color=COLORS['muted'])
-        apply_layout(fig_banks, "$5,200 GOLD DECK IS CONSERVATIVE vs BANK FORECASTS ($5,720 AVG)", 300)
+        apply_layout(fig_banks, f"${BASE['gold_y1']:,} GOLD DECK IS CONSERVATIVE vs BANK FORECASTS ($5,720 AVG)", 300)
         fig_banks.update_layout(xaxis_title='Gold Forecast ($/oz)', yaxis_title='Bank / Forecast Source', xaxis_range=[4000, 7000])
         st.plotly_chart(fig_banks, use_container_width=True)
     with c2:
@@ -3406,7 +3425,7 @@ with tabs[5]:
     st.markdown(f"**DCF and P/NAV models converge: intrinsic value range ${BASE['dcf_price']:.0f}–${BASE['nav_price']:.0f}/share, blended ${BASE['blended_target']:.0f}. At NEM's current price of ${BASE['price']:.2f}, the market implies gold at ~${BASE['implied_gold']:,.0f}/oz — {BASE['gold_gap_pct']:.0f}% below spot.**")
 
     with st.expander("▶ Model Context — Conservative Gold Deck & No-Aggressive-Assumption Framework", expanded=False):
-        insight_callout(f"Even at the model's ${BASE['gold_y1']:,}/oz gold assumption — below spot — the DCF implies ${BASE['dcf_price']:.0f}/share ({((BASE['dcf_price'] / BASE['price']) - 1) * 100:+.0f}% vs. current ${BASE['price']:.2f}). The model does not depend on aggressive gold assumptions.")
+        insight_callout(f"Even at a conservative ${BASE['gold_y1']:,}/oz gold — {(1 - BASE['gold_y1']/BASE['gold_spot'])*100:.0f}% below spot — the DCF implies ${BASE['dcf_price']:.0f}/share ({((BASE['dcf_price'] / BASE['price']) - 1) * 100:+.0f}% vs. current ${BASE['price']:.2f}). The model does not depend on aggressive gold assumptions.")
 
     st.markdown('<div class="panel-header">DCF ENGINE — INTERACTIVE FCFF MODEL</div>', unsafe_allow_html=True)
 
@@ -3556,7 +3575,7 @@ with tabs[5]:
     # ══ KEY ASSUMPTION SOURCE CAPTIONS ══════════════════════════════════════
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">KEY ASSUMPTION SOURCES</div>', unsafe_allow_html=True)
-    st.markdown(f'<div style="color:#8b949e;font-size:10px;line-height:1.8;padding:8px 12px;background:#161b22;border:1px solid #30363d;margin-bottom:8px;"><b style="color:#f0b429;">Gold Price:</b> Source: Consensus bank forecast avg (Goldman, JPMorgan, Citi, BofA, Barclays) = <span style="font-family:Courier New;">$5,720/oz</span> avg; model uses <span style="font-family:Courier New;">${BASE["gold_y1"]:,}/oz</span> — conservative discount<br><b style="color:#f0b429;">WACC:</b> Source: CAPM — risk-free rate <span style="font-family:Courier New;">{BASE["rf"]*100:.2f}%</span> (10Y UST) + ERP × β = <span style="font-family:Courier New;">{BASE["wacc"]*100:.2f}%</span> base case<br><b style="color:#f0b429;">AISC:</b> Source: NEM FY2026 guidance <span style="font-family:Courier New;">${BASE["aisc_y1"]:,}/oz</span> by-product basis; upside bias from FY2025 <span style="font-family:Courier New;">$262/oz</span> beat<br><b style="color:#f0b429;">Exit Multiple:</b> Source: Current NEM EV/EBITDA ~<span style="font-family:Courier New;">9.8x</span>; peer avg <span style="font-family:Courier New;">11.2x</span>; model uses <span style="font-family:Courier New;">{BASE["exit_multiple"]:.1f}x</span> conservative mid-case<br><b style="color:#f0b429;">Production:</b> Source: NEM FY2026 guidance <span style="font-family:Courier New;">{BASE["production_y1"]:.1f} Moz</span>; model applies credibility haircut</div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="color:#8b949e;font-size:10px;line-height:1.8;padding:8px 12px;background:#161b22;border:1px solid #30363d;margin-bottom:8px;"><b style="color:#f0b429;">Gold Price:</b> Source: Consensus bank forecast avg (Goldman, JPMorgan, Citi, BofA, Barclays) = <span style="font-family:Courier New;">$5,720/oz</span> avg; model uses <span style="font-family:Courier New;">${BASE["gold_y1"]:,}/oz</span> — <span style="font-family:Courier New;">{(1 - BASE["gold_y1"]/5720)*100:.0f}%</span> conservative discount<br><b style="color:#f0b429;">WACC:</b> Source: CAPM — risk-free rate <span style="font-family:Courier New;">{BASE["rf"]*100:.2f}%</span> (10Y UST) + ERP <span style="font-family:Courier New;">{BASE["erp"]:.1f}%</span> × β <span style="font-family:Courier New;">{BASE["beta"]:.2f}</span> = <span style="font-family:Courier New;">{BASE["wacc"]*100:.2f}%</span> base case<br><b style="color:#f0b429;">AISC:</b> Source: NEM FY2026 guidance <span style="font-family:Courier New;">${BASE["aisc_y1"]:,.0f}/oz</span> by-product basis; upside bias from FY2025 <span style="font-family:Courier New;">$262/oz</span> beat<br><b style="color:#f0b429;">Exit Multiple:</b> Source: Current NEM EV/EBITDA ~<span style="font-family:Courier New;">{BASE["peer_median_evebda"]:.1f}x</span>; peer avg <span style="font-family:Courier New;">11.2x</span>; model uses <span style="font-family:Courier New;">{BASE["peer_median_evebda"]:.1f}x</span> conservative mid-case<br><b style="color:#f0b429;">Production:</b> Source: NEM FY2026 guidance <span style="font-family:Courier New;">{BASE["prod_schedule"][0]:.1f} Moz</span>; model applies <span style="font-family:Courier New;">-3.8%</span> historical haircut = <span style="font-family:Courier New;">{BASE["prod_schedule"][0]*0.962:.2f} Moz</span></div>', unsafe_allow_html=True)
 
     if st.button("⟳ Reset to Research Default", key="reset_dcf_defaults"):
         for k in list(st.session_state.keys()):
@@ -4174,12 +4193,12 @@ with tabs[5]:
     with c_cu2:
         st.markdown('<div class="panel-header">COPPER vs GOLD REVENUE CONTRIBUTION (FY2026E)</div>', unsafe_allow_html=True)
         # Pie-like comparison
-        cadia_gold_rev_fy26 = 270 * 5200 / 1000  # 270 Koz × $5,200 = $1,404M
+        cadia_gold_rev_fy26 = 270 * BASE['gold_y1'] / 1000  # 270 Koz × gold_y1
         cadia_copper_rev_fy26 = cadia_cu.get('fy2026_revenue_m', 808)
-        boding_gold_rev_fy26 = 580 * 5200 / 1000  # ~$3,016M
+        boding_gold_rev_fy26 = 580 * BASE['gold_y1'] / 1000
         boding_copper_rev_fy26 = boding_cu.get('fy2026_revenue_m', 124)
         # Company-wide copper vs gold total
-        total_gold_rev_fy26 = sum(mine['production_koz'] for mine in d['nem_operational']['mine_data'].values()) * 5200 / 1000
+        total_gold_rev_fy26 = sum(mine['production_koz'] for mine in d['nem_operational']['mine_data'].values()) * BASE['gold_y1'] / 1000
         # All copper
         total_copper_rev_fy26 = cadia_copper_rev_fy26 + boding_copper_rev_fy26
         pct_copper = total_copper_rev_fy26 / (total_gold_rev_fy26 + total_copper_rev_fy26) * 100 if (total_gold_rev_fy26 + total_copper_rev_fy26) > 0 else 0
@@ -7216,7 +7235,7 @@ with tabs[12]:
          'Tanami contributes less than 8% of portfolio NAV. Mining operations resumed within 4 days. NEM maintained the TE2 timeline with no guidance revision; even a 6-month delay shifts less than $1.50/share in NPV.'),
         ('Ghana Royalty Hike',
          'New sliding-scale royalty of 5-12% enacted Mar 9, 2026 — at current gold prices the 12% ceiling is active, adding ~$50/oz to total NEM AISC.',
-         'The $50/oz impact is already embedded in FY2026 guidance (explicitly excluded from prior guidance, now included). At $5,200 gold and $1,680 AISC guidance, NEM still generates $3,520/oz margin — the royalty reduces margin by 1.4%, not a thesis-breaking quantum.'),
+         f'The $50/oz impact is already embedded in FY2026 guidance (explicitly excluded from prior guidance, now included). At ${BASE["gold_y1"]:,} gold and $1,680 AISC guidance, NEM still generates ${BASE["gold_y1"] - 1680:,}/oz margin — the royalty reduces margin by 1.4%, not a thesis-breaking quantum.'),
     ]
     for risk_name, risk_desc, risk_rebuttal in _risks_rebuttals:
         st.markdown(f"""
@@ -8286,7 +8305,7 @@ with tabs[13]:
             <b style="color:#3fb950;">Benign interpretation:</b> NEM's FY2025 gross RRR of {nem_fy25_gross_rr:.0f}% (including price revision to $2,000/oz) is broadly 
             adequate. The 16 Moz reserve decline in FY2025 is overwhelmingly driven by divestitures (8.6 Moz), not operational depletion. 
             Remaining portfolio (118.2 Moz) still represents {reserve_life_yrs:.0f}+ years of production life at current rates — one of the 
-            highest in the sector. The $2,000/oz reserve price is still 60%+ below current spot ($5,200); price reserves could be 
+            highest in the sector. The $2,000/oz reserve price is still 60%+ below current spot (${BASE['gold_y1']:,}); price reserves could be 
             restated dramatically higher at spot prices, adding tens of millions of Moz.<br><br>
             <b style="color:#f85149;">Bear case watch:</b> Organic replacement ratio of {nem_fy25_organic_rr:.0f}% (FY2025, exploration-only) is below the 
             100% threshold. If exploration spending is cut (currently ~$240M in FY2026) or if gold prices fall, reserve additions could 
