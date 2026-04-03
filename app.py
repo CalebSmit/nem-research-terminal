@@ -1149,18 +1149,28 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ─── 20 TABS ──────────────────────────────────────────────────────────────────
+
+# ─── 14 TABS ──────────────────────────────────────────────────────────────────
 tabs = st.tabs([
-    "01·STORY", "02·CMD", "03·GOLD", "04·PROFILE", "05·MINES",
-    "06·DCF", "07·REL VAL", "08·RISK", "09·MC SIM",
-    "10·RETURNS", "11·CATALYST", "12·ALT DATA", "13·ESG",
-    "14·CREDIBILITY", "15·VERDICT", "16·GLD CMP",
-    "17·COPPER", "18·MGMT", "19·ROIC", "20·QRTLY MODEL"
+    "Thesis Narrative",
+    "Command Center",
+    "Gold Macro",
+    "Company Profile",
+    "Mine Portfolio",
+    "Valuation Engine",
+    "Peer Analysis",
+    "Risk & Scenarios",
+    "Catalyst Map",
+    "Channel Checks",
+    "ESG & Stewardship",
+    "Management Credibility",
+    "Thesis Verdict",
+    "Quarterly Model"
 ])
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 1 — HOW WE GOT HERE (THE STORY)
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 1 — THESIS NARRATIVE
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[0]:
     B = BASE
 
@@ -1644,11 +1654,9 @@ with tabs[0]:
 
     source_footer("Primary Research: NEM 10-K/10-Q/8-K Filings, SEC Form 4, Earnings Transcripts Q1-Q4 2025, jobs.newmont.com, LinkedIn, Perplexity Finance, BHP, McKinsey, JPMorgan, IEA, ICSG, S&P Global, Ghana Minerals Commission, NSW Supreme Court | Mar 31, 2026", tier=1)
 
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # TAB 2 — COMMAND CENTER
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[1]:
     d = DATA
     price = BASE['price']
@@ -2024,9 +2032,9 @@ with tabs[1]:
 
     source_footer("NEM FY2021-2025 10-K Filings, Market Data", tier=1)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 2 — GOLD MACRO
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 3 — GOLD MACRO
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[2]:
     d = DATA
     gold_spot = BASE['gold_spot']
@@ -2569,9 +2577,9 @@ with tabs[2]:
 
     source_footer("World Gold Council Gold Demand Trends 2025 (Jan 2026); WGC Central Bank Survey 2025; S&P Global Market Intelligence (Jul & Oct 2025); Metals & Miners Substack (Feb 2026); LBMA; NEM FY2025 Filings — cross-referenced via Perplexity Premium search", tier=2)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 3 — COMPANY PROFILE
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 4 — COMPANY PROFILE (PROFILE + RETURNS + ROIC)
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[3]:
     d = DATA
     f = d['nem_annual_financials']
@@ -2668,9 +2676,262 @@ with tabs[3]:
         </div>""", unsafe_allow_html=True)
     source_footer("NEM FY2021-2025 10-K Filings", tier=1)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 4 — MINE PORTFOLIO
-# ═══════════════════════════════════════════════════════════════════════════════
+    with st.expander("Capital Returns", expanded=False):
+        d = DATA
+        f = d['nem_annual_financials']
+        insight_callout(f"Here's the asymmetry in one number: NEM returned $3.4B to shareholders in 2025 while sitting on net cash of $7.2B. If the stock is mispriced, you're getting paid to wait — {DATA['market_data']['nem_div_yield']*100:.0f}% dividend yield + {DATA['nem_annual_financials']['2025']['buybacks']/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% buyback yield = {(DATA['nem_annual_financials']['2025']['dividends']+DATA['nem_annual_financials']['2025']['buybacks'])/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% total shareholder yield, with shrinking share count. The downside is cushioned by $7.2B net cash; the upside is leveraged to gold.")
+
+
+        st.markdown('<div class="panel-header">CAPITAL ALLOCATION & SHAREHOLDER RETURNS</div>', unsafe_allow_html=True)
+        f25_cr = f['2025']
+        fcf_2025 = f25_cr['fcf']
+        divs_cr = f25_cr['dividends']
+        buybacks_cr = f25_cr['buybacks']
+        retained_cr = fcf_2025 - divs_cr - buybacks_cr
+
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown('<div class="panel-header">FY2025 FCF DEPLOYMENT ($M)</div>', unsafe_allow_html=True)
+            fig_fcf_bar = go.Figure()
+            fcf_cats = ['Dividends', 'Buybacks', 'Retained']
+            fcf_vals = [divs_cr, buybacks_cr, max(retained_cr, 0)]
+            fcf_colors = [COLORS['blue'], COLORS['green'], COLORS['amber']]
+            fcf_total = sum(fcf_vals)
+            for cat, val, clr in zip(fcf_cats, fcf_vals, fcf_colors):
+                pct = val / fcf_total * 100 if fcf_total > 0 else 0
+                fig_fcf_bar.add_trace(go.Bar(
+                    y=['FY2025 FCF'], x=[val], name=cat, orientation='h',
+                    marker_color=clr, text=[f"${val:,.0f}M ({pct:.0f}%)"],
+                    textposition='inside', textfont=dict(color='#e6edf3', size=10),
+                    hovertemplate=f'{cat}: $%{{x:,.0f}}M<extra></extra>'))
+            apply_layout(fig_fcf_bar, f"${fcf_2025/1000:.1f}B FCF: 60% TO SHAREHOLDERS, 40% TO BALANCE SHEET", 200)
+            fig_fcf_bar.update_layout(barmode='stack', xaxis_title='$M',
+                showlegend=True, legend=dict(orientation='h', y=1.15, x=0, font=dict(size=9, color=COLORS['text'])))
+            st.plotly_chart(fig_fcf_bar, use_container_width=True)
+        with c2:
+            st.markdown('<div class="panel-header">KEY CAPITAL RETURN METRICS</div>', unsafe_allow_html=True)
+            mktcap_m_cr = BASE['mktcap'] / 1e6
+            metrics_cr = [
+                ('FCF / Market Cap Yield', f"{fcf_2025 / mktcap_m_cr * 100:.1f}%", COLORS['green']),
+                ('Dividend Coverage (FCF/Divs)', f"{fcf_2025/divs_cr:.1f}×", COLORS['blue']),
+                ('Total Shareholder Yield', f"{(divs_cr+buybacks_cr)/mktcap_m_cr*100:.1f}%", COLORS['green']),
+                ('Buyback Yield', f"{buybacks_cr/mktcap_m_cr*100:.1f}%", COLORS['blue']),
+                ('Net Cash Position', f"${abs(f25_cr['net_debt'])/1000:.1f}B", COLORS['green']),
+            ]
+            for label_cr, val_cr, color_cr in metrics_cr:
+                st.markdown(f"""
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #30363d;background:#161b22;">
+                  <span style="color:#8b949e;font-size:11px;">{label_cr}</span>
+                  <span style="color:{color_cr};font-size:13px;font-weight:700;">{val_cr}</span>
+                </div>""", unsafe_allow_html=True)
+
+        st.markdown('<br>', unsafe_allow_html=True)
+        c1, c2, c3 = st.columns(3)
+        yrs_cr = ['2021', '2022', '2023', '2024', '2025']
+        with c1:
+            st.markdown('<div class="panel-header">DEBT & NET CASH TRAJECTORY</div>', unsafe_allow_html=True)
+            lt_debt_vals = [f[y]['lt_debt'] for y in yrs_cr]
+            net_debt_vals = [f[y]['net_debt'] for y in yrs_cr]
+            fig_debt = go.Figure()
+            fig_debt.add_trace(go.Bar(x=yrs_cr, y=lt_debt_vals, name='LT Debt ($M)',
+                                      marker_color='rgba(248,81,73,0.5)', marker_line=dict(color=COLORS['red'], width=1)))
+            fig_debt.add_trace(go.Scatter(x=yrs_cr, y=net_debt_vals, name='Net Debt ($M)',
+                                          line=dict(color=COLORS['amber'], width=2), marker=dict(size=7)))
+            fig_debt.add_hline(y=0, line_color='#30363d', line_dash='dash')
+            apply_layout(fig_debt, "$9.4B DEBT → NET CASH IN 2 YEARS", 280)
+            fig_debt.update_layout(barmode='group')
+            fig_debt.add_annotation(x='2025', y=7200, text='<b>Net Cash: $7.2B</b><br>Fortress balance sheet', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-50, ay=-30)
+            fig_debt.update_layout(yaxis_title='Debt Outstanding ($B)')
+            st.plotly_chart(fig_debt, use_container_width=True)
+        with c2:
+            st.markdown('<div class="panel-header">DILUTED SHARE COUNT (M)</div>', unsafe_allow_html=True)
+            shares_data = [f[y]['shares_diluted'] for y in yrs_cr]
+            fig_shares = go.Figure()
+            share_colors = [COLORS['red'] if shares_data[i] > (shares_data[i-1] if i > 0 else shares_data[0])
+                            else COLORS['green'] for i in range(len(shares_data))]
+            fig_shares.add_trace(go.Bar(x=yrs_cr, y=shares_data, marker_color=share_colors,
+                                        text=[f"{v:,.0f}M" for v in shares_data], textposition='outside',
+                                        textfont=dict(color=COLORS['text'], size=10)))
+            apply_layout(fig_shares, "DILUTED SHARES &mdash; BUYBACK EFFECT", 280)
+            # Annotate net reduction
+            if len(shares_data) >= 2:
+                net_chg = shares_data[-1] - max(shares_data)
+                fig_shares.add_annotation(x=yrs_cr[-1], y=shares_data[-1],
+                    text=f'<b>{net_chg:,.0f}M</b><br>from peak', showarrow=True, arrowhead=2,
+                    font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+                    bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-25)
+            fig_shares.update_layout(yaxis_title='Diluted Shares Outstanding (M)')
+            st.plotly_chart(fig_shares, use_container_width=True)
+        with c3:
+            st.markdown('<div class="panel-header">DIVIDEND SUSTAINABILITY</div>', unsafe_allow_html=True)
+            divs_data = [f[y]['dividends'] for y in yrs_cr]
+            fcf_data_cr = [f[y]['fcf'] for y in yrs_cr]
+            coverage = [fc / dv if dv > 0 else 0 for fc, dv in zip(fcf_data_cr, divs_data)]
+            fig_div = make_subplots(specs=[[{"secondary_y": True}]])
+            fig_div.add_trace(go.Bar(x=yrs_cr, y=divs_data, name='Dividends ($M)',
+                                      marker_color='rgba(88,166,255,0.5)', marker_line=dict(color=COLORS['blue'], width=1)))
+            fig_div.add_trace(go.Bar(x=yrs_cr, y=fcf_data_cr, name='FCF ($M)',
+                                      marker_color='rgba(63,185,80,0.3)', marker_line=dict(color=COLORS['green'], width=1)))
+            fig_div.add_trace(go.Scatter(x=yrs_cr, y=coverage, name='FCF Coverage',
+                                         line=dict(color=COLORS['amber'], width=2), marker=dict(size=7)), secondary_y=True)
+            apply_layout(fig_div, "DIVIDEND COVERED 6.6× BY FCF — SAFEST IN SECTOR", 280)
+            fig_div.update_layout(barmode='group')
+            fig_div.update_yaxes(title_text="FCF Coverage Ratio (x)", secondary_y=True)
+            fig_div.update_yaxes(title_text="Amount ($M)", secondary_y=False)
+            fig_div.add_hline(y=2.0, line_dash='dot', line_color=COLORS['amber'], line_width=1,
+                annotation_text='2x = Safe Zone', annotation_position='bottom right',
+                annotation_font=dict(size=9, color=COLORS['amber']), secondary_y=True)
+            st.plotly_chart(fig_div, use_container_width=True)
+        source_footer("NEM FY2021-2025 10-K Filings", tier=1)
+
+    with st.expander("ROIC & Economic Value", expanded=False):
+        d = DATA
+        f = d['nem_annual_financials']
+
+        insight_callout("NEM earns returns well above its cost of capital — creating real economic value. This is rare in mining and signals quality capital allocation.")
+
+
+        st.markdown('<div class="panel-header">ROIC & ECONOMIC VALUE ADDED (EVA)</div>', unsafe_allow_html=True)
+
+        # Calculate ROIC for 2023-2025
+        roic_years = ['2023', '2024', '2025']
+        roic_data = []
+        for yr in roic_years:
+            fy = f[yr]
+            nopat_r = fy['ebit'] * (1 - BASE['effective_tax'])
+            invested_cap = fy['equity'] + fy['total_debt']  # simplified
+            roic_r = nopat_r / invested_cap if invested_cap > 0 else 0
+            roic_data.append({
+                'Year': yr,
+                'EBIT': fy['ebit'],
+                'Tax Rate': BASE['effective_tax'],
+                'NOPAT': nopat_r,
+                'Equity': fy['equity'],
+                'Total Debt': fy['total_debt'],
+                'Invested Capital': invested_cap,
+                'ROIC': roic_r,
+            })
+
+        roic_df = pd.DataFrame(roic_data)
+
+        # ROIC KPIs
+        latest_roic = roic_data[-1]['ROIC']
+        wacc_v = BASE['wacc']
+        spread_v = latest_roic - wacc_v
+        eva_v = spread_v * roic_data[-1]['Invested Capital']
+        spread_color = COLORS['green'] if spread_v > 0 else COLORS['red']
+
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">FY2025 ROIC</div>
+              <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{latest_roic*100:.1f}%</div>
+              <div class="kpi-sub">NOPAT / Invested Capital</div></div>""", unsafe_allow_html=True)
+        with c2:
+            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">WACC</div>
+              <div class="kpi-value" style="color:{COLORS['blue']};font-size:24px;">{wacc_v*100:.2f}%</div>
+              <div class="kpi-sub">Cost of Capital</div></div>""", unsafe_allow_html=True)
+        with c3:
+            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">ROIC - WACC SPREAD</div>
+              <div class="kpi-value" style="color:{spread_color};font-size:24px;">{spread_v*100:+.1f}%</div>
+              <div class="kpi-sub">{'Value Creation' if spread_v > 0 else 'Value Destruction'}</div></div>""", unsafe_allow_html=True)
+        with c4:
+            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">EVA (FY2025)</div>
+              <div class="kpi-value" style="color:{spread_color};font-size:24px;">${eva_v:,.0f}M</div>
+              <div class="kpi-sub">Economic Profit</div></div>""", unsafe_allow_html=True)
+
+        st.markdown('<br>', unsafe_allow_html=True)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            # ROIC vs WACC chart
+            st.markdown('<div class="panel-header">ROIC vs WACC — VALUE CREATION SPREAD</div>', unsafe_allow_html=True)
+            roic_vals = [rd['ROIC'] * 100 for rd in roic_data]
+            wacc_vals_ch = [wacc_v * 100] * len(roic_years)
+            fig_roic = go.Figure()
+            fig_roic.add_trace(go.Bar(x=roic_years, y=roic_vals, name='ROIC (%)',
+                marker_color=[COLORS['green'] if r > wacc_v * 100 else COLORS['red'] for r in roic_vals],
+                text=[f"{r:.1f}%" for r in roic_vals], textposition='outside',
+                textfont=dict(color=COLORS['text'], size=10)))
+            fig_roic.add_trace(go.Scatter(x=roic_years, y=wacc_vals_ch, name=f'WACC ({wacc_v*100:.2f}%)',
+                line=dict(color=COLORS['amber'], width=2, dash='dash'), marker=dict(size=7)))
+            apply_layout(fig_roic, "NEM CROSSES THE VALUE CREATION THRESHOLD — ROIC EXCEEDS WACC", 300)
+            # Label the ROIC-WACC spread on latest year
+            latest_spread = roic_vals[-1] - wacc_v * 100
+            fig_roic.add_annotation(x=roic_years[-1], y=roic_vals[-1],
+                text=f'<b>Spread: {latest_spread:+.1f}%</b>', showarrow=True, arrowhead=2,
+                font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
+                bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=45, ay=-30)
+            fig_roic.update_layout(yaxis_title='Return on Invested Capital (%)')
+            st.plotly_chart(fig_roic, use_container_width=True)
+
+        with c2:
+            # EVA trend
+            st.markdown('<div class="panel-header">EVA TREND — ECONOMIC PROFIT ($M)</div>', unsafe_allow_html=True)
+            eva_vals = [(rd['ROIC'] - wacc_v) * rd['Invested Capital'] for rd in roic_data]
+            eva_colors = [COLORS['green'] if e > 0 else COLORS['red'] for e in eva_vals]
+            fig_eva = go.Figure(go.Bar(x=roic_years, y=eva_vals, marker_color=eva_colors,
+                text=[f"${e:,.0f}M" for e in eva_vals], textposition='outside',
+                textfont=dict(color=COLORS['text'], size=10)))
+            fig_eva.add_hline(y=0, line_color=COLORS['border'], line_dash='dash')
+            apply_layout(fig_eva, "ECONOMIC VALUE ADDED TURNS POSITIVE — FIRST TIME IN 3 YEARS", 300)
+            fig_eva.update_layout(yaxis_title='Economic Value Added ($M)')
+            st.plotly_chart(fig_eva, use_container_width=True)
+
+        # ROIC detail table
+        st.markdown('<div class="panel-header">ROIC CALCULATION DETAIL</div>', unsafe_allow_html=True)
+        detail_rows = []
+        for rd in roic_data:
+            detail_rows.append({
+                'Year': rd['Year'],
+                'EBIT ($M)': f"${rd['EBIT']:,}",
+                'Tax Rate': f"{rd['Tax Rate']*100:.1f}%",
+                'NOPAT ($M)': f"${rd['NOPAT']:,.0f}",
+                'Invested Cap ($M)': f"${rd['Invested Capital']:,}",
+                'ROIC': f"{rd['ROIC']*100:.1f}%",
+                'ROIC-WACC': f"{(rd['ROIC']-wacc_v)*100:+.1f}%",
+            })
+        st.dataframe(pd.DataFrame(detail_rows), use_container_width=True, hide_index=True)
+
+        # Peer comparison
+        st.markdown('<div class="panel-header">ROIC PEER COMPARISON (FY2025)</div>', unsafe_allow_html=True)
+        peer_roic = [
+            ('NEM', latest_roic * 100, COLORS['green']),
+            ('AEM', 17.9, COLORS['blue']),   # Gurufocus: annualized Dec 2025 = 17.94%
+            ('KGC', 23.6, COLORS['blue']),   # Finbox: FY2025 = 23.6%, record year
+            ('GFI', 16.5, COLORS['blue']),   # GFI 2024 normalized profit $1.23B / ~$8B IC, 2025 higher on gold
+            ('WPM', 9.2, COLORS['blue']),    # Streaming model: lower capital intensity but lower ROIC
+        ]
+        sorted_pr = sorted(peer_roic, key=lambda x: x[1])
+        fig_peer_roic = go.Figure(go.Bar(
+            x=[r[1] for r in sorted_pr],
+            y=[r[0] for r in sorted_pr],
+            orientation='h',
+            marker_color=[r[2] for r in sorted_pr],
+            text=[f"{r[1]:.1f}%" for r in sorted_pr],
+            textposition='outside',
+            textfont=dict(color=COLORS['text'], size=10),
+        ))
+        fig_peer_roic.add_vline(x=wacc_v * 100, line_dash='dash', line_color=COLORS['amber'],
+                                annotation_text=f"WACC: {wacc_v*100:.2f}%", annotation_font_color=COLORS['amber'])
+        apply_layout(fig_peer_roic, "NEM ROIC RECOVERY POSITIONS IT AMONG SECTOR VALUE CREATORS", 280)
+        fig_peer_roic.update_layout(xaxis_title='Return on Invested Capital (%)')
+        st.plotly_chart(fig_peer_roic, use_container_width=True)
+
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {spread_color};padding:14px 20px;margin-top:8px;">
+          <span style="color:#8b949e;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;">KEY INSIGHT  </span>
+          <span style="color:#e6edf3;font-size:12px;">
+            NEM earns <b style="color:#3fb950;">{latest_roic*100:.1f}%</b> on invested capital vs a
+            <b style="color:#58a6ff;">{wacc_v*100:.2f}%</b> cost of capital — creating
+            <b style="color:{spread_color};">${eva_v:,.0f}M</b> in economic value annually.
+            This is rare in mining, where many companies destroy value through the cycle.
+          </span>
+        </div>""", unsafe_allow_html=True)
+        source_footer("NEM FY2023-2025 Financial Statements | Peer ROIC: Gurufocus (AEM Dec 2025), Finbox (KGC FY2025), Gold Fields FY2025 Annual Report, WPM FY2025 10-K")
+
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 5 — MINE PORTFOLIO (MINES + COPPER)
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[4]:
     d = DATA
     mines = d['nem_operational']['mine_data']
@@ -2840,9 +3101,274 @@ with tabs[4]:
         </div>""", unsafe_allow_html=True)
     source_footer("NEM FY2025 Annual Report, Mine Technical Reports")
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 5 — DCF ENGINE
-# ═══════════════════════════════════════════════════════════════════════════════
+    with st.expander("Copper Optionality", expanded=False):
+        d = DATA
+        insight_callout("Copper from Cadia adds incremental value NOT captured in our gold-focused DCF or P/NAV. At long-run copper of $4.50/lb, this standalone NAV is worth ~$12-15/share — the same unpriced optionality called out in the Command Center.")
+
+
+        st.markdown('<div class="panel-header">COPPER OPTIONALITY — CADIA VALLEY</div>', unsafe_allow_html=True)
+
+        copper_price_v = st.session_state.get('copper_price', 5.63)
+        copper_prod_v = st.session_state.get('copper_production_ktpa', 120)
+        copper_dr = st.session_state.get('copper_discount_rate', 8.0) / 100
+        copper_reserves = d['nem_operational']['copper_reserves_mt']
+        cadia_mine_life = 30  # years for Cadia
+
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown('<div class="panel-header">CADIA COPPER PROFILE</div>', unsafe_allow_html=True)
+            copper_items = [
+                ("Copper Reserves", f"{copper_reserves} Mt"),
+                ("Annual Production", f"{copper_prod_v} kt/yr"),
+                ("Current Copper Price", f"${copper_price_v:.2f}/lb"),
+                ("Implied Mine Life", f"{copper_reserves*1000/copper_prod_v:.0f} years"),
+                ("Key Growth Driver", "Panel Cave 1-4 Expansion"),
+                ("Demand Thesis", "EVs, Data Centers, Renewables"),
+            ]
+            for label_cu, val_cu in copper_items:
+                st.markdown(f"""
+                <div style="display:flex;justify-content:space-between;padding:6px 12px;border-bottom:1px solid #30363d;background:#161b22;">
+                  <span style="color:#8b949e;font-size:11px;">{label_cu}</span>
+                  <span style="color:#d29922;font-size:12px;font-weight:600;">{val_cu}</span>
+                </div>""", unsafe_allow_html=True)
+            why_expander('copper_price')
+            why_expander('copper_production_ktpa')
+
+        with c2:
+            st.markdown('<div class="panel-header">COPPER SENSITIVITY — INCREMENTAL $/SHARE</div>', unsafe_allow_html=True)
+            copper_prices_s = [3.50, 4.00, 4.50, 5.00, 5.50, 5.63]
+            c1_cash_cost = 1.80  # $/lb — industry C1 cash cost for Cadia (NEM filings)
+            cu_val_per_share = []
+            for cp in copper_prices_s:
+                # Cash margin = price - C1 cost, applied to production volume
+                margin_per_lb = max(cp - c1_cash_cost, 0)
+                annual_ocf_cu = margin_per_lb * copper_prod_v * 1000 * 2204.62 / 1e6  # $M
+                # NPV with discount rate over mine life
+                annuity_cu = (1 - (1 + copper_dr) ** (-min(cadia_mine_life, 30))) / copper_dr
+                npv_cu = annual_ocf_cu * annuity_cu
+                per_share_cu = npv_cu / BASE['shares_m']
+                cu_val_per_share.append(per_share_cu)
+
+            fig_cu = go.Figure(go.Bar(
+                x=[f"${cp:.2f}/lb" for cp in copper_prices_s],
+                y=cu_val_per_share,
+                marker_color=[COLORS['blue'] if cp < 5.63 else COLORS['green'] for cp in copper_prices_s],
+                text=[f"${v:.1f}" for v in cu_val_per_share],
+                textposition='outside',
+                textfont=dict(color=COLORS['text'], size=10),
+            ))
+            fig_cu.add_hline(y=cu_val_per_share[-1], line_dash='dash', line_color=COLORS['green'],
+                             annotation_text=f"Current: ${cu_val_per_share[-1]:.1f}/sh",
+                             annotation_font_color=COLORS['green'])
+            apply_layout(fig_cu, f"HIDDEN COPPER KICKER: +${cu_val_per_share[-1]:.1f}/SHARE NOT IN THE BASE CASE", 300)
+            fig_cu.update_layout(yaxis_title="Value per NEM Share ($)")
+            st.plotly_chart(fig_cu, use_container_width=True)
+
+        # Copper demand narrative
+        st.markdown('<div class="panel-header">COPPER SUPPLY-DEMAND NARRATIVE</div>', unsafe_allow_html=True)
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.markdown("""
+            <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #d29922;padding:16px;">
+              <div style="color:#d29922;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">EV TRANSITION</div>
+              <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
+                Each EV uses 3-4× more copper than ICE vehicles. Global EV sales growing 25%+ annually.
+                By 2030, EVs alone could add 3-4 Mt of annual copper demand.
+              </div>
+            </div>""", unsafe_allow_html=True)
+        with c2:
+            st.markdown("""
+            <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #d29922;padding:16px;">
+              <div style="color:#d29922;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">DATA CENTERS</div>
+              <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
+                AI-driven data center buildout requires massive copper wiring. Global data center capex
+                expected to exceed $400B annually by 2028. Each GW of capacity uses ~5,000t of copper.
+              </div>
+            </div>""", unsafe_allow_html=True)
+        with c3:
+            st.markdown("""
+            <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #d29922;padding:16px;">
+              <div style="color:#d29922;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">SUPPLY CONSTRAINTS</div>
+              <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
+                Declining ore grades, longer permitting, few new large deposits. Supply deficit projected
+                to widen through 2030+. Chile/Peru production plateauing.
+              </div>
+            </div>""", unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:14px 20px;margin-top:16px;">
+          <span style="color:#8b949e;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;">KEY INSIGHT  </span>
+          <span style="color:#e6edf3;font-size:12px;">
+            Our gold-focused DCF and P/NAV do NOT include copper upside. At current copper prices,
+            Cadia's copper production adds approximately <b style="color:#d29922;">${cu_val_per_share[-1]:.1f}/share</b> of
+            value beyond our target — this is free optionality not in the price.
+          </span>
+        </div>""", unsafe_allow_html=True)
+        if st.button("Reset Copper Assumptions", key='reset_copper_tab'):
+            reset_section(['copper_price', 'copper_production_ktpa', 'copper_discount_rate'])
+            st.rerun()
+
+        # ══ A3: COPPER SUPPLY-DEMAND CHART + AI DATA CENTER COPPER INTENSITY ═════════
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">COPPER SUPPLY-DEMAND BALANCE — AI DATA CENTER DEMAND SURGE</div>', unsafe_allow_html=True)
+
+        cu_sd_col1, cu_sd_col2 = st.columns(2)
+        with cu_sd_col1:
+            cu_years = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2030]
+            cu_supply = [20.6, 21.0, 21.8, 22.0, 22.3, 22.5, 22.8, 23.1, 23.5, 24.0]  # Mt
+            cu_demand = [19.8, 21.2, 22.0, 22.5, 23.0, 23.8, 24.8, 26.0, 27.5, 30.0]  # Mt (incl AI ramp)
+            cu_deficit = [s - d for s, d in zip(cu_supply, cu_demand)]
+            fig_cu_sd = make_subplots(specs=[[{"secondary_y": True}]])
+            fig_cu_sd.add_trace(go.Scatter(x=cu_years, y=cu_supply, name='Cu Supply (Mt)',
+                line=dict(color=COLORS['blue'], width=2.5), mode='lines+markers',
+                marker=dict(size=7)), secondary_y=False)
+            fig_cu_sd.add_trace(go.Scatter(x=cu_years, y=cu_demand, name='Cu Demand (Mt)',
+                line=dict(color=COLORS['amber'], width=2.5), mode='lines+markers',
+                marker=dict(size=7)), secondary_y=False)
+            fig_cu_sd.add_trace(go.Bar(x=cu_years, y=cu_deficit, name='Deficit (Mt)',
+                marker_color=[COLORS['green'] if d > 0 else COLORS['red'] for d in cu_deficit],
+                opacity=0.5), secondary_y=True)
+            apply_layout(fig_cu_sd, "COPPER DEFICIT WIDENS AS AI DEMAND ACCELERATES", 340)
+            fig_cu_sd.update_layout(
+                yaxis=dict(title='Million Tonnes', range=[18, 32]),
+                yaxis2=dict(title='Surplus/Deficit (Mt)', overlaying='y', side='right',
+                            gridcolor='#30363d', tickfont=dict(color='#8b949e', size=10)),
+                legend=dict(orientation='h', yanchor='bottom', y=1.02, x=0.5, xanchor='center')
+            )
+            st.plotly_chart(fig_cu_sd, use_container_width=True)
+
+        with cu_sd_col2:
+            # Copper intensity per MW — AI data centers
+            dc_types = ['Standard DC\n(10-15 t/MW)', 'Hyperscale DC\n(27 t/MW)', 'AI Training\n(30-40 t/MW)', 'AI Training\nPeak (47 t/MW)']
+            cu_per_mw = [12.5, 27, 35, 47]
+            dc_colors = [COLORS['muted'], COLORS['blue'], COLORS['amber'], COLORS['red']]
+            fig_cu_int = go.Figure(go.Bar(
+                x=dc_types, y=cu_per_mw,
+                marker_color=dc_colors,
+                text=[f"{v} t/MW" for v in cu_per_mw],
+                textposition='outside',
+                textfont=dict(color=COLORS['text'], size=10)
+            ))
+            fig_cu_int.add_annotation(x='AI Training\nPeak (47 t/MW)', y=47,
+                text='<b>47 t/MW</b><br>S&P Global Jan 2026', showarrow=True, arrowhead=2,
+                arrowcolor=COLORS['red'], font=dict(size=9, color=COLORS['red']),
+                bgcolor='#0d1117', bordercolor=COLORS['red'], borderwidth=1, ax=0, ay=-35)
+            apply_layout(fig_cu_int, "COPPER INTENSITY PER MW — AI FACILITIES USE 3-4× MORE", 340)
+            fig_cu_int.update_layout(yaxis_title='Tonnes of Copper per MW')
+            st.plotly_chart(fig_cu_int, use_container_width=True)
+
+        st.markdown(f"""
+        <div style="background:#0d1117;border:2px solid #d29922;padding:18px 22px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <span style="background:#d29922;color:#0d1117;font-size:9px;font-weight:700;padding:3px 10px;letter-spacing:2px;">NON-CONSENSUS VIEW</span>
+            <span style="color:#e6edf3;font-size:12px;font-weight:700;">NEM's Hidden AI Infrastructure Play via Copper</span>
+          </div>
+          <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+            <b style="color:#d29922;">The non-obvious insight:</b> Most gold investors don't price NEM's copper optionality.
+            AI data centers require <b>27-47 tonnes of copper per MW</b> (S&P Global, Jan 2026). With $300B+ in global
+            data center CapEx through 2028 and Goldman Sachs projecting 122 GW of capacity by 2030,
+            copper demand is set to surge by 3-5 Mt/yr above baseline.
+            <br><br>
+            NEM's <b style="color:#58a6ff;">Cadia mine (2.9 Mt Cu reserves)</b> is the <b>only Tier-1 copper asset
+            inside any major gold miner</b>. This creates a structural call option on AI infrastructure spending
+            that generates $12-22/share of incremental value not captured in any consensus gold-sector model.
+            <br><br>
+            <b>S&P Global projects a 10 Mt copper supply shortfall by 2040</b> — 23.8% of projected 42 Mt demand unmet.
+            At JPMorgan's $12,500/t copper forecast, Cadia's copper NAV alone approaches $18-22/share.
+          </div>
+          <div style="color:#8b949e;font-size:9px;margin-top:8px;">Source: S&P Global "Copper in the Age of AI" (Jan 2026), Goldman Sachs Research, Microsoft Chicago study, NEM FY2025 10-K</div>
+        </div>""", unsafe_allow_html=True)
+
+        # ── PERPLEXITY PREMIUM DATA: BANK PRICE FORECASTS + AI DEMAND ──
+        st.markdown(f"""
+        <div style="background:#1a1f2e;border:2px solid {COLORS['blue']};margin-top:20px;overflow:hidden;">
+          <div style="background:{COLORS['blue']};padding:7px 18px;">
+            <span style="color:#0d1117;font-size:10px;font-weight:700;letter-spacing:2px;">
+              PERPLEXITY PREMIUM DATA &mdash; COPPER PRICE FORECASTS &amp; AI DEMAND THESIS (JAN–MAR 2026)
+            </span>
+          </div>
+          <div style="padding:20px 24px;">
+
+            <div style="color:{COLORS['amber']};font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:12px;">
+              MAJOR BANK COPPER PRICE FORECASTS</div>
+            <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-bottom:20px;">
+              <div style="background:#161b22;border:1px solid #30363d;padding:12px;text-align:center;">
+                <div style="color:#8b949e;font-size:9px;letter-spacing:1px;margin-bottom:4px;">JPMORGAN Q2 2026</div>
+                <div style="color:{COLORS['green']};font-size:22px;font-weight:700;">$12,500/t</div>
+                <div style="color:#8b949e;font-size:10px;">($5.67/lb) &mdash; +24% vs current</div>
+                <div style="color:#8b949e;font-size:9px;margin-top:4px;">Trade policy front-running + AI demand</div>
+              </div>
+              <div style="background:#161b22;border:1px solid #30363d;padding:12px;text-align:center;">
+                <div style="color:#8b949e;font-size:9px;letter-spacing:1px;margin-bottom:4px;">BANK OF AMERICA 2027</div>
+                <div style="color:{COLORS['green']};font-size:22px;font-weight:700;">$13,501/t</div>
+                <div style="color:#8b949e;font-size:10px;">($6.12/lb) &mdash; +35% vs current</div>
+                <div style="color:#8b949e;font-size:9px;margin-top:4px;">Structural demand from electrification</div>
+              </div>
+              <div style="background:#161b22;border:1px solid {COLORS['amber']};padding:12px;text-align:center;">
+                <div style="color:{COLORS['amber']};font-size:9px;letter-spacing:1px;margin-bottom:4px;">S&amp;P GLOBAL 10-YEAR DEFICIT</div>
+                <div style="color:{COLORS['amber']};font-size:22px;font-weight:700;">10 Mt</div>
+                <div style="color:#8b949e;font-size:10px;">Cumulative shortfall by 2040</div>
+                <div style="color:#8b949e;font-size:9px;margin-top:4px;">&ldquo;Copper in the Age of AI&rdquo; Jan 8, 2026</div>
+              </div>
+            </div>
+
+            <div style="color:{COLORS['blue']};font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:12px;">
+              AI DATA CENTER COPPER DEMAND &mdash; THE STRUCTURAL DRIVER WALL STREET UNDERESTIMATES</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+              <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {COLORS['blue']};padding:14px;">
+                <div style="color:{COLORS['blue']};font-size:10px;font-weight:700;margin-bottom:8px;">COPPER PER MEGAWATT (DATA CENTERS)</div>
+                <div style="color:#e6edf3;font-size:20px;font-weight:700;margin-bottom:4px;">27&ndash;47 t/MW</div>
+                <div style="color:#8b949e;font-size:10px;line-height:1.5;">
+                  Microsoft Chicago AI data center study (cross-referenced via Perplexity).
+                  A single 100 MW hyperscale AI campus requires 2,700&ndash;4,700 tonnes of copper
+                  &mdash; equivalent to a small copper mine&rsquo;s annual output.<br><br>
+                  <b style="color:#e6edf3;">Global data center capex 2028:</b> $400B+/yr<br>
+                  <b style="color:#e6edf3;">Implied copper demand:</b> 3&ndash;5 Mt/yr incremental by 2030
+                </div>
+              </div>
+              <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {COLORS['amber']};padding:14px;">
+                <div style="color:{COLORS['amber']};font-size:10px;font-weight:700;margin-bottom:8px;">WHY CADIA IS THE ONLY PLAY IN GOLD MINING</div>
+                <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
+                  Among all major gold miners, <b style="color:{COLORS['blue']};">only NEM (via Cadia)</b> has material,
+                  Tier-1 copper exposure at scale:<br><br>
+                  &bull; Barrick (GOLD): No meaningful copper assets<br>
+                  &bull; Agnico Eagle (AEM): No meaningful copper assets<br>
+                  &bull; Kinross (KGC): No meaningful copper assets<br><br>
+                  <b style="color:{COLORS['green']};">NEM&rsquo;s 2.9 Mt Cu reserve</b> at Cadia = 24+ year copper mine life.
+                  If copper hits $13,500/t (BofA 2027 target), our copper NAV estimate
+                  rises from ~$12&ndash;15/share to <b>$18&ndash;22/share</b>.
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#0d1117;border:1px solid {COLORS['green']};padding:14px 18px;">
+              <div style="color:{COLORS['green']};font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">
+                THE CADIA COPPER-AI THESIS IN ONE SENTENCE</div>
+              <div style="color:#e6edf3;font-size:12px;line-height:1.6;">
+                Every AI data center built globally increases copper demand, tightens a market already facing a
+                10 Mt structural deficit by 2040, lifts the copper price toward JPMorgan&rsquo;s $12,500/t and
+                BofA&rsquo;s $13,501/t forecasts &mdash; and NEM&rsquo;s Cadia mine is the <b>only Tier-1 copper
+                asset inside any major gold miner</b>. This creates $12&ndash;22/share of incremental value
+                that does not appear in any consensus gold-sector model.
+              </div>
+            </div>
+
+            <div style="color:#8b949e;font-size:9px;margin-top:12px;border-top:1px solid #30363d;padding-top:8px;">
+              Sources: JPMorgan Commodities Research (Q2 2026 Copper Outlook), Bank of America Global Research
+              (Copper: The New Oil, Feb 2026), S&amp;P Global Market Intelligence &ldquo;Copper in the Age of AI&rdquo;
+              (Jan 8, 2026), Microsoft Chicago AI Data Center Study (copper density benchmark),
+              IEA &ldquo;The Role of Critical Minerals in Clean Energy Transitions&rdquo; (2025 update),
+              NEM FY2025 Annual Report (Cadia reserve estimate), CME Copper Futures (Apr 2, 2026) &mdash;
+              compiled and cross-referenced via Perplexity Search + Perplexity Finance.
+            </div>
+          </div>
+        </div>""", unsafe_allow_html=True)
+
+        source_footer("NEM FY2025 Annual Report, CME Copper Futures, IEA Copper Outlook, JPMorgan Commodities Research (Q2 2026), Bank of America Global Research (Feb 2026), S&P Global Market Intelligence (Jan 8, 2026), Microsoft Chicago AI Data Center Study — compiled via Perplexity Search + Finance", tier=2)
+
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 6 — VALUATION ENGINE (DCF + GLD COMPARISON)
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[5]:
     insight_callout(f"Even at a conservative $5,200/oz gold — 10% below spot — our DCF implies ${BASE['dcf_price']:.0f}/share ({((BASE['dcf_price'] / BASE['price']) - 1) * 100:+.0f}% vs. current ${BASE['price']:.2f}). The model does not depend on aggressive gold assumptions.")
 
@@ -3929,9 +4455,157 @@ with tabs[5]:
 
     source_footer("NEM Filings, Peer Data, Damodaran; SOTP discount rates per Damodaran country risk premium methodology; NGM JV: Bloomberg (Feb 20, 2026), FinancialContent/MarketMinute (Mar 10, 2026), NEM Q4 2025 earnings; Copper: NEM Feb 2026 guidance, mqworld.com; Pro-forma balance sheet: NEM Q4 2025 10-K (SEC, Feb 19, 2026); Reuters (Jan 23, 2026); Globe & Mail (Dec 1, 2025)")
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 7 — RELATIVE VALUATION
-# ═══════════════════════════════════════════════════════════════════════════════
+    with st.expander("NEM vs GLD Comparison", expanded=False):
+        d = DATA
+        insight_callout("NEM is not a gold bet — it is a gold OPERATING LEVERAGE bet with a dividend, a cost floor, and copper optionality. GLD provides none of these.")
+
+
+        st.markdown('<div class="panel-header">WHY NOT JUST BUY GLD?</div>', unsafe_allow_html=True)
+
+        aisc_gld = d['nem_operational']['aisc_2025']
+        gold_spot_gld = BASE['gold_spot']
+        nem_price_gld = BASE['price']
+        gld_price_gld = st.session_state.get('gld_price', 430.13)
+
+        # Operating leverage chart
+        st.markdown('<div class="panel-header">OPERATING LEVERAGE — NEM MARGIN/OZ vs GLD</div>', unsafe_allow_html=True)
+        gold_levels = [2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 7000]
+        nem_margins = [max(g - aisc_gld, 0) for g in gold_levels]
+        gld_margins = [0] * len(gold_levels)
+        nem_margin_pcts = [m / g * 100 if g > 0 else 0 for m, g in zip(nem_margins, gold_levels)]
+
+        fig_olev = go.Figure()
+        fig_olev.add_trace(go.Bar(x=[f"${g:,}" for g in gold_levels], y=nem_margins, name='NEM Margin/oz',
+            marker_color=COLORS['green'], text=[f"${m:,}" for m in nem_margins], textposition='outside',
+            textfont=dict(color=COLORS['text'], size=9)))
+        fig_olev.add_trace(go.Scatter(x=[f"${g:,}" for g in gold_levels], y=nem_margin_pcts,
+            name='NEM Margin %', yaxis='y2', line=dict(color=COLORS['amber'], width=2), marker=dict(size=6)))
+        # Add spot price annotation instead of vline (categorical x-axis)
+        spot_label = f"${gold_spot_gld:,}"
+        if spot_label in [f"${g:,}" for g in gold_levels]:
+            spot_idx = [f"${g:,}" for g in gold_levels].index(spot_label)
+            fig_olev.add_annotation(x=spot_label, y=nem_margins[spot_idx], text=f"◆ SPOT",
+                showarrow=True, arrowhead=2, arrowcolor=COLORS['blue'],
+                font=dict(color=COLORS['blue'], size=10), ax=0, ay=-30)
+        else:
+            # Add annotation at closest level
+            closest_idx = min(range(len(gold_levels)), key=lambda i: abs(gold_levels[i] - gold_spot_gld))
+            fig_olev.add_annotation(x=f"${gold_levels[closest_idx]:,}", y=nem_margins[closest_idx],
+                text=f"Spot ~${gold_spot_gld:,}", showarrow=True, arrowhead=2, arrowcolor=COLORS['blue'],
+                font=dict(color=COLORS['blue'], size=10), ax=0, ay=-30)
+        apply_layout(fig_olev, "EVERY $100/oz GOLD INCREASE = ~$323M INCREMENTAL FCF", 350)
+        fig_olev.update_layout(
+            yaxis=dict(title="Margin $/oz"),
+            yaxis2=dict(title="Margin %", overlaying='y', side='right', gridcolor='#30363d', tickfont=dict(color='#8b949e', size=10)),
+            barmode='group')
+        st.plotly_chart(fig_olev, use_container_width=True)
+
+        # Side-by-side scenario table
+        st.markdown('<div class="panel-header">NEM vs GLD — SCENARIO RETURNS</div>', unsafe_allow_html=True)
+        gold_beta_v = st.session_state.get('gold_beta', 0.95)
+        div_yield_v = d['market_data']['nem_div_yield']
+
+        scenarios_gld = [
+            ('Gold +30%', 0.30), ('Gold +20%', 0.20), ('Gold +10%', 0.10),
+            ('Gold FLAT', 0.00), ('Gold -10%', -0.10), ('Gold -20%', -0.20), ('Gold -30%', -0.30),
+        ]
+        comp_rows = []
+        for label_g, chg in scenarios_gld:
+            gld_ret = chg * 100
+            # NEM return: leverage amplifies gold moves + dividend
+            new_gold = gold_spot_gld * (1 + chg)
+            old_margin = gold_spot_gld - aisc_gld
+            new_margin = max(new_gold - aisc_gld, 0)
+            if old_margin > 0:
+                margin_chg = (new_margin / old_margin - 1)
+            else:
+                margin_chg = 0
+            nem_ret = margin_chg * 100 * 0.65 + div_yield_v * 100  # rough operating leverage
+            nem_ret = max(min(nem_ret, 300), -80)  # cap extremes
+            comp_rows.append({
+                'Scenario': label_g,
+                'Gold Change': f"{chg*100:+.0f}%",
+                'GLD Return': f"{gld_ret:+.1f}%",
+                'NEM Est Return': f"{nem_ret:+.1f}%",
+                'NEM Advantage': f"{nem_ret - gld_ret:+.1f}%",
+            })
+        comp_df = pd.DataFrame(comp_rows)
+        st.dataframe(comp_df, use_container_width=True, hide_index=True)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            # Dividend advantage
+            st.markdown('<div class="panel-header">CUMULATIVE DIVIDEND ADVANTAGE</div>', unsafe_allow_html=True)
+            hold_years = [1, 2, 3, 4, 5]
+            nem_divs_cum = [1.0 * y for y in hold_years]  # $1/share/year base dividend
+            gld_divs_cum = [0] * len(hold_years)
+            nem_div_yield_pct = 1.0 / BASE['price'] * 100  # $1/share annual dividend
+            nem_total_return = [nem_div_yield_pct * y for y in hold_years]  # dividend contribution only (price return shown separately)
+            gld_total_return = [0] * len(hold_years)  # GLD has zero income return
+            fig_div_adv = go.Figure()
+            fig_div_adv.add_trace(go.Scatter(
+                x=[f"{y}yr" for y in hold_years], y=nem_divs_cum,
+                mode='lines+markers+text', name='NEM Cumulative Dividends ($/share)',
+                line=dict(color=COLORS['green'], width=2.5), marker=dict(size=8),
+                text=[f"${d_v:.2f}" for d_v in nem_divs_cum], textposition='top center',
+                textfont=dict(color=COLORS['text'], size=10)))
+            fig_div_adv.add_trace(go.Scatter(
+                x=[f"{y}yr" for y in hold_years], y=nem_total_return,
+                mode='lines+markers', name=f'NEM Dividend Yield Contribution ({nem_div_yield_pct:.1f}%/yr)',
+                line=dict(color=COLORS['blue'], width=1.5, dash='dash'), marker=dict(size=6)))
+            fig_div_adv.add_trace(go.Scatter(
+                x=[f"{y}yr" for y in hold_years], y=gld_total_return,
+                mode='lines', name='GLD Income Return ($0)',
+                line=dict(color=COLORS['muted'], width=1.5, dash='dot')))
+            apply_layout(fig_div_adv, f"NEM INCOME ADVANTAGE: ${nem_divs_cum[-1]:.0f}/SHARE OVER 5 YEARS vs. $0 FROM GLD", 280)
+            fig_div_adv.update_layout(
+                xaxis_title='Holding Period', yaxis_title='Cumulative Income ($/share)',
+                legend=dict(orientation='h', y=1.15, x=0, font=dict(size=9, color=COLORS['text'])))
+            st.plotly_chart(fig_div_adv, use_container_width=True)
+        with c2:
+            # Breakeven comparison
+            st.markdown('<div class="panel-header">BREAKEVEN COMPARISON</div>', unsafe_allow_html=True)
+            breakeven_nem = aisc_gld + st.session_state.get('breakeven_fixed_cost', 200)
+            st.markdown(f"""
+            <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div style="border:1px solid #30363d;padding:16px;text-align:center;">
+                  <div style="color:#3fb950;font-size:14px;font-weight:700;margin-bottom:8px;">NEM</div>
+                  <div style="color:#8b949e;font-size:9px;">Breakeven Gold</div>
+                  <div style="color:#e6edf3;font-size:18px;font-weight:700;">${breakeven_nem:,}/oz</div>
+                  <div style="color:#8b949e;font-size:9px;margin-top:8px;">Buffer vs Spot</div>
+                  <div style="color:#3fb950;font-size:16px;font-weight:700;">{(gold_spot_gld-breakeven_nem)/breakeven_nem*100:.0f}%</div>
+                  <div style="color:#8b949e;font-size:9px;margin-top:8px;">Below breakeven: still has $57B in assets, 118 Moz reserves, producing mines</div>
+                </div>
+                <div style="border:1px solid #30363d;padding:16px;text-align:center;">
+                  <div style="color:#d29922;font-size:14px;font-weight:700;margin-bottom:8px;">GLD</div>
+                  <div style="color:#8b949e;font-size:9px;">Breakeven Gold</div>
+                  <div style="color:#e6edf3;font-size:18px;font-weight:700;">$0/oz</div>
+                  <div style="color:#8b949e;font-size:9px;margin-top:8px;">Linear to Zero</div>
+                  <div style="color:#d29922;font-size:16px;font-weight:700;">1:1</div>
+                  <div style="color:#8b949e;font-size:9px;margin-top:8px;">GLD tracks gold linearly — no operating leverage, no floor, no dividends</div>
+                </div>
+              </div>
+            </div>""", unsafe_allow_html=True)
+
+        # Conclusion
+        st.markdown(f"""
+        <div style="background:#161b22;border:2px solid #3fb950;padding:20px;margin-top:16px;text-align:center;">
+          <div style="color:#3fb950;font-size:14px;font-weight:700;letter-spacing:2px;margin-bottom:12px;">CONCLUSION</div>
+          <div style="color:#e6edf3;font-size:13px;line-height:1.8;">
+            NEM is not a gold bet — it is a <b style="color:#3fb950;">gold OPERATING LEVERAGE bet</b> with:<br>
+            <b style="color:#58a6ff;">1.</b> Expanding margins as gold rises (AISC ${aisc_gld:,} vs spot ${gold_spot_gld:,}) |
+            <b style="color:#58a6ff;">2.</b> Dividends ($1.00/yr base) that GLD cannot provide |
+            <b style="color:#58a6ff;">3.</b> Buybacks reducing share count |
+            <b style="color:#58a6ff;">4.</b> Copper optionality (12.5 Mt reserves) |
+            <b style="color:#58a6ff;">5.</b> A hard cost floor — NEM generates cash at any gold above ${breakeven_nem:,}/oz
+          </div>
+        </div>""", unsafe_allow_html=True)
+        source_footer("NEM Filings, GLD ETF Data, Model Calculations")
+
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 7 — PEER ANALYSIS
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[6]:
     d = DATA
     B = BASE
@@ -4697,9 +5371,9 @@ with tabs[6]:
 
     source_footer("Yahoo Finance; Koyfin; NEM/AEM/KGC/GFI/WPM/GOLD Filings; JPMorgan NEM Initiation Mar 2026; Barrick GOLD FY2025 earnings; MarketScreener Consensus (Apr 2026); MarketBeat analyst ratings — cross-referenced via Perplexity Finance", tier=2)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 7 — RISK ENGINE
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 8 — RISK & SCENARIOS (RISK + MONTE CARLO)
+# ═════════════════════════════════════════════════════════════════════════════
 with tabs[7]:
     d = DATA
     price_r = BASE['price']
@@ -4896,358 +5570,244 @@ with tabs[7]:
 
     source_footer("Model Calculations, NEM Filings, Alternative Data Channel Checks (see ALT DATA tab)", tier=2)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 8 — MONTE CARLO
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[8]:
-    insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; returns structure is the cushion. Next tab: how NEM pays you to wait.")
+    with st.expander("Monte Carlo Simulation", expanded=False):
+        insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; returns structure is the cushion. Next tab: how NEM pays you to wait.")
 
 
-    st.markdown('<div class="panel-header">MONTE CARLO — 50,000 CORRELATED ITERATIONS</div>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">MONTE CARLO — 50,000 CORRELATED ITERATIONS</div>', unsafe_allow_html=True)
 
-    rho_mc = st.session_state.get('mc_rho', 0.7)
-    sigma_mc = st.session_state.get('mc_gold_sigma', 0.35)
-    n_mc = st.session_state.get('mc_iterations', 50000)
+        rho_mc = st.session_state.get('mc_rho', 0.7)
+        sigma_mc = st.session_state.get('mc_gold_sigma', 0.35)
+        n_mc = st.session_state.get('mc_iterations', 50000)
 
-    np.random.seed(42)
-    Z_mc = np.random.standard_normal(n_mc)
-    eps_mult_mc = np.random.standard_normal(n_mc)
-    eps_wacc_mc = np.random.standard_normal(n_mc)
-    mu_gold_mc = np.log(BASE['gold_y1'])
-    gold_mc = np.exp(mu_gold_mc + sigma_mc * Z_mc)
-    base_mult_mc = BASE['peer_median_evebda']
-    sigma_mult_mc = 1.8
-    # Pre-clip rho boosted from 0.70 → 0.73 to compensate for correlation attenuation
-    # caused by clipping mult_mc to [3, 20]. Post-clip corr(gold, mult) ≈ 0.70.
-    rho_mc_internal = rho_mc + 0.03
-    mult_mc = base_mult_mc + rho_mc_internal * sigma_mult_mc * Z_mc + np.sqrt(1 - rho_mc_internal**2) * sigma_mult_mc * eps_mult_mc
-    mult_mc = np.clip(mult_mc, 3, 20)
-    sigma_wacc_mc = 0.006
-    wacc_mc_arr = BASE['wacc'] + sigma_wacc_mc * eps_wacc_mc
-    wacc_mc_arr = np.clip(wacc_mc_arr, 0.03, 0.18)
-    prod_avg_mc = 5.8
+        np.random.seed(42)
+        Z_mc = np.random.standard_normal(n_mc)
+        eps_mult_mc = np.random.standard_normal(n_mc)
+        eps_wacc_mc = np.random.standard_normal(n_mc)
+        mu_gold_mc = np.log(BASE['gold_y1'])
+        gold_mc = np.exp(mu_gold_mc + sigma_mc * Z_mc)
+        base_mult_mc = BASE['peer_median_evebda']
+        sigma_mult_mc = 1.8
+        # Pre-clip rho boosted from 0.70 → 0.73 to compensate for correlation attenuation
+        # caused by clipping mult_mc to [3, 20]. Post-clip corr(gold, mult) ≈ 0.70.
+        rho_mc_internal = rho_mc + 0.03
+        mult_mc = base_mult_mc + rho_mc_internal * sigma_mult_mc * Z_mc + np.sqrt(1 - rho_mc_internal**2) * sigma_mult_mc * eps_mult_mc
+        mult_mc = np.clip(mult_mc, 3, 20)
+        sigma_wacc_mc = 0.006
+        wacc_mc_arr = BASE['wacc'] + sigma_wacc_mc * eps_wacc_mc
+        wacc_mc_arr = np.clip(wacc_mc_arr, 0.03, 0.18)
+        prod_avg_mc = 5.8
 
-    # ── PRODUCTION VOLUME UNCERTAINTY (NEW — institutional pass 2) ────────────────
-    # Production has its own stochastic process (sigma ~5% per year, reflecting
-    # operational variance across NEM's portfolio: sequencing, weather, permitting).
-    # CRITICALLY: production misses are negatively correlated with AISC.
-    # When fewer ounces are produced, fixed costs (sustaining CapEx, labor, G&A) are
-    # spread over fewer ounces, causing AISC to increase. Correlation: rho=-0.45.
-    # This is the key institutional improvement: in low-gold/low-production scenarios,
-    # the model correctly shows margin compression from BOTH lower revenue AND higher
-    # unit costs, rather than treating production as a constant.
-    prod_sigma_mc = 0.05  # 5% vol on annual production (operational uncertainty)
-    rho_prod_aisc = -0.45  # negative correlation: production miss → AISC increase
-    eps_prod_mc = np.random.standard_normal(n_mc)  # independent production shock
-    # Correlated AISC shock: combine independent part + production component
-    eps_aisc_indep = np.random.standard_normal(n_mc)
-    eps_aisc_mc = rho_prod_aisc * eps_prod_mc + np.sqrt(1 - rho_prod_aisc**2) * eps_aisc_indep
-    # Production per simulation: lognormal around base production
-    # Production factor: mean-preserving (E[prod_factor]=1 by lognormal construction)
-    prod_sigma_log = np.sqrt(np.log(1 + prod_sigma_mc**2))  # approx sigma for lognormal
-    prod_factor_mc = np.exp(prod_sigma_log * eps_prod_mc - 0.5 * prod_sigma_log**2)
-    prod_mc = prod_avg_mc * prod_factor_mc  # Moz, stochastic
+        # ── PRODUCTION VOLUME UNCERTAINTY (NEW — institutional pass 2) ────────────────
+        # Production has its own stochastic process (sigma ~5% per year, reflecting
+        # operational variance across NEM's portfolio: sequencing, weather, permitting).
+        # CRITICALLY: production misses are negatively correlated with AISC.
+        # When fewer ounces are produced, fixed costs (sustaining CapEx, labor, G&A) are
+        # spread over fewer ounces, causing AISC to increase. Correlation: rho=-0.45.
+        # This is the key institutional improvement: in low-gold/low-production scenarios,
+        # the model correctly shows margin compression from BOTH lower revenue AND higher
+        # unit costs, rather than treating production as a constant.
+        prod_sigma_mc = 0.05  # 5% vol on annual production (operational uncertainty)
+        rho_prod_aisc = -0.45  # negative correlation: production miss → AISC increase
+        eps_prod_mc = np.random.standard_normal(n_mc)  # independent production shock
+        # Correlated AISC shock: combine independent part + production component
+        eps_aisc_indep = np.random.standard_normal(n_mc)
+        eps_aisc_mc = rho_prod_aisc * eps_prod_mc + np.sqrt(1 - rho_prod_aisc**2) * eps_aisc_indep
+        # Production per simulation: lognormal around base production
+        # Production factor: mean-preserving (E[prod_factor]=1 by lognormal construction)
+        prod_sigma_log = np.sqrt(np.log(1 + prod_sigma_mc**2))  # approx sigma for lognormal
+        prod_factor_mc = np.exp(prod_sigma_log * eps_prod_mc - 0.5 * prod_sigma_log**2)
+        prod_mc = prod_avg_mc * prod_factor_mc  # Moz, stochastic
 
-    # Monte Carlo per-ounce AISC model — AISC also stochastic (lognormal, sigma=8%)
-    # AISC and production are now negatively correlated (see above)
-    aisc_base_mc = BASE['aisc_y1']
-    aisc_esc_mc = BASE['aisc_esc']
-    aisc_sigma_mc = 0.08  # 8% vol on AISC (labor, diesel, consumables uncertainty)
+        # Monte Carlo per-ounce AISC model — AISC also stochastic (lognormal, sigma=8%)
+        # AISC and production are now negatively correlated (see above)
+        aisc_base_mc = BASE['aisc_y1']
+        aisc_esc_mc = BASE['aisc_esc']
+        aisc_sigma_mc = 0.08  # 8% vol on AISC (labor, diesel, consumables uncertainty)
 
-    pv_fcfs_mc = np.zeros(n_mc)
-    for i_mc in range(5):
-        gold_i_mc = gold_mc * ((1 + BASE['gold_esc']) ** i_mc)
-        # Use stochastic production (not fixed prod_avg_mc)
-        tr_mc = gold_i_mc * prod_mc + BASE['other_rev']
-        # Per-ounce AISC: escalated + stochastic shock (correlated with production)
-        aisc_i_mc = aisc_base_mc * ((1 + aisc_esc_mc) ** i_mc) * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5 * aisc_sigma_mc**2)
-        total_cc_mc = aisc_i_mc * prod_mc  # $M — stochastic production
-        sga_mc = tr_mc * BASE['sga_pct']
-        opex_mc_amt = tr_mc * BASE['opex_pct']
-        ebit_mc = tr_mc - total_cc_mc - sga_mc - opex_mc_amt
-        fcff_mc = ebit_mc * (1 - BASE['effective_tax']) + tr_mc * BASE['da_pct'] - tr_mc * BASE['capex_pct'] - tr_mc * BASE['wc_pct']
-        pv_fcfs_mc += fcff_mc / (1 + wacc_mc_arr) ** (i_mc + 0.5)
+        pv_fcfs_mc = np.zeros(n_mc)
+        for i_mc in range(5):
+            gold_i_mc = gold_mc * ((1 + BASE['gold_esc']) ** i_mc)
+            # Use stochastic production (not fixed prod_avg_mc)
+            tr_mc = gold_i_mc * prod_mc + BASE['other_rev']
+            # Per-ounce AISC: escalated + stochastic shock (correlated with production)
+            aisc_i_mc = aisc_base_mc * ((1 + aisc_esc_mc) ** i_mc) * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5 * aisc_sigma_mc**2)
+            total_cc_mc = aisc_i_mc * prod_mc  # $M — stochastic production
+            sga_mc = tr_mc * BASE['sga_pct']
+            opex_mc_amt = tr_mc * BASE['opex_pct']
+            ebit_mc = tr_mc - total_cc_mc - sga_mc - opex_mc_amt
+            fcff_mc = ebit_mc * (1 - BASE['effective_tax']) + tr_mc * BASE['da_pct'] - tr_mc * BASE['capex_pct'] - tr_mc * BASE['wc_pct']
+            pv_fcfs_mc += fcff_mc / (1 + wacc_mc_arr) ** (i_mc + 0.5)
 
-    # Y5 EBITDA for terminal value (per-oz model, stochastic production)
-    aisc_y5_mc = aisc_base_mc * ((1 + aisc_esc_mc) ** 4) * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5 * aisc_sigma_mc**2)
-    tr_y5_mc = gold_mc * ((1+BASE['gold_esc'])**4) * prod_mc + BASE['other_rev']
-    total_cc_y5_mc = aisc_y5_mc * prod_mc  # $M — stochastic production
-    sga_y5_mc = tr_y5_mc * BASE['sga_pct']
-    opex_y5_mc = tr_y5_mc * BASE['opex_pct']
-    ebit_y5_mc = tr_y5_mc - total_cc_y5_mc - sga_y5_mc - opex_y5_mc
-    ebitda_y5_mc = ebit_y5_mc + tr_y5_mc * BASE['da_pct']
-    tv_mc = ebitda_y5_mc * mult_mc / (1 + wacc_mc_arr) ** 4.5
-    ev_mc = pv_fcfs_mc + tv_mc
-    dcf_prices_mc = (ev_mc - BASE['total_debt_val'] - BASE['minority'] + BASE['cash']) / BASE['shares_m']
-    mc_prices = BASE['dcf_weight'] * dcf_prices_mc + (1 - BASE['dcf_weight']) * BASE['nav_price']
+        # Y5 EBITDA for terminal value (per-oz model, stochastic production)
+        aisc_y5_mc = aisc_base_mc * ((1 + aisc_esc_mc) ** 4) * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5 * aisc_sigma_mc**2)
+        tr_y5_mc = gold_mc * ((1+BASE['gold_esc'])**4) * prod_mc + BASE['other_rev']
+        total_cc_y5_mc = aisc_y5_mc * prod_mc  # $M — stochastic production
+        sga_y5_mc = tr_y5_mc * BASE['sga_pct']
+        opex_y5_mc = tr_y5_mc * BASE['opex_pct']
+        ebit_y5_mc = tr_y5_mc - total_cc_y5_mc - sga_y5_mc - opex_y5_mc
+        ebitda_y5_mc = ebit_y5_mc + tr_y5_mc * BASE['da_pct']
+        tv_mc = ebitda_y5_mc * mult_mc / (1 + wacc_mc_arr) ** 4.5
+        ev_mc = pv_fcfs_mc + tv_mc
+        dcf_prices_mc = (ev_mc - BASE['total_debt_val'] - BASE['minority'] + BASE['cash']) / BASE['shares_m']
+        mc_prices = BASE['dcf_weight'] * dcf_prices_mc + (1 - BASE['dcf_weight']) * BASE['nav_price']
 
-    mc_stats = {'Mean': np.mean(mc_prices), 'Median': np.median(mc_prices), 'Std Dev': np.std(mc_prices),
-        'P5': np.percentile(mc_prices, 5), 'P10': np.percentile(mc_prices, 10),
-        'P25': np.percentile(mc_prices, 25), 'P50': np.percentile(mc_prices, 50),
-        'P75': np.percentile(mc_prices, 75), 'P90': np.percentile(mc_prices, 90), 'P95': np.percentile(mc_prices, 95)}
-    prob_above_mc = (mc_prices > BASE['price']).mean() * 100
-    # 95% confidence intervals for key MC statistics
-    mc_se_mean = mc_stats['Std Dev'] / np.sqrt(n_mc)
-    mc_ci_mean = (mc_stats['Mean'] - 1.96 * mc_se_mean, mc_stats['Mean'] + 1.96 * mc_se_mean)
-    mc_se_prob = np.sqrt(prob_above_mc / 100 * (1 - prob_above_mc / 100) / n_mc) * 100
-    mc_ci_prob = (prob_above_mc - 1.96 * mc_se_prob, prob_above_mc + 1.96 * mc_se_prob)
-    # Simulated gold-multiple correlation (audit verified)
-    mc_realized_corr = np.corrcoef(gold_mc, mult_mc)[0, 1]
+        mc_stats = {'Mean': np.mean(mc_prices), 'Median': np.median(mc_prices), 'Std Dev': np.std(mc_prices),
+            'P5': np.percentile(mc_prices, 5), 'P10': np.percentile(mc_prices, 10),
+            'P25': np.percentile(mc_prices, 25), 'P50': np.percentile(mc_prices, 50),
+            'P75': np.percentile(mc_prices, 75), 'P90': np.percentile(mc_prices, 90), 'P95': np.percentile(mc_prices, 95)}
+        prob_above_mc = (mc_prices > BASE['price']).mean() * 100
+        # 95% confidence intervals for key MC statistics
+        mc_se_mean = mc_stats['Std Dev'] / np.sqrt(n_mc)
+        mc_ci_mean = (mc_stats['Mean'] - 1.96 * mc_se_mean, mc_stats['Mean'] + 1.96 * mc_se_mean)
+        mc_se_prob = np.sqrt(prob_above_mc / 100 * (1 - prob_above_mc / 100) / n_mc) * 100
+        mc_ci_prob = (prob_above_mc - 1.96 * mc_se_prob, prob_above_mc + 1.96 * mc_se_prob)
+        # Simulated gold-multiple correlation (audit verified)
+        mc_realized_corr = np.corrcoef(gold_mc, mult_mc)[0, 1]
 
-    # 95% confidence intervals for key MC statistics
-    mc_se_mean = mc_stats['Std Dev'] / np.sqrt(n_mc)
-    mc_ci_mean = (mc_stats['Mean'] - 1.96 * mc_se_mean, mc_stats['Mean'] + 1.96 * mc_se_mean)
-    mc_se_median = 1.253 * mc_stats['Std Dev'] / np.sqrt(n_mc)
-    mc_ci_median = (mc_stats['Median'] - 1.96 * mc_se_median, mc_stats['Median'] + 1.96 * mc_se_median)
-    mc_se_prob = np.sqrt(prob_above_mc / 100 * (1 - prob_above_mc / 100) / n_mc) * 100
-    mc_ci_prob = (prob_above_mc - 1.96 * mc_se_prob, prob_above_mc + 1.96 * mc_se_prob)
+        # 95% confidence intervals for key MC statistics
+        mc_se_mean = mc_stats['Std Dev'] / np.sqrt(n_mc)
+        mc_ci_mean = (mc_stats['Mean'] - 1.96 * mc_se_mean, mc_stats['Mean'] + 1.96 * mc_se_mean)
+        mc_se_median = 1.253 * mc_stats['Std Dev'] / np.sqrt(n_mc)
+        mc_ci_median = (mc_stats['Median'] - 1.96 * mc_se_median, mc_stats['Median'] + 1.96 * mc_se_median)
+        mc_se_prob = np.sqrt(prob_above_mc / 100 * (1 - prob_above_mc / 100) / n_mc) * 100
+        mc_ci_prob = (prob_above_mc - 1.96 * mc_se_prob, prob_above_mc + 1.96 * mc_se_prob)
 
-    c1, c2, c3, c4, c5 = st.columns(5)
-    for col, (label_mc, val_mc, color_mc, sub_mc) in zip([c1, c2, c3, c4, c5], [
-        ('MEDIAN', f"${mc_stats['Median']:.2f}", COLORS['blue'],
-         f"95% CI: ${mc_ci_median[0]:.2f}–${mc_ci_median[1]:.2f}"),
-        ('MEAN', f"${mc_stats['Mean']:.2f}", COLORS['blue'],
-         f"95% CI: ${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f}"),
-        ('P(>CURRENT)', f"{prob_above_mc:.1f}%", COLORS['green'] if prob_above_mc > 60 else COLORS['amber'],
-         f"95% CI: {mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%"),
-        ('P10', f"${mc_stats['P10']:.2f}", COLORS['red'], f"n={n_mc:,} simulations"),
-        ('P90', f"${mc_stats['P90']:.2f}", COLORS['green'], f"n={n_mc:,} simulations"),
-    ]):
-        with col:
-            st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">{label_mc}</div>
-              <div class="kpi-value" style="color:{color_mc};font-size:20px;">{val_mc}</div>
-              <div class="kpi-sub">{sub_mc}</div></div>""", unsafe_allow_html=True)
+        c1, c2, c3, c4, c5 = st.columns(5)
+        for col, (label_mc, val_mc, color_mc, sub_mc) in zip([c1, c2, c3, c4, c5], [
+            ('MEDIAN', f"${mc_stats['Median']:.2f}", COLORS['blue'],
+             f"95% CI: ${mc_ci_median[0]:.2f}–${mc_ci_median[1]:.2f}"),
+            ('MEAN', f"${mc_stats['Mean']:.2f}", COLORS['blue'],
+             f"95% CI: ${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f}"),
+            ('P(>CURRENT)', f"{prob_above_mc:.1f}%", COLORS['green'] if prob_above_mc > 60 else COLORS['amber'],
+             f"95% CI: {mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%"),
+            ('P10', f"${mc_stats['P10']:.2f}", COLORS['red'], f"n={n_mc:,} simulations"),
+            ('P90', f"${mc_stats['P90']:.2f}", COLORS['green'], f"n={n_mc:,} simulations"),
+        ]):
+            with col:
+                st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">{label_mc}</div>
+                  <div class="kpi-value" style="color:{color_mc};font-size:20px;">{val_mc}</div>
+                  <div class="kpi-sub">{sub_mc}</div></div>""", unsafe_allow_html=True)
 
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:6px 14px;margin-top:6px;font-size:9px;color:#8b949e;">
-      <span style="color:#58a6ff;font-weight:700;">95% CIs (n={n_mc:,}):</span>
-      Mean ${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f} |
-      P(>Current) {mc_ci_prob[0]:.1f}–{mc_ci_prob[1]:.1f}% |
-      Gold–Multiple ρ = {mc_realized_corr:.3f} (target {rho_mc:.2f})
-    </div>""", unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:6px 14px;margin-top:6px;font-size:9px;color:#8b949e;">
+          <span style="color:#58a6ff;font-weight:700;">95% CIs (n={n_mc:,}):</span>
+          Mean ${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f} |
+          P(>Current) {mc_ci_prob[0]:.1f}–{mc_ci_prob[1]:.1f}% |
+          Gold–Multiple ρ = {mc_realized_corr:.3f} (target {rho_mc:.2f})
+        </div>""", unsafe_allow_html=True)
 
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">DISTRIBUTION OF SIMULATED PRICES</div>', unsafe_allow_html=True)
-    clip_prices_mc = np.clip(mc_prices, -50, 1000)
-    fig_hist = go.Figure()
-    fig_hist.add_trace(go.Histogram(x=clip_prices_mc, nbinsx=80, marker_color=COLORS['blue'], opacity=0.7, name='Simulations'))
-    above_mask = clip_prices_mc[mc_prices > BASE['price']]
-    if len(above_mask):
-        fig_hist.add_trace(go.Histogram(x=above_mask, nbinsx=80, marker_color=COLORS['green'], opacity=0.7, name=f'Above Current ({prob_above_mc:.1f}%)'))
-    for line_val, lbl, clr in [
-        (BASE['price'], f"Current ${BASE['price']:.2f}", COLORS['amber']),
-        (mc_stats['Median'], f"Median ${mc_stats['Median']:.2f}", COLORS['blue']),
-        (mc_stats['P10'], f"P10 ${mc_stats['P10']:.2f}", COLORS['red']),
-        (mc_stats['P90'], f"P90 ${mc_stats['P90']:.2f}", COLORS['green']),
-    ]:
-        fig_hist.add_vline(x=line_val, line_color=clr, line_dash='dash', line_width=1.5,
-                           annotation_text=lbl, annotation_position="top", annotation_font_color=clr, annotation_font_size=9)
-    apply_layout(fig_hist, f"50K MC — {prob_above_mc:.1f}% exceed current price (95% CI: {mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%)", 380)
-    fig_hist.update_layout(barmode='overlay', xaxis_title='Simulated Fair Value ($/share)', yaxis_title='Frequency (Simulations)')
-    fig_hist.add_vline(x=BASE['price'], line_color='#f85149', line_width=2, line_dash='dash', annotation_text=f"Current: ${BASE['price']:.2f}", annotation_position='top left', annotation_font=dict(size=9, color='#f85149'))
-    st.plotly_chart(fig_hist, use_container_width=True)
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">DISTRIBUTION OF SIMULATED PRICES</div>', unsafe_allow_html=True)
+        clip_prices_mc = np.clip(mc_prices, -50, 1000)
+        fig_hist = go.Figure()
+        fig_hist.add_trace(go.Histogram(x=clip_prices_mc, nbinsx=80, marker_color=COLORS['blue'], opacity=0.7, name='Simulations'))
+        above_mask = clip_prices_mc[mc_prices > BASE['price']]
+        if len(above_mask):
+            fig_hist.add_trace(go.Histogram(x=above_mask, nbinsx=80, marker_color=COLORS['green'], opacity=0.7, name=f'Above Current ({prob_above_mc:.1f}%)'))
+        for line_val, lbl, clr in [
+            (BASE['price'], f"Current ${BASE['price']:.2f}", COLORS['amber']),
+            (mc_stats['Median'], f"Median ${mc_stats['Median']:.2f}", COLORS['blue']),
+            (mc_stats['P10'], f"P10 ${mc_stats['P10']:.2f}", COLORS['red']),
+            (mc_stats['P90'], f"P90 ${mc_stats['P90']:.2f}", COLORS['green']),
+        ]:
+            fig_hist.add_vline(x=line_val, line_color=clr, line_dash='dash', line_width=1.5,
+                               annotation_text=lbl, annotation_position="top", annotation_font_color=clr, annotation_font_size=9)
+        apply_layout(fig_hist, f"50K MC — {prob_above_mc:.1f}% exceed current price (95% CI: {mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%)", 380)
+        fig_hist.update_layout(barmode='overlay', xaxis_title='Simulated Fair Value ($/share)', yaxis_title='Frequency (Simulations)')
+        fig_hist.add_vline(x=BASE['price'], line_color='#f85149', line_width=2, line_dash='dash', annotation_text=f"Current: ${BASE['price']:.2f}", annotation_position='top left', annotation_font=dict(size=9, color='#f85149'))
+        st.plotly_chart(fig_hist, use_container_width=True)
 
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="panel-header">CONVERGENCE PLOT — RUNNING MEDIAN</div>', unsafe_allow_html=True)
-        check_points = np.logspace(2.5, np.log10(n_mc), 50).astype(int)
-        running_medians = [np.median(mc_prices[:cp]) for cp in check_points]
-        fig_conv = go.Figure()
-        fig_conv.add_trace(go.Scatter(x=check_points, y=running_medians, mode='lines',
-            line=dict(color=COLORS['blue'], width=2), name='Running Median'))
-        fig_conv.add_hline(y=mc_stats['Median'], line_dash='dash', line_color=COLORS['green'],
-                           annotation_text=f"Final Median: ${mc_stats['Median']:.2f}", annotation_font_color=COLORS['green'])
-        # Find stabilization point (running median within ±1% of final)
-        _final_med = mc_stats['Median']
-        _stab_iter = n_mc
-        for _si, (_cp, _rm) in enumerate(zip(check_points, running_medians)):
-            if abs(_rm - _final_med) / abs(_final_med) < 0.01:
-                if all(abs(running_medians[_sj] - _final_med) / abs(_final_med) < 0.01 for _sj in range(_si, len(running_medians))):
-                    _stab_iter = int(_cp)
-                    break
-        apply_layout(fig_conv, f"MEDIAN STABILIZES (±1%) BY ~{_stab_iter:,} ITERATIONS — RESULT ROBUST (n={n_mc:,})", 300)
-        fig_conv.update_layout(xaxis_title="Iterations", yaxis_title="Median Price ($)")
-        st.plotly_chart(fig_conv, use_container_width=True)
-    with c2:
-        st.markdown('<div class="panel-header">TORNADO — INPUT VARIABLE IMPACT</div>', unsafe_allow_html=True)
-        # 5-variable tornado now including production volume
-        inputs_t = {
-            'Gold Price': gold_mc,
-            'Exit Multiple': mult_mc,
-            'WACC': wacc_mc_arr,
-            'AISC (Y1)': aisc_base_mc * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5*aisc_sigma_mc**2),
-            'Production (Moz)': prod_mc,
-        }
-        variances_t = {}
-        for name_t, inp_arr in inputs_t.items():
-            corr_t = np.corrcoef(inp_arr, mc_prices)[0, 1]
-            variances_t[name_t] = corr_t ** 2 * 100
-        sorted_v = sorted(variances_t.items(), key=lambda x: x[1])
-        fig_tornado = go.Figure(go.Bar(x=[v for _, v in sorted_v], y=[n for n, _ in sorted_v], orientation='h',
-            marker_color=[COLORS['green'] if v > 50 else (COLORS['red'] if n in ['AISC (Y1)', 'WACC'] else (COLORS['amber'] if n == 'Production (Moz)' else COLORS['blue'])) for n, v in sorted_v],
-            text=[f"{v:.1f}%" for _, v in sorted_v], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
-        top_driver = sorted_v[-1][0]
-        top_pct = sorted_v[-1][1]
-        apply_layout(fig_tornado, f"{top_driver.upper()} DRIVES {top_pct:.0f}% OF VARIANCE — PRODUCTION VOLUME NOW STOCHASTIC (rho≠AISC=-0.45)", 320)
-        fig_tornado.update_layout(xaxis_title="Variance Explained (%)")
-        # Annotate the dominant driver
-        top_var = sorted_v[-1]
-        fig_tornado.add_annotation(x=top_var[1], y=top_var[0],
-            text=f'<b>{top_var[1]:.0f}%</b> &mdash; dominant driver', showarrow=True, arrowhead=2,
-            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
-            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=45, ay=-20)
-        st.plotly_chart(fig_tornado, use_container_width=True)
-
-    st.markdown('<div class="panel-header">SIMULATION PARAMETERS</div>', unsafe_allow_html=True)
-    # Compute observed gold-multiple correlation for reporting
-    mc_corr_pearson = np.corrcoef(gold_mc, mult_mc)[0, 1]
-
-    param_rows_mc = [
-        ['Gold Price (Y1)', 'Log-normal', f"mu=ln(${BASE['gold_y1']:,}), sigma={sigma_mc:.0%}"],
-        ['Production Volume', 'Log-normal (sigma=5%)', f"mu={prod_avg_mc:.1f} Moz, rho(AISC)=-0.45 — production miss → AISC increase (per gold sector operating leverage literature, n≈40 company-years)"],
-        ['AISC (Y1) [per-oz]', 'Log-normal (sigma=8%, corr w/prod)', f"mu=${BASE['aisc_y1']:,}/oz, esc={BASE['aisc_esc']*100:.1f}%/yr — FIXED cost, CORRELATED with production"],
-        ['Exit EV/EBITDA', f'Normal (rho={rho_mc:.2f})', f"mu={base_mult_mc:.1f}×, sigma={sigma_mult_mc:.1f} | observed r={mc_corr_pearson:.3f}"],
-        ['WACC', 'Normal (independent)', f"mu={BASE['wacc']*100:.2f}%, sigma=60bps"],
-        ['Iterations', 'Fixed', f"{n_mc:,}"],
-    ]
-    st.dataframe(pd.DataFrame(param_rows_mc, columns=['Variable', 'Distribution', 'Parameters']), use_container_width=True, hide_index=True)
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:8px 14px;margin-top:6px;font-size:10px;color:#8b949e;">
-      <span style="color:#d29922;font-weight:700;">INSTITUTIONAL UPGRADE — PASS 2:</span>
-      Production volume is now stochastic (σ=5%, lognormal) and <b>negatively correlated with AISC (ρ=-0.45)</b>.
-      When production misses occur, fixed mine costs (sustaining CapEx, labor, G&A) spread over fewer ounces,
-      so AISC rises. This prevents unrealistic scenarios where a production miss has no cost consequence,
-      and produces a heavier left tail in the distribution compared to the prior model.
-    </div>""", unsafe_allow_html=True)
-    # Statistical robustness note
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:8px 14px;margin-top:6px;font-size:10px;color:#8b949e;">
-      <span style="color:#58a6ff;font-weight:700;">STATISTICAL ROBUSTNESS (n={n_mc:,}):</span>
-      Median 95% CI: <b>${mc_ci_median[0]:.2f}–${mc_ci_median[1]:.2f}</b> |
-      Mean 95% CI: <b>${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f}</b> |
-      P(>current) 95% CI: <b>{mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%</b> |
-      Gold-multiple observed r={mc_corr_pearson:.3f} (target ρ={rho_mc}).
-      Running median stabilizes within 1% of final value by ~5,000 iterations.
-    </div>""", unsafe_allow_html=True)
-    why_expander('mc_rho')
-    why_expander('mc_gold_sigma')
-    source_footer("Monte Carlo Simulation Model — Production-AISC correlation per gold sector operating leverage literature")
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 9 — CAPITAL RETURNS
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[9]:
-    d = DATA
-    f = d['nem_annual_financials']
-    insight_callout(f"Here's the asymmetry in one number: NEM returned $3.4B to shareholders in 2025 while sitting on net cash of $7.2B. If the stock is mispriced, you're getting paid to wait — {DATA['market_data']['nem_div_yield']*100:.0f}% dividend yield + {DATA['nem_annual_financials']['2025']['buybacks']/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% buyback yield = {(DATA['nem_annual_financials']['2025']['dividends']+DATA['nem_annual_financials']['2025']['buybacks'])/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% total shareholder yield, with shrinking share count. The downside is cushioned by $7.2B net cash; the upside is leveraged to gold.")
-
-
-    st.markdown('<div class="panel-header">CAPITAL ALLOCATION & SHAREHOLDER RETURNS</div>', unsafe_allow_html=True)
-    f25_cr = f['2025']
-    fcf_2025 = f25_cr['fcf']
-    divs_cr = f25_cr['dividends']
-    buybacks_cr = f25_cr['buybacks']
-    retained_cr = fcf_2025 - divs_cr - buybacks_cr
-
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="panel-header">FY2025 FCF DEPLOYMENT ($M)</div>', unsafe_allow_html=True)
-        fig_fcf_bar = go.Figure()
-        fcf_cats = ['Dividends', 'Buybacks', 'Retained']
-        fcf_vals = [divs_cr, buybacks_cr, max(retained_cr, 0)]
-        fcf_colors = [COLORS['blue'], COLORS['green'], COLORS['amber']]
-        fcf_total = sum(fcf_vals)
-        for cat, val, clr in zip(fcf_cats, fcf_vals, fcf_colors):
-            pct = val / fcf_total * 100 if fcf_total > 0 else 0
-            fig_fcf_bar.add_trace(go.Bar(
-                y=['FY2025 FCF'], x=[val], name=cat, orientation='h',
-                marker_color=clr, text=[f"${val:,.0f}M ({pct:.0f}%)"],
-                textposition='inside', textfont=dict(color='#e6edf3', size=10),
-                hovertemplate=f'{cat}: $%{{x:,.0f}}M<extra></extra>'))
-        apply_layout(fig_fcf_bar, f"${fcf_2025/1000:.1f}B FCF: 60% TO SHAREHOLDERS, 40% TO BALANCE SHEET", 200)
-        fig_fcf_bar.update_layout(barmode='stack', xaxis_title='$M',
-            showlegend=True, legend=dict(orientation='h', y=1.15, x=0, font=dict(size=9, color=COLORS['text'])))
-        st.plotly_chart(fig_fcf_bar, use_container_width=True)
-    with c2:
-        st.markdown('<div class="panel-header">KEY CAPITAL RETURN METRICS</div>', unsafe_allow_html=True)
-        mktcap_m_cr = BASE['mktcap'] / 1e6
-        metrics_cr = [
-            ('FCF / Market Cap Yield', f"{fcf_2025 / mktcap_m_cr * 100:.1f}%", COLORS['green']),
-            ('Dividend Coverage (FCF/Divs)', f"{fcf_2025/divs_cr:.1f}×", COLORS['blue']),
-            ('Total Shareholder Yield', f"{(divs_cr+buybacks_cr)/mktcap_m_cr*100:.1f}%", COLORS['green']),
-            ('Buyback Yield', f"{buybacks_cr/mktcap_m_cr*100:.1f}%", COLORS['blue']),
-            ('Net Cash Position', f"${abs(f25_cr['net_debt'])/1000:.1f}B", COLORS['green']),
-        ]
-        for label_cr, val_cr, color_cr in metrics_cr:
-            st.markdown(f"""
-            <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #30363d;background:#161b22;">
-              <span style="color:#8b949e;font-size:11px;">{label_cr}</span>
-              <span style="color:{color_cr};font-size:13px;font-weight:700;">{val_cr}</span>
-            </div>""", unsafe_allow_html=True)
-
-    st.markdown('<br>', unsafe_allow_html=True)
-    c1, c2, c3 = st.columns(3)
-    yrs_cr = ['2021', '2022', '2023', '2024', '2025']
-    with c1:
-        st.markdown('<div class="panel-header">DEBT & NET CASH TRAJECTORY</div>', unsafe_allow_html=True)
-        lt_debt_vals = [f[y]['lt_debt'] for y in yrs_cr]
-        net_debt_vals = [f[y]['net_debt'] for y in yrs_cr]
-        fig_debt = go.Figure()
-        fig_debt.add_trace(go.Bar(x=yrs_cr, y=lt_debt_vals, name='LT Debt ($M)',
-                                  marker_color='rgba(248,81,73,0.5)', marker_line=dict(color=COLORS['red'], width=1)))
-        fig_debt.add_trace(go.Scatter(x=yrs_cr, y=net_debt_vals, name='Net Debt ($M)',
-                                      line=dict(color=COLORS['amber'], width=2), marker=dict(size=7)))
-        fig_debt.add_hline(y=0, line_color='#30363d', line_dash='dash')
-        apply_layout(fig_debt, "$9.4B DEBT → NET CASH IN 2 YEARS", 280)
-        fig_debt.update_layout(barmode='group')
-        fig_debt.add_annotation(x='2025', y=7200, text='<b>Net Cash: $7.2B</b><br>Fortress balance sheet', showarrow=True, arrowhead=2, font=dict(size=9, color='#3fb950'), arrowcolor='#3fb950', bgcolor='#0d1117', bordercolor='#3fb950', borderwidth=1, ax=-50, ay=-30)
-        fig_debt.update_layout(yaxis_title='Debt Outstanding ($B)')
-        st.plotly_chart(fig_debt, use_container_width=True)
-    with c2:
-        st.markdown('<div class="panel-header">DILUTED SHARE COUNT (M)</div>', unsafe_allow_html=True)
-        shares_data = [f[y]['shares_diluted'] for y in yrs_cr]
-        fig_shares = go.Figure()
-        share_colors = [COLORS['red'] if shares_data[i] > (shares_data[i-1] if i > 0 else shares_data[0])
-                        else COLORS['green'] for i in range(len(shares_data))]
-        fig_shares.add_trace(go.Bar(x=yrs_cr, y=shares_data, marker_color=share_colors,
-                                    text=[f"{v:,.0f}M" for v in shares_data], textposition='outside',
-                                    textfont=dict(color=COLORS['text'], size=10)))
-        apply_layout(fig_shares, "DILUTED SHARES &mdash; BUYBACK EFFECT", 280)
-        # Annotate net reduction
-        if len(shares_data) >= 2:
-            net_chg = shares_data[-1] - max(shares_data)
-            fig_shares.add_annotation(x=yrs_cr[-1], y=shares_data[-1],
-                text=f'<b>{net_chg:,.0f}M</b><br>from peak', showarrow=True, arrowhead=2,
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown('<div class="panel-header">CONVERGENCE PLOT — RUNNING MEDIAN</div>', unsafe_allow_html=True)
+            check_points = np.logspace(2.5, np.log10(n_mc), 50).astype(int)
+            running_medians = [np.median(mc_prices[:cp]) for cp in check_points]
+            fig_conv = go.Figure()
+            fig_conv.add_trace(go.Scatter(x=check_points, y=running_medians, mode='lines',
+                line=dict(color=COLORS['blue'], width=2), name='Running Median'))
+            fig_conv.add_hline(y=mc_stats['Median'], line_dash='dash', line_color=COLORS['green'],
+                               annotation_text=f"Final Median: ${mc_stats['Median']:.2f}", annotation_font_color=COLORS['green'])
+            # Find stabilization point (running median within ±1% of final)
+            _final_med = mc_stats['Median']
+            _stab_iter = n_mc
+            for _si, (_cp, _rm) in enumerate(zip(check_points, running_medians)):
+                if abs(_rm - _final_med) / abs(_final_med) < 0.01:
+                    if all(abs(running_medians[_sj] - _final_med) / abs(_final_med) < 0.01 for _sj in range(_si, len(running_medians))):
+                        _stab_iter = int(_cp)
+                        break
+            apply_layout(fig_conv, f"MEDIAN STABILIZES (±1%) BY ~{_stab_iter:,} ITERATIONS — RESULT ROBUST (n={n_mc:,})", 300)
+            fig_conv.update_layout(xaxis_title="Iterations", yaxis_title="Median Price ($)")
+            st.plotly_chart(fig_conv, use_container_width=True)
+        with c2:
+            st.markdown('<div class="panel-header">TORNADO — INPUT VARIABLE IMPACT</div>', unsafe_allow_html=True)
+            # 5-variable tornado now including production volume
+            inputs_t = {
+                'Gold Price': gold_mc,
+                'Exit Multiple': mult_mc,
+                'WACC': wacc_mc_arr,
+                'AISC (Y1)': aisc_base_mc * np.exp(aisc_sigma_mc * eps_aisc_mc - 0.5*aisc_sigma_mc**2),
+                'Production (Moz)': prod_mc,
+            }
+            variances_t = {}
+            for name_t, inp_arr in inputs_t.items():
+                corr_t = np.corrcoef(inp_arr, mc_prices)[0, 1]
+                variances_t[name_t] = corr_t ** 2 * 100
+            sorted_v = sorted(variances_t.items(), key=lambda x: x[1])
+            fig_tornado = go.Figure(go.Bar(x=[v for _, v in sorted_v], y=[n for n, _ in sorted_v], orientation='h',
+                marker_color=[COLORS['green'] if v > 50 else (COLORS['red'] if n in ['AISC (Y1)', 'WACC'] else (COLORS['amber'] if n == 'Production (Moz)' else COLORS['blue'])) for n, v in sorted_v],
+                text=[f"{v:.1f}%" for _, v in sorted_v], textposition='outside', textfont=dict(color=COLORS['text'], size=10)))
+            top_driver = sorted_v[-1][0]
+            top_pct = sorted_v[-1][1]
+            apply_layout(fig_tornado, f"{top_driver.upper()} DRIVES {top_pct:.0f}% OF VARIANCE — PRODUCTION VOLUME NOW STOCHASTIC (rho≠AISC=-0.45)", 320)
+            fig_tornado.update_layout(xaxis_title="Variance Explained (%)")
+            # Annotate the dominant driver
+            top_var = sorted_v[-1]
+            fig_tornado.add_annotation(x=top_var[1], y=top_var[0],
+                text=f'<b>{top_var[1]:.0f}%</b> &mdash; dominant driver', showarrow=True, arrowhead=2,
                 font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
-                bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=40, ay=-25)
-        fig_shares.update_layout(yaxis_title='Diluted Shares Outstanding (M)')
-        st.plotly_chart(fig_shares, use_container_width=True)
-    with c3:
-        st.markdown('<div class="panel-header">DIVIDEND SUSTAINABILITY</div>', unsafe_allow_html=True)
-        divs_data = [f[y]['dividends'] for y in yrs_cr]
-        fcf_data_cr = [f[y]['fcf'] for y in yrs_cr]
-        coverage = [fc / dv if dv > 0 else 0 for fc, dv in zip(fcf_data_cr, divs_data)]
-        fig_div = make_subplots(specs=[[{"secondary_y": True}]])
-        fig_div.add_trace(go.Bar(x=yrs_cr, y=divs_data, name='Dividends ($M)',
-                                  marker_color='rgba(88,166,255,0.5)', marker_line=dict(color=COLORS['blue'], width=1)))
-        fig_div.add_trace(go.Bar(x=yrs_cr, y=fcf_data_cr, name='FCF ($M)',
-                                  marker_color='rgba(63,185,80,0.3)', marker_line=dict(color=COLORS['green'], width=1)))
-        fig_div.add_trace(go.Scatter(x=yrs_cr, y=coverage, name='FCF Coverage',
-                                     line=dict(color=COLORS['amber'], width=2), marker=dict(size=7)), secondary_y=True)
-        apply_layout(fig_div, "DIVIDEND COVERED 6.6× BY FCF — SAFEST IN SECTOR", 280)
-        fig_div.update_layout(barmode='group')
-        fig_div.update_yaxes(title_text="FCF Coverage Ratio (x)", secondary_y=True)
-        fig_div.update_yaxes(title_text="Amount ($M)", secondary_y=False)
-        fig_div.add_hline(y=2.0, line_dash='dot', line_color=COLORS['amber'], line_width=1,
-            annotation_text='2x = Safe Zone', annotation_position='bottom right',
-            annotation_font=dict(size=9, color=COLORS['amber']), secondary_y=True)
-        st.plotly_chart(fig_div, use_container_width=True)
-    source_footer("NEM FY2021-2025 10-K Filings", tier=1)
+                bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=45, ay=-20)
+            st.plotly_chart(fig_tornado, use_container_width=True)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 10 — CATALYST MAP
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[10]:
+        st.markdown('<div class="panel-header">SIMULATION PARAMETERS</div>', unsafe_allow_html=True)
+        # Compute observed gold-multiple correlation for reporting
+        mc_corr_pearson = np.corrcoef(gold_mc, mult_mc)[0, 1]
+
+        param_rows_mc = [
+            ['Gold Price (Y1)', 'Log-normal', f"mu=ln(${BASE['gold_y1']:,}), sigma={sigma_mc:.0%}"],
+            ['Production Volume', 'Log-normal (sigma=5%)', f"mu={prod_avg_mc:.1f} Moz, rho(AISC)=-0.45 — production miss → AISC increase (per gold sector operating leverage literature, n≈40 company-years)"],
+            ['AISC (Y1) [per-oz]', 'Log-normal (sigma=8%, corr w/prod)', f"mu=${BASE['aisc_y1']:,}/oz, esc={BASE['aisc_esc']*100:.1f}%/yr — FIXED cost, CORRELATED with production"],
+            ['Exit EV/EBITDA', f'Normal (rho={rho_mc:.2f})', f"mu={base_mult_mc:.1f}×, sigma={sigma_mult_mc:.1f} | observed r={mc_corr_pearson:.3f}"],
+            ['WACC', 'Normal (independent)', f"mu={BASE['wacc']*100:.2f}%, sigma=60bps"],
+            ['Iterations', 'Fixed', f"{n_mc:,}"],
+        ]
+        st.dataframe(pd.DataFrame(param_rows_mc, columns=['Variable', 'Distribution', 'Parameters']), use_container_width=True, hide_index=True)
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:8px 14px;margin-top:6px;font-size:10px;color:#8b949e;">
+          <span style="color:#d29922;font-weight:700;">INSTITUTIONAL UPGRADE — PASS 2:</span>
+          Production volume is now stochastic (σ=5%, lognormal) and <b>negatively correlated with AISC (ρ=-0.45)</b>.
+          When production misses occur, fixed mine costs (sustaining CapEx, labor, G&A) spread over fewer ounces,
+          so AISC rises. This prevents unrealistic scenarios where a production miss has no cost consequence,
+          and produces a heavier left tail in the distribution compared to the prior model.
+        </div>""", unsafe_allow_html=True)
+        # Statistical robustness note
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:8px 14px;margin-top:6px;font-size:10px;color:#8b949e;">
+          <span style="color:#58a6ff;font-weight:700;">STATISTICAL ROBUSTNESS (n={n_mc:,}):</span>
+          Median 95% CI: <b>${mc_ci_median[0]:.2f}–${mc_ci_median[1]:.2f}</b> |
+          Mean 95% CI: <b>${mc_ci_mean[0]:.2f}–${mc_ci_mean[1]:.2f}</b> |
+          P(>current) 95% CI: <b>{mc_ci_prob[0]:.1f}%–{mc_ci_prob[1]:.1f}%</b> |
+          Gold-multiple observed r={mc_corr_pearson:.3f} (target ρ={rho_mc}).
+          Running median stabilizes within 1% of final value by ~5,000 iterations.
+        </div>""", unsafe_allow_html=True)
+        why_expander('mc_rho')
+        why_expander('mc_gold_sigma')
+        source_footer("Monte Carlo Simulation Model — Production-AISC correlation per gold sector operating leverage literature")
+
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 9 — CATALYST MAP
+# ═════════════════════════════════════════════════════════════════════════════
+with tabs[8]:
     insight_callout("Forward catalysts add ~$30/share in probability-weighted expected value — WITHOUT requiring gold price appreciation from current levels.")
 
 
@@ -5340,10 +5900,10 @@ with tabs[10]:
 
     source_footer("NEM Investor Presentations, Earnings Calls")
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 11 — ALT DATA (AI Channel Checks)
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[11]:
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 10 — CHANNEL CHECKS
+# ═════════════════════════════════════════════════════════════════════════════
+with tabs[9]:
     insight_callout("8 independent alternative data channels researched. 5 bullish, 1 neutral, 2 bearish. The bearish findings (insider selling, Ghana royalty) are included because intellectual honesty scores higher than cheerleading.")
 
     # ══ NON-OBVIOUS INSIGHTS HERO BANNER ══════════════════════════════════════
@@ -5722,10 +6282,10 @@ with tabs[11]:
 
     source_footer("Channel checks compiled Mar 31, 2026. Primary sources: SEC EDGAR Form 4, S&P Global Market Intelligence, BHP Insights, Goldman Sachs Research, IEA, WGC, NSW Supreme Court, NSW EPA, Ghana Minerals Commission, NEM/AEM/GOLD/GFI/AU earnings releases, NEM Q1-Q4 2025 earnings transcripts. Full research: 8 reports, 40+ primary sources.", tier=3)
 
-
-# TAB 11 — ESG
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[12]:
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 11 — ESG & STEWARDSHIP
+# ═════════════════════════════════════════════════════════════════════════════
+with tabs[10]:
     d = DATA
     esg = d['esg']
 
@@ -5848,10 +6408,10 @@ with tabs[12]:
           <div style="color:#e6edf3;font-size:12px;line-height:1.6;">{text_t}</div></div>""", unsafe_allow_html=True)
     source_footer("NEM 2025 Sustainability Report, MSCI, Sustainalytics, S&P Global")
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 13 — MANAGEMENT CREDIBILITY STUDY
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[13]:
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 12 — MANAGEMENT CREDIBILITY (CREDIBILITY + MGMT)
+# ═════════════════════════════════════════════════════════════════════════════
+with tabs[11]:
     insight_callout("10-year study (2015-2025, excl. 2019 structural break): NEM beat production guidance in only 2 of 10 years. Average miss: -3.5%. But two distinct eras emerge — pre-Goldcorp accuracy was ±1%, post-Goldcorp was -5.4%. The 2024-2025 convergence to -0.4% suggests the integration tax is finally paid. This is Driver 3 — the Credibility Flip. With the case now built across three independent drivers, the final verdict is in 15·VERDICT.")
 
     # ══ AISC CREDIBILITY NON-CONSENSUS CALLOUT ═════════════════════════════════════
@@ -6326,11 +6886,144 @@ with tabs[13]:
 
     source_footer("NEM Annual Reports & Investor Day Presentations 2015-2025, AEM Q4 Reports 2020-2025, Barrick Q4 Reports 2020-2025, SEC EDGAR, Newmont.com, Barrick.com, AgnicoEagle.com, NEM Earnings Calls", tier=1)
 
+    with st.expander("Leadership Profile", expanded=False):
+        d = DATA
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 12 — THESIS VERDICT
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[14]:
+        insight_callout("New CEO Natascha Viljoen inherits NEM's best balance sheet since at least 2010 — net cash $7.2B, Piotroski 9/9. Her Anglo American Platinum track record (22% LTI reduction, 2019-2022) demonstrates operational execution. For guidance/EPS credibility data, see the 14-CREDIBILITY tab.")
+
+        # CEO Profile
+        st.markdown('<div class="panel-header">CEO PROFILE &mdash; NATASCHA VILJOEN</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
+          <div style="color:#58a6ff;font-size:14px;font-weight:700;margin-bottom:8px;">Natascha Viljoen — President & CEO (since Jan 1, 2026)</div>
+          <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+            <b>Tenure:</b> CEO since January 2026 | <b>Background:</b> Chemical Engineering, former COO of Anglo American Platinum<br>
+            <b>Why This Matters:</b><br>
+            - Succeeded Tom Palmer (CEO 2019-2025), who led the Newcrest acquisition and balance sheet transformation<br>
+            - At Anglo American Platinum, achieved a 22% reduction in lost-time injury (LTI) rates — operational excellence DNA<br>
+            - Deep processing/metallurgy expertise — aligned with NEM's AISC optimization priority<br>
+            - First female CEO of a major gold miner — ESG narrative tailwind<br>
+            - Inherits the strongest balance sheet in NEM's history: net cash $7.2B, Piotroski 9/9<br>
+            <b style="color:#d29922;">Key Risk:</b> New CEO transition always carries execution uncertainty. Track 2026 guidance delivery closely.
+          </div>
+        </div>""", unsafe_allow_html=True)
+
+        # Predecessor
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">PREDECESSOR — TOM PALMER (2019-2025)</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:16px 20px;">
+          <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+            Led $26B Newcrest acquisition, $8.5B debt repayment, $2.3B buyback program, net cash position achieved.
+            Palmer's legacy: transformed NEM from an overleveraged acquirer into a fortress balance sheet with Tier 1 assets only.
+          </div>
+        </div>""", unsafe_allow_html=True)
+
+        # Board Composition
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">BOARD COMPOSITION & GOVERNANCE</div>', unsafe_allow_html=True)
+        board_members = [
+            {'Name': 'Gregory Boyce', 'Role': 'Chairman', 'Expertise': 'Mining CEO (Peabody Energy)', 'Color': COLORS['blue']},
+            {'Name': 'Natascha Viljoen', 'Role': 'President & CEO', 'Expertise': 'Mining operations, chemical engineering', 'Color': COLORS['blue']},
+            {'Name': 'Bruce Brook', 'Role': 'Independent Director', 'Expertise': 'Finance, audit (former EY partner)', 'Color': COLORS['muted']},
+            {'Name': 'Maura Clark', 'Role': 'Independent Director', 'Expertise': 'Energy markets, commodity trading', 'Color': COLORS['muted']},
+            {'Name': 'Harry M. Conger', 'Role': 'Independent Director', 'Expertise': 'Mining operations', 'Color': COLORS['muted']},
+            {'Name': 'Emma FitzGerald', 'Role': 'Independent Director', 'Expertise': 'Sustainability, ESG', 'Color': COLORS['green']},
+            {'Name': 'José Manuel Madero', 'Role': 'Independent Director', 'Expertise': 'Latin American mining', 'Color': COLORS['muted']},
+            {'Name': 'Jane Nelson', 'Role': 'Independent Director', 'Expertise': 'ESG, corporate responsibility', 'Color': COLORS['green']},
+        ]
+        for bm in board_members:
+            st.markdown(f"""
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #30363d;background:#161b22;">
+              <span style="color:#e6edf3;font-size:11px;font-weight:600;width:160px;">{bm['Name']}</span>
+              <span style="color:{bm['Color']};font-size:10px;width:160px;">{bm['Role']}</span>
+              <span style="color:#8b949e;font-size:10px;flex:1;">{bm['Expertise']}</span>
+            </div>""", unsafe_allow_html=True)
+
+        # Compensation Alignment
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">COMPENSATION ALIGNMENT WITH SHAREHOLDERS</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;">
+          <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+            <b style="color:{COLORS['green']};">Positives:</b><br>
+            - 60% of CEO long-term incentive tied to TSR (total shareholder return) vs gold peer group<br>
+            - Stock ownership requirement: 6× base salary for CEO, 3× for other NEOs<br>
+            - Clawback policy covers both financial restatements and misconduct<br>
+            - Annual say-on-pay approval &gt;90% in 2024 and 2025<br><br>
+            <b style="color:{COLORS['amber']};">Watch items:</b><br>
+            - New CEO compensation benchmarked to "large cap mining" — could be inflated vs pure gold peers<br>
+            - No disclosed performance targets for 2026 incentive plan (pending first proxy under Viljoen)
+          </div>
+        </div>""", unsafe_allow_html=True)
+
+        # Capital allocation timeline (kept here — it's leadership decision-making content)
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">CAPITAL ALLOCATION TIMELINE</div>', unsafe_allow_html=True)
+        cap_events = [
+            {'Date': '2023-Q4', 'Event': 'Newcrest Acquisition Closes', 'Type': 'M&A',
+             'Impact': 'Added Cadia ($400/oz AISC), Lihir, Telfer. Doubled reserve base to 118 Moz.',
+             'Color': COLORS['blue']},
+            {'Date': '2024-Q1', 'Event': 'Non-Core Divestitures Begin', 'Type': 'Divestiture',
+             'Impact': 'Sold Eleonore, Musselwhite, Porcupine, CC&V, Akyem. Focus on Tier 1 only.',
+             'Color': COLORS['amber']},
+            {'Date': '2024-H2', 'Event': 'Debt Repayment Acceleration', 'Type': 'Deleveraging',
+             'Impact': 'Retired $8.5B in debt. Moved from $9B total debt to $474M by end of 2025.',
+             'Color': COLORS['green']},
+            {'Date': '2025-Q1', 'Event': 'Buyback Program Initiated', 'Type': 'Returns',
+             'Impact': '$2.3B repurchased in 2025. Reduced diluted shares from 1,148M to 1,108M.',
+             'Color': COLORS['green']},
+            {'Date': '2025-Q4', 'Event': 'Net Cash Position Achieved', 'Type': 'Balance Sheet',
+             'Impact': 'Cash $7.6B vs Debt $474M = $7.2B net cash. Fortress balance sheet.',
+             'Color': COLORS['green']},
+        ]
+        for evt in cap_events:
+            st.markdown(f"""
+            <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {evt['Color']};padding:12px 16px;margin-bottom:8px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="color:{evt['Color']};font-size:11px;font-weight:700;">{evt['Event']}</span>
+                <span style="color:#8b949e;font-size:10px;">{evt['Date']} | {evt['Type']}</span>
+              </div>
+              <div style="color:#e6edf3;font-size:11px;line-height:1.5;">{evt['Impact']}</div>
+            </div>""", unsafe_allow_html=True)
+
+        # EPS BEAT/MISS CHART — management execution track record
+        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-header">EARNINGS EXECUTION — EPS BEAT/MISS TRACK RECORD</div>', unsafe_allow_html=True)
+        _earn_mgmt = d['earnings_history']
+        _earn_periods = [e['period'] for e in _earn_mgmt]
+        _earn_actual = [e['actual_eps'] for e in _earn_mgmt]
+        _earn_est = [e['est_eps'] for e in _earn_mgmt]
+        _earn_surprise = [a - e for a, e in zip(_earn_actual, _earn_est)]
+        _earn_colors = [COLORS['green'] if s >= 0 else COLORS['red'] for s in _earn_surprise]
+        _beats = sum(1 for s in _earn_surprise if s >= 0)
+        _total_q = len(_earn_surprise)
+
+        fig_eps_mgmt = go.Figure()
+        fig_eps_mgmt.add_trace(go.Bar(
+            x=_earn_periods, y=_earn_surprise,
+            marker_color=_earn_colors,
+            text=[f"{'+'if s>=0 else ''}{s:.2f}" for s in _earn_surprise],
+            textposition='outside', textfont=dict(color=COLORS['text'], size=10),
+            name='EPS Surprise ($)'
+        ))
+        fig_eps_mgmt.add_hline(y=0, line_color=COLORS['muted'], line_width=1)
+        apply_layout(fig_eps_mgmt, f"NEM BEATS EPS CONSENSUS {_beats} OF {_total_q} QUARTERS — MANAGEMENT DELIVERS", 300)
+        fig_eps_mgmt.update_layout(yaxis_title='EPS Surprise (Actual - Estimate, $)')
+        fig_eps_mgmt.add_annotation(
+            x=_earn_periods[-1], y=max(_earn_surprise),
+            text=f'<b>{_beats}/{_total_q} beats</b><br>Avg surprise: ${sum(_earn_surprise)/len(_earn_surprise):.2f}',
+            showarrow=True, arrowhead=2, font=dict(size=9, color=COLORS['green']),
+            arrowcolor=COLORS['green'], bgcolor='#0d1117',
+            bordercolor=COLORS['green'], borderwidth=1, ax=50, ay=-30)
+        st.plotly_chart(fig_eps_mgmt, use_container_width=True)
+
+        source_footer("NEM Proxy Statements, Earnings Calls, Annual Reports, Investor Presentations 2023-2025")
+
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 13 — THESIS VERDICT
+# ═════════════════════════════════════════════════════════════════════════════
+with tabs[12]:
     B = BASE
     d = DATA
 
@@ -7033,714 +7726,10 @@ with tabs[14]:
     </div>""", unsafe_allow_html=True)
     source_footer("NEM Filings, Model Calculations", tier=1)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 13 — GLD vs NEM COMPARISON
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[15]:
-    d = DATA
-    insight_callout("NEM is not a gold bet — it is a gold OPERATING LEVERAGE bet with a dividend, a cost floor, and copper optionality. GLD provides none of these.")
-
-
-    st.markdown('<div class="panel-header">WHY NOT JUST BUY GLD?</div>', unsafe_allow_html=True)
-
-    aisc_gld = d['nem_operational']['aisc_2025']
-    gold_spot_gld = BASE['gold_spot']
-    nem_price_gld = BASE['price']
-    gld_price_gld = st.session_state.get('gld_price', 430.13)
-
-    # Operating leverage chart
-    st.markdown('<div class="panel-header">OPERATING LEVERAGE — NEM MARGIN/OZ vs GLD</div>', unsafe_allow_html=True)
-    gold_levels = [2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 7000]
-    nem_margins = [max(g - aisc_gld, 0) for g in gold_levels]
-    gld_margins = [0] * len(gold_levels)
-    nem_margin_pcts = [m / g * 100 if g > 0 else 0 for m, g in zip(nem_margins, gold_levels)]
-
-    fig_olev = go.Figure()
-    fig_olev.add_trace(go.Bar(x=[f"${g:,}" for g in gold_levels], y=nem_margins, name='NEM Margin/oz',
-        marker_color=COLORS['green'], text=[f"${m:,}" for m in nem_margins], textposition='outside',
-        textfont=dict(color=COLORS['text'], size=9)))
-    fig_olev.add_trace(go.Scatter(x=[f"${g:,}" for g in gold_levels], y=nem_margin_pcts,
-        name='NEM Margin %', yaxis='y2', line=dict(color=COLORS['amber'], width=2), marker=dict(size=6)))
-    # Add spot price annotation instead of vline (categorical x-axis)
-    spot_label = f"${gold_spot_gld:,}"
-    if spot_label in [f"${g:,}" for g in gold_levels]:
-        spot_idx = [f"${g:,}" for g in gold_levels].index(spot_label)
-        fig_olev.add_annotation(x=spot_label, y=nem_margins[spot_idx], text=f"◆ SPOT",
-            showarrow=True, arrowhead=2, arrowcolor=COLORS['blue'],
-            font=dict(color=COLORS['blue'], size=10), ax=0, ay=-30)
-    else:
-        # Add annotation at closest level
-        closest_idx = min(range(len(gold_levels)), key=lambda i: abs(gold_levels[i] - gold_spot_gld))
-        fig_olev.add_annotation(x=f"${gold_levels[closest_idx]:,}", y=nem_margins[closest_idx],
-            text=f"Spot ~${gold_spot_gld:,}", showarrow=True, arrowhead=2, arrowcolor=COLORS['blue'],
-            font=dict(color=COLORS['blue'], size=10), ax=0, ay=-30)
-    apply_layout(fig_olev, "EVERY $100/oz GOLD INCREASE = ~$323M INCREMENTAL FCF", 350)
-    fig_olev.update_layout(
-        yaxis=dict(title="Margin $/oz"),
-        yaxis2=dict(title="Margin %", overlaying='y', side='right', gridcolor='#30363d', tickfont=dict(color='#8b949e', size=10)),
-        barmode='group')
-    st.plotly_chart(fig_olev, use_container_width=True)
-
-    # Side-by-side scenario table
-    st.markdown('<div class="panel-header">NEM vs GLD — SCENARIO RETURNS</div>', unsafe_allow_html=True)
-    gold_beta_v = st.session_state.get('gold_beta', 0.95)
-    div_yield_v = d['market_data']['nem_div_yield']
-
-    scenarios_gld = [
-        ('Gold +30%', 0.30), ('Gold +20%', 0.20), ('Gold +10%', 0.10),
-        ('Gold FLAT', 0.00), ('Gold -10%', -0.10), ('Gold -20%', -0.20), ('Gold -30%', -0.30),
-    ]
-    comp_rows = []
-    for label_g, chg in scenarios_gld:
-        gld_ret = chg * 100
-        # NEM return: leverage amplifies gold moves + dividend
-        new_gold = gold_spot_gld * (1 + chg)
-        old_margin = gold_spot_gld - aisc_gld
-        new_margin = max(new_gold - aisc_gld, 0)
-        if old_margin > 0:
-            margin_chg = (new_margin / old_margin - 1)
-        else:
-            margin_chg = 0
-        nem_ret = margin_chg * 100 * 0.65 + div_yield_v * 100  # rough operating leverage
-        nem_ret = max(min(nem_ret, 300), -80)  # cap extremes
-        comp_rows.append({
-            'Scenario': label_g,
-            'Gold Change': f"{chg*100:+.0f}%",
-            'GLD Return': f"{gld_ret:+.1f}%",
-            'NEM Est Return': f"{nem_ret:+.1f}%",
-            'NEM Advantage': f"{nem_ret - gld_ret:+.1f}%",
-        })
-    comp_df = pd.DataFrame(comp_rows)
-    st.dataframe(comp_df, use_container_width=True, hide_index=True)
-
-    c1, c2 = st.columns(2)
-    with c1:
-        # Dividend advantage
-        st.markdown('<div class="panel-header">CUMULATIVE DIVIDEND ADVANTAGE</div>', unsafe_allow_html=True)
-        hold_years = [1, 2, 3, 4, 5]
-        nem_divs_cum = [1.0 * y for y in hold_years]  # $1/share/year base dividend
-        gld_divs_cum = [0] * len(hold_years)
-        nem_div_yield_pct = 1.0 / BASE['price'] * 100  # $1/share annual dividend
-        nem_total_return = [nem_div_yield_pct * y for y in hold_years]  # dividend contribution only (price return shown separately)
-        gld_total_return = [0] * len(hold_years)  # GLD has zero income return
-        fig_div_adv = go.Figure()
-        fig_div_adv.add_trace(go.Scatter(
-            x=[f"{y}yr" for y in hold_years], y=nem_divs_cum,
-            mode='lines+markers+text', name='NEM Cumulative Dividends ($/share)',
-            line=dict(color=COLORS['green'], width=2.5), marker=dict(size=8),
-            text=[f"${d_v:.2f}" for d_v in nem_divs_cum], textposition='top center',
-            textfont=dict(color=COLORS['text'], size=10)))
-        fig_div_adv.add_trace(go.Scatter(
-            x=[f"{y}yr" for y in hold_years], y=nem_total_return,
-            mode='lines+markers', name=f'NEM Dividend Yield Contribution ({nem_div_yield_pct:.1f}%/yr)',
-            line=dict(color=COLORS['blue'], width=1.5, dash='dash'), marker=dict(size=6)))
-        fig_div_adv.add_trace(go.Scatter(
-            x=[f"{y}yr" for y in hold_years], y=gld_total_return,
-            mode='lines', name='GLD Income Return ($0)',
-            line=dict(color=COLORS['muted'], width=1.5, dash='dot')))
-        apply_layout(fig_div_adv, f"NEM INCOME ADVANTAGE: ${nem_divs_cum[-1]:.0f}/SHARE OVER 5 YEARS vs. $0 FROM GLD", 280)
-        fig_div_adv.update_layout(
-            xaxis_title='Holding Period', yaxis_title='Cumulative Income ($/share)',
-            legend=dict(orientation='h', y=1.15, x=0, font=dict(size=9, color=COLORS['text'])))
-        st.plotly_chart(fig_div_adv, use_container_width=True)
-    with c2:
-        # Breakeven comparison
-        st.markdown('<div class="panel-header">BREAKEVEN COMPARISON</div>', unsafe_allow_html=True)
-        breakeven_nem = aisc_gld + st.session_state.get('breakeven_fixed_cost', 200)
-        st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div style="border:1px solid #30363d;padding:16px;text-align:center;">
-              <div style="color:#3fb950;font-size:14px;font-weight:700;margin-bottom:8px;">NEM</div>
-              <div style="color:#8b949e;font-size:9px;">Breakeven Gold</div>
-              <div style="color:#e6edf3;font-size:18px;font-weight:700;">${breakeven_nem:,}/oz</div>
-              <div style="color:#8b949e;font-size:9px;margin-top:8px;">Buffer vs Spot</div>
-              <div style="color:#3fb950;font-size:16px;font-weight:700;">{(gold_spot_gld-breakeven_nem)/breakeven_nem*100:.0f}%</div>
-              <div style="color:#8b949e;font-size:9px;margin-top:8px;">Below breakeven: still has $57B in assets, 118 Moz reserves, producing mines</div>
-            </div>
-            <div style="border:1px solid #30363d;padding:16px;text-align:center;">
-              <div style="color:#d29922;font-size:14px;font-weight:700;margin-bottom:8px;">GLD</div>
-              <div style="color:#8b949e;font-size:9px;">Breakeven Gold</div>
-              <div style="color:#e6edf3;font-size:18px;font-weight:700;">$0/oz</div>
-              <div style="color:#8b949e;font-size:9px;margin-top:8px;">Linear to Zero</div>
-              <div style="color:#d29922;font-size:16px;font-weight:700;">1:1</div>
-              <div style="color:#8b949e;font-size:9px;margin-top:8px;">GLD tracks gold linearly — no operating leverage, no floor, no dividends</div>
-            </div>
-          </div>
-        </div>""", unsafe_allow_html=True)
-
-    # Conclusion
-    st.markdown(f"""
-    <div style="background:#161b22;border:2px solid #3fb950;padding:20px;margin-top:16px;text-align:center;">
-      <div style="color:#3fb950;font-size:14px;font-weight:700;letter-spacing:2px;margin-bottom:12px;">CONCLUSION</div>
-      <div style="color:#e6edf3;font-size:13px;line-height:1.8;">
-        NEM is not a gold bet — it is a <b style="color:#3fb950;">gold OPERATING LEVERAGE bet</b> with:<br>
-        <b style="color:#58a6ff;">1.</b> Expanding margins as gold rises (AISC ${aisc_gld:,} vs spot ${gold_spot_gld:,}) |
-        <b style="color:#58a6ff;">2.</b> Dividends ($1.00/yr base) that GLD cannot provide |
-        <b style="color:#58a6ff;">3.</b> Buybacks reducing share count |
-        <b style="color:#58a6ff;">4.</b> Copper optionality (12.5 Mt reserves) |
-        <b style="color:#58a6ff;">5.</b> A hard cost floor — NEM generates cash at any gold above ${breakeven_nem:,}/oz
-      </div>
-    </div>""", unsafe_allow_html=True)
-    source_footer("NEM Filings, GLD ETF Data, Model Calculations")
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 14 — COPPER OPTIONALITY
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[16]:
-    d = DATA
-    insight_callout("Copper from Cadia adds incremental value NOT captured in our gold-focused DCF or P/NAV. At long-run copper of $4.50/lb, this standalone NAV is worth ~$12-15/share — the same unpriced optionality called out in the Command Center.")
-
-
-    st.markdown('<div class="panel-header">COPPER OPTIONALITY — CADIA VALLEY</div>', unsafe_allow_html=True)
-
-    copper_price_v = st.session_state.get('copper_price', 5.63)
-    copper_prod_v = st.session_state.get('copper_production_ktpa', 120)
-    copper_dr = st.session_state.get('copper_discount_rate', 8.0) / 100
-    copper_reserves = d['nem_operational']['copper_reserves_mt']
-    cadia_mine_life = 30  # years for Cadia
-
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="panel-header">CADIA COPPER PROFILE</div>', unsafe_allow_html=True)
-        copper_items = [
-            ("Copper Reserves", f"{copper_reserves} Mt"),
-            ("Annual Production", f"{copper_prod_v} kt/yr"),
-            ("Current Copper Price", f"${copper_price_v:.2f}/lb"),
-            ("Implied Mine Life", f"{copper_reserves*1000/copper_prod_v:.0f} years"),
-            ("Key Growth Driver", "Panel Cave 1-4 Expansion"),
-            ("Demand Thesis", "EVs, Data Centers, Renewables"),
-        ]
-        for label_cu, val_cu in copper_items:
-            st.markdown(f"""
-            <div style="display:flex;justify-content:space-between;padding:6px 12px;border-bottom:1px solid #30363d;background:#161b22;">
-              <span style="color:#8b949e;font-size:11px;">{label_cu}</span>
-              <span style="color:#d29922;font-size:12px;font-weight:600;">{val_cu}</span>
-            </div>""", unsafe_allow_html=True)
-        why_expander('copper_price')
-        why_expander('copper_production_ktpa')
-
-    with c2:
-        st.markdown('<div class="panel-header">COPPER SENSITIVITY — INCREMENTAL $/SHARE</div>', unsafe_allow_html=True)
-        copper_prices_s = [3.50, 4.00, 4.50, 5.00, 5.50, 5.63]
-        c1_cash_cost = 1.80  # $/lb — industry C1 cash cost for Cadia (NEM filings)
-        cu_val_per_share = []
-        for cp in copper_prices_s:
-            # Cash margin = price - C1 cost, applied to production volume
-            margin_per_lb = max(cp - c1_cash_cost, 0)
-            annual_ocf_cu = margin_per_lb * copper_prod_v * 1000 * 2204.62 / 1e6  # $M
-            # NPV with discount rate over mine life
-            annuity_cu = (1 - (1 + copper_dr) ** (-min(cadia_mine_life, 30))) / copper_dr
-            npv_cu = annual_ocf_cu * annuity_cu
-            per_share_cu = npv_cu / BASE['shares_m']
-            cu_val_per_share.append(per_share_cu)
-
-        fig_cu = go.Figure(go.Bar(
-            x=[f"${cp:.2f}/lb" for cp in copper_prices_s],
-            y=cu_val_per_share,
-            marker_color=[COLORS['blue'] if cp < 5.63 else COLORS['green'] for cp in copper_prices_s],
-            text=[f"${v:.1f}" for v in cu_val_per_share],
-            textposition='outside',
-            textfont=dict(color=COLORS['text'], size=10),
-        ))
-        fig_cu.add_hline(y=cu_val_per_share[-1], line_dash='dash', line_color=COLORS['green'],
-                         annotation_text=f"Current: ${cu_val_per_share[-1]:.1f}/sh",
-                         annotation_font_color=COLORS['green'])
-        apply_layout(fig_cu, f"HIDDEN COPPER KICKER: +${cu_val_per_share[-1]:.1f}/SHARE NOT IN THE BASE CASE", 300)
-        fig_cu.update_layout(yaxis_title="Value per NEM Share ($)")
-        st.plotly_chart(fig_cu, use_container_width=True)
-
-    # Copper demand narrative
-    st.markdown('<div class="panel-header">COPPER SUPPLY-DEMAND NARRATIVE</div>', unsafe_allow_html=True)
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown("""
-        <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #d29922;padding:16px;">
-          <div style="color:#d29922;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">EV TRANSITION</div>
-          <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
-            Each EV uses 3-4× more copper than ICE vehicles. Global EV sales growing 25%+ annually.
-            By 2030, EVs alone could add 3-4 Mt of annual copper demand.
-          </div>
-        </div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown("""
-        <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #d29922;padding:16px;">
-          <div style="color:#d29922;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">DATA CENTERS</div>
-          <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
-            AI-driven data center buildout requires massive copper wiring. Global data center capex
-            expected to exceed $400B annually by 2028. Each GW of capacity uses ~5,000t of copper.
-          </div>
-        </div>""", unsafe_allow_html=True)
-    with c3:
-        st.markdown("""
-        <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #d29922;padding:16px;">
-          <div style="color:#d29922;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">SUPPLY CONSTRAINTS</div>
-          <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
-            Declining ore grades, longer permitting, few new large deposits. Supply deficit projected
-            to widen through 2030+. Chile/Peru production plateauing.
-          </div>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:14px 20px;margin-top:16px;">
-      <span style="color:#8b949e;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;">KEY INSIGHT  </span>
-      <span style="color:#e6edf3;font-size:12px;">
-        Our gold-focused DCF and P/NAV do NOT include copper upside. At current copper prices,
-        Cadia's copper production adds approximately <b style="color:#d29922;">${cu_val_per_share[-1]:.1f}/share</b> of
-        value beyond our target — this is free optionality not in the price.
-      </span>
-    </div>""", unsafe_allow_html=True)
-    if st.button("Reset Copper Assumptions", key='reset_copper_tab'):
-        reset_section(['copper_price', 'copper_production_ktpa', 'copper_discount_rate'])
-        st.rerun()
-
-    # ══ A3: COPPER SUPPLY-DEMAND CHART + AI DATA CENTER COPPER INTENSITY ═════════
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">COPPER SUPPLY-DEMAND BALANCE — AI DATA CENTER DEMAND SURGE</div>', unsafe_allow_html=True)
-
-    cu_sd_col1, cu_sd_col2 = st.columns(2)
-    with cu_sd_col1:
-        cu_years = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2030]
-        cu_supply = [20.6, 21.0, 21.8, 22.0, 22.3, 22.5, 22.8, 23.1, 23.5, 24.0]  # Mt
-        cu_demand = [19.8, 21.2, 22.0, 22.5, 23.0, 23.8, 24.8, 26.0, 27.5, 30.0]  # Mt (incl AI ramp)
-        cu_deficit = [s - d for s, d in zip(cu_supply, cu_demand)]
-        fig_cu_sd = make_subplots(specs=[[{"secondary_y": True}]])
-        fig_cu_sd.add_trace(go.Scatter(x=cu_years, y=cu_supply, name='Cu Supply (Mt)',
-            line=dict(color=COLORS['blue'], width=2.5), mode='lines+markers',
-            marker=dict(size=7)), secondary_y=False)
-        fig_cu_sd.add_trace(go.Scatter(x=cu_years, y=cu_demand, name='Cu Demand (Mt)',
-            line=dict(color=COLORS['amber'], width=2.5), mode='lines+markers',
-            marker=dict(size=7)), secondary_y=False)
-        fig_cu_sd.add_trace(go.Bar(x=cu_years, y=cu_deficit, name='Deficit (Mt)',
-            marker_color=[COLORS['green'] if d > 0 else COLORS['red'] for d in cu_deficit],
-            opacity=0.5), secondary_y=True)
-        apply_layout(fig_cu_sd, "COPPER DEFICIT WIDENS AS AI DEMAND ACCELERATES", 340)
-        fig_cu_sd.update_layout(
-            yaxis=dict(title='Million Tonnes', range=[18, 32]),
-            yaxis2=dict(title='Surplus/Deficit (Mt)', overlaying='y', side='right',
-                        gridcolor='#30363d', tickfont=dict(color='#8b949e', size=10)),
-            legend=dict(orientation='h', yanchor='bottom', y=1.02, x=0.5, xanchor='center')
-        )
-        st.plotly_chart(fig_cu_sd, use_container_width=True)
-
-    with cu_sd_col2:
-        # Copper intensity per MW — AI data centers
-        dc_types = ['Standard DC\n(10-15 t/MW)', 'Hyperscale DC\n(27 t/MW)', 'AI Training\n(30-40 t/MW)', 'AI Training\nPeak (47 t/MW)']
-        cu_per_mw = [12.5, 27, 35, 47]
-        dc_colors = [COLORS['muted'], COLORS['blue'], COLORS['amber'], COLORS['red']]
-        fig_cu_int = go.Figure(go.Bar(
-            x=dc_types, y=cu_per_mw,
-            marker_color=dc_colors,
-            text=[f"{v} t/MW" for v in cu_per_mw],
-            textposition='outside',
-            textfont=dict(color=COLORS['text'], size=10)
-        ))
-        fig_cu_int.add_annotation(x='AI Training\nPeak (47 t/MW)', y=47,
-            text='<b>47 t/MW</b><br>S&P Global Jan 2026', showarrow=True, arrowhead=2,
-            arrowcolor=COLORS['red'], font=dict(size=9, color=COLORS['red']),
-            bgcolor='#0d1117', bordercolor=COLORS['red'], borderwidth=1, ax=0, ay=-35)
-        apply_layout(fig_cu_int, "COPPER INTENSITY PER MW — AI FACILITIES USE 3-4× MORE", 340)
-        fig_cu_int.update_layout(yaxis_title='Tonnes of Copper per MW')
-        st.plotly_chart(fig_cu_int, use_container_width=True)
-
-    st.markdown(f"""
-    <div style="background:#0d1117;border:2px solid #d29922;padding:18px 22px;margin-bottom:16px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-        <span style="background:#d29922;color:#0d1117;font-size:9px;font-weight:700;padding:3px 10px;letter-spacing:2px;">NON-CONSENSUS VIEW</span>
-        <span style="color:#e6edf3;font-size:12px;font-weight:700;">NEM's Hidden AI Infrastructure Play via Copper</span>
-      </div>
-      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        <b style="color:#d29922;">The non-obvious insight:</b> Most gold investors don't price NEM's copper optionality.
-        AI data centers require <b>27-47 tonnes of copper per MW</b> (S&P Global, Jan 2026). With $300B+ in global
-        data center CapEx through 2028 and Goldman Sachs projecting 122 GW of capacity by 2030,
-        copper demand is set to surge by 3-5 Mt/yr above baseline.
-        <br><br>
-        NEM's <b style="color:#58a6ff;">Cadia mine (2.9 Mt Cu reserves)</b> is the <b>only Tier-1 copper asset
-        inside any major gold miner</b>. This creates a structural call option on AI infrastructure spending
-        that generates $12-22/share of incremental value not captured in any consensus gold-sector model.
-        <br><br>
-        <b>S&P Global projects a 10 Mt copper supply shortfall by 2040</b> — 23.8% of projected 42 Mt demand unmet.
-        At JPMorgan's $12,500/t copper forecast, Cadia's copper NAV alone approaches $18-22/share.
-      </div>
-      <div style="color:#8b949e;font-size:9px;margin-top:8px;">Source: S&P Global "Copper in the Age of AI" (Jan 2026), Goldman Sachs Research, Microsoft Chicago study, NEM FY2025 10-K</div>
-    </div>""", unsafe_allow_html=True)
-
-    # ── PERPLEXITY PREMIUM DATA: BANK PRICE FORECASTS + AI DEMAND ──
-    st.markdown(f"""
-    <div style="background:#1a1f2e;border:2px solid {COLORS['blue']};margin-top:20px;overflow:hidden;">
-      <div style="background:{COLORS['blue']};padding:7px 18px;">
-        <span style="color:#0d1117;font-size:10px;font-weight:700;letter-spacing:2px;">
-          PERPLEXITY PREMIUM DATA &mdash; COPPER PRICE FORECASTS &amp; AI DEMAND THESIS (JAN–MAR 2026)
-        </span>
-      </div>
-      <div style="padding:20px 24px;">
-
-        <div style="color:{COLORS['amber']};font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:12px;">
-          MAJOR BANK COPPER PRICE FORECASTS</div>
-        <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-bottom:20px;">
-          <div style="background:#161b22;border:1px solid #30363d;padding:12px;text-align:center;">
-            <div style="color:#8b949e;font-size:9px;letter-spacing:1px;margin-bottom:4px;">JPMORGAN Q2 2026</div>
-            <div style="color:{COLORS['green']};font-size:22px;font-weight:700;">$12,500/t</div>
-            <div style="color:#8b949e;font-size:10px;">($5.67/lb) &mdash; +24% vs current</div>
-            <div style="color:#8b949e;font-size:9px;margin-top:4px;">Trade policy front-running + AI demand</div>
-          </div>
-          <div style="background:#161b22;border:1px solid #30363d;padding:12px;text-align:center;">
-            <div style="color:#8b949e;font-size:9px;letter-spacing:1px;margin-bottom:4px;">BANK OF AMERICA 2027</div>
-            <div style="color:{COLORS['green']};font-size:22px;font-weight:700;">$13,501/t</div>
-            <div style="color:#8b949e;font-size:10px;">($6.12/lb) &mdash; +35% vs current</div>
-            <div style="color:#8b949e;font-size:9px;margin-top:4px;">Structural demand from electrification</div>
-          </div>
-          <div style="background:#161b22;border:1px solid {COLORS['amber']};padding:12px;text-align:center;">
-            <div style="color:{COLORS['amber']};font-size:9px;letter-spacing:1px;margin-bottom:4px;">S&amp;P GLOBAL 10-YEAR DEFICIT</div>
-            <div style="color:{COLORS['amber']};font-size:22px;font-weight:700;">10 Mt</div>
-            <div style="color:#8b949e;font-size:10px;">Cumulative shortfall by 2040</div>
-            <div style="color:#8b949e;font-size:9px;margin-top:4px;">&ldquo;Copper in the Age of AI&rdquo; Jan 8, 2026</div>
-          </div>
-        </div>
-
-        <div style="color:{COLORS['blue']};font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:12px;">
-          AI DATA CENTER COPPER DEMAND &mdash; THE STRUCTURAL DRIVER WALL STREET UNDERESTIMATES</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
-          <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {COLORS['blue']};padding:14px;">
-            <div style="color:{COLORS['blue']};font-size:10px;font-weight:700;margin-bottom:8px;">COPPER PER MEGAWATT (DATA CENTERS)</div>
-            <div style="color:#e6edf3;font-size:20px;font-weight:700;margin-bottom:4px;">27&ndash;47 t/MW</div>
-            <div style="color:#8b949e;font-size:10px;line-height:1.5;">
-              Microsoft Chicago AI data center study (cross-referenced via Perplexity).
-              A single 100 MW hyperscale AI campus requires 2,700&ndash;4,700 tonnes of copper
-              &mdash; equivalent to a small copper mine&rsquo;s annual output.<br><br>
-              <b style="color:#e6edf3;">Global data center capex 2028:</b> $400B+/yr<br>
-              <b style="color:#e6edf3;">Implied copper demand:</b> 3&ndash;5 Mt/yr incremental by 2030
-            </div>
-          </div>
-          <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {COLORS['amber']};padding:14px;">
-            <div style="color:{COLORS['amber']};font-size:10px;font-weight:700;margin-bottom:8px;">WHY CADIA IS THE ONLY PLAY IN GOLD MINING</div>
-            <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
-              Among all major gold miners, <b style="color:{COLORS['blue']};">only NEM (via Cadia)</b> has material,
-              Tier-1 copper exposure at scale:<br><br>
-              &bull; Barrick (GOLD): No meaningful copper assets<br>
-              &bull; Agnico Eagle (AEM): No meaningful copper assets<br>
-              &bull; Kinross (KGC): No meaningful copper assets<br><br>
-              <b style="color:{COLORS['green']};">NEM&rsquo;s 2.9 Mt Cu reserve</b> at Cadia = 24+ year copper mine life.
-              If copper hits $13,500/t (BofA 2027 target), our copper NAV estimate
-              rises from ~$12&ndash;15/share to <b>$18&ndash;22/share</b>.
-            </div>
-          </div>
-        </div>
-
-        <div style="background:#0d1117;border:1px solid {COLORS['green']};padding:14px 18px;">
-          <div style="color:{COLORS['green']};font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">
-            THE CADIA COPPER-AI THESIS IN ONE SENTENCE</div>
-          <div style="color:#e6edf3;font-size:12px;line-height:1.6;">
-            Every AI data center built globally increases copper demand, tightens a market already facing a
-            10 Mt structural deficit by 2040, lifts the copper price toward JPMorgan&rsquo;s $12,500/t and
-            BofA&rsquo;s $13,501/t forecasts &mdash; and NEM&rsquo;s Cadia mine is the <b>only Tier-1 copper
-            asset inside any major gold miner</b>. This creates $12&ndash;22/share of incremental value
-            that does not appear in any consensus gold-sector model.
-          </div>
-        </div>
-
-        <div style="color:#8b949e;font-size:9px;margin-top:12px;border-top:1px solid #30363d;padding-top:8px;">
-          Sources: JPMorgan Commodities Research (Q2 2026 Copper Outlook), Bank of America Global Research
-          (Copper: The New Oil, Feb 2026), S&amp;P Global Market Intelligence &ldquo;Copper in the Age of AI&rdquo;
-          (Jan 8, 2026), Microsoft Chicago AI Data Center Study (copper density benchmark),
-          IEA &ldquo;The Role of Critical Minerals in Clean Energy Transitions&rdquo; (2025 update),
-          NEM FY2025 Annual Report (Cadia reserve estimate), CME Copper Futures (Apr 2, 2026) &mdash;
-          compiled and cross-referenced via Perplexity Search + Perplexity Finance.
-        </div>
-      </div>
-    </div>""", unsafe_allow_html=True)
-
-    source_footer("NEM FY2025 Annual Report, CME Copper Futures, IEA Copper Outlook, JPMorgan Commodities Research (Q2 2026), Bank of America Global Research (Feb 2026), S&P Global Market Intelligence (Jan 8, 2026), Microsoft Chicago AI Data Center Study — compiled via Perplexity Search + Finance", tier=2)
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 18 — CEO & LEADERSHIP
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[17]:
-    d = DATA
-
-    insight_callout("New CEO Natascha Viljoen inherits NEM's best balance sheet since at least 2010 — net cash $7.2B, Piotroski 9/9. Her Anglo American Platinum track record (22% LTI reduction, 2019-2022) demonstrates operational execution. For guidance/EPS credibility data, see the 14-CREDIBILITY tab.")
-
-    # CEO Profile
-    st.markdown('<div class="panel-header">CEO PROFILE &mdash; NATASCHA VILJOEN</div>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;padding:20px;">
-      <div style="color:#58a6ff;font-size:14px;font-weight:700;margin-bottom:8px;">Natascha Viljoen — President & CEO (since Jan 1, 2026)</div>
-      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        <b>Tenure:</b> CEO since January 2026 | <b>Background:</b> Chemical Engineering, former COO of Anglo American Platinum<br>
-        <b>Why This Matters:</b><br>
-        - Succeeded Tom Palmer (CEO 2019-2025), who led the Newcrest acquisition and balance sheet transformation<br>
-        - At Anglo American Platinum, achieved a 22% reduction in lost-time injury (LTI) rates — operational excellence DNA<br>
-        - Deep processing/metallurgy expertise — aligned with NEM's AISC optimization priority<br>
-        - First female CEO of a major gold miner — ESG narrative tailwind<br>
-        - Inherits the strongest balance sheet in NEM's history: net cash $7.2B, Piotroski 9/9<br>
-        <b style="color:#d29922;">Key Risk:</b> New CEO transition always carries execution uncertainty. Track 2026 guidance delivery closely.
-      </div>
-    </div>""", unsafe_allow_html=True)
-
-    # Predecessor
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">PREDECESSOR — TOM PALMER (2019-2025)</div>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid #58a6ff;padding:16px 20px;">
-      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        Led $26B Newcrest acquisition, $8.5B debt repayment, $2.3B buyback program, net cash position achieved.
-        Palmer's legacy: transformed NEM from an overleveraged acquirer into a fortress balance sheet with Tier 1 assets only.
-      </div>
-    </div>""", unsafe_allow_html=True)
-
-    # Board Composition
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">BOARD COMPOSITION & GOVERNANCE</div>', unsafe_allow_html=True)
-    board_members = [
-        {'Name': 'Gregory Boyce', 'Role': 'Chairman', 'Expertise': 'Mining CEO (Peabody Energy)', 'Color': COLORS['blue']},
-        {'Name': 'Natascha Viljoen', 'Role': 'President & CEO', 'Expertise': 'Mining operations, chemical engineering', 'Color': COLORS['blue']},
-        {'Name': 'Bruce Brook', 'Role': 'Independent Director', 'Expertise': 'Finance, audit (former EY partner)', 'Color': COLORS['muted']},
-        {'Name': 'Maura Clark', 'Role': 'Independent Director', 'Expertise': 'Energy markets, commodity trading', 'Color': COLORS['muted']},
-        {'Name': 'Harry M. Conger', 'Role': 'Independent Director', 'Expertise': 'Mining operations', 'Color': COLORS['muted']},
-        {'Name': 'Emma FitzGerald', 'Role': 'Independent Director', 'Expertise': 'Sustainability, ESG', 'Color': COLORS['green']},
-        {'Name': 'José Manuel Madero', 'Role': 'Independent Director', 'Expertise': 'Latin American mining', 'Color': COLORS['muted']},
-        {'Name': 'Jane Nelson', 'Role': 'Independent Director', 'Expertise': 'ESG, corporate responsibility', 'Color': COLORS['green']},
-    ]
-    for bm in board_members:
-        st.markdown(f"""
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #30363d;background:#161b22;">
-          <span style="color:#e6edf3;font-size:11px;font-weight:600;width:160px;">{bm['Name']}</span>
-          <span style="color:{bm['Color']};font-size:10px;width:160px;">{bm['Role']}</span>
-          <span style="color:#8b949e;font-size:10px;flex:1;">{bm['Expertise']}</span>
-        </div>""", unsafe_allow_html=True)
-
-    # Compensation Alignment
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">COMPENSATION ALIGNMENT WITH SHAREHOLDERS</div>', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;">
-      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        <b style="color:{COLORS['green']};">Positives:</b><br>
-        - 60% of CEO long-term incentive tied to TSR (total shareholder return) vs gold peer group<br>
-        - Stock ownership requirement: 6× base salary for CEO, 3× for other NEOs<br>
-        - Clawback policy covers both financial restatements and misconduct<br>
-        - Annual say-on-pay approval &gt;90% in 2024 and 2025<br><br>
-        <b style="color:{COLORS['amber']};">Watch items:</b><br>
-        - New CEO compensation benchmarked to "large cap mining" — could be inflated vs pure gold peers<br>
-        - No disclosed performance targets for 2026 incentive plan (pending first proxy under Viljoen)
-      </div>
-    </div>""", unsafe_allow_html=True)
-
-    # Capital allocation timeline (kept here — it's leadership decision-making content)
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">CAPITAL ALLOCATION TIMELINE</div>', unsafe_allow_html=True)
-    cap_events = [
-        {'Date': '2023-Q4', 'Event': 'Newcrest Acquisition Closes', 'Type': 'M&A',
-         'Impact': 'Added Cadia ($400/oz AISC), Lihir, Telfer. Doubled reserve base to 118 Moz.',
-         'Color': COLORS['blue']},
-        {'Date': '2024-Q1', 'Event': 'Non-Core Divestitures Begin', 'Type': 'Divestiture',
-         'Impact': 'Sold Eleonore, Musselwhite, Porcupine, CC&V, Akyem. Focus on Tier 1 only.',
-         'Color': COLORS['amber']},
-        {'Date': '2024-H2', 'Event': 'Debt Repayment Acceleration', 'Type': 'Deleveraging',
-         'Impact': 'Retired $8.5B in debt. Moved from $9B total debt to $474M by end of 2025.',
-         'Color': COLORS['green']},
-        {'Date': '2025-Q1', 'Event': 'Buyback Program Initiated', 'Type': 'Returns',
-         'Impact': '$2.3B repurchased in 2025. Reduced diluted shares from 1,148M to 1,108M.',
-         'Color': COLORS['green']},
-        {'Date': '2025-Q4', 'Event': 'Net Cash Position Achieved', 'Type': 'Balance Sheet',
-         'Impact': 'Cash $7.6B vs Debt $474M = $7.2B net cash. Fortress balance sheet.',
-         'Color': COLORS['green']},
-    ]
-    for evt in cap_events:
-        st.markdown(f"""
-        <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {evt['Color']};padding:12px 16px;margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-            <span style="color:{evt['Color']};font-size:11px;font-weight:700;">{evt['Event']}</span>
-            <span style="color:#8b949e;font-size:10px;">{evt['Date']} | {evt['Type']}</span>
-          </div>
-          <div style="color:#e6edf3;font-size:11px;line-height:1.5;">{evt['Impact']}</div>
-        </div>""", unsafe_allow_html=True)
-
-    # EPS BEAT/MISS CHART — management execution track record
-    st.markdown('<br>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">EARNINGS EXECUTION — EPS BEAT/MISS TRACK RECORD</div>', unsafe_allow_html=True)
-    _earn_mgmt = d['earnings_history']
-    _earn_periods = [e['period'] for e in _earn_mgmt]
-    _earn_actual = [e['actual_eps'] for e in _earn_mgmt]
-    _earn_est = [e['est_eps'] for e in _earn_mgmt]
-    _earn_surprise = [a - e for a, e in zip(_earn_actual, _earn_est)]
-    _earn_colors = [COLORS['green'] if s >= 0 else COLORS['red'] for s in _earn_surprise]
-    _beats = sum(1 for s in _earn_surprise if s >= 0)
-    _total_q = len(_earn_surprise)
-
-    fig_eps_mgmt = go.Figure()
-    fig_eps_mgmt.add_trace(go.Bar(
-        x=_earn_periods, y=_earn_surprise,
-        marker_color=_earn_colors,
-        text=[f"{'+'if s>=0 else ''}{s:.2f}" for s in _earn_surprise],
-        textposition='outside', textfont=dict(color=COLORS['text'], size=10),
-        name='EPS Surprise ($)'
-    ))
-    fig_eps_mgmt.add_hline(y=0, line_color=COLORS['muted'], line_width=1)
-    apply_layout(fig_eps_mgmt, f"NEM BEATS EPS CONSENSUS {_beats} OF {_total_q} QUARTERS — MANAGEMENT DELIVERS", 300)
-    fig_eps_mgmt.update_layout(yaxis_title='EPS Surprise (Actual - Estimate, $)')
-    fig_eps_mgmt.add_annotation(
-        x=_earn_periods[-1], y=max(_earn_surprise),
-        text=f'<b>{_beats}/{_total_q} beats</b><br>Avg surprise: ${sum(_earn_surprise)/len(_earn_surprise):.2f}',
-        showarrow=True, arrowhead=2, font=dict(size=9, color=COLORS['green']),
-        arrowcolor=COLORS['green'], bgcolor='#0d1117',
-        bordercolor=COLORS['green'], borderwidth=1, ax=50, ay=-30)
-    st.plotly_chart(fig_eps_mgmt, use_container_width=True)
-
-    source_footer("NEM Proxy Statements, Earnings Calls, Annual Reports, Investor Presentations 2023-2025")
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 16 — ROIC / EVA
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[18]:
-    d = DATA
-    f = d['nem_annual_financials']
-
-    insight_callout("NEM earns returns well above its cost of capital — creating real economic value. This is rare in mining and signals quality capital allocation.")
-
-
-    st.markdown('<div class="panel-header">ROIC & ECONOMIC VALUE ADDED (EVA)</div>', unsafe_allow_html=True)
-
-    # Calculate ROIC for 2023-2025
-    roic_years = ['2023', '2024', '2025']
-    roic_data = []
-    for yr in roic_years:
-        fy = f[yr]
-        nopat_r = fy['ebit'] * (1 - BASE['effective_tax'])
-        invested_cap = fy['equity'] + fy['total_debt']  # simplified
-        roic_r = nopat_r / invested_cap if invested_cap > 0 else 0
-        roic_data.append({
-            'Year': yr,
-            'EBIT': fy['ebit'],
-            'Tax Rate': BASE['effective_tax'],
-            'NOPAT': nopat_r,
-            'Equity': fy['equity'],
-            'Total Debt': fy['total_debt'],
-            'Invested Capital': invested_cap,
-            'ROIC': roic_r,
-        })
-
-    roic_df = pd.DataFrame(roic_data)
-
-    # ROIC KPIs
-    latest_roic = roic_data[-1]['ROIC']
-    wacc_v = BASE['wacc']
-    spread_v = latest_roic - wacc_v
-    eva_v = spread_v * roic_data[-1]['Invested Capital']
-    spread_color = COLORS['green'] if spread_v > 0 else COLORS['red']
-
-    c1, c2, c3, c4 = st.columns(4)
-    with c1:
-        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">FY2025 ROIC</div>
-          <div class="kpi-value" style="color:{COLORS['green']};font-size:24px;">{latest_roic*100:.1f}%</div>
-          <div class="kpi-sub">NOPAT / Invested Capital</div></div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">WACC</div>
-          <div class="kpi-value" style="color:{COLORS['blue']};font-size:24px;">{wacc_v*100:.2f}%</div>
-          <div class="kpi-sub">Cost of Capital</div></div>""", unsafe_allow_html=True)
-    with c3:
-        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">ROIC - WACC SPREAD</div>
-          <div class="kpi-value" style="color:{spread_color};font-size:24px;">{spread_v*100:+.1f}%</div>
-          <div class="kpi-sub">{'Value Creation' if spread_v > 0 else 'Value Destruction'}</div></div>""", unsafe_allow_html=True)
-    with c4:
-        st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">EVA (FY2025)</div>
-          <div class="kpi-value" style="color:{spread_color};font-size:24px;">${eva_v:,.0f}M</div>
-          <div class="kpi-sub">Economic Profit</div></div>""", unsafe_allow_html=True)
-
-    st.markdown('<br>', unsafe_allow_html=True)
-
-    c1, c2 = st.columns(2)
-    with c1:
-        # ROIC vs WACC chart
-        st.markdown('<div class="panel-header">ROIC vs WACC — VALUE CREATION SPREAD</div>', unsafe_allow_html=True)
-        roic_vals = [rd['ROIC'] * 100 for rd in roic_data]
-        wacc_vals_ch = [wacc_v * 100] * len(roic_years)
-        fig_roic = go.Figure()
-        fig_roic.add_trace(go.Bar(x=roic_years, y=roic_vals, name='ROIC (%)',
-            marker_color=[COLORS['green'] if r > wacc_v * 100 else COLORS['red'] for r in roic_vals],
-            text=[f"{r:.1f}%" for r in roic_vals], textposition='outside',
-            textfont=dict(color=COLORS['text'], size=10)))
-        fig_roic.add_trace(go.Scatter(x=roic_years, y=wacc_vals_ch, name=f'WACC ({wacc_v*100:.2f}%)',
-            line=dict(color=COLORS['amber'], width=2, dash='dash'), marker=dict(size=7)))
-        apply_layout(fig_roic, "NEM CROSSES THE VALUE CREATION THRESHOLD — ROIC EXCEEDS WACC", 300)
-        # Label the ROIC-WACC spread on latest year
-        latest_spread = roic_vals[-1] - wacc_v * 100
-        fig_roic.add_annotation(x=roic_years[-1], y=roic_vals[-1],
-            text=f'<b>Spread: {latest_spread:+.1f}%</b>', showarrow=True, arrowhead=2,
-            font=dict(size=9, color=COLORS['green']), arrowcolor=COLORS['green'],
-            bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=45, ay=-30)
-        fig_roic.update_layout(yaxis_title='Return on Invested Capital (%)')
-        st.plotly_chart(fig_roic, use_container_width=True)
-
-    with c2:
-        # EVA trend
-        st.markdown('<div class="panel-header">EVA TREND — ECONOMIC PROFIT ($M)</div>', unsafe_allow_html=True)
-        eva_vals = [(rd['ROIC'] - wacc_v) * rd['Invested Capital'] for rd in roic_data]
-        eva_colors = [COLORS['green'] if e > 0 else COLORS['red'] for e in eva_vals]
-        fig_eva = go.Figure(go.Bar(x=roic_years, y=eva_vals, marker_color=eva_colors,
-            text=[f"${e:,.0f}M" for e in eva_vals], textposition='outside',
-            textfont=dict(color=COLORS['text'], size=10)))
-        fig_eva.add_hline(y=0, line_color=COLORS['border'], line_dash='dash')
-        apply_layout(fig_eva, "ECONOMIC VALUE ADDED TURNS POSITIVE — FIRST TIME IN 3 YEARS", 300)
-        fig_eva.update_layout(yaxis_title='Economic Value Added ($M)')
-        st.plotly_chart(fig_eva, use_container_width=True)
-
-    # ROIC detail table
-    st.markdown('<div class="panel-header">ROIC CALCULATION DETAIL</div>', unsafe_allow_html=True)
-    detail_rows = []
-    for rd in roic_data:
-        detail_rows.append({
-            'Year': rd['Year'],
-            'EBIT ($M)': f"${rd['EBIT']:,}",
-            'Tax Rate': f"{rd['Tax Rate']*100:.1f}%",
-            'NOPAT ($M)': f"${rd['NOPAT']:,.0f}",
-            'Invested Cap ($M)': f"${rd['Invested Capital']:,}",
-            'ROIC': f"{rd['ROIC']*100:.1f}%",
-            'ROIC-WACC': f"{(rd['ROIC']-wacc_v)*100:+.1f}%",
-        })
-    st.dataframe(pd.DataFrame(detail_rows), use_container_width=True, hide_index=True)
-
-    # Peer comparison
-    st.markdown('<div class="panel-header">ROIC PEER COMPARISON (FY2025)</div>', unsafe_allow_html=True)
-    peer_roic = [
-        ('NEM', latest_roic * 100, COLORS['green']),
-        ('AEM', 17.9, COLORS['blue']),   # Gurufocus: annualized Dec 2025 = 17.94%
-        ('KGC', 23.6, COLORS['blue']),   # Finbox: FY2025 = 23.6%, record year
-        ('GFI', 16.5, COLORS['blue']),   # GFI 2024 normalized profit $1.23B / ~$8B IC, 2025 higher on gold
-        ('WPM', 9.2, COLORS['blue']),    # Streaming model: lower capital intensity but lower ROIC
-    ]
-    sorted_pr = sorted(peer_roic, key=lambda x: x[1])
-    fig_peer_roic = go.Figure(go.Bar(
-        x=[r[1] for r in sorted_pr],
-        y=[r[0] for r in sorted_pr],
-        orientation='h',
-        marker_color=[r[2] for r in sorted_pr],
-        text=[f"{r[1]:.1f}%" for r in sorted_pr],
-        textposition='outside',
-        textfont=dict(color=COLORS['text'], size=10),
-    ))
-    fig_peer_roic.add_vline(x=wacc_v * 100, line_dash='dash', line_color=COLORS['amber'],
-                            annotation_text=f"WACC: {wacc_v*100:.2f}%", annotation_font_color=COLORS['amber'])
-    apply_layout(fig_peer_roic, "NEM ROIC RECOVERY POSITIONS IT AMONG SECTOR VALUE CREATORS", 280)
-    fig_peer_roic.update_layout(xaxis_title='Return on Invested Capital (%)')
-    st.plotly_chart(fig_peer_roic, use_container_width=True)
-
-    st.markdown(f"""
-    <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid {spread_color};padding:14px 20px;margin-top:8px;">
-      <span style="color:#8b949e;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;">KEY INSIGHT  </span>
-      <span style="color:#e6edf3;font-size:12px;">
-        NEM earns <b style="color:#3fb950;">{latest_roic*100:.1f}%</b> on invested capital vs a
-        <b style="color:#58a6ff;">{wacc_v*100:.2f}%</b> cost of capital — creating
-        <b style="color:{spread_color};">${eva_v:,.0f}M</b> in economic value annually.
-        This is rare in mining, where many companies destroy value through the cycle.
-      </span>
-    </div>""", unsafe_allow_html=True)
-    source_footer("NEM FY2023-2025 Financial Statements | Peer ROIC: Gurufocus (AEM Dec 2025), Finbox (KGC FY2025), Gold Fields FY2025 Annual Report, WPM FY2025 10-K")
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# TAB 19 — FORWARD QUARTERLY MODEL (20·QRTLY MODEL)
-# ═══════════════════════════════════════════════════════════════════════════════
-with tabs[19]:
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 14 — QUARTERLY MODEL
+# ═════════════════════════════════════════════════════════════════════════════
+with tabs[13]:
     d = DATA
     qm = d.get('forward_quarterly_model', {})
     quarters_data = qm.get('quarters', {})
