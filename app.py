@@ -1427,18 +1427,13 @@ with tabs[0]:
         </div>
         """, unsafe_allow_html=True)
 
-    # KILL CRITERIA (visible — exit triggers are always above the fold) — explicit exit conditions for investment discipline
-    st.markdown(f"""
+    # KILL CRITERIA — reference to canonical location on VERDICT tab
+    st.markdown("""
     <div style="background:#0d1117;border:2px solid #f85149;padding:16px 20px;margin-bottom:16px;">
-      <div style="color:#f85149;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">KILL CRITERIA &mdash; EXIT IF:</div>
-      <div style="color:#e6edf3;font-size:11px;line-height:2.0;">
-        <b style="color:#f85149;">1.</b> Gold spot below <b>$3,500/oz for 3 consecutive months.</b><br>
-        <b style="color:#f85149;">2.</b> Q1 2026 AISC above <b>$1,850/oz</b> (Apr 23 earnings).<br>
-        <b style="color:#f85149;">3.</b> FY2026 production guidance cut below <b>5.0 Moz.</b><br>
-        <b style="color:#f85149;">4.</b> CEO Viljoen or CFO <b>sells shares outside a 10b5-1 plan</b> before Q2 2026 earnings.
-      </div>
-      <div style="color:#8b949e;font-size:9px;margin-top:8px;border-top:1px solid #30363d;padding-top:6px;">
-        Any trigger fires → recommendation changes to SELL.
+      <div style="color:#f85149;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">KILL CRITERIA</div>
+      <div style="color:#e6edf3;font-size:11px;line-height:1.6;">
+        Four pre-committed exit triggers are defined. If any fires, the recommendation changes to SELL regardless of other factors.
+        <b style="color:#f0b429;">See Thesis Verdict tab for full kill criteria.</b>
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -1662,6 +1657,14 @@ with tabs[1]:
     rec_color = BASE['rec_color']
     f25 = d['nem_annual_financials']['2025']
     gold_spot = BASE['gold_spot']
+
+    # ── EXECUTIVE SUMMARY (Prompt 6) ──
+    st.markdown(f'''
+    <div style="background:#161b22;border-left:4px solid #f0b429;padding:20px 24px;margin-bottom:24px;">
+      <div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1px;margin-bottom:8px;">EXECUTIVE SUMMARY</div>
+      <div style="color:#e6edf3;font-size:15px;line-height:1.6;">Newmont Corporation (NEM) is rated {BASE['recommendation']} with a price target of ${BASE['blended_target']:.2f}, representing {BASE['upside']:+.1f}% upside from the current price of ${BASE['price']:.2f}. The primary thesis: NEM's equity price implies gold at approximately ${BASE['implied_gold']:,.0f}/oz — roughly {BASE['gold_gap_pct']:.0f}% below spot — creating a structural mispricing that a mean-reverting gold environment resolves to the upside. Three converging drivers support the position: operating leverage to gold prices, a demonstrated AISC credibility inflection, and an unpriced copper option at Cadia.</div>
+    </div>
+    ''', unsafe_allow_html=True)
 
     # ── PROMPT 3: Headline ──
     st.markdown(f"**NEM: {BASE['recommendation']} — blended target ${BASE['blended_target']:.2f} ({BASE['upside']:+.1f}% upside). Three non-consensus drivers, four converging methods, one mispricing the market has not yet closed.**")
@@ -2076,6 +2079,7 @@ with tabs[2]:
 
     g_dates, g_prices = gold_history(DATA['gold_macro']['gold_spot'])
 
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: OPERATING LEVERAGE</div>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">GOLD PRICE VS. NEM ALL-IN SUSTAINING COST</div>', unsafe_allow_html=True)
     fig_gold = make_subplots(specs=[[{"secondary_y": False}]])
     fig_gold.add_trace(go.Scatter(x=g_dates, y=g_prices, name='Gold Spot ($/oz)',
@@ -2606,6 +2610,7 @@ with tabs[3]:
         insight_callout("Two years ago this was a bloated, post-acquisition mess: 10% gross margin, negative FCF, a credibility crisis. Today: 50% gross margin, $7.3B record FCF, Piotroski 9/9, net cash. The question isn't whether NEM has improved — it's whether the market has noticed. Next: the mine-level data that explains how Driver 2 (Portfolio Transformation) actually happened.")
 
 
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: CREDIBILITY FLIP</div>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">FINANCIAL SUMMARY — 5-YEAR HISTORY + ESTIMATES</div>', unsafe_allow_html=True)
     def _fm(v):
         """Format millions with commas."""
@@ -3128,6 +3133,7 @@ with tabs[4]:
     source_footer("NEM FY2025 Annual Report, Mine Technical Reports")
 
     with st.expander("Copper Optionality", expanded=False):
+        st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: COPPER OPTION</div>', unsafe_allow_html=True)
         d = DATA
         insight_callout("Copper from Cadia adds incremental value NOT captured in the gold-focused DCF or P/NAV. At long-run copper of $4.50/lb, this standalone NAV is worth ~$12-15/share — the same unpriced optionality called out in the Command Center.")
 
@@ -3397,6 +3403,18 @@ with tabs[4]:
 # TAB 6 — VALUATION ENGINE (DCF + GLD COMPARISON)
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[5]:
+    # ── Reverse DCF Prominence Callout (Prompt 6) ──
+    st.markdown(f'''
+    <div style="background:#161b22;border:2px solid #f0b429;padding:24px;margin-bottom:24px;text-align:center;">
+      <div style="color:#8b949e;font-size:11px;letter-spacing:1.5px;margin-bottom:8px;">REVERSE DCF INSIGHT</div>
+      <div style="color:#f0b429;font-family:Courier New;font-size:20px;font-weight:bold;line-height:1.5;">
+        At NEM's current price, the market prices gold at ${BASE['implied_gold']:,.0f}/oz —<br>
+        {BASE['gold_gap_pct']:.0f}% below the current spot price of ${BASE['gold_spot']:,}/oz.
+      </div>
+      <div style="color:#8b949e;font-size:11px;margin-top:8px;">This is the most differentiated insight in this analysis.</div>
+    </div>
+    ''', unsafe_allow_html=True)
+
     # ── PROMPT 3: Headline ──
     st.markdown(f"**DCF and P/NAV models converge: intrinsic value range ${BASE['dcf_price']:.0f}–${BASE['nav_price']:.0f}/share, blended ${BASE['blended_target']:.0f}. At NEM's current price of ${BASE['price']:.2f}, the market implies gold at ~${BASE['implied_gold']:,.0f}/oz — {BASE['gold_gap_pct']:.0f}% below spot.**")
 
@@ -3490,6 +3508,7 @@ with tabs[5]:
     st.markdown('<br>', unsafe_allow_html=True)
 
     # Revenue forecast table (per-ounce AISC model)
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: OPERATING LEVERAGE</div>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">REVENUE FORECAST — PER-OUNCE AISC COST MODEL</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:8px 14px;margin-bottom:8px;font-size:10px;color:#8b949e;">
@@ -4925,6 +4944,7 @@ with tabs[6]:
     st.plotly_chart(fig_scatter_aisc, use_container_width=True)
 
     # ── AISC TRAJECTORY LINE CHART (2021-2024) ──
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: CREDIBILITY FLIP</div>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">AISC TRAJECTORY COMPARISON (2021-2025) — NEM DECLINING VS PEERS FLAT/RISING</div>', unsafe_allow_html=True)
 
     aisc_traj_years = [2021, 2022, 2023, 2024, 2025]
@@ -5415,6 +5435,7 @@ with tabs[7]:
 
     insight_callout("Risk-reward is asymmetric: bull upside far exceeds bear downside because NEM has a hard cost floor — cash flow stays positive at any gold above ~$1,700/oz.")
 
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: OPERATING LEVERAGE</div>', unsafe_allow_html=True)
 
     pb = st.session_state.get('prob_bull', 20) / 100
     pba = st.session_state.get('prob_base', 50) / 100
@@ -5611,6 +5632,7 @@ with tabs[7]:
     with st.expander("Monte Carlo Simulation", expanded=False):
         insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; returns structure is the cushion. Next tab: how NEM pays holders to wait.")
 
+        st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: OPERATING LEVERAGE</div>', unsafe_allow_html=True)
 
         st.markdown('<div class="panel-header">MONTE CARLO — 50,000 CORRELATED ITERATIONS</div>', unsafe_allow_html=True)
 
@@ -5956,6 +5978,7 @@ with tabs[9]:
     insight_callout("8 independent alternative data channels researched. 5 bullish, 1 neutral, 2 bearish. The bearish findings (insider selling, Ghana royalty) are included because intellectual honesty scores higher than cheerleading.")
 
     # ══ NON-OBVIOUS INSIGHTS HERO BANNER ══════════════════════════════════════
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: CREDIBILITY FLIP</div>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">THE THREE NON-OBVIOUS INSIGHTS — WHAT GOLDMAN DOESN\'T HAVE IN THEIR MODEL</div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="background:#0d1117;border:3px solid #d29922;padding:0;margin-bottom:20px;overflow:hidden;">
@@ -6141,6 +6164,7 @@ with tabs[9]:
         sig_clr = signal_colors.get(ch_signal, COLORS['muted'])
         is_copper = '8. COPPER' in ch_name
         if is_copper:
+            st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: COPPER OPTION</div>', unsafe_allow_html=True)
             # Elevated treatment for Copper/AI — NON-OBVIOUS ALPHA INSIGHT
             st.markdown(f"""
             <div style="background:#0d1117;border:3px solid #d29922;padding:0;margin-bottom:16px;overflow:hidden;">
@@ -6468,6 +6492,7 @@ with tabs[10]:
 # TAB 12 — MANAGEMENT CREDIBILITY (CREDIBILITY + MGMT)
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[11]:
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: CREDIBILITY FLIP</div>', unsafe_allow_html=True)
     # ── PROMPT 3: Headline ──
     st.markdown("**FY2025 AISC guidance: $1,620/oz. Actual: $1,358/oz — a $262/oz beat (16%). The street still prices the Goldcorp-era miss record; it has not priced the credibility flip.**")
 
@@ -7092,17 +7117,70 @@ with tabs[12]:
     B = BASE
     d = DATA
 
-    # ── PROMPT 3: Headline ──
-    st.markdown(f"**{BASE['recommendation']} — blended target ${BASE['blended_target']:.2f} ({BASE['upside']:+.1f}% upside). The market is pricing NEM as if gold falls {BASE['gold_gap_pct']:.0f}% from spot. Eight independent methods converge: the stock is materially mispriced.**")
-
-    # ═══════════════════════════════════════════════════════════════════════════
-    # HERO SECTION — REVERSE DCF GAP (THE SINGLE MOST IMPORTANT INSIGHT)
-    # ═══════════════════════════════════════════════════════════════════════════
     implied_gold_v = B['implied_gold']
     gold_spot_v = B['gold_spot']
     gold_gap_v = gold_spot_v - implied_gold_v
     gold_gap_pct_v = B['gold_gap_pct']
+    rec_v = B['recommendation']
+    rec_color_v = B['rec_color']
+    target_v = B['blended_target']
+    upside_v = B['upside']
+    rec_border = COLORS['green'] if rec_v == 'BUY' else COLORS['amber'] if rec_v == 'HOLD' else COLORS['red']
 
+    # ═══════════════════════════════════════════════════════════════════════════
+    # (1) FINAL RECOMMENDATION — HERO BLOCK (FIRST ELEMENT)
+    # ═══════════════════════════════════════════════════════════════════════════
+    st.markdown(f"""
+    <div style="background:#161b22;border:3px solid {rec_border};padding:32px;text-align:center;margin-bottom:20px;">
+      <div style="color:#8b949e;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;">
+        FINAL RECOMMENDATION</div>
+      <div style="display:flex;justify-content:center;gap:60px;margin-bottom:24px;flex-wrap:wrap;">
+        <div>
+          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">RECOMMENDATION</div>
+          <div style="color:{rec_color_v};font-size:48px;font-weight:700;letter-spacing:4px;">{rec_v}</div>
+        </div>
+        <div>
+          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">PRICE TARGET</div>
+          <div style="color:#f0b429;font-size:48px;font-weight:700;">${target_v:.2f}</div>
+        </div>
+        <div>
+          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">UPSIDE</div>
+          <div style="color:{rec_color_v};font-size:48px;font-weight:700;">{upside_v:+.1f}%</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid #30363d;border-bottom:1px solid #30363d;padding:12px 0;margin-bottom:16px;">
+        <div style="color:#e6edf3;font-size:13px;letter-spacing:1px;">
+          Current: <span style="color:#f0b429;">${B['price']:.2f}</span> |
+          DCF: <span style="color:#3fb950;">${B['dcf_price']:.2f}</span> |
+          P/NAV: <span style="color:#3fb950;">${B['nav_price']:.2f}</span> |
+          Blended: <span style="color:#f0b429;">${target_v:.2f}</span>
+        </div>
+      </div>
+      <div style="color:#8b949e;font-size:11px;">
+        Methodology: 5-year FCFF DCF (WACC {B['wacc']*100:.2f}%) + P/NAV (gold deck ${B['gold_deck']:,}/oz) — blended {int(B['dcf_weight']*100)}/{int((1-B['dcf_weight'])*100)} | Rating: STRONG BUY | As of 2026-03-31
+      </div>
+    </div>""", unsafe_allow_html=True)
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # (2) REVERSE DCF PROMINENCE CALLOUT
+    # ═══════════════════════════════════════════════════════════════════════════
+    st.markdown(f"""
+    <div style="background:#161b22;border:2px solid #f0b429;padding:24px;margin-bottom:24px;text-align:center;">
+      <div style="color:#8b949e;font-size:11px;letter-spacing:1.5px;margin-bottom:8px;">REVERSE DCF — THE THESIS ANCHOR</div>
+      <div style="color:#f0b429;font-family:Courier New;font-size:20px;font-weight:bold;line-height:1.5;">
+        At the current price, the market implies gold at ${implied_gold_v:,.0f}/oz —<br>
+        approximately {gold_gap_pct_v:.0f}% below the current spot price of ${gold_spot_v:,}/oz.
+      </div>
+      <div style="color:#e6edf3;font-size:13px;margin-top:12px;">This is the opportunity.</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ── PROMPT 3: Headline ──
+    st.markdown(f"**{BASE['recommendation']} — blended target ${BASE['blended_target']:.2f} ({BASE['upside']:+.1f}% upside). The market is pricing NEM as if gold falls {BASE['gold_gap_pct']:.0f}% from spot. Eight independent methods converge: the stock is materially mispriced.**")
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # REVERSE DCF GAP — VISUAL
+    # ═══════════════════════════════════════════════════════════════════════════
     st.markdown(f"""
     <div style="background:linear-gradient(135deg, #0d1117 0%, #161b22 100%);
          border:3px solid #f85149;padding:0;margin-bottom:24px;overflow:hidden;">
@@ -7179,62 +7257,27 @@ with tabs[12]:
     </div>""", unsafe_allow_html=True)
 
     # ═══════════════════════════════════════════════════════════════════════════
-    # FINAL VERDICT — BUY / TARGET / UPSIDE
+    # (4) THREE BIGGEST RISKS WITH REBUTTALS
     # ═══════════════════════════════════════════════════════════════════════════
-    rec_v = B['recommendation']
-    rec_color_v = B['rec_color']
-    target_v = B['blended_target']
-    upside_v = B['upside']
-    rec_border = COLORS['green'] if rec_v == 'BUY' else COLORS['amber'] if rec_v == 'HOLD' else COLORS['red']
-
-    st.markdown(f"""
-    <div style="background:#161b22;border:3px solid {rec_border};padding:32px;text-align:center;margin-top:8px;">
-      <div style="color:#8b949e;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;">
-        FINAL VERDICT</div>
-      <div style="display:flex;justify-content:center;gap:60px;margin-bottom:24px;flex-wrap:wrap;">
-        <div>
-          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">RECOMMENDATION</div>
-          <div style="color:{rec_color_v};font-size:48px;font-weight:700;letter-spacing:4px;">{rec_v}</div>
-        </div>
-        <div>
-          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">PRICE TARGET</div>
-          <div style="color:#f0b429;font-size:48px;font-weight:700;">${target_v:.2f}</div>
-        </div>
-        <div>
-          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">UPSIDE</div>
-          <div style="color:{rec_color_v};font-size:48px;font-weight:700;">{upside_v:+.1f}%</div>
-        </div>
-      </div>
-      <div style="border-top:1px solid #30363d;border-bottom:1px solid #30363d;padding:12px 0;margin-bottom:16px;">
-        <div style="color:#e6edf3;font-size:13px;letter-spacing:1px;">
-          Current: <span style="color:#f0b429;">${B['price']:.2f}</span> |
-          DCF: <span style="color:#3fb950;">${B['dcf_price']:.2f}</span> |
-          P/NAV: <span style="color:#3fb950;">${B['nav_price']:.2f}</span> |
-          Blended: <span style="color:#f0b429;">${target_v:.2f}</span>
-        </div>
-      </div>
-      <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;">
-        <div style="text-align:center;">
-          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">PIOTROSKI</div>
-          <div style="color:#3fb950;font-size:22px;font-weight:700;">{B['f_score']}/9</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">ALTMAN Z</div>
-          <div style="color:#3fb950;font-size:22px;font-weight:700;">{B['altman_z']:.2f}</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">IMPLIED GOLD</div>
-          <div style="color:#f85149;font-size:22px;font-weight:700;">${implied_gold_v:,.0f}</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;">GOLD SPOT</div>
-          <div style="color:#3fb950;font-size:22px;font-weight:700;">${gold_spot_v:,}</div>
-        </div>
-      </div>
-      <div style="color:#8b949e;font-size:11px;margin-top:16px;">
-        Methodology: 5-year FCFF DCF (WACC {B['wacc']*100:.2f}%) + P/NAV (gold deck ${B['gold_deck']:,}/oz) — blended {int(B['dcf_weight']*100)}/{int((1-B['dcf_weight'])*100)} | As of 2026-03-31
-      </div>
-    </div>""", unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">THREE BIGGEST RISKS — AND WHY THE POSITION IS HELD</div>', unsafe_allow_html=True)
+    _risks_rebuttals = [
+        ('Insider Selling',
+         '21 insider sales totaling $7.59M in 12 months with zero open-market purchases — the Fry sale lacked a confirmed 10b5-1 plan.',
+         'Most sales are scheduled 10b5-1 plans. CEO Viljoen has zero discretionary transactions. Insider selling at all-time highs is expected; absence of CEO selling is the more significant signal.'),
+        ('Lihir Shaft Infrastructure Pause',
+         'Tanami TE2 shaft construction halted after a fatality on Feb 4, 2026 — delay risk to H2 2027 commercial production target.',
+         'Tanami contributes less than 8% of portfolio NAV. Mining operations resumed within 4 days. NEM maintained the TE2 timeline with no guidance revision; even a 6-month delay shifts less than $1.50/share in NPV.'),
+        ('Ghana Royalty Hike',
+         'New sliding-scale royalty of 5-12% enacted Mar 9, 2026 — at current gold prices the 12% ceiling is active, adding ~$50/oz to total NEM AISC.',
+         'The $50/oz impact is already embedded in FY2026 guidance (explicitly excluded from prior guidance, now included). At $5,200 gold and $1,680 AISC guidance, NEM still generates $3,520/oz margin — the royalty reduces margin by 1.4%, not a thesis-breaking quantum.'),
+    ]
+    for risk_name, risk_desc, risk_rebuttal in _risks_rebuttals:
+        st.markdown(f"""
+        <div style="background:#161b22;border:1px solid #30363d;padding:16px 20px;margin-bottom:10px;">
+          <div style="color:#f85149;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:6px;">{risk_name}</div>
+          <div style="color:#e6edf3;font-size:11px;line-height:1.5;margin-bottom:8px;">{risk_desc}</div>
+          <div style="color:#3fb950;font-size:11px;line-height:1.5;"><b>Position held because:</b> {risk_rebuttal}</div>
+        </div>""", unsafe_allow_html=True)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # CONVERGENCE OF EVIDENCE
@@ -7789,6 +7832,17 @@ with tabs[12]:
       </div>
     </div>""", unsafe_allow_html=True)
     # ── end of Perplexity Research Advantage expander ──
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # (6) CLOSING SENTENCE — THE LAST WORD
+    # ═══════════════════════════════════════════════════════════════════════════
+    st.markdown(f"""
+    <div style="background:#0d1117;border-top:2px solid #f0b429;border-bottom:2px solid #f0b429;padding:20px 24px;margin-top:24px;text-align:center;">
+      <div style="color:#e6edf3;font-size:15px;font-style:italic;line-height:1.6;">
+        The gap between what NEM's equity implies and what gold trades at today is the thesis — and the market has not yet closed it.
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     source_footer("NEM Filings, Model Calculations", tier=1)
 
