@@ -1940,7 +1940,8 @@ with tabs[1]:
                               font=dict(color=COLORS['green'], size=11),
                               xanchor='right', yanchor='bottom')
         apply_layout(fig_s, "RECORD $7.3B FCF — 3× 2023 LEVELS", 200)
-        fig_s.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20))
+        fig_s.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20),
+                            yaxis_title='FCF ($M)', xaxis_title='Year')
         st.plotly_chart(fig_s, use_container_width=True)
     with c2:
         fig_s2 = go.Figure()
@@ -1951,7 +1952,8 @@ with tabs[1]:
                               font=dict(color=COLORS['blue'], size=11),
                               xanchor='right', yanchor='bottom')
         apply_layout(fig_s2, "REVENUE NEARLY DOUBLED IN 2 YEARS", 200)
-        fig_s2.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20))
+        fig_s2.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20),
+                             yaxis_title='Revenue ($M)', xaxis_title='Year')
         st.plotly_chart(fig_s2, use_container_width=True)
     with c3:
         aisc_yrs_h = ['2022', '2023', '2024', '2025']
@@ -1967,7 +1969,8 @@ with tabs[1]:
                               font=dict(color=COLORS['amber'], size=11),
                               xanchor='right', yanchor='top')
         apply_layout(fig_s3, "AISC $1,358 &mdash; BELOW GLOBAL AVG", 200)
-        fig_s3.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20))
+        fig_s3.update_layout(showlegend=False, margin=dict(l=40, r=10, t=40, b=20),
+                             yaxis_title='AISC ($/oz)', xaxis_title='Year')
         st.plotly_chart(fig_s3, use_container_width=True)
     # --- CRITERION 1: WHAT HAS TO BE TRUE falsifiable scorecard ---
     st.markdown('<br>', unsafe_allow_html=True)
@@ -3419,7 +3422,7 @@ with tabs[5]:
         (col_s1, 'GROSS PORTFOLIO NAV', f'${total_gross_nav:,.0f}M', COLORS['blue']),
         (col_s2, 'CORP OVERHEAD DEDUCT', f'(${capitalized_overhead_sotp:,.0f}M)', COLORS['red']),
         (col_s3, 'SOTP NAV/SHARE', f'${sotp_nav_per_share:.2f}', COLORS['blue']),
-        (col_s4, f'SOTP @ {BASE["p_nav_multiple"]:.2f}x P/NAV', f'${sotp_nav_price:.2f}', COLORS['green']),
+        (col_s4, f'SOTP @ {BASE["p_nav_multiple"]:.2f}× P/NAV', f'${sotp_nav_price:.2f}', COLORS['green']),
     ]:
         with col_s:
             st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">{lbl_s}</div>
@@ -3845,7 +3848,7 @@ with tabs[5]:
          f"${net_debt_a/1000:.1f}B",
          f"${annual_interest_a:.0f}M/yr @ 5.5%",
          f"${nav_delta_after_financing_a:.1f}/sh (vs. +$16 gross)",
-         f"ND/EBITDA: {net_debt_a/(nem_fcf_annual_m+annual_interest_a):.1f}x — stretches investment-grade",
+         f"ND/EBITDA: {net_debt_a/(nem_fcf_annual_m+annual_interest_a):.1f}× — stretches investment-grade",
          COLORS['red']),
         (col_pfb, 'SCENARIO B\n50% DEBT / 50% EQUITY',
          f"${new_debt_b/1000:.1f}B debt + ${new_equity_b/1000:.1f}B equity raise",
@@ -3954,7 +3957,7 @@ with tabs[6]:
     implied_price_rv = B['price'] * (median_ev / nem_ev) if nem_ev else B['price']
     rv_upside = ((implied_price_rv / B['price']) - 1) * 100
 
-    insight_callout(f"NEM trades at {nem_ev:.1f}x EV/EBITDA — a {abs(ev_discount_pct):.0f}% {'discount' if ev_discount_pct < 0 else 'premium'} to the peer median of {median_ev:.1f}x. If NEM re-rated to the peer median, the implied share price is ${implied_price_rv:.2f} — {rv_upside:+.0f}% from today.")
+    insight_callout(f"NEM trades at {nem_ev:.1f}× EV/EBITDA — a {abs(ev_discount_pct):.0f}% {'discount' if ev_discount_pct < 0 else 'premium'} to the peer median of {median_ev:.1f}×. If NEM re-rated to the peer median, the implied share price is ${implied_price_rv:.2f} — {rv_upside:+.0f}% from today.")
 
     # ══ NON-OBVIOUS COMPETITIVE INSIGHT NAVIGATOR ══════════════════════════════════
     st.markdown(f"""
@@ -4004,8 +4007,8 @@ with tabs[6]:
         q = peer_q.get(t, {})
         r = peer_r.get(t, {})
         mcap_str = f"${q.get('market_cap', 0)/1e9:.1f}B" if q.get('market_cap') else '—'
-        pe_str = f"{q.get('pe', 0):.1f}x" if q.get('pe') else '—'
-        ev_str = f"{r.get('ev_ebitda', 0):.1f}x" if r.get('ev_ebitda') else '—'
+        pe_str = f"{q.get('pe', 0):.1f}×" if q.get('pe') else '—'
+        ev_str = f"{r.get('ev_ebitda', 0):.1f}×" if r.get('ev_ebitda') else '—'
         dy_str = f"{q.get('div_yield', 0)*100:.1f}%" if q.get('div_yield') is not None else '—'
         is_nem = t == 'NEM'
         is_barrick = t == 'GOLD'
@@ -4032,8 +4035,8 @@ with tabs[6]:
           <span style="color:{COLORS['amber']};font-size:10px;width:60px;font-weight:700;">MEDIAN</span>
           <span style="color:#8b949e;font-size:10px;width:80px;">—</span>
           <span style="color:#8b949e;font-size:10px;width:100px;">— (producers)</span>
-          <span style="color:{COLORS['amber']};font-size:10px;width:80px;font-weight:600;">{np.median(all_pe_rv):.1f}x</span>
-          <span style="color:{COLORS['amber']};font-size:10px;width:90px;font-weight:600;">{np.median(all_ev_rv):.1f}x</span>
+          <span style="color:{COLORS['amber']};font-size:10px;width:80px;font-weight:600;">{np.median(all_pe_rv):.1f}×</span>
+          <span style="color:{COLORS['amber']};font-size:10px;width:90px;font-weight:600;">{np.median(all_ev_rv):.1f}×</span>
           <span style="color:{COLORS['amber']};font-size:10px;width:80px;font-weight:600;">{np.median(all_dy_rv)*100:.1f}%</span>
         </div>
     </div>""", unsafe_allow_html=True)
@@ -4044,9 +4047,9 @@ with tabs[6]:
     <div style="background:#0d1117;border:1px solid #30363d;border-left:2px solid #8b949e;padding:8px 16px;margin-top:4px;margin-bottom:8px;font-size:9px;color:#8b949e;">
       <span style="color:#8b949e;font-weight:700;">STREAMING BUCKET (EXCLUDED FROM PRODUCER MEDIAN) — WPM: </span>
       Price ${wpm_q.get('price', 0):.2f} | MktCap ${wpm_q.get('market_cap', 0)/1e9:.1f}B | 
-      P/E {wpm_q.get('pe', 0):.1f}x | EV/EBITDA {wpm_r.get('ev_ebitda', 0):.1f}x | Div {wpm_q.get('div_yield', 0)*100:.1f}%
+      P/E {wpm_q.get('pe', 0):.1f}× | EV/EBITDA {wpm_r.get('ev_ebitda', 0):.1f}× | Div {wpm_q.get('div_yield', 0)*100:.1f}%
       <br><span style="color:#636e7b;">WPM is a streaming company: royalty revenue, no operating costs, no CapEx exposure — 
-      27.7x EV/EBITDA is structurally non-comparable to gold producers. Including it inflates the peer median.</span>
+      27.7× EV/EBITDA is structurally non-comparable to gold producers. Including it inflates the peer median.</span>
     </div>""", unsafe_allow_html=True)
 
     # ── EV/EBITDA Bar Chart ──
@@ -4057,11 +4060,11 @@ with tabs[6]:
     fig_ev = go.Figure(go.Bar(
         y=ev_chart_tickers, x=ev_chart_vals, orientation='h',
         marker_color=ev_bar_colors,
-        text=[f"{v:.1f}x" for v in ev_chart_vals], textposition='outside',
+        text=[f"{v:.1f}×" for v in ev_chart_vals], textposition='outside',
         textfont=dict(color=COLORS['text'], size=10)
     ))
     fig_ev.add_vline(x=median_ev, line_color=COLORS['amber'], line_dash='dash', line_width=2,
-        annotation_text=f"Peer Median: {median_ev:.1f}x", annotation_position="top",
+        annotation_text=f"Peer Median: {median_ev:.1f}×", annotation_position="top",
         annotation_font=dict(size=9, color=COLORS['amber']))
     fig_ev.add_annotation(x=nem_ev, y='NEM',
         text=f"<b>{ev_discount_pct:+.0f}%</b> vs median", showarrow=True, arrowhead=2,
@@ -4079,11 +4082,11 @@ with tabs[6]:
     fig_pe = go.Figure(go.Bar(
         y=pe_chart_tickers, x=pe_chart_vals, orientation='h',
         marker_color=pe_bar_colors,
-        text=[f"{v:.1f}x" for v in pe_chart_vals], textposition='outside',
+        text=[f"{v:.1f}×" for v in pe_chart_vals], textposition='outside',
         textfont=dict(color=COLORS['text'], size=10)
     ))
     fig_pe.add_vline(x=median_pe, line_color=COLORS['amber'], line_dash='dash', line_width=2,
-        annotation_text=f"Peer Median: {median_pe:.1f}x", annotation_position="top",
+        annotation_text=f"Peer Median: {median_pe:.1f}×", annotation_position="top",
         annotation_font=dict(size=9, color=COLORS['amber']))
     fig_pe.add_annotation(x=nem_pe, y='NEM',
         text=f"<b>{pe_discount_pct:+.0f}%</b> vs median", showarrow=True, arrowhead=2,
@@ -4136,10 +4139,10 @@ with tabs[6]:
         <div style="display:grid;grid-template-columns:55px 1fr 70px 60px 60px 60px 65px 60px 70px 65px;padding:7px 12px;border-bottom:1px solid #30363d;background:{bg_c};{border_c}align-items:center;min-width:680px;">
           <span style="color:{name_color};font-size:10px;font-weight:{'700' if is_nem_c else '400'};">{ticker_c}</span>
           <span style="color:#8b949e;font-size:9px;">{cd['name']}</span>
-          <span style="color:#e6edf3;font-size:10px;">{cd['ev_ebitda']:.1f}x</span>
-          <span style="color:#e6edf3;font-size:10px;">{cd['pe']:.1f}x</span>
-          <span style="color:#e6edf3;font-size:10px;">{cd['p_cf']:.1f}x</span>
-          <span style="color:#e6edf3;font-size:10px;">{cd['p_book']:.1f}x</span>
+          <span style="color:#e6edf3;font-size:10px;">{cd['ev_ebitda']:.1f}×</span>
+          <span style="color:#e6edf3;font-size:10px;">{cd['pe']:.1f}×</span>
+          <span style="color:#e6edf3;font-size:10px;">{cd['p_cf']:.1f}×</span>
+          <span style="color:#e6edf3;font-size:10px;">{cd['p_book']:.1f}×</span>
           <span style="color:{'#3fb950' if cd['fcf_yield'] > 5 else '#e6edf3'};font-size:10px;font-weight:{'600' if cd['fcf_yield'] > 5 else '400'};">{cd['fcf_yield']:.1f}%</span>
           <span style="color:#e6edf3;font-size:10px;">{cd['div_yield']:.1f}%</span>
           <span style="color:{'#3fb950' if 0 < cd['aisc'] < 1400 else ('#e6edf3' if cd['aisc'] > 0 else '#8b949e')};font-size:10px;">{aisc_str}</span>
@@ -4160,10 +4163,10 @@ with tabs[6]:
       <div style="display:grid;grid-template-columns:55px 1fr 70px 60px 60px 60px 65px 60px 70px 65px;padding:8px 12px;border-top:2px solid #30363d;background:#161b22;min-width:680px;">
         <span style="color:{COLORS['amber']};font-size:10px;font-weight:700;">MED</span>
         <span style="color:{COLORS['amber']};font-size:9px;font-weight:600;">Producer Median</span>
-        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_eveb:.1f}x</span>
-        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_pe_c:.1f}x</span>
-        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_pcf:.1f}x</span>
-        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_pb:.1f}x</span>
+        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_eveb:.1f}×</span>
+        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_pe_c:.1f}×</span>
+        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_pcf:.1f}×</span>
+        <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_pb:.1f}×</span>
         <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_fcfy:.1f}%</span>
         <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">{med_divy:.1f}%</span>
         <span style="color:{COLORS['amber']};font-size:10px;font-weight:600;">${med_aisc:,.0f}</span>
@@ -4209,7 +4212,7 @@ with tabs[6]:
         annotation_text=f"Med AISC: ${med_aisc:,.0f}", annotation_position="top",
         annotation_font=dict(size=8, color=COLORS['amber']))
     fig_scatter_aisc.add_hline(y=med_eveb, line_dash='dash', line_color=COLORS['amber'], line_width=1,
-        annotation_text=f"Med EV/EBITDA: {med_eveb:.1f}x", annotation_position="right",
+        annotation_text=f"Med EV/EBITDA: {med_eveb:.1f}×", annotation_position="right",
         annotation_font=dict(size=8, color=COLORS['amber']))
     apply_layout(fig_scatter_aisc, "NEM: LOW AISC + LOW MULTIPLE = BEST RISK/REWARD IN GOLD SECTOR", 400)
     fig_scatter_aisc.update_layout(
@@ -4292,13 +4295,13 @@ with tabs[6]:
         ('GOLD', 'Barrick Gold', COLORS['amber'], 'Copper-Focused Pivot, Tier 1 Assets, No Dividend Growth',
          'Pivoting toward copper (Reko Diq, Lumwana). Tier 1 asset portfolio but hampered by geopolitical risk (Loulo-Gounkoto suspended Jan 2025 by Mali govt). Rising AISC ($1,637/oz, +60% since 2021). No dividend growth priority — returns are secondary to portfolio building.'),
         ('AEM', 'Agnico Eagle', COLORS['green'], 'Canada-Focused, Lowest Geopolitical Risk, Premium Multiple',
-         'Industry gold standard for operational delivery (+0.1% avg miss). Lowest AISC ($1,200/oz). Almost exclusively OECD jurisdictions (Canada, Australia, Finland, Mexico). Commands premium valuation (10x+ EV/EBITDA) for quality and credibility. Smaller reserve base (55 Moz) limits long-term growth.'),
+         'Industry gold standard for operational delivery (+0.1% avg miss). Lowest AISC ($1,200/oz). Almost exclusively OECD jurisdictions (Canada, Australia, Finland, Mexico). Commands premium valuation (10×+ EV/EBITDA) for quality and credibility. Smaller reserve base (55 Moz) limits long-term growth.'),
         ('KGC', 'Kinross Gold', '#8b949e', 'Americas + Africa, Higher Risk, Lower Multiple',
          'Concentrated in Americas (Paracatu, Fort Knox, Tasiast). Improving balance sheet but still carries geopolitical risk from Tasiast (Mauritania). Lower multiple reflects execution uncertainty. Moderate AISC ($1,350/oz) with limited cost reduction catalysts.'),
         ('GFI', 'Gold Fields', '#6e7681', 'South Africa + Australia, Growing Dividends',
          'Dual-listed (JSE/NYSE). South Deep turnaround has been multi-year effort. Growing dividends (2.5%+ yield). Australian assets provide stability but AISC rising ($1,645/oz). Salares Norte (Chile) is key growth project with ramp-up risk.'),
         ('WPM', 'Wheaton PM', '#bc8cff', 'Royalty/Streaming Model, Zero AISC Exposure, Premium Valuation',
-         'Streaming company — not a miner. No operating costs, no CapEx exposure, no AISC risk. 27.7x EV/EBITDA reflects business model premium (pure margin, optionality on exploration success). Included for contrast — structurally non-comparable to producers.'),
+         'Streaming company — not a miner. No operating costs, no CapEx exposure, no AISC risk. 27.7× EV/EBITDA reflects business model premium (pure margin, optionality on exploration success). Included for contrast — structurally non-comparable to producers.'),
     ]
     for s_tick, s_name, s_color, s_strategy, s_detail in strategies:
         st.markdown(f"""
@@ -4316,11 +4319,11 @@ with tabs[6]:
     c1_rv, c2_rv, c3_rv = st.columns(3)
     with c1_rv:
         st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">NEM EV/EBITDA</div>
-          <div class="kpi-value" style="color:{COLORS['blue']};font-size:22px;">{nem_ev:.1f}x</div>
+          <div class="kpi-value" style="color:{COLORS['blue']};font-size:22px;">{nem_ev:.1f}×</div>
           <div class="kpi-sub">Current multiple</div></div>""", unsafe_allow_html=True)
     with c2_rv:
         st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">PEER MEDIAN</div>
-          <div class="kpi-value" style="color:{COLORS['amber']};font-size:22px;">{median_ev:.1f}x</div>
+          <div class="kpi-value" style="color:{COLORS['amber']};font-size:22px;">{median_ev:.1f}×</div>
           <div class="kpi-sub">{abs(ev_discount_pct):.0f}% {'discount' if ev_discount_pct < 0 else 'premium'}</div></div>""", unsafe_allow_html=True)
     with c3_rv:
         st.markdown(f"""<div class="kpi-tile"><div class="kpi-label">IMPLIED PRICE</div>
@@ -4331,7 +4334,7 @@ with tabs[6]:
     <div style="background:#0d1117;border:2px solid {COLORS['green']};padding:18px;margin-top:12px;">
       <div style="color:{COLORS['green']};font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">RE-RATING MATH</div>
       <div style="color:#e6edf3;font-size:12px;line-height:1.7;">
-        If NEM re-rated from <b>{nem_ev:.1f}x</b> to the peer median of <b>{median_ev:.1f}x</b> EV/EBITDA,
+        If NEM re-rated from <b>{nem_ev:.1f}×</b> to the peer median of <b>{median_ev:.1f}×</b> EV/EBITDA,
         the implied share price = <b style="color:{COLORS['green']};">${implied_price_rv:.2f}</b>
         (current ${B['price']:.2f} &times; {median_ev:.1f} / {nem_ev:.1f}).<br>
         That represents <b style="color:{COLORS['green']};">{rv_upside:+.0f}% upside</b> from the current price —
@@ -4356,8 +4359,8 @@ with tabs[6]:
         fwd_rows.append({
             'Ticker': t,
             'FY2026E EBITDA ($M)': f"${fd.get('FY2026E_ebitda', 0):,}" if fd.get('FY2026E_ebitda') else '—',
-            'FY2026E EV/EBITDA': f"{fd.get('FY2026E_ev_ebitda', 0):.1f}x" if fd.get('FY2026E_ev_ebitda') else '—',
-            'FY2027E EV/EBITDA': f"{fd.get('FY2027E_ev_ebitda', 0):.1f}x" if fd.get('FY2027E_ev_ebitda') else '—',
+            'FY2026E EV/EBITDA': f"{fd.get('FY2026E_ev_ebitda', 0):.1f}×" if fd.get('FY2026E_ev_ebitda') else '—',
+            'FY2027E EV/EBITDA': f"{fd.get('FY2027E_ev_ebitda', 0):.1f}×" if fd.get('FY2027E_ev_ebitda') else '—',
             'FY2026E FCF Yield': f"{fd.get('FY2026E_fcf_yield', 0)*100:.1f}%" if fd.get('FY2026E_fcf_yield') else '—',
             'FY2027E FCF Yield': f"{fd.get('FY2027E_fcf_yield', 0)*100:.1f}%" if fd.get('FY2027E_fcf_yield') else '—',
         })
@@ -4368,7 +4371,7 @@ with tabs[6]:
     st.markdown('<br>', unsafe_allow_html=True)
     st.markdown('<div class="panel-header">FORWARD EV/EBITDA SENSITIVITY — IMPLIED SHARE PRICE AT FY2026E EBITDA SCENARIOS</div>', unsafe_allow_html=True)
     ebitda_range_fwd = np.arange(15000, 23001, 1000)  # $15B-$23B FY2026E EBITDA range
-    mult_range_fwd = np.arange(5.0, 13.0, 1.0)       # 5x-12x EV/EBITDA
+    mult_range_fwd = np.arange(5.0, 13.0, 1.0)       # 5×-12× EV/EBITDA
     nem_ev_base = fwd_data.get('NEM', {}).get('ev', 148929)
     fwd_heat_data = []
     for m_fwd in mult_range_fwd:
@@ -4383,7 +4386,7 @@ with tabs[6]:
     fig_fwd_heat = go.Figure(go.Heatmap(
         z=fwd_heat_data,
         x=[f"${int(eb/1000)}B" for eb in ebitda_range_fwd],
-        y=[f"{m:.0f}x" for m in mult_range_fwd],
+        y=[f"{m:.0f}×" for m in mult_range_fwd],
         text=fwd_heat_text, texttemplate='%{text}',
         textfont=dict(size=9, color='#e6edf3'),
         colorscale=[[0, COLORS['red']], [0.4, COLORS['amber']], [0.7, COLORS['green']], [1, '#00ff88']],
@@ -4395,8 +4398,8 @@ with tabs[6]:
     fig_fwd_heat.update_layout(xaxis_title='FY2026E EBITDA ($M)', yaxis_title='EV/EBITDA Multiple')
     # Mark JPMorgan estimate
     fig_fwd_heat.add_annotation(
-        x='$19B', y='5x',
-        text='<b>JPM 5x target</b>',
+        x='$19B', y='5×',
+        text='<b>JPM 5× target</b>',
         showarrow=True, arrowhead=2, arrowcolor=COLORS['amber'],
         font=dict(size=9, color=COLORS['amber']), bgcolor='#0d1117',
         bordercolor=COLORS['amber'], borderwidth=1, ax=50, ay=-30
@@ -4464,10 +4467,10 @@ with tabs[6]:
 
     for name, date, ev_m, acqr, tgt, note, ev_eb, ev_res_oz, ev_rsrc_oz, pnav, gold_at_deal in _prec_txns:
         is_nem_deal = 'Newcrest' in name
-        ev_eb_s = f"{ev_eb:.1f}x"
+        ev_eb_s = f"{ev_eb:.1f}×"
         ev_res_s = f"${ev_res_oz}/oz"
         ev_rsrc_s = f"${ev_rsrc_oz}/oz"
-        pnav_s = f"{pnav:.2f}x"
+        pnav_s = f"{pnav:.2f}×"
         bg = '#1a2233' if is_nem_deal else '#0d1117'
         border = f'border-left:3px solid {COLORS["blue"]};' if is_nem_deal else ''
         st.markdown(f"""<div style="display:grid;grid-template-columns:180px 70px 75px 85px 70px 70px 70px 70px 1fr;padding:7px 12px;border-bottom:1px solid #30363d;align-items:start;min-width:750px;background:{bg};{border}">
@@ -4489,10 +4492,10 @@ with tabs[6]:
         <span style="color:#8b949e;font-size:9px;">—</span>
         <span style="color:#8b949e;font-size:9px;">—</span>
         <span style="color:#8b949e;font-size:9px;">—</span>
-        <span style="color:#d29922;font-size:9px;font-weight:700;">{med_ev_eb_v:.1f}x</span>
+        <span style="color:#d29922;font-size:9px;font-weight:700;">{med_ev_eb_v:.1f}×</span>
         <span style="color:#d29922;font-size:9px;font-weight:700;">${med_ev_res_v:.0f}/oz</span>
         <span style="color:#d29922;font-size:9px;font-weight:700;">${med_ev_rsrc_v:.0f}/oz</span>
-        <span style="color:#d29922;font-size:9px;font-weight:700;">{med_pnav_v:.2f}x</span>
+        <span style="color:#d29922;font-size:9px;font-weight:700;">{med_pnav_v:.2f}×</span>
       </div></div>""", unsafe_allow_html=True)
 
     # --- Implied NEM values from precedent medians ---
@@ -4555,14 +4558,14 @@ with tabs[6]:
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div>
-          <div style="color:#8b949e;font-size:9px;margin-bottom:3px;">MEDIAN P/NAV ({med_pnav_v:.2f}x) × NEM NAV/sh (${BASE['nav_per_share']:.2f})</div>
+          <div style="color:#8b949e;font-size:9px;margin-bottom:3px;">MEDIAN P/NAV ({med_pnav_v:.2f}×) × NEM NAV/sh (${BASE['nav_per_share']:.2f})</div>
           <div style="color:#3fb950;font-size:20px;font-weight:700;">${prec_pnav_px:.2f} <span style="color:#3fb950;font-size:11px;">({(prec_pnav_px/BASE['price']-1)*100:+.0f}%)</span></div>
           <div style="color:#636e7b;font-size:9px;margin-top:3px;">Gold-price neutral — same ${{BASE['gold_deck']:,}}/oz deck used in both NAV and precedent NAV. Most apples-to-apples comparison.</div>
         </div>
         <div>
-          <div style="color:#8b949e;font-size:9px;margin-bottom:3px;">MEDIAN EV/EBITDA ({med_ev_eb_v:.1f}x) × FY2026E EBITDA (${nem_ebitda_fwd:,}M)</div>
+          <div style="color:#8b949e;font-size:9px;margin-bottom:3px;">MEDIAN EV/EBITDA ({med_ev_eb_v:.1f}×) × FY2026E EBITDA (${nem_ebitda_fwd:,}M)</div>
           <div style="color:#3fb950;font-size:20px;font-weight:700;">${prec_eveb_px:.2f} <span style="color:#3fb950;font-size:11px;">({(prec_eveb_px/BASE['price']-1)*100:+.0f}%)</span></div>
-          <div style="color:#636e7b;font-size:9px;margin-top:3px;">Forward basis (FY2026E). NEM currently trades at {_nem_fwd_ev_ebitda:.1f}x FY2026E EV/EBITDA vs {med_ev_eb_v:.1f}x median paid in M&A. Discount to M&A median = opportunity.</div>
+          <div style="color:#636e7b;font-size:9px;margin-top:3px;">Forward basis (FY2026E). NEM currently trades at {_nem_fwd_ev_ebitda:.1f}× FY2026E EV/EBITDA vs {med_ev_eb_v:.1f}× median paid in M&A. Discount to M&A median = opportunity.</div>
         </div>
         <div>
           <div style="color:#8b949e;font-size:9px;margin-bottom:3px;">EV/Reserve-oz (${med_ev_res_adj:.0f}/oz gold-adj) × {nem_pp_reserves:.1f} Moz P&P reserves</div>
@@ -4579,7 +4582,7 @@ with tabs[6]:
         <b style="color:#bc8cff;">KEY INSIGHT:</b> After gold-era adjustment, ALL four precedent metrics point to upside.
         P/NAV and EV/EBITDA (forward) are the most reliable — they use current or normalized assumptions.
         EV/oz metrics confirm the same direction: NEM's reserves and resources are priced below historical acquisition comparables at today's gold price.
-        <b style="color:#3fb950;">NEM currently trades at {_nem_fwd_ev_ebitda:.1f}x FY2026E EV/EBITDA — vs {med_ev_eb_v:.1f}x median paid in actual M&A deals.</b>
+        <b style="color:#3fb950;">NEM currently trades at {_nem_fwd_ev_ebitda:.1f}× FY2026E EV/EBITDA — vs {med_ev_eb_v:.1f}× median paid in actual M&A deals.</b>
         Acquirers have historically been willing to pay {(med_ev_eb_v / _nem_fwd_ev_ebitda - 1)*100:.0f}% more than NEM's current forward multiple. 
       </div>
     </div>
@@ -4853,7 +4856,7 @@ with tabs[7]:
          "Q1 2026 earnings (Apr 23) — first AISC print under new regime"),
         ('CADIA CLASS ACTION', COLORS['amber'], 'MEDIUM',
          "Unquantified contingent liability; defense costs ~$15-25M/yr",
-         "&minus;$0.3&ndash;0.5/share (defense only; settlement TBD)",
+         "&minus;$0.3&ndash;0.5/share (defense only; settlement outcome pending Jul 2026 hearing)",
          "Jul 16, 2026 hearing; trial H2 2027"),
         ('INSIDER SELLING', COLORS['amber'], 'SIGNAL',
          "No direct FCF impact — sentiment/conviction indicator",
@@ -6811,7 +6814,7 @@ with tabs[14]:
       <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
         <b>vs. GLD (gold ETF):</b> NEM provides operating leverage ({(B['gold_spot'] - d['nem_operational']['aisc_2025']) / B['gold_spot'] * 100:.0f}% margin at spot), {d['market_data']['nem_div_yield']*100:.0f}% dividend yield + buyback support ({(d['nem_annual_financials']['2025']['dividends']+d['nem_annual_financials']['2025']['buybacks'])/(d['market_data']['nem_market_cap']/1e6)*100:.1f}% total shareholder yield), and copper optionality worth $12-15/share. GLD provides none.<br>
         <b>vs. Barrick (GOLD):</b> NEM has S&amp;P 500 inclusion (liquidity premium), net cash vs. Barrick's higher leverage, and the NGM JV dispute is asymmetric — settlement or buy-sell clause both favor NEM. Barrick's Piotroski is lower and credibility gap is wider (&minus;3.8% avg miss vs. NEM's &minus;3.5%).<br>
-        <b>vs. Agnico Eagle (AEM):</b> AEM has better execution (credibility A-grade) but trades at a premium multiple (10.0x EV/EBITDA vs. NEM's {d['peer_ratios_latest']['NEM'].get('ev_ebitda', 0):.1f}x). NEM offers larger reserve base (118 vs. ~53 Moz), copper exposure (2.9 Mt Cu at Cadia), and higher absolute upside from re-rating. AEM is the safer pick; NEM is the higher-alpha pick.
+        <b>vs. Agnico Eagle (AEM):</b> AEM has better execution (credibility A-grade) but trades at a premium multiple (10.0× EV/EBITDA vs. NEM's {d['peer_ratios_latest']['NEM'].get('ev_ebitda', 0):.1f}×). NEM offers larger reserve base (118 vs. ~53 Moz), copper exposure (2.9 Mt Cu at Cadia), and higher absolute upside from re-rating. AEM is the safer pick; NEM is the higher-alpha pick.
       </div>
     </div>""", unsafe_allow_html=True)
 
@@ -6837,7 +6840,7 @@ with tabs[14]:
         ('AISC ($/oz, FY2025)', '$1,358', '$1,180', '$1,350', '$1,060', 'Cost position vs. peers', False),
         ('Copper Optionality', '<b style="color:#3fb950;">YES</b>', 'NO', 'NO', 'NO', '$12-15/share unpriced NAV', True),
         ('FCF Yield (%)', f'{d["nem_annual_financials"]["2025"]["fcf"] / (d["market_data"]["nem_market_cap"] / 1e6) * 100:.1f}%', '5.2%', '6.8%', '4.1%', 'Cash generation power', False),
-        ('EV/EBITDA (x)', f'{_nem_eveb:.1f}x', f'{_aem_eveb:.1f}x', f'{_gold_eveb:.1f}x', f'{_kgc_eveb:.1f}x', 'Valuation discount = upside', False),
+        ('EV/EBITDA (x)', f'{_nem_eveb:.1f}×', f'{_aem_eveb:.1f}×', f'{_gold_eveb:.1f}×', f'{_kgc_eveb:.1f}×', 'Valuation discount = upside', False),
         ('ESG (MSCI)', '<b style="color:#3fb950;">AA</b>', 'AA', 'A', 'BBB', 'Institutional capital access', True),
         ('S&P 500 Member', '<b style="color:#3fb950;">YES</b>', 'NO', 'NO', 'NO', 'Forced index fund buying', True),
         ('Piotroski F-Score', '<b style="color:#3fb950;">9/9</b>', '7/9', '6/9', '7/9', 'Financial health signal', True),
@@ -7514,7 +7517,7 @@ with tabs[17]:
       <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
         <b style="color:{COLORS['green']};">Positives:</b><br>
         - 60% of CEO long-term incentive tied to TSR (total shareholder return) vs gold peer group<br>
-        - Stock ownership requirement: 6x base salary for CEO, 3x for other NEOs<br>
+        - Stock ownership requirement: 6× base salary for CEO, 3× for other NEOs<br>
         - Clawback policy covers both financial restatements and misconduct<br>
         - Annual say-on-pay approval &gt;90% in 2024 and 2025<br><br>
         <b style="color:{COLORS['amber']};">Watch items:</b><br>
