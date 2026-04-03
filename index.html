@@ -2130,7 +2130,7 @@ html, body {
     <div style="display:flex; gap:20px; align-items:center; border-top:1px solid var(--border); padding-top:12px;">
       <div>
         <span class="text-muted" style="font-size:11px;">Probability-Weighted Value: </span>
-        <span class="mono text-gold" style="font-size:16px; font-weight:700;">$189.73</span>
+        <span class="mono text-gold" style="font-size:16px; font-weight:700;">$186.31</span>
       </div>
       <div>
         <span class="text-muted" style="font-size:11px;">Risk-Reward Ratio: </span>
@@ -2624,7 +2624,7 @@ html, body {
       <div class="line-item"><span class="line-label">FCF Breakeven Gold</span><span class="line-val highlight">$1,558/oz</span></div>
       <div class="line-item"><span class="line-label">Current Spot Gold</span><span class="line-val text-gold">$4,758/oz</span></div>
       <div class="line-item"><span class="line-label">Buffer Above Breakeven</span><span class="line-val text-green">$3,200/oz (205%)</span></div>
-      <div class="line-item"><span class="line-label">P-Weighted Value</span><span class="line-val text-gold">~$189.73</span></div>
+      <div class="line-item"><span class="line-label">P-Weighted Value</span><span class="line-val text-gold">$186.31</span></div>
       <div class="line-item"><span class="line-label">Risk-Reward Ratio</span><span class="line-val text-green">62× favorable (BULL:STRESS)</span></div>
     </div>
   </div>
@@ -2708,12 +2708,12 @@ html, body {
       </div>
       <div class="kpi-card">
         <div class="kpi-label">P10 (Downside)</div>
-        <div class="kpi-value mono text-red">$78.40</div>
+        <div class="kpi-value mono text-red">$88.40</div>
         <div class="kpi-sub">10th percentile</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">P90 (Upside)</div>
-        <div class="kpi-value mono text-green">$198.60</div>
+        <div class="kpi-value mono text-green">$258.60</div>
         <div class="kpi-sub">90th percentile</div>
       </div>
       <div class="kpi-card hero-buy">
@@ -5056,7 +5056,7 @@ function renderTab9Charts() {
     'Q2 2026 Earnings',
     'Tanami TE2'
   ];
-  const pWeighted = [3.50, 3.00, 4.80, 5.00, 3.25, 2.98, 3.20, 2.80, 2.63, 3.15];
+  const pWeighted = [3.50, 3.00, 4.80, 3.50, 3.25, 2.98, 3.20, 2.80, 2.63, 3.15];
   const sortIdx = pWeighted.map((v,i) => i).sort((a,b) => pWeighted[a] - pWeighted[b]);
   const sortedCat = sortIdx.map(i => catalysts[i]);
   const sortedPW  = sortIdx.map(i => pWeighted[i]);
