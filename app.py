@@ -1366,7 +1366,7 @@ with tabs[0]:
       <div style="color:{COLORS['red']};font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">THE BEAR CASE I TOOK SERIOUSLY</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
         <b>"You're just riding the gold price."</b> &mdash; If gold falls {BASE['gold_gap_pct']:.0f}% to ${BASE['implied_gold']:,.0f}/oz (the price the market implies),
-        NEM's AISC of $1,358/oz still produces $2,247/oz margin &mdash; positive FCF in every scenario above $1,700/oz.
+        NEM's AISC of $1,358/oz still produces ${B['implied_gold'] - 1358:,}/oz margin even at the market-implied gold floor &mdash; positive FCF in every scenario above $1,700/oz.
         This is not a hope trade. It's an asymmetric margin-of-safety play.<br>
         <b>"Management is new and unproven."</b> &mdash; Correct. Viljoen started Jan 2026. But she inherits net cash of $7.2B,
         Piotroski 9/9, and a completed portfolio transformation. The hard work is done.
@@ -1478,7 +1478,7 @@ with tabs[0]:
             'tool': 'Perplexity Search + Premium',
             'query': 'Newmont production guidance vs actuals 2015-2025 annual miss rate',
             'finding': 'Perplexity Search pulled NEM annual reports (2015-2025) and earnings releases. Premium deep research compiled the 10-year time series and identified the Goldcorp acquisition (2019) as a structural break: pre-2019 avg miss was &minus;1.2%, post-2019 was &minus;5.1%. Benchmarking against Barrick (&minus;3.8%) and AEM (&minus;0.3%) showed NEM is the weakest on credibility.',
-            'assumption_change': 'Applied &minus;2.9% credibility haircut to our production assumption (5.30 &times; 0.971 = 5.15 Moz effective). This haircut flows through DCF, reducing target by ~$4. No sell-side model applies this adjustment.',
+            'assumption_change': 'Applied &minus;2.9% credibility haircut to our production assumption (5.26 &times; 0.971 = 5.11 Moz effective). This haircut flows through DCF, reducing target by ~$4. No sell-side model applies this adjustment.',
             'feeds': 'Tab 14 (CREDIBILITY), Tab 6 (DCF production input)',
             'color': COLORS['red'],
         },
@@ -1573,7 +1573,7 @@ with tabs[0]:
          'HIGH', 'Manual parsing of 81 SEC filings would take a junior analyst 4+ hours; Computer did it in minutes'),
         ('Production Credibility Haircut', 'Search+Premium',
          'Used NEM guidance of 5.30 Moz at face value. No adjustment.',
-         'Built 10-year guidance vs. actual time series. Identified Goldcorp 2019 as structural break. Applied -2.9% haircut (5.30 × 0.971 = 5.15 Moz). No sell-side model does this.',
+         'Built 10-year guidance vs. actual time series. Identified Goldcorp 2019 as structural break. Applied -2.9% haircut (5.26 × 0.971 = 5.11 Moz). No sell-side model does this.',
          'VERY HIGH', 'Pre-Goldcorp avg miss -1.2%, post-Goldcorp -5.1%. Required 10yr data series compilation'),
         ('Cadia Copper NAV', 'Search+Computer',
          'Copper credited as byproduct against gold AISC. Zero standalone NAV.',
@@ -1877,18 +1877,21 @@ with tabs[1]:
     with c3:
         nd_color = COLORS['green'] if net_debt < 0 else COLORS['amber']
         nd_label = "NET CASH" if net_debt < 0 else "NET DEBT"
+        aisc_guided_2025 = 1620  # FY2025 AISC guidance
+        aisc_actual_2025 = d['nem_operational']['aisc_2025']
+        aisc_beat_pct = (aisc_guided_2025 - aisc_actual_2025) / aisc_guided_2025 * 100
         st.markdown(f"""
         <div class="driver-card">
           <div style="color:#8b949e;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">
-            DRIVER 3 — CAPITAL DISCIPLINE</div>
-          <div style="color:{nd_color};font-size:20px;font-weight:700;margin-bottom:6px;">
-            ${abs(net_debt/1000):.1f}B {nd_label}</div>
+            DRIVER 3 — CREDIBILITY FLIP</div>
+          <div style="color:#3fb950;font-size:20px;font-weight:700;margin-bottom:6px;">
+            ${aisc_guided_2025:,}&rarr;${aisc_actual_2025:,} AISC</div>
           <div style="color:#e6edf3;font-size:11px;margin-bottom:8px;">
-            FCF: ${fcf/1000:.1f}B | D/E: {d['peer_ratios_latest']['NEM']['de']:.1%}</div>
+            ${aisc_guided_2025 - aisc_actual_2025:,}/oz beat &mdash; {aisc_beat_pct:.0f}% below guidance</div>
           <div style="color:#8b949e;font-size:10px;line-height:1.6;">
-            Paid $2.3B in buybacks (2025).<br>
-            Dividend covered {fcf/f25['dividends']:.1f}× by FCF.<br>
-            <span style="color:#3fb950;">FCF/market cap yield: {fcf/(BASE['mktcap']/1e6)*100:.1f}%</span>
+            10yr study: only 2 of 10 years above guidance.<br>
+            FY2025: beat AISC <i>and</i> production. New NEM.<br>
+            <span style="color:#3fb950;">Net cash ${abs(net_debt/1000):.1f}B: balance sheet proves it</span>
           </div>
         </div>""", unsafe_allow_html=True)
 
@@ -2571,7 +2574,7 @@ with tabs[3]:
     f = d['nem_annual_financials']
     yrs_p = ['2021', '2022', '2023', '2024', '2025']
 
-    insight_callout("Two years ago this was a bloated, post-acquisition mess: 10% gross margin, negative FCF, a credibility crisis. Today: 50% gross margin, $7.3B record FCF, Piotroski 9/9, net cash. The question isn't whether NEM has improved — it's whether the market has noticed.")
+    insight_callout("Two years ago this was a bloated, post-acquisition mess: 10% gross margin, negative FCF, a credibility crisis. Today: 50% gross margin, $7.3B record FCF, Piotroski 9/9, net cash. The question isn't whether NEM has improved — it's whether the market has noticed. Next: the mine-level data that explains how Driver 2 (Portfolio Transformation) actually happened.")
 
 
     st.markdown('<div class="panel-header">FINANCIAL SUMMARY — 5-YEAR HISTORY + ESTIMATES</div>', unsafe_allow_html=True)
@@ -2729,6 +2732,17 @@ with tabs[4]:
             'NAV %': f"{nav_pct:.1f}%",
         })
     st.dataframe(pd.DataFrame(mine_table).sort_values('Prod (Koz)', ascending=False), use_container_width=True, hide_index=True)
+
+    st.markdown("""
+    <div style="background:#161b22;border-left:3px solid #8b949e;padding:10px 16px;margin-bottom:12px;">
+      <div style="color:#8b949e;font-size:10px;line-height:1.6;">
+        <b style="color:#e6edf3;">Note on production figures:</b> Mine-level production shown is FY2026 modeled estimates per mine,
+        not FY2025 actuals. Individual mine totals sum to ~4,900 Koz; FY2026 portfolio guidance is 5,260 Koz —
+        the ~360 Koz difference reflects smaller and unlisted operations not broken out individually
+        (e.g., CC&V, Yanacocha ramp contributions, intercompany). FY2025 actual total was 5,900 Koz (5.9 Moz).
+        Ahafo shown at 550 Koz reflects FY2026 modeled output; FY2025 actual was 734 Koz.
+      </div>
+    </div>""", unsafe_allow_html=True)
 
     c1, c2 = st.columns(2)
     with c1:
@@ -4085,7 +4099,7 @@ with tabs[6]:
 
     # Comprehensive peer data (realistic hardcoded — source: company filings, consensus estimates)
     comp_data = {
-        'NEM':  {'name': 'Newmont Corp',       'ev_ebitda': nem_ev,  'pe': nem_pe, 'p_cf': 8.2, 'p_book': 2.1, 'fcf_yield': 7.0, 'div_yield': peer_q.get('NEM', {}).get('div_yield', 0.018)*100, 'aisc': 1358, 'production': 5.90},
+        'NEM':  {'name': 'Newmont Corp',       'ev_ebitda': nem_ev,  'pe': nem_pe, 'p_cf': 8.2, 'p_book': 2.1, 'fcf_yield': round(DATA['nem_annual_financials']['2025']['fcf']/(DATA['market_data']['nem_market_cap']/1e6)*100,1), 'div_yield': peer_q.get('NEM', {}).get('div_yield', 0.018)*100, 'aisc': 1358, 'production': 5.90},
         'GOLD': {'name': 'Barrick Gold',       'ev_ebitda': ev_ebitda_vals.get('GOLD', 7.5), 'pe': pe_vals.get('GOLD', 15.2), 'p_cf': 7.5, 'p_book': 1.6, 'fcf_yield': 4.5, 'div_yield': peer_q.get('GOLD', {}).get('div_yield', 0.022)*100, 'aisc': 1637, 'production': 3.26},
         'AEM':  {'name': 'Agnico Eagle',       'ev_ebitda': ev_ebitda_vals.get('AEM', 10.0), 'pe': pe_vals.get('AEM', 18.5), 'p_cf': 11.2, 'p_book': 2.8, 'fcf_yield': 3.5, 'div_yield': peer_q.get('AEM', {}).get('div_yield', 0.016)*100, 'aisc': 1200, 'production': 3.45},
         'KGC':  {'name': 'Kinross Gold',       'ev_ebitda': ev_ebitda_vals.get('KGC', 5.8), 'pe': pe_vals.get('KGC', 10.2), 'p_cf': 5.8, 'p_book': 1.9, 'fcf_yield': 5.0, 'div_yield': peer_q.get('KGC', {}).get('div_yield', 0.012)*100, 'aisc': 1350, 'production': 2.11},
@@ -4883,7 +4897,7 @@ with tabs[7]:
 # TAB 8 — MONTE CARLO
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[8]:
-    insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price.")
+    insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; returns structure is the cushion. Next tab: how NEM pays you to wait.")
 
 
     st.markdown('<div class="panel-header">MONTE CARLO — 50,000 CORRELATED ITERATIONS</div>', unsafe_allow_html=True)
@@ -5122,7 +5136,7 @@ with tabs[8]:
 with tabs[9]:
     d = DATA
     f = d['nem_annual_financials']
-    insight_callout("Here's the asymmetry in one number: NEM returned $3.4B to shareholders in 2025 while sitting on net cash of $7.2B. If the stock is mispriced, you're getting paid to wait — 3.4% dividend yield + buyback support shrinking the share count. The downside is cushioned by cash; the upside is leveraged to gold.")
+    insight_callout(f"Here's the asymmetry in one number: NEM returned $3.4B to shareholders in 2025 while sitting on net cash of $7.2B. If the stock is mispriced, you're getting paid to wait — {DATA['market_data']['nem_div_yield']*100:.0f}% dividend yield + {DATA['nem_annual_financials']['2025']['buybacks']/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% buyback yield = {(DATA['nem_annual_financials']['2025']['dividends']+DATA['nem_annual_financials']['2025']['buybacks'])/(DATA['market_data']['nem_market_cap']/1e6)*100:.1f}% total shareholder yield, with shrinking share count. The downside is cushioned by $7.2B net cash; the upside is leveraged to gold.")
 
 
     st.markdown('<div class="panel-header">CAPITAL ALLOCATION & SHAREHOLDER RETURNS</div>', unsafe_allow_html=True)
@@ -5503,7 +5517,7 @@ with tabs[11]:
          '<br><br>'
          '<b>Cadia copper:</b> FY2025 production: 82 kt. FY2026 guidance: 65 kt (lower grade transition). '
          'PC2-3 peak (2027&ndash;2032): 40&ndash;60 kt/yr. Total copper reserves: 2.9 Mt. '
-         'NEM is the only major gold miner with 2.9 Mt Cu reserves (40-60 kt/yr at peak, ~$8-10/share NAV) &mdash; an unpriced AI infrastructure call option.',
+         'NEM is the only major gold miner with 2.9 Mt Cu reserves (40-60 kt/yr at peak, ~$12-15/share NAV) &mdash; an unpriced AI infrastructure call option.',
          'BHP Insights (Jan 2025), S&P Global (Jan 8, 2026), Goldman Sachs Research (Feb 2025), IEA (Apr 2025), JPMorgan, NEM Q4 2025 earnings'),
     ]
 
@@ -5835,7 +5849,7 @@ with tabs[12]:
 # TAB 13 — MANAGEMENT CREDIBILITY STUDY
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[13]:
-    insight_callout("10-year study (2015-2025, excl. 2019 structural break): NEM beat production guidance in only 2 of 10 years. Average miss: -3.5%. But two distinct eras emerge — pre-Goldcorp accuracy was ±1%, post-Goldcorp was -5.4%. The 2024-2025 convergence to -0.4% suggests the integration tax is finally paid.")
+    insight_callout("10-year study (2015-2025, excl. 2019 structural break): NEM beat production guidance in only 2 of 10 years. Average miss: -3.5%. But two distinct eras emerge — pre-Goldcorp accuracy was ±1%, post-Goldcorp was -5.4%. The 2024-2025 convergence to -0.4% suggests the integration tax is finally paid. This is Driver 3 — the Credibility Flip. With the case now built across three independent drivers, the final verdict is in 15·VERDICT.")
 
     # ══ AISC CREDIBILITY NON-CONSENSUS CALLOUT ═════════════════════════════════════
     st.markdown(f"""
@@ -6795,7 +6809,7 @@ with tabs[14]:
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:16px 20px;margin-top:20px;">
       <div style="color:#d29922;font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:8px;">WHY NEM OVER ALTERNATIVES?</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        <b>vs. GLD (gold ETF):</b> NEM provides operating leverage ({(B['gold_spot'] - d['nem_operational']['aisc_2025']) / B['gold_spot'] * 100:.0f}% margin at spot), dividends (3.4% yield), and copper optionality worth $8-10/share. GLD provides none.<br>
+        <b>vs. GLD (gold ETF):</b> NEM provides operating leverage ({(B['gold_spot'] - d['nem_operational']['aisc_2025']) / B['gold_spot'] * 100:.0f}% margin at spot), {d['market_data']['nem_div_yield']*100:.0f}% dividend yield + buyback support ({(d['nem_annual_financials']['2025']['dividends']+d['nem_annual_financials']['2025']['buybacks'])/(d['market_data']['nem_market_cap']/1e6)*100:.1f}% total shareholder yield), and copper optionality worth $12-15/share. GLD provides none.<br>
         <b>vs. Barrick (GOLD):</b> NEM has S&amp;P 500 inclusion (liquidity premium), net cash vs. Barrick's higher leverage, and the NGM JV dispute is asymmetric — settlement or buy-sell clause both favor NEM. Barrick's Piotroski is lower and credibility gap is wider (&minus;3.8% avg miss vs. NEM's &minus;3.5%).<br>
         <b>vs. Agnico Eagle (AEM):</b> AEM has better execution (credibility A-grade) but trades at a premium multiple (10.0x EV/EBITDA vs. NEM's {d['peer_ratios_latest']['NEM'].get('ev_ebitda', 0):.1f}x). NEM offers larger reserve base (118 vs. ~53 Moz), copper exposure (2.9 Mt Cu at Cadia), and higher absolute upside from re-rating. AEM is the safer pick; NEM is the higher-alpha pick.
       </div>
@@ -6991,15 +7005,22 @@ with tabs[14]:
       </div>
     </div>""", unsafe_allow_html=True)
 
-    # THE BOOKEND — the memorable sentence, evolved
+    # THE BOOKEND — the lasting impression
     aisc_d = d['nem_operational']['aisc_2025']
+    aisc_guided_bk = 1620
+    aisc_beat_bk = aisc_guided_bk - aisc_d
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg, #161b22 0%, #0d1117 100%);border:3px solid #3fb950;padding:28px 24px;margin-top:20px;text-align:center;">
-      <div style="color:#e6edf3;font-size:18px;font-weight:700;line-height:1.5;max-width:800px;margin:0 auto;">
+    <div style="background:linear-gradient(135deg, #161b22 0%, #0d1117 100%);border:3px solid #3fb950;padding:32px 28px;margin-top:20px;text-align:center;">
+      <div style="color:#e6edf3;font-size:18px;font-weight:700;line-height:1.6;max-width:860px;margin:0 auto;">
         The market is pricing Newmont as if gold falls to
-        <span style="color:#f85149;">${B['implied_gold']:,.0f}</span>.
-        I spent a week and 14 tabs proving it won't.<br>
-        <span style="color:#3fb950;font-size:22px;">Target: ${target_v:.2f} &nbsp;|&nbsp; Upside: {upside_v:+.1f}% &nbsp;|&nbsp; {rec_v}</span>
+        <span style="color:#f85149;">${B['implied_gold']:,.0f}/oz</span>.
+        Three things say it won't &mdash; and that the market is discounting the wrong company.<br><br>
+        <span style="color:#58a6ff;font-size:14px;font-weight:400;">&#9312;&nbsp; Gold macro: central banks buying 2&times; pre-2022, zero major discoveries in 2023&ndash;2024, spot at ${B['gold_spot']:,}.</span><br>
+        <span style="color:#3fb950;font-size:14px;font-weight:400;">&#9313;&nbsp; Portfolio transformation: AISC $1,620 &rarr; $1,358 &mdash; lowest-cost trajectory among majors, Cadia at $400/oz.</span><br>
+        <span style="color:#d29922;font-size:14px;font-weight:400;">&#9314;&nbsp; Credibility flip: guided ${aisc_guided_bk:,}, delivered ${aisc_d:,} &mdash; ${aisc_beat_bk:,}/oz beat. New NEM, old discount.</span>
+      </div>
+      <div style="margin-top:20px;">
+        <span style="color:#3fb950;font-size:24px;font-weight:700;">Target: ${target_v:.2f} &nbsp;|&nbsp; Upside: {upside_v:+.1f}% &nbsp;|&nbsp; {rec_v}</span>
       </div>
       <div style="color:#8b949e;font-size:10px;margin-top:12px;">
         DCF ${B['dcf_price']:.2f} | P/NAV ${B['nav_price']:.2f} | MC Median confirms | 4/4 methods converge |
@@ -7165,7 +7186,7 @@ with tabs[15]:
 # ═══════════════════════════════════════════════════════════════════════════════
 with tabs[16]:
     d = DATA
-    insight_callout("Copper from Cadia adds incremental value NOT captured in our gold-focused DCF or P/NAV. At current copper prices, this is worth ~$8-10/share of hidden upside.")
+    insight_callout("Copper from Cadia adds incremental value NOT captured in our gold-focused DCF or P/NAV. At long-run copper of $4.50/lb, this standalone NAV is worth ~$12-15/share — the same unpriced optionality called out in the Command Center.")
 
 
     st.markdown('<div class="panel-header">COPPER OPTIONALITY — CADIA VALLEY</div>', unsafe_allow_html=True)
