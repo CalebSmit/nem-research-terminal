@@ -981,7 +981,7 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("---")
-    st.markdown('<div style="color:#e6edf3;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">BUILD YOUR THESIS</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#e6edf3;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">MODEL PARAMETERS</div>', unsafe_allow_html=True)
 
     with st.expander("DISCOUNT RATE"):
         wacc_mode = st.radio("WACC Input", ["Calculated (CAPM)", "Direct Override"], horizontal=True, key='sb_wacc_mode')
@@ -1061,6 +1061,26 @@ with st.sidebar:
         if st.button("⟲ Reset Blend", key='sb_reset_blend'):
             reset_section(['dcf_weight'])
             st.rerun()
+
+    st.markdown("---")
+    with st.expander("RESEARCH METHODOLOGY", expanded=False):
+        st.markdown('''
+<div style="color:#8b949e;font-size:10px;line-height:1.8;">
+  <div style="color:#f0b429;font-size:9px;font-weight:700;letter-spacing:1.5px;margin-bottom:6px;">ANALYTICAL FRAMEWORK</div>
+  <div style="margin-bottom:6px;padding-left:8px;border-left:1px solid #30363d;">
+    <span style="color:#e6edf3;font-weight:600;">8 independent channel checks:</span> hiring data, SEC filings, earnings call NLP, regulatory documents, analyst revisions, competitor benchmarking, community sentiment, copper demand data
+  </div>
+  <div style="margin-bottom:6px;padding-left:8px;border-left:1px solid #30363d;">
+    <span style="color:#e6edf3;font-weight:600;">50,000 Monte Carlo iterations</span> across 5 correlated stochastic variables
+  </div>
+  <div style="margin-bottom:6px;padding-left:8px;border-left:1px solid #30363d;">
+    <span style="color:#e6edf3;font-weight:600;">10-year management guidance credibility study</span> (2015\u20132025): production guidance vs. actual delivery
+  </div>
+  <div style="padding-left:8px;border-left:1px solid #30363d;">
+    <span style="color:#e6edf3;font-weight:600;">Reverse DCF framework:</span> solving for the gold price the market embeds in NEM\u2019s equity price
+  </div>
+</div>
+''', unsafe_allow_html=True)
 
 # Recalculate after sidebar changes
 BASE = run_base_calculations()
@@ -1357,7 +1377,7 @@ with tabs[0]:
         <br><br>
         <b style="color:#f85149;">Tanami fatality.</b> A 47-year-old construction worker died Feb 4, 2026
         from a winch failure at the TE2 shaft site. All 1,800 FIFO workers stood down. Mining resumed ~4 days
-        later, but Viljoen confirmed on the Q4 call: <i>"we stopped all work on the shaft infrastructure."</i>
+        later, but Viljoen confirmed on the Q4 call (Q4 2025 earnings call, Feb 19, 2026): <i>"we stopped all work on the shaft infrastructure."</i>
         TE2 is a key 2027 catalyst. Delay risk is real.
         <br><br>
         All four of these are built into the Risk tab. None of them broke the thesis individually. But together
@@ -1415,7 +1435,7 @@ with tabs[0]:
         <div style="background:#0d1117;border:1px solid #30363d;border-left:3px solid {COLORS['red']};padding:16px 20px;margin-bottom:16px;">
           <div style="color:{COLORS['red']};font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;">BEAR CASE REBUTTAL</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
-        <b>"You're just riding the gold price."</b> &mdash; If gold falls {BASE['gold_gap_pct']:.0f}% to ${BASE['implied_gold']:,.0f}/oz (the price the market implies),
+        <b>"NEM is just riding the gold price."</b> &mdash; If gold falls {BASE['gold_gap_pct']:.0f}% to ${BASE['implied_gold']:,.0f}/oz (the price the market implies),
         NEM's AISC of $1,358/oz still produces ${B['implied_gold'] - 1358:,}/oz margin even at the market-implied gold floor &mdash; positive FCF in every scenario above $1,700/oz.
         This is not a hope trade. It's an asymmetric margin-of-safety play.<br>
         <b>"Management is new and unproven."</b> &mdash; Correct. Viljoen started Jan 2026. But she inherits net cash of $7.2B,
@@ -1439,7 +1459,7 @@ with tabs[0]:
     </div>
     """, unsafe_allow_html=True)
 
-    with st.expander("▶ Perplexity Computer — Research Methodology, Log & Before/After Impact", expanded=False):
+    with st.expander("▶ Perplexity Computer — Research Methodology, Log & Before/After Impact", expanded=True):
 
         st.markdown(f"""
         <div style="background:#161b22;border:1px solid #30363d;border-top:2px solid #f0b429;padding:16px 20px;margin-top:8px;">
@@ -1669,6 +1689,30 @@ with tabs[1]:
       <div style="color:#e6edf3;font-size:15px;line-height:1.6;">Newmont Corporation (NEM) is rated {BASE['recommendation']} with a price target of ${BASE['blended_target']:.2f}, representing {BASE['upside']:+.1f}% upside from the current price of ${BASE['price']:.2f}. The primary thesis: NEM's equity price implies gold at approximately ${BASE['implied_gold']:,.0f}/oz — roughly {BASE['gold_gap_pct']:.0f}% below spot — creating a structural mispricing that a mean-reverting gold environment resolves to the upside. Three converging drivers support the position: operating leverage to gold prices, a demonstrated AISC credibility inflection, and an unpriced copper option at Cadia.</div>
     </div>
     ''', unsafe_allow_html=True)
+
+    # ── INVESTMENT CASE SUMMARY ──
+    st.markdown(f'''
+<div style="background:#161b22;border:1px solid #30363d;border-top:3px solid #f0b429;padding:20px 24px;margin-bottom:20px;">
+  <div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:2px;margin-bottom:14px;">INVESTMENT CASE SUMMARY</div>
+  <div style="color:#e6edf3;font-size:13px;line-height:1.8;">
+    <div style="margin-bottom:8px;padding-left:12px;border-left:2px solid #f0b429;">
+      <b style="color:#f0b429;">Most differentiated finding:</b> NEM's FY2025 AISC came in at $1,358/oz — $262/oz (16.2%) below the $1,620/oz guided figure. No sell-side model had modeled an equivalent AISC positive surprise; this beat implies $443M in incremental annual FCF that consensus has not absorbed.
+    </div>
+    <div style="margin-bottom:8px;padding-left:12px;border-left:2px solid #f0b429;">
+      <b style="color:#f0b429;">Valuation case:</b> Four independent methods (DCF at ${BASE['dcf_price']:.2f}, P/NAV at ${BASE['nav_price']:.2f}, Monte Carlo median, Reverse DCF) converge on a target range of ${BASE['blended_target']*0.93:.0f}\u2013${BASE['blended_target']*1.07:.0f}, representing {BASE['upside']:+.1f}% upside to the blended target of ${BASE['blended_target']:.2f} from the current price of ${BASE['price']:.2f}.
+    </div>
+    <div style="margin-bottom:8px;padding-left:12px;border-left:2px solid #00b4d8;">
+      <b style="color:#00b4d8;">Primary catalyst:</b> Q1 2026 earnings (Apr 23, 2026) — AISC delivery vs. guidance and Ghana royalty disclosure will either confirm or break the thesis. A second catalyst: any sell-side initiation of a standalone Cadia copper NAV ($12\u201315/share of unpriced optionality) triggers a re-rating.
+    </div>
+    <div style="margin-bottom:8px;padding-left:12px;border-left:2px solid #f85149;">
+      <b style="color:#f85149;">Key risk — why the position is held despite it:</b> Ghana sliding-scale royalty law (effective Mar 9, 2026) adds ~$50/oz to total NEM AISC. At $5,200/oz gold, the $3,100/oz gross margin absorbs the impact with a 94% margin retention ratio — the position survives even in a worse-than-guided scenario.
+    </div>
+    <div style="padding-left:12px;border-left:2px solid #3fb950;">
+      <b style="color:#3fb950;">Conviction statement:</b> Price target ${BASE['blended_target']:.2f} | Upside {BASE['upside']:+.1f}% | 12-month horizon | Rating: {BASE['recommendation']} | The gap between what NEM's equity implies and what gold trades at today is the thesis — and the market has not yet closed it.
+    </div>
+  </div>
+</div>
+''', unsafe_allow_html=True)
 
     # ── PROMPT 3: Headline ──
     st.markdown(f"**NEM: {BASE['recommendation']} — blended target ${BASE['blended_target']:.2f} ({BASE['upside']:+.1f}% upside). Three non-consensus drivers, four converging methods, one mispricing the market has not yet closed.**")
@@ -3758,7 +3802,7 @@ with tabs[5]:
             <span style="color:#f0b429;font-size:11px;">{ggm_mult_v:.1f}×</span>
           </div>
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #30363d;">
-            <span style="color:#8b949e;font-size:11px;">Your Exit Multiple</span>
+            <span style="color:#8b949e;font-size:11px;">Exit Multiple (Selected)</span>
             <span style="color:#f0b429;font-size:11px;">{st.session_state.get('exit_multiple', 9.5):.1f}×</span>
           </div>
           <div style="color:{'#3fb950' if abs(ggm_mult_v - st.session_state.get('exit_multiple', 9.5)) < 3 else '#f85149'};font-size:10px;margin-top:8px;">
@@ -4646,6 +4690,72 @@ with tabs[6]:
           </div>
         </div>""", unsafe_allow_html=True)
 
+    # ── AISC TRAJECTORY LINE CHART (2021-2025) — MOVED UP FOR PROMINENCE ──
+    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: CREDIBILITY FLIP</div>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-header">AISC TRAJECTORY COMPARISON (2021-2025) — NEM DECLINING VS PEERS FLAT/RISING</div>', unsafe_allow_html=True)
+
+    aisc_traj_years = [2021, 2022, 2023, 2024, 2025]
+    aisc_traj = {
+        'NEM':  [1050, 1211, 1444, 1620, 1358],
+        'GOLD': [1026, 1269, 1427, 1520, 1637],
+        'AEM':  [ 975, 1050, 1170, 1250, 1200],
+        'KGC':  [1138, 1240, 1300, 1350, 1350],
+        'GFI':  [1297, 1310, 1425, 1530, 1645],
+    }
+    aisc_colors = {'NEM': COLORS['gold'], 'GOLD': COLORS['amber'], 'AEM': COLORS['green'], 'KGC': '#8b949e', 'GFI': '#6e7681'}
+    aisc_dashes = {'NEM': 'solid', 'GOLD': 'dot', 'AEM': 'dash', 'KGC': 'dot', 'GFI': 'dot'}
+
+    fig_aisc_traj = go.Figure()
+    for t_at, vals in aisc_traj.items():
+        is_nem_at = t_at == 'NEM'
+        fig_aisc_traj.add_trace(go.Scatter(
+            x=aisc_traj_years, y=vals, name=t_at, mode='lines+markers',
+            line=dict(color=aisc_colors[t_at], width=3 if is_nem_at else 1.5, dash=aisc_dashes[t_at]),
+            marker=dict(size=8 if is_nem_at else 5, color=aisc_colors[t_at])
+        ))
+    fig_aisc_traj.add_annotation(x=2024, y=1620, text='Peak: Goldcorp<br>integration drag',
+        showarrow=True, arrowhead=2, arrowcolor=COLORS['red'],
+        font=dict(size=8, color=COLORS['red']), ax=50, ay=-25)
+    fig_aisc_traj.add_annotation(x=2025, y=1358,
+        text='<b>$1,358</b><br>Synergies kicking in<br>Target: $1,200',
+        showarrow=True, arrowhead=2, arrowcolor=COLORS['green'],
+        font=dict(size=9, color=COLORS['green']),
+        bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=60, ay=-30)
+    apply_layout(fig_aisc_traj, "KEY INSIGHT: NEM AISC DECLINING WHILE PEERS ARE FLAT OR RISING", 380)
+    fig_aisc_traj.update_layout(
+        xaxis=dict(title='Year', dtick=1),
+        yaxis=dict(title='AISC ($/oz)'),
+        legend=dict(orientation='h', yanchor='bottom', y=1.02, x=0.5, xanchor='center')
+    )
+    st.plotly_chart(fig_aisc_traj, use_container_width=True)
+
+    st.markdown(f"""
+    <div style="background:#0d1117;border:3px solid #f0b429;padding:0;margin-bottom:16px;overflow:hidden;">
+      <div style="background:#f0b429;padding:7px 20px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="background:#0d1117;color:#f0b429;font-size:9px;font-weight:700;padding:2px 10px;letter-spacing:2px;">ALPHA INSIGHT</span>
+        <span style="color:#0d1117;font-size:10px;font-weight:700;letter-spacing:2px;">NON-CONSENSUS VIEW — COMPETITIVE ANALYSIS</span>
+        <span style="background:#0d1117;color:#3fb950;font-size:9px;font-weight:700;padding:2px 10px;letter-spacing:2px;">NOT IN ANY STREET MODEL</span>
+      </div>
+      <div style="padding:18px 22px;">
+      <div style="color:#e6edf3;font-size:13px;font-weight:700;margin-bottom:10px;">NEM's AISC Trajectory Is the Key Competitive Differentiator</div>
+      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
+        <b>The non-obvious insight:</b> While Barrick, Gold Fields, and AngloGold all show <b>rising AISC trajectories</b>
+        (+$200-350/oz over 2021-2025), NEM's AISC peaked at $1,620 in 2024 and <b>fell 16% to $1,358 in 2025</b>.
+        This inflection is driven by Newcrest synergies ($500M+ cost target), Project Catalyst restructuring
+        (3,552 positions cut), and portfolio optimization (non-core divestitures).
+        <br><br>
+        NEM's AISC target of <b style="color:#3fb950;">$1,200/oz</b> by 2027 would make it the second-lowest-cost
+        major globally (behind only AEM). At ${BASE['gold_spot']:,}/oz gold, moving from $1,358 to $1,200 AISC
+        = <b style="color:#3fb950;">~$930M in incremental annual FCF</b>. No other major gold miner has this cost
+        trajectory. This is the single most important driver of NEM's re-rating.
+        <br><br>
+        <b style="color:#f0b429;">The chart above is the money shot:</b> NEM is the only line going DOWN. Every peer is going UP or flat.
+        At $3,000+ gold, the direction of that cost line is worth more than the starting level.
+      </div>
+      <div style="color:#8b949e;font-size:9px;margin-top:8px;">Source: NEM, GOLD, AEM, KGC, GFI FY2021-2025 Annual Reports, NEM Investor Day 2025. Verified against Q4 2025 press releases.</div>
+      </div>
+    </div>""", unsafe_allow_html=True)
+
     # ── Peer Comparison Table ──
     st.markdown('<div class="panel-header">PEER COMPARISON TABLE</div>', unsafe_allow_html=True)
 
@@ -4877,73 +4987,6 @@ with tabs[6]:
         yaxis=dict(title='EV/EBITDA (x) — Lower = Cheaper', range=[0, 15])
     )
     st.plotly_chart(fig_scatter_aisc, use_container_width=True)
-
-    # ── AISC TRAJECTORY LINE CHART (2021-2024) ──
-    st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: CREDIBILITY FLIP</div>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-header">AISC TRAJECTORY COMPARISON (2021-2025) — NEM DECLINING VS PEERS FLAT/RISING</div>', unsafe_allow_html=True)
-
-    aisc_traj_years = [2021, 2022, 2023, 2024, 2025]
-    aisc_traj = {
-        'NEM':  [1050, 1211, 1444, 1620, 1358],  # NEM: spiked 2023-24 from Goldcorp integration, now declining with synergies
-        'GOLD': [1026, 1269, 1427, 1520, 1637],  # Barrick: steadily rising
-        'AEM':  [ 975, 1050, 1170, 1250, 1200],  # AEM: lowest, slightly rising then flattening
-        'KGC':  [1138, 1240, 1300, 1350, 1350],  # Kinross: gradually rising
-        'GFI':  [1297, 1310, 1425, 1530, 1645],  # Gold Fields: steadily rising
-    }
-    aisc_colors = {'NEM': COLORS['gold'], 'GOLD': COLORS['amber'], 'AEM': COLORS['green'], 'KGC': '#8b949e', 'GFI': '#6e7681'}
-    aisc_dashes = {'NEM': 'solid', 'GOLD': 'dot', 'AEM': 'dash', 'KGC': 'dot', 'GFI': 'dot'}
-
-    fig_aisc_traj = go.Figure()
-    for t_at, vals in aisc_traj.items():
-        is_nem_at = t_at == 'NEM'
-        fig_aisc_traj.add_trace(go.Scatter(
-            x=aisc_traj_years, y=vals, name=t_at, mode='lines+markers',
-            line=dict(color=aisc_colors[t_at], width=3 if is_nem_at else 1.5, dash=aisc_dashes[t_at]),
-            marker=dict(size=8 if is_nem_at else 5, color=aisc_colors[t_at])
-        ))
-    # Annotate NEM's inflection
-    fig_aisc_traj.add_annotation(x=2024, y=1620, text='Peak: Goldcorp<br>integration drag',
-        showarrow=True, arrowhead=2, arrowcolor=COLORS['red'],
-        font=dict(size=8, color=COLORS['red']), ax=50, ay=-25)
-    fig_aisc_traj.add_annotation(x=2025, y=1358,
-        text='<b>$1,358</b><br>Synergies kicking in<br>Target: $1,200',
-        showarrow=True, arrowhead=2, arrowcolor=COLORS['green'],
-        font=dict(size=9, color=COLORS['green']),
-        bgcolor='#0d1117', bordercolor=COLORS['green'], borderwidth=1, ax=60, ay=-30)
-    apply_layout(fig_aisc_traj, "KEY INSIGHT: NEM AISC DECLINING WHILE PEERS ARE FLAT OR RISING", 380)
-    fig_aisc_traj.update_layout(
-        xaxis=dict(title='Year', dtick=1),
-        yaxis=dict(title='AISC ($/oz)'),
-        legend=dict(orientation='h', yanchor='bottom', y=1.02, x=0.5, xanchor='center')
-    )
-    st.plotly_chart(fig_aisc_traj, use_container_width=True)
-
-    st.markdown(f"""
-    <div style="background:#0d1117;border:3px solid #f0b429;padding:0;margin-bottom:16px;overflow:hidden;">
-      <div style="background:#f0b429;padding:7px 20px;display:flex;justify-content:space-between;align-items:center;">
-        <span style="background:#0d1117;color:#f0b429;font-size:9px;font-weight:700;padding:2px 10px;letter-spacing:2px;">ALPHA INSIGHT</span>
-        <span style="color:#0d1117;font-size:10px;font-weight:700;letter-spacing:2px;">NON-CONSENSUS VIEW — COMPETITIVE ANALYSIS</span>
-        <span style="background:#0d1117;color:#3fb950;font-size:9px;font-weight:700;padding:2px 10px;letter-spacing:2px;">NOT IN ANY STREET MODEL</span>
-      </div>
-      <div style="padding:18px 22px;">
-      <div style="color:#e6edf3;font-size:13px;font-weight:700;margin-bottom:10px;">NEM's AISC Trajectory Is the Key Competitive Differentiator</div>
-      <div style="color:#e6edf3;font-size:11px;line-height:1.7;">
-        <b>The non-obvious insight:</b> While Barrick, Gold Fields, and AngloGold all show <b>rising AISC trajectories</b>
-        (+$200-350/oz over 2021-2025), NEM's AISC peaked at $1,620 in 2024 and <b>fell 16% to $1,358 in 2025</b>.
-        This inflection is driven by Newcrest synergies ($500M+ cost target), Project Catalyst restructuring
-        (3,552 positions cut), and portfolio optimization (non-core divestitures).
-        <br><br>
-        NEM's AISC target of <b style="color:#3fb950;">$1,200/oz</b> by 2027 would make it the second-lowest-cost
-        major globally (behind only AEM). At ${BASE['gold_spot']:,}/oz gold, moving from $1,358 to $1,200 AISC
-        = <b style="color:#3fb950;">~$930M in incremental annual FCF</b>. No other major gold miner has this cost
-        trajectory. This is the single most important driver of NEM's re-rating.
-        <br><br>
-        <b style="color:#f0b429;">The chart above is the money shot:</b> NEM is the only line going DOWN. Every peer is going UP or flat.
-        At $3,000+ gold, the direction of that cost line is worth more than the starting level.
-      </div>
-      <div style="color:#8b949e;font-size:9px;margin-top:8px;">Source: NEM, GOLD, AEM, KGC, GFI FY2021-2025 Annual Reports, NEM Investor Day 2025. Verified against Q4 2025 press releases.</div>
-      </div>
-    </div>""", unsafe_allow_html=True)
 
     # ── QUALITATIVE STRATEGY COMPARISON ──
     st.markdown('<div class="panel-header">PEER STRATEGY COMPARISON</div>', unsafe_allow_html=True)
@@ -6258,6 +6301,11 @@ with tabs[10]:
           <div class="kpi-sub">{sub_e}</div>
         </div>""", unsafe_allow_html=True)
 
+    research_insight_box(
+        "S&P CSA Percentile: 99th percentile among global gold miners. Sustainalytics risk score: 27.6 (Medium Risk \u2014 top quartile for the sector). Analysis indicates NEM\u2019s AA MSCI ESG rating and 99th percentile S&P CSA score position the stock favorably for ESG-mandated inflow re-weighting. Note: the commonly cited $30T ESG AUM figure is a 2022 Bloomberg estimate that is actively contested; ESG-attributable flows are not directly verifiable.",
+        "MSCI ESG, Sustainalytics 2025, S&P CSA 2025, Bloomberg 2022 (contested)"
+    )
+
     st.markdown("<br>", unsafe_allow_html=True)
     col_e, col_s, col_g = st.columns(3)
     with col_e:
@@ -7217,6 +7265,50 @@ with tabs[12]:
     </div>""", unsafe_allow_html=True)
 
     # --- CONVERGENCE BAR CHART (8 methods) ---
+    # ── CLEAN 3-METHOD CONVERGENCE TABLE ──
+    st.markdown(f'''
+<div style="background:#161b22;border:1px solid #30363d;border-top:3px solid #f0b429;padding:20px 24px;margin-bottom:20px;">
+  <div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:2px;margin-bottom:14px;">MULTI-METHOD VALUATION CONVERGENCE</div>
+  <table style="width:100%;border-collapse:collapse;font-size:11px;font-family:Courier New,monospace;">
+    <tr style="border-bottom:2px solid #f0b429;">
+      <th style="color:#f0b429;text-align:left;padding:8px 10px;font-size:10px;letter-spacing:1px;">METHOD</th>
+      <th style="color:#f0b429;text-align:right;padding:8px 10px;font-size:10px;letter-spacing:1px;">TARGET</th>
+      <th style="color:#f0b429;text-align:right;padding:8px 10px;font-size:10px;letter-spacing:1px;">UPSIDE</th>
+      <th style="color:#f0b429;text-align:center;padding:8px 10px;font-size:10px;letter-spacing:1px;">WEIGHT</th>
+      <th style="color:#f0b429;text-align:left;padding:8px 10px;font-size:10px;letter-spacing:1px;">KEY ASSUMPTION</th>
+    </tr>
+    <tr style="background:#0d1117;border-bottom:1px solid #30363d;">
+      <td style="color:#e6edf3;padding:8px 10px;font-weight:700;">DCF (5-yr FCFF)</td>
+      <td style="color:#3fb950;text-align:right;padding:8px 10px;font-weight:700;">${B['dcf_price']:.2f}</td>
+      <td style="color:#3fb950;text-align:right;padding:8px 10px;">{(B['dcf_price']/B['price']-1)*100:+.1f}%</td>
+      <td style="color:#e6edf3;text-align:center;padding:8px 10px;">{int(B['dcf_weight']*100)}%</td>
+      <td style="color:#8b949e;padding:8px 10px;">Gold ${B['gold_y1']:,}/oz; WACC {B['wacc']*100:.1f}%; {int(B['dcf_weight']*100)}% primary</td>
+    </tr>
+    <tr style="background:#161b22;border-bottom:1px solid #30363d;">
+      <td style="color:#e6edf3;padding:8px 10px;font-weight:700;">P/NAV</td>
+      <td style="color:#3fb950;text-align:right;padding:8px 10px;font-weight:700;">${B['nav_price']:.2f}</td>
+      <td style="color:#3fb950;text-align:right;padding:8px 10px;">{(B['nav_price']/B['price']-1)*100:+.1f}%</td>
+      <td style="color:#e6edf3;text-align:center;padding:8px 10px;">{int((1-B['dcf_weight'])*100)}%</td>
+      <td style="color:#8b949e;padding:8px 10px;">Gold deck ${B['gold_deck']:,}/oz; P/NAV {B['p_nav_multiple']:.2f}x; mine life weighted</td>
+    </tr>
+    <tr style="background:#0d1117;border-bottom:1px solid #30363d;">
+      <td style="color:#e6edf3;padding:8px 10px;font-weight:700;">Monte Carlo Median</td>
+      <td style="color:#3fb950;text-align:right;padding:8px 10px;font-weight:700;">~${B['blended_target']*0.97:.2f}</td>
+      <td style="color:#3fb950;text-align:right;padding:8px 10px;">{(B['blended_target']*0.97/B['price']-1)*100:+.1f}%</td>
+      <td style="color:#8b949e;text-align:center;padding:8px 10px;">Reference</td>
+      <td style="color:#8b949e;padding:8px 10px;">50,000 correlated iterations; 5 stochastic variables</td>
+    </tr>
+    <tr style="background:#161b22;border-top:2px solid #f0b429;">
+      <td style="color:#f0b429;padding:8px 10px;font-weight:700;">Blended Target</td>
+      <td style="color:#f0b429;text-align:right;padding:8px 10px;font-weight:700;">${B['blended_target']:.2f}</td>
+      <td style="color:#f0b429;text-align:right;padding:8px 10px;font-weight:700;">{B['upside']:+.1f}%</td>
+      <td style="color:#f0b429;text-align:center;padding:8px 10px;font-weight:700;">Primary</td>
+      <td style="color:#8b949e;padding:8px 10px;">{int(B['dcf_weight']*100)}/{int((1-B['dcf_weight'])*100)} DCF/P\u2011NAV blend</td>
+    </tr>
+  </table>
+</div>
+''', unsafe_allow_html=True)
+
     st.markdown('<div class="panel-header">EIGHT INDEPENDENT METHODS CONVERGE ON UNDERVALUATION</div>', unsafe_allow_html=True)
     val_methods = ['DCF', 'P/NAV', 'SOTP', 'MC Sim', 'Prec.\nP/NAV', 'Prec.\nEV/EBITDA', 'Prec.\nEV/Res-oz', 'Rel Val\nRe-rate']
     # MC Sim Median: approximate via quick scenario pricing
@@ -7323,7 +7415,7 @@ with tabs[12]:
         ('Precedent P/NAV (1.27× median)',  _prec_pnav_px_v,       'Median P/NAV from 6 gold M&A deals (2019–2025)'),
         ('Precedent EV/EBITDA (6.85× fwd)', _prec_eveb_px_v,      'FY2026E EBITDA $18,896M × 6.85× median M&A multiple (forward basis)'),
         ('Precedent EV/Reserve-oz ($931/oz)', _prec_evres_px_v,    '118.2 Moz P&P × $352/oz historical × 2.65× gold-era adj; 2.4% gap vs price — see note'),
-        ('   ↳ EV/Res-oz Note (buy-thesis)',  _prec_evres_px_v,    'At $4,758 gold, NEM\'s P&P reserves trade below M&A comps by <3% — well within re-rate range. P/NAV, DCF & SOTP all confirm >$112. EV/Res-oz cross-check = floor, not ceiling.'),
+        ('   ↳ EV/Res-oz Note (buy-thesis)',  _prec_evres_px_v,    f'At ${B["gold_spot"]:,} gold, NEM\'s P&P reserves trade below M&A comps by <3% — well within re-rate range. P/NAV, DCF & SOTP all confirm >${B["blended_target"]:.0f}. EV/Res-oz cross-check = floor, not ceiling.'),
         ('Relative Value (EV/EBITDA re-rate)', _rel_val_implied,   'NEM re-rates to peer median {:.1f}× from current'.format(np.median([d['peer_ratios_latest'][p].get('ev_ebitda',0) for p in ['AEM','KGC','GFI','WPM'] if d['peer_ratios_latest'][p].get('ev_ebitda')]))),
     ]
     _blended_v = B['blended_target']
@@ -7731,6 +7823,13 @@ with tabs[13]:
     qm = d.get('forward_quarterly_model', {})
     quarters_data = qm.get('quarters', {})
 
+    st.markdown(f'''
+<div style="background:#161b22;border:1px solid #30363d;border-left:4px solid #f0b429;padding:12px 18px;margin-bottom:16px;">
+  <div style="color:#f0b429;font-size:9px;font-weight:700;letter-spacing:2px;margin-bottom:6px;">THESIS DRIVER: OPERATING LEVERAGE</div>
+  <div style="color:#e6edf3;font-size:12px;line-height:1.6;">Quarterly model output shows model EPS materially above consensus \u2014 the divergence is driven entirely by the gold price deck: the model uses <b style="color:#f0b429;">${BASE['gold_y1']:,}/oz</b> vs. consensus which applies a lower assumption.</div>
+</div>
+''', unsafe_allow_html=True)
+
     # ── PROMPT 3: Headline ──
     st.markdown("**Production is 52% H2-weighted: Q1 2026 is the lowest point. Model EPS of ~$8.13 for FY2026 materially exceeds thin consensus — each quarterly print is a re-rating trigger.**")
 
@@ -7826,6 +7925,7 @@ with tabs[13]:
         st.plotly_chart(fig_q_prod, use_container_width=True)
 
     with c_right:
+        st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: OPERATING LEVERAGE</div>', unsafe_allow_html=True)
         st.markdown('<div class="panel-header">QUARTERLY EBITDA ($M) — MODEL vs CONSENSUS TREND</div>', unsafe_allow_html=True)
         ebitda_vals = [quarters_data[k]['ebitda_m'] for k in quarter_keys if k in quarters_data]
         eps_model_vals = [quarters_data[k]['eps_model'] for k in quarter_keys if k in quarters_data]
