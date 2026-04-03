@@ -1338,6 +1338,7 @@ tabs = st.tabs([
 # TAB 1 — THESIS NARRATIVE
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[0]:
+    research_data_badge()
     B = BASE
 
     # ── PROMPT 3: Headline ──
@@ -1384,17 +1385,17 @@ with tabs[0]:
         <div style="background:#0d1117;border-left:3px solid #f0b429;padding:16px 20px;margin-bottom:16px;">
           <div style="color:#f0b429;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE STARTING POINT</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
-        Starting where everyone starts: a DCF model that said Newmont was cheap. $149.24 implied value
-        versus ${B['price']:.2f} market price. Fine. Every team in this competition will have a DCF that says NEM
-        is undervalued. That's the consensus view dressed up in a spreadsheet.
+        Standard DCF analysis implies a value of $149.24 per share versus the current market price of
+        ${B['price']:.2f}. Every team in this competition can produce a DCF that says NEM is undervalued.
+        That is the consensus view dressed up in a spreadsheet. The differentiated question is what the
+        market <i>must believe</i> to justify the current price.
         <br><br>
-        The interesting part came when running the model backward. The question: what gold price does the
-        <i>market</i> need to believe to justify the current stock price? The answer was
-        <b style="color:#f85149;">${B['implied_gold']:,.0f}/oz</b> &mdash; a
-        <b style="color:#f85149;">{B['gold_gap_pct']:.0f}% discount</b> to the current spot
-        of ${B['gold_spot']:,}/oz. That's not a small disagreement. That's the market saying gold is
-        going back to 2023 levels and staying there. The question: does the market know something not reflected in the data,
-        or is it simply wrong.
+        Running the DCF in reverse yields a specific answer: the market is pricing NEM as if gold
+        settles at <b style="color:#f85149;">${B['implied_gold']:,.0f}/oz</b> long-term &mdash; a
+        <b style="color:#f85149;">{B['gold_gap_pct']:.0f}% discount</b> to the current spot of
+        ${B['gold_spot']:,}/oz. That is not a small disagreement. That is the market forecasting a
+        return to 2023 gold levels and holding there. Eight alternative data channels test whether
+        that implied view is supported by observable evidence.
           </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1407,11 +1408,12 @@ with tabs[0]:
               <div style="color:#f85149;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:700;">
                 THE REVERSE DCF INSIGHT</div>
           <div style="color:#e6edf3;font-size:13px;line-height:1.7;">
-            Run the model backward: what gold price justifies NEM at ${B['price']:.2f}?
-            Answer: <b style="color:#f85149;">${B['implied_gold']:,.0f}/oz</b>. Gold actually trades at
-            <b style="color:#3fb950;">${B['gold_spot']:,}/oz</b>. That's a
-            <b style="color:#d29922;">{B['gold_gap_pct']:.0f}% gap</b> &mdash; the market is betting
-            gold reverts to 2023 levels. The 8 checks below test whether it will.</div>
+            Reverse DCF analysis: what gold price justifies NEM at ${B['price']:.2f}?
+            Answer: <b style="color:#f85149;">${B['implied_gold']:,.0f}/oz</b>. Gold trades at
+            <b style="color:#3fb950;">${B['gold_spot']:,}/oz</b>. That is a
+            <b style="color:#d29922;">{B['gold_gap_pct']:.0f}% gap</b> &mdash; the market is embedding
+            a reversion to 2023 gold levels. Eight channel checks below test whether the evidence
+            supports that implied view.</div>
         </div>
         <div style="text-align:center;min-width:140px;">
           <div style="color:#f85149;font-size:28px;font-weight:700;">${B['implied_gold']:,.0f}</div>
@@ -2737,6 +2739,7 @@ with tabs[2]:
 # TAB 4 — COMPANY PROFILE (PROFILE + RETURNS + ROIC)
 # ═════════════════════════════════════════════════════════════════════════════
 with tabs[3]:
+    live_data_badge()
     d = DATA
     f = d['nem_annual_financials']
     yrs_p = ['2021', '2022', '2023', '2024', '2025']
@@ -5723,7 +5726,18 @@ with tabs[7]:
 
     source_footer("Model Calculations, NEM Filings, Alternative Data Channel Checks (see ALT DATA tab)", tier=2)
 
-    with st.expander("Monte Carlo Simulation", expanded=False):
+    # ── Plain-English MC summary — VISIBLE above expander (Prompt 7) ──
+    st.markdown(f'''
+    <div style="background:#161b22;border-left:3px solid #00b4d8;padding:16px;margin:12px 0;">
+      <div style="color:#00b4d8;font-size:10px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;">⚡ MONTE CARLO — METHODOLOGY SUMMARY</div>
+      <div style="color:#e6edf3;font-size:13px;line-height:1.6;">
+        The Monte Carlo simulation runs <span style="font-family:Courier New;">50,000</span> correlated iterations across five key value drivers — gold price, AISC, production volume, WACC, and exit multiple — drawing from historically calibrated distributions. The output shows the full probability distribution of NEM intrinsic value under realistic uncertainty. The two most decision-relevant statistics: the median output, and the probability of exceeding the current share price of <span style="font-family:Courier New;">${BASE['price']:.2f}</span>.
+      </div>
+      <div style="color:#8b949e;font-size:10px;margin-top:8px;">Gold-multiple correlation ρ = {st.session_state.get('mc_rho', 0.7):.2f} | Gold vol σ = {st.session_state.get('mc_gold_sigma', 0.35):.0%} | Iterations: 50,000 | Seed: fixed (reproducible)</div>
+    </div>
+    ''', unsafe_allow_html=True)
+
+    with st.expander("Monte Carlo Simulation — Full Model & Distribution", expanded=False):
         st.markdown('''
         <div style="background:#0d1117;border-left:3px solid #00b4d8;padding:16px;margin-bottom:16px;">
           <div style="color:#e6edf3;font-size:13px;line-height:1.7;">
@@ -5732,7 +5746,46 @@ with tabs[7]:
         </div>
         ''', unsafe_allow_html=True)
 
-        insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; returns structure is the cushion. Next tab: how NEM pays holders to wait.")
+        insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; the capital returns structure is the cushion.")
+
+        with st.expander("▶ Simulation Parameters — Input Distributions & Sources", expanded=False):
+            st.markdown(f'''
+<div style="background:#0d1117;border:1px solid #30363d;padding:16px;">
+  <div style="color:#f0b429;font-size:10px;font-weight:bold;letter-spacing:2px;margin-bottom:12px;">SIMULATION PARAMETERS — 50,000 ITERATIONS</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:10px;">
+    <div style="border-left:2px solid #30363d;padding-left:8px;">
+      <b style="color:#e6edf3;">Gold Price</b><br>
+      <span style="color:#8b949e;">Distribution: Lognormal | μ = ln(${BASE['gold_y1']:,}) | σ = {st.session_state.get('mc_gold_sigma', 0.35):.0%}<br>
+      Source: 10-year realized gold volatility (LBMA spot); σ = 0.35 is conservative vs. realized 0.40+</span>
+    </div>
+    <div style="border-left:2px solid #30363d;padding-left:8px;">
+      <b style="color:#e6edf3;">EV/EBITDA Exit Multiple</b><br>
+      <span style="color:#8b949e;">Distribution: Normal | μ = {BASE['peer_median_evebda']:.1f}x | σ = 1.8x | Corr with gold = {st.session_state.get('mc_rho', 0.7):.2f}<br>
+      Source: NEM 5yr multiple range 7–14x; peer median 11.2x (AEM, GOLD, KGC, GFI)</span>
+    </div>
+    <div style="border-left:2px solid #30363d;padding-left:8px;">
+      <b style="color:#e6edf3;">WACC</b><br>
+      <span style="color:#8b949e;">Distribution: Normal | μ = {BASE['wacc']*100:.2f}% | σ = 0.6%<br>
+      Source: CAPM — Rf {BASE['rf']*100:.2f}% (10Y UST) + ERP {BASE['erp']*100:.1f}% × β {BASE['beta']:.2f}</span>
+    </div>
+    <div style="border-left:2px solid #30363d;padding-left:8px;">
+      <b style="color:#e6edf3;">AISC</b><br>
+      <span style="color:#8b949e;">Distribution: Lognormal | μ = ${BASE['aisc_y1']:,}/oz | σ = 8%<br>
+      Source: NEM FY2025 actual $1,358/oz; FY2026 guidance $1,680/oz by-product basis</span>
+    </div>
+    <div style="border-left:2px solid #30363d;padding-left:8px;">
+      <b style="color:#e6edf3;">Production Volume</b><br>
+      <span style="color:#8b949e;">Distribution: Lognormal | μ = {BASE['prod_schedule'][0]:.1f} Moz | σ = 5%<br>
+      Source: NEM FY2026 guidance 5.3 Moz; model applies -3.8% historical production haircut</span>
+    </div>
+    <div style="border-left:2px solid #30363d;padding-left:8px;">
+      <b style="color:#e6edf3;">Convergence</b><br>
+      <span style="color:#8b949e;">Running median stabilizes at ~5,000 iterations (1/10th of full run).<br>
+      50,000 iterations selected for distributional stability per simulation best practice.</span>
+    </div>
+  </div>
+</div>
+''', unsafe_allow_html=True)
 
         st.markdown('<div style="color:#f0b429;font-size:11px;font-weight:bold;letter-spacing:1.5px;margin-bottom:6px;border-left:2px solid #f0b429;padding-left:8px;">THESIS DRIVER: OPERATING LEVERAGE</div>', unsafe_allow_html=True)
 
