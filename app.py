@@ -447,7 +447,7 @@ PLOT_LAYOUT = dict(
 COLORS = {
     'bg': '#0d1117', 'panel': '#161b22', 'border': '#30363d',
     'text': '#e6edf3', 'muted': '#8b949e',
-    'gold': '#f0b429', 'teal': '#00b4d8', 'green': '#3fb950', 'red': '#f85149', 'amber': '#d29922',
+    'gold': '#f0b429', 'teal': '#00b4d8', 'blue': '#00b4d8', 'green': '#3fb950', 'red': '#f85149', 'amber': '#d29922',
 }
 
 def apply_layout(fig, title='', height=400):
@@ -486,7 +486,7 @@ DEFAULTS = {
         'why': 'Conservative estimate below bank consensus average of $5,720. Uses ~90% of avg to avoid dependence on aggressive forecasts. Banks: JPM $6,300, GS $5,400, UBS $6,200, MS $5,700, Citi $5,000.',
         'source': 'Bank research reports (JPM, GS, UBS, MS, Citi), as of Mar 2026'},
     'gold_escalation': {'value': 3.0, 'label': 'Gold Annual Escalation (%)',
-        'why': 'Long-run gold appreciation: ~2% inflation + ~1% real return. Historical 20-year CAGR ~8%, but we use 3% for conservatism.',
+        'why': 'Long-run gold appreciation: ~2% inflation + ~1% real return. Historical 20-year CAGR ~8%, but 3% is used for conservatism.',
         'source': 'World Gold Council historical data'},
     'production_y1': {'value': 5.3, 'label': 'Production Year 1 (Moz)',
         'why': "NEM's FY2026 production guidance. Conservative vs. 2025 actual of 5.9 Moz to account for mine sequencing.",
@@ -1258,17 +1258,17 @@ with tabs[0]:
         <div style="background:#0d1117;border-left:3px solid #f0b429;padding:16px 20px;margin-bottom:16px;">
           <div style="color:#f0b429;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE STARTING POINT</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
-        I started where everyone starts: a DCF model that said Newmont was cheap. $149.24 implied value
+        Starting where everyone starts: a DCF model that said Newmont was cheap. $149.24 implied value
         versus ${B['price']:.2f} market price. Fine. Every team in this competition will have a DCF that says NEM
         is undervalued. That's the consensus view dressed up in a spreadsheet.
         <br><br>
-        The interesting part came when I ran the model backward. I asked: what gold price does the
+        The interesting part came when running the model backward. The question: what gold price does the
         <i>market</i> need to believe to justify the current stock price? The answer was
         <b style="color:#f85149;">${B['implied_gold']:,.0f}/oz</b> &mdash; a
         <b style="color:#f85149;">{B['gold_gap_pct']:.0f}% discount</b> to the current spot
         of ${B['gold_spot']:,}/oz. That's not a small disagreement. That's the market saying gold is
-        going back to 2023 levels and staying there. I wanted to know if the market knew something I didn't,
-        or if it was just wrong.
+        going back to 2023 levels and staying there. The question: does the market know something not reflected in the data,
+        or is it simply wrong.
           </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1302,14 +1302,14 @@ with tabs[0]:
         <div style="background:#0d1117;border-left:3px solid #3fb950;padding:16px 20px;margin-bottom:16px;">
           <div style="color:#3fb950;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE 8 CHANNEL CHECKS</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
-        So I ran 8 alternative data channel checks using Perplexity Computer &mdash; the kind of research
+        Running 8 alternative data channel checks using Perplexity Computer &mdash; the kind of research
         that usually costs a Bloomberg terminal, an expert network subscription, and a team of junior analysts.
         Here's what actually happened:
         <br><br>
-        <b style="color:#3fb950;">Job postings.</b> I went to jobs.newmont.com expecting to find post-restructuring
-        attrition &mdash; Project Catalyst cut exactly 3,552 positions in 2024. Instead I found active hiring:
+        <b style="color:#3fb950;">Job postings.</b> Checking jobs.newmont.com expecting to find post-restructuring
+        attrition &mdash; Project Catalyst cut exactly 3,552 positions in 2024. Instead found active hiring:
         Boddington had 22 open roles, Tanami had 12, Ahafo had 5. They're recruiting for a <i>2027 Graduate Program</i>
-        in mine surveying and mining engineering. You don't recruit graduates into a shrinking operation.
+        in mine surveying and mining engineering. Graduates aren't recruited into a shrinking operation.
         <br><br>
         <b style="color:#3fb950;">Analyst revisions.</b> 4 upgrades, 0 downgrades in 6 months. Bernstein's Bob Brackett
         upgraded to Outperform on Feb 27, target $121&rarr;$157. Citigroup's Alexander Hacking raised to $150
@@ -1318,11 +1318,11 @@ with tabs[0]:
         <br><br>
         <b style="color:#3fb950;">Earnings call tone.</b> Daniel Morgan (Barrenjoey) asked on Q2 if guidance was
         "pitched conservatively." Adam Baker (Macquarie) asked on Q4 if the $2,000/oz reserve price was
-        "still too conservative." CTechO Hardy's reply: <i>"our reserve price assumption remains conservative
+        "still too conservative." CTechO Hardy's reply: <i>"the reserve price assumption remains conservative
         at more than 20% below the three-year trailing average."</i> With gold at ${B['gold_spot']:,}, that reserve price
         is 56% below spot. Tone scores: Q2 3.6 (31 negative mentions) &rarr; Q3 4.5 (only 7 negatives) &rarr; Q4 4.1.
         <br><br>
-        <b style="color:#3fb950;">The copper surprise.</b> This one I didn't expect. A study of Microsoft's
+        <b style="color:#3fb950;">The copper surprise.</b> An unexpected finding. A study of Microsoft's
         Chicago facility found 2,177 tonnes of copper for ~80 MW &mdash; 27 t/MW. S&amp;P Global (Jan 2026)
         puts AI training facilities at up to 47 t/MW. Goldman Sachs forecasts 122 GW of data center capacity
         by 2030. S&amp;P Global projects a <b>10 Mt copper supply shortfall by 2040</b>. Cadia produced
@@ -1336,9 +1336,9 @@ with tabs[0]:
         <div style="background:#0d1117;border-left:3px solid #d29922;padding:16px 20px;margin-bottom:16px;">
           <div style="color:#d29922;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">WHAT ALMOST KILLED THE THESIS</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
-        Around check #5, I found the stuff that made me uncomfortable.
+        Around check #5, the analysis surfaced material concerns.
         <br><br>
-        <b style="color:#f85149;">Insider selling.</b> I pulled all 81 Form 4 filings. Zero purchases.
+        <b style="color:#f85149;">Insider selling.</b> All 81 Form 4 filings were reviewed. Zero purchases.
         21 open-market sales: 81,989 shares, $7.59M, by 7 insiders. Most were scheduled 10b5-1 plans &mdash;
         Bruce Brook sold exactly ~2,078 shares monthly like clockwork. But EVP David Fry sold 18,394 shares
         at $111.45 on Mar 16 ($2.05M) with <i>no confirmed 10b5-1 plan</i>. NEM fell 7.1% the next day.
@@ -1359,7 +1359,7 @@ with tabs[0]:
         later, but Viljoen confirmed on the Q4 call: <i>"we stopped all work on the shaft infrastructure."</i>
         TE2 is a key 2027 catalyst. Delay risk is real.
         <br><br>
-        I built all four of these into the Risk tab. None of them broke the thesis individually. But together
+        All four of these are built into the Risk tab. None of them broke the thesis individually. But together
           they explain why the stock trades at a discount &mdash; and why that discount is larger than it should be.
           </div>
         </div>
@@ -1370,8 +1370,8 @@ with tabs[0]:
         <div style="background:#0d1117;border-left:3px solid #f0b429;padding:16px 20px;margin-bottom:16px;">
           <div style="color:#f0b429;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">THE CREDIBILITY QUESTION</div>
       <div style="color:#e6edf3;font-size:11px;line-height:1.8;">
-        Before I put any weight on forward guidance, I tested whether NEM management deserves the
-        benefit of the doubt. I pulled 10 years of initial guidance vs. actual results (2015&ndash;2025,
+        Before weighting forward guidance, the analysis tested whether NEM management deserves the
+        benefit of the doubt. Pulling 10 years of initial guidance vs. actual results (2015&ndash;2025,
         excluding 2019's Goldcorp structural break) for production and AISC.
         <br><br>
         <b>The honest answer: they beat production guidance in only 2 of 10 comparable years</b> (2016 and 2017,
@@ -1384,7 +1384,7 @@ with tabs[0]:
         Agnico Eagle (AEM) is the gold standard &mdash; +0.1% average deviation post-merger, never missed
         (excl. 2020 COVID force majeure). NEM's recent trajectory is converging toward Barrick-level, not yet AEM-level.
         <br><br>
-        I haircut our production estimate to 5.11 Moz (&minus;2.9% vs. guided 5.26 Moz). At ${B['gold_spot']:,} gold
+        Applied a haircut to the production estimate: 5.11 Moz (&minus;2.9% vs. guided 5.26 Moz). At ${B['gold_spot']:,} gold
         and $1,680 AISC, each 100 Koz of production variance equals ~${(B['gold_spot'] - 1680) * 100000 / 1e6:.0f}M in FCF. The &minus;2.9% haircut
           puts $443M of FCF at risk vs. guidance &mdash; that's the credibility gap, quantified.
           </div>
@@ -1420,7 +1420,7 @@ with tabs[0]:
         <b>"Management is new and unproven."</b> &mdash; Correct. Viljoen started Jan 2026. But she inherits net cash of $7.2B,
         Piotroski 9/9, and a completed portfolio transformation. The hard work is done.
         Track 2026 guidance delivery as the validation trigger.<br>
-        <b>"Insider selling is a red flag."</b> &mdash; I agree it's cautionary. 81 Form 4 filings, zero purchases,
+        <b>"Insider selling is a red flag."</b> &mdash; Agreed, it's cautionary. 81 Form 4 filings, zero purchases,
         21 sales (81,989 shares / $7.59M). Most were 10b5-1 plans, but David Fry's $2.05M sale had no confirmed plan.
           Flagged neutral-bearish — absence of buying is absence of conviction.
           </div>
@@ -1430,7 +1430,7 @@ with tabs[0]:
     # KILL CRITERIA (visible — exit triggers are always above the fold) — explicit exit conditions for investment discipline
     st.markdown(f"""
     <div style="background:#0d1117;border:2px solid #f85149;padding:16px 20px;margin-bottom:16px;">
-      <div style="color:#f85149;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">KILL CRITERIA &mdash; WE EXIT IF:</div>
+      <div style="color:#f85149;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">KILL CRITERIA &mdash; EXIT IF:</div>
       <div style="color:#e6edf3;font-size:11px;line-height:2.0;">
         <b style="color:#f85149;">1.</b> Gold spot below <b>$3,500/oz for 3 consecutive months.</b><br>
         <b style="color:#f85149;">2.</b> Q1 2026 AISC above <b>$1,850/oz</b> (Apr 23 earnings).<br>
@@ -1479,7 +1479,7 @@ with tabs[0]:
                 'tool': 'Perplexity Premium (Deep Research)',
                 'query': 'Ghana gold mining royalty changes 2025-2026 impact on Newmont Ahafo',
                 'finding': 'Discovered Ghana Minerals and Mining (Royalties) Regulations, 2025 enacted March 9, 2026 &mdash; a windfall royalty regime that NEM <b>excluded from FY2026 guidance</b>. Perplexity Premium cross-referenced the Ghana Minerals Commission filing with NEM&rsquo;s Q4 2025 10-K (pg. 48) to confirm the ~$50/oz incremental cost on Ahafo South/North output (~575 Koz).',
-                'assumption_change': 'Raised AISC assumption from $1,680/oz (guidance) to $1,730&ndash;1,780/oz. This is our first non-consensus call: consensus models $0 Ghana royalty impact.',
+                'assumption_change': 'Raised AISC assumption from $1,680/oz (guidance) to $1,730&ndash;1,780/oz. This is the first non-consensus call: consensus models $0 Ghana royalty impact.',
                 'feeds': 'Tab 2 (CMD CENTER non-consensus call #1), Tab 4 (MINES), Tab 8 (RISK)',
                 'color': COLORS['amber'],
             },
@@ -1495,7 +1495,7 @@ with tabs[0]:
                 'tool': 'Perplexity Search + Premium',
                 'query': 'Newmont production guidance vs actuals 2015-2025 annual miss rate',
                 'finding': 'Perplexity Search pulled NEM annual reports (2015-2025) and earnings releases. Premium deep research compiled the 10-year time series and identified the Goldcorp acquisition (2019) as a structural break: pre-2019 avg miss was &minus;1.2%, post-2019 was &minus;5.1%. Benchmarking against Barrick (&minus;3.8%) and AEM (&minus;0.3%) showed NEM is the weakest on credibility.',
-                'assumption_change': 'Applied &minus;2.9% credibility haircut to our production assumption (5.26 &times; 0.971 = 5.11 Moz effective). This haircut flows through DCF, reducing target by ~$4. No sell-side model applies this adjustment.',
+                'assumption_change': 'Applied &minus;2.9% credibility haircut to the production assumption (5.26 &times; 0.971 = 5.11 Moz effective). This haircut flows through DCF, reducing target by ~$4. No sell-side model applies this adjustment.',
                 'feeds': 'Tab 14 (CREDIBILITY), Tab 6 (DCF production input)',
                 'color': COLORS['red'],
             },
@@ -1563,11 +1563,11 @@ with tabs[0]:
         _before_after = [
             ('Reverse DCF Anchor', 'Search',
              'NEM is cheap on P/E vs. peers. Standard BUY thesis.',
-             'Market implies gold at $[implied]/oz — a [gap]% gap to spot $[spot]/oz. This became the thesis anchor and differentiated our entire approach from peer pitches.',
+             'Market implies gold at $[implied]/oz — a [gap]% gap to spot $[spot]/oz. This became the thesis anchor and differentiated this approach from peer pitches.',
              'HIGH', 'No sell-side published an implied-gold reverse DCF for NEM; Perplexity surfaced the raw inputs to solve it'),
             ('Ghana Royalty Impact', 'Premium',
              'Used NEM guidance AISC of $1,680/oz. Ghana royalty = zero.',
-             'Discovered Ghana Minerals and Mining (Royalties) Regulations, 2025 enacted Mar 9, 2026. Raised AISC to $1,730–1,780/oz. Our only non-consensus bearish flag that makes the BUY MORE credible.',
+             'Discovered Ghana Minerals and Mining (Royalties) Regulations, 2025 enacted Mar 9, 2026. Raised AISC to $1,730–1,780/oz. The only non-consensus bearish flag that makes the BUY MORE credible.',
              'HIGH', 'Ghana Minerals Commission filing cross-referenced with NEM Q4 10-K pg. 48 in a single query'),
             ('Insider Trading Signal', 'Computer',
              '"14 insider sales = bearish signal." Thesis would have been weakened.',
@@ -4067,7 +4067,7 @@ with tabs[5]:
         <div style="color:#e6edf3;font-size:13px;line-height:1.7;margin-bottom:12px;">
           Every sell-side analyst treats Cadia's copper as a by-product credit &mdash; a line item that reduces gold AISC.
           <b style="color:#d29922;">None of them assign a standalone copper NAV.</b>
-          We did. At $4.50/lb long-run copper and Cadia's 120 kt/yr ramp, the standalone value is
+          This model does. At $4.50/lb long-run copper and Cadia's 120 kt/yr ramp, the standalone value is
           <b style="color:#d29922;font-size:16px;">$12&ndash;15/share</b> &mdash; value that is mathematically absent
           from every consensus model.
         </div>
@@ -4182,7 +4182,7 @@ with tabs[5]:
     <div style="background:#161b22;border:1px solid #30363d;border-left:3px solid #d29922;padding:10px 16px;font-size:10px;margin-top:4px;">
       <b style="color:#d29922;">COPPER INTEGRATION NOTE:</b> 
       The base DCF (above) prices copper implicitly — it uses NEM's reported AISC which is net of copper credits. 
-      This standalone NAV is <b>additive</b> only if you gross up AISC to exclude the copper credit 
+      This standalone NAV is <b>additive</b> only if AISC is grossed up to exclude the copper credit 
       (i.e., switch to a gold-only AISC ∼$600-900/oz for Cadia and add copper as a separate revenue line). 
       As presented, the copper standalone NAV of <b style="color:#d29922;">${copper_nav_ps_lr:.1f}/sh (LR) – ${copper_nav_ps_spot:.1f}/sh (spot)</b>
       represents the value not captured in a gold-only model that strips copper entirely and uses the net-of-credit AISC.
@@ -5609,7 +5609,7 @@ with tabs[7]:
     source_footer("Model Calculations, NEM Filings, Alternative Data Channel Checks (see ALT DATA tab)", tier=2)
 
     with st.expander("Monte Carlo Simulation", expanded=False):
-        insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; returns structure is the cushion. Next tab: how NEM pays you to wait.")
+        insight_callout("50,000 correlated simulations (converging by ~5,000 iterations) show the probability distribution is skewed to the upside — the median outcome exceeds the current stock price. Valuation is the floor; returns structure is the cushion. Next tab: how NEM pays holders to wait.")
 
 
         st.markdown('<div class="panel-header">MONTE CARLO — 50,000 CORRELATED ITERATIONS</div>', unsafe_allow_html=True)
@@ -6043,11 +6043,11 @@ with tabs[9]:
          'Exact quotes:<br>'
          '&bull; <b>Q2 2025</b>: Daniel Morgan (Barrenjoey) asked if production guidance was "pitched conservatively" &mdash; Palmer deflected without confirming.<br>'
          '&bull; <b>Q4 2025</b>: Adam Baker (Macquarie) asked if the $2,000/oz reserve price is "still too conservative." '
-         'CTechO Fran&ccedil;ois Hardy replied: <i>"Even with this increase, our reserve price assumption remains conservative '
+         'CTechO Fran&ccedil;ois Hardy replied: <i>"Even with this increase, the reserve price assumption remains conservative '
          'at more than 20% below the three-year trailing average and well below spot."</i><br>'
          '&bull; <b>Q4 2025 (Viljoen)</b>: <i>"generating $2.8 billion in free cash flow in the fourth quarter '
          'and $7.3 billion for the full year"</i> &mdash; described as "record" multiple times.<br>'
-         '&bull; <b>Q4 2025 (Viljoen)</b>: <i>"2026 represents a trough in our production cycle due to planned mine sequencing"</i> '
+         '&bull; <b>Q4 2025 (Viljoen)</b>: <i>"2026 represents a trough in the production cycle due to planned mine sequencing"</i> '
          '&mdash; explicit low-bar framing.<br>'
          '<br>'
          'Tone scores: Q1 3.8 (transitional) &rarr; Q2 3.6 (dip, 31 negative mentions) &rarr; Q3 4.5 (peak, only 7 negatives) &rarr; Q4 4.1 (balanced). '
@@ -6098,7 +6098,7 @@ with tabs[9]:
          'Engineer Drill &amp; Blast, Supervisory Officer Construction, Communications Technician, Data Scientist, AHS operators.'
          '<br><br>'
          'Graduate recruitment at Cadia and construction hires at Ahafo North are <b>forward-looking signals</b> &mdash; '
-         'you don&rsquo;t recruit graduates into a shrinking operation. Data science hires confirm digital transformation is real, not PR.',
+         'graduates are not recruited into a shrinking operation. Data science hires confirm digital transformation is real, not PR.',
          'jobs.newmont.com (live fetch Mar 31, 2026), Newmont 2025 10-K, Reuters'),
 
         ('7. COMMUNITY &amp; SAFETY', 'NEUTRAL', COLORS['amber'],
@@ -6207,7 +6207,7 @@ with tabs[9]:
       </div>
     </div>""", unsafe_allow_html=True)
 
-    # Bear case: resolution timeline + what would change our mind (new layer, not repeat)
+    # Bear case: resolution timeline + what would change the thesis (new layer, not repeat)
     st.markdown(f"""
     <div style="background:#161b22;border:2px solid {COLORS['red']};padding:18px;margin-top:8px;">
       <div style="color:{COLORS['red']};font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:10px;">BEAR CASE RESOLUTION CALENDAR &mdash; KEY DATES</div>
@@ -6223,7 +6223,7 @@ with tabs[9]:
         Scope and timeline set. If the court narrows claims, risk is bounded. If expanded, defense costs rise.<br>
         <b style="color:#d29922;">H2 2026:</b> Tanami TE2 shaft work resumption. NT WorkSafe investigation conclusion.
         If TE2 resumes by Q3, 2027 catalyst intact. If delayed past Q4, de-rate TE2 contribution by 6 months.<br>
-        <b style="color:#8b949e;">Ongoing:</b> Insider transactions. We monitor for CEO Viljoen's first 10b5-1 filing.
+        <b style="color:#8b949e;">Ongoing:</b> Insider transactions. Monitoring for CEO Viljoen's first 10b5-1 filing.
         A purchase would be the single strongest bullish signal in the insider data.
       </div>
     </div>""", unsafe_allow_html=True)
@@ -6858,7 +6858,7 @@ with tabs[11]:
           <b style="color:{COLORS['gold']};">Why no sell-side analyst has modeled this:</b> Standard consensus models apply a static discount
           to NEM guidance without tracking the <i>trajectory</i> of miss magnitude over time. By cross-referencing NEM
           Annual Reports (2015&ndash;2025), Goldcorp integration filings, and quarterly earnings transcripts,
-          we identified that the integration tax is essentially paid down &mdash; and that 2026 guidance credibility is
+          the analysis identified that the integration tax is essentially paid down &mdash; and that 2026 guidance credibility is
           structurally different from 2020&ndash;2022. Consensus is still discounting a company that no longer exists.
           <br><br>
           <b style="color:{COLORS['amber']};">Q4 2025 EPS confirmation:</b> Actual $2.52 vs. consensus $1.81 &mdash;
