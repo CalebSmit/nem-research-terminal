@@ -6314,11 +6314,11 @@ with tabs[9]:
          'BHP Insights (Jan 2025), S&P Global (Jan 8, 2026), Goldman Sachs Research (Feb 2025), IEA (Apr 2025), JPMorgan, NEM Q4 2025 earnings'),
     ]
 
-    signal_colors = {‘STRONGLY BULLISH’: ‘#3fb950’, ‘BULLISH’: ‘#3fb950’,
-                     ‘NEUTRAL-TO-BULLISH’: ‘#3fb950’, ‘NEUTRAL-BULLISH’: ‘#3fb950’,
-                     ‘NEUTRAL’: ‘#8b949e’, ‘NEUTRAL-TO-SLIGHTLY-BEARISH’: ‘#8b949e’,
-                     ‘NEUTRAL-BEARISH’: ‘#f85149’, ‘BEARISH’: ‘#f85149’,
-                     ‘MIXED (BEARISH safety/Australia; BULLISH Ghana)’: ‘#8b949e’}
+    signal_colors = {'STRONGLY BULLISH': '#3fb950', 'BULLISH': '#3fb950',
+                     'NEUTRAL-TO-BULLISH': '#3fb950', 'NEUTRAL-BULLISH': '#3fb950',
+                     'NEUTRAL': '#8b949e', 'NEUTRAL-TO-SLIGHTLY-BEARISH': '#8b949e',
+                     'NEUTRAL-BEARISH': '#f85149', 'BEARISH': '#f85149',
+                     'MIXED (BEARISH safety/Australia; BULLISH Ghana)': '#8b949e'}
 
     # ── Channel Check Implications (short finding per channel for expander header) ──
     _cc_implications = {
