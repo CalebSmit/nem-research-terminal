@@ -77,8 +77,20 @@ html, body {
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
-  min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ── SHELL: iframe-safe flex-column layout ─────────────── */
+#shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh; /* dynamic viewport height for iframes */
+  min-height: 100%;
+  overflow: hidden;
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -87,8 +99,8 @@ html, body {
 
 /* ── HEADER ─────────────────────────────────────────────── */
 #header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  position: relative;
+  flex-shrink: 0;
   height: var(--header-h);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -96,7 +108,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .header-brand {
@@ -220,14 +232,13 @@ html, body {
 
 /* ── STORY ARC BAR ───────────────────────────────────────── */
 #story-arc {
-  position: fixed;
-  top: var(--header-h);
-  left: 0; right: 0;
+  position: relative;
+  flex-shrink: 0;
   height: var(--arc-h);
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   display: flex;
-  z-index: 999;
+  z-index: 99;
 }
 
 .arc-phase {
@@ -272,15 +283,14 @@ html, body {
 
 /* ── TAB NAV ─────────────────────────────────────────────── */
 #tab-nav {
-  position: fixed;
-  top: calc(var(--header-h) + var(--arc-h));
-  left: 0; right: 0;
+  position: relative;
+  flex-shrink: 0;
   height: var(--tab-h);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   display: flex;
   overflow-x: auto;
-  z-index: 998;
+  z-index: 98;
   scrollbar-width: none;
 }
 #tab-nav::-webkit-scrollbar { display: none; }
@@ -311,10 +321,11 @@ html, body {
 
 /* ── MAIN CONTENT ────────────────────────────────────────── */
 #main {
-  margin-top: calc(var(--header-h) + var(--arc-h) + var(--tab-h));
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 28px 28px 60px;
   width: 100%;
-  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -702,6 +713,7 @@ html, body {
 </style>
 </head>
 <body>
+<div id="shell">
 
 <!-- ═══════════════════════════════════════════════════════════
      HEADER
@@ -3669,6 +3681,7 @@ html, body {
 </div>
 
 </div><!-- /main -->
+</div><!-- /shell -->
 
 <!-- ═══════════════════════════════════════════════════════════════
      JAVASCRIPT
