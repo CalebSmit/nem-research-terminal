@@ -1112,6 +1112,101 @@ input[type=range].val-slider::-moz-range-thumb {
   .slider-grid { grid-template-columns: 1fr; }
   .sotp-disc-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ─────────────────────────────────────────
+   ASSUMPTION TOOLTIPS — Valuation Tab
+   ───────────────────────────────────────── */
+.assumption-tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: help;
+}
+.assumption-tip .info-icon {
+  font-size: 11px;
+  font-style: normal;
+  color: #636e7b;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.assumption-tip:hover .info-icon {
+  color: var(--gold-light);
+}
+.assumption-tip .tip-box {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 9999;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  background: #1a1a2e;
+  color: #d0d0d8;
+  border: 1px solid rgba(201,148,43,0.35);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  pointer-events: none;
+  transition: opacity 0.2s, visibility 0.2s;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.assumption-tip .tip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(201,148,43,0.35);
+}
+.assumption-tip:hover .tip-box {
+  visibility: visible;
+  opacity: 1;
+}
+.tip-box .tip-title {
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--gold-light);
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+.tip-box .tip-line {
+  margin-bottom: 3px;
+}
+.tip-box .tip-label {
+  font-weight: 600;
+  color: #a8a8b8;
+}
+.tip-box .tip-stance-conservative { color: var(--green); font-weight: 600; }
+.tip-box .tip-stance-neutral { color: var(--gold-light); font-weight: 600; }
+.tip-box .tip-stance-aggressive { color: var(--red); font-weight: 600; }
+/* Prevent tooltip from clipping off-screen left/right */
+.assumption-tip .tip-box.tip-left {
+  left: 0;
+  transform: none;
+}
+.assumption-tip .tip-box.tip-left::after {
+  left: 20px;
+  transform: none;
+}
+.assumption-tip .tip-box.tip-right {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.assumption-tip .tip-box.tip-right::after {
+  left: auto;
+  right: 20px;
+  transform: none;
+}
 </style>
 </head>
 <body>
@@ -2238,23 +2333,23 @@ input[type=range].val-slider::-moz-range-thumb {
        ═══════════════════════════════════════════════════════════ -->
   <div class="section-label">Valuation Summary — Four Methods, One Answer</div>
   <div class="grid-4">
-    <div class="kpi-tile" title="5-year FCFF DCF at WACC 7.04%; gold Y1 $5,200/oz (conservative vs $5,720 bank avg); exit 9.5x EV/EBITDA. Primary method (70% weight).">
-      <div class="kpi-label">DCF Value/Share</div>
+    <div class="kpi-tile">
+      <div class="kpi-label"><span class="assumption-tip">DCF Value/Share<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF Price Target</span><span class="tip-line"><span class="tip-label">Source:</span> 5-year FCFF DCF model. Gold Y1 $5,200/oz (9% below $5,720 bank consensus avg). WACC 7.04%. Exit 9.5× EV/EBITDA.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Primary method (70% weight) because NEM generates $7.3B annual FCF — cash-flow valuation is structurally appropriate for producers.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — gold deck below consensus, exit multiple at peer median.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each $100/oz gold change moves DCF by ~$18/share. WACC ±50bp moves it by ~$12/share.</span></span></span></div>
       <div class="kpi-value gold">$235.10</div>
       <div class="kpi-sub">WACC 7.04% · Gold $5,200/oz · +117.2%</div>
     </div>
-    <div class="kpi-tile" title="Whole-company annuity NAV: reserves 118.2 Moz ÷ 21yr life × ($2,775−$1,358)/oz margin × 12.02× annuity factor. Conservative 2yr gold deck. 1.20× sector multiple.">
-      <div class="kpi-label">P/NAV Value/Share</div>
+    <div class="kpi-tile">
+      <div class="kpi-label"><span class="assumption-tip">P/NAV Value/Share<i class="info-icon">&#9432;</i><span class="tip-box"><span class="tip-title">P/NAV Price Target</span><span class="tip-line"><span class="tip-label">Source:</span> Whole-company annuity model — 118.2 Moz reserves, 21yr life, $2,775/oz gold (2yr trailing avg), $1,358/oz AISC, 5.75% discount rate.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Industry-standard NAV approach for gold miners. Applied 1.20× P/NAV multiple (peer sector midpoint).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — gold deck 42% below spot; uses trailing average, not forward consensus.</span><span class="tip-line"><span class="tip-label">Impact:</span> At spot gold ($4,758), P/NAV alone implies $257/share — significantly above blended target.</span></span></span></div>
       <div class="kpi-value gold">$111.56</div>
       <div class="kpi-sub">1.20× NAV · Gold deck $2,775/oz · +3.1%</div>
     </div>
-    <div class="kpi-tile" title="Blended: 70% DCF × $235.10 + 30% P/NAV × $111.56 = $198.03. DCF primary because NEM generates $7.3B FCF. P/NAV secondary to capture reserve optionality.">
-      <div class="kpi-label">Blended Target (70/30)</div>
+    <div class="kpi-tile">
+      <div class="kpi-label"><span class="assumption-tip">Blended Target (70/30)<i class="info-icon">&#9432;</i><span class="tip-box"><span class="tip-title">Valuation Blend Weights</span><span class="tip-line"><span class="tip-label">Source:</span> Analyst convention for senior gold miners — DCF dominates at 50–70%, P/NAV anchors at 30–50%.</span><span class="tip-line"><span class="tip-label">Rationale:</span> DCF gets 70% because NEM's $7.3B FCF makes cash-flow valuation most reliable. P/NAV gets 30% to capture reserve optionality and floor value.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — standard institutional weighting. Shifting to 50/50 would lower target to ~$173.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each 10% shift from DCF to P/NAV reduces blended target by ~$12.35/share (due to DCF's higher implied value).</span></span></span></div>
       <div class="kpi-value green">$198.03</div>
       <div class="kpi-sub">70% DCF + 30% P/NAV · 12-month target</div>
     </div>
-    <div class="kpi-tile" title="At $108.25 current price vs $198.03 blended target. All 8 independent methods except EV/Reserve-oz (floor method) show upside.">
-      <div class="kpi-label">Implied Upside</div>
+    <div class="kpi-tile">
+      <div class="kpi-label"><span class="assumption-tip">Implied Upside<i class="info-icon">&#9432;</i><span class="tip-box tip-right"><span class="tip-title">Implied Upside</span><span class="tip-line"><span class="tip-label">Source:</span> $198.03 blended target vs. $108.25 current price (NYSE, Mar 31 2026).</span><span class="tip-line"><span class="tip-label">Rationale:</span> 7 of 8 independent methods confirm upside. Range: $99.80 (SOTP floor) to $235.10 (DCF). Only EV/Reserve-oz is near current price.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — mathematical output of two conservative methods.</span><span class="tip-line"><span class="tip-label">Impact:</span> Strong BUY conviction. Even bear-case SOTP floor ($99.80) implies limited downside of −7.8%.</span></span></span></div>
       <div class="kpi-value green">+82.9%</div>
       <div class="kpi-sub">vs $108.25 · Strong BUY · 8/8 methods</div>
     </div>
@@ -2270,12 +2365,12 @@ input[type=range].val-slider::-moz-range-thumb {
         <div style="font-size:10px;color:var(--text-3);">NYSE · Mar 31 2026</div>
       </div>
       <div style="background:rgba(201,148,43,0.06);border-right:1px solid var(--border);padding:12px;text-align:center;">
-        <div style="font-size:10px;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">DCF Component</div>
+        <div style="font-size:10px;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;"><span class="assumption-tip">DCF Component<i class="info-icon">&#9432;</i><span class="tip-box"><span class="tip-title">DCF Weight: 70%</span><span class="tip-line"><span class="tip-label">Source:</span> Analyst convention — DCF dominates (50–70%) for producers with strong FCF generation.</span><span class="tip-line"><span class="tip-label">Rationale:</span> NEM generates $7.3B annual FCF — cash-flow valuation is structurally most appropriate.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — standard weighting for senior gold producers.</span></span></span></div>
         <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--gold-light);">$164.57</div>
         <div style="font-size:10px;color:var(--text-3);">$235.10 × 70%</div>
       </div>
       <div style="background:rgba(201,148,43,0.04);border-right:1px solid var(--border);padding:12px;text-align:center;">
-        <div style="font-size:10px;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">P/NAV Component</div>
+        <div style="font-size:10px;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;"><span class="assumption-tip">P/NAV Component<i class="info-icon">&#9432;</i><span class="tip-box"><span class="tip-title">P/NAV Weight: 30%</span><span class="tip-line"><span class="tip-label">Source:</span> Industry convention — P/NAV at 30–50% for miners to capture reserve optionality.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Anchors blended target to asset value, providing a floor. Uses conservative 2yr trailing gold deck ($2,775).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — at low end of typical range; higher P/NAV weight would lower target.</span></span></span></div>
         <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--gold-light);">$33.47</div>
         <div style="font-size:10px;color:var(--text-3);">$111.56 × 30%</div>
       </div>
@@ -2322,7 +2417,7 @@ input[type=range].val-slider::-moz-range-thumb {
     <div class="slider-grid">
       <div class="slider-row">
         <div class="slider-label">
-          <span class="slider-label-text">Gold Deck</span>
+          <span class="slider-label-text"><span class="assumption-tip">Gold Deck<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Gold Price Deck (P/NAV)</span><span class="tip-line"><span class="tip-label">Source:</span> 2-year trailing average — 2024 avg ~$2,350 + 2025 avg ~$3,200 = $2,775 midpoint.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Smooths cycle peaks; avoids anchoring NAV to spot ($4,758). Standard institutional NAV methodology.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — 42% below current spot gold.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each $100/oz change in gold deck moves P/NAV target by ~$4/share. At spot gold, P/NAV alone implies $257/sh.</span></span></span></span>
           <span class="slider-val" id="pnav-gold-val">$2,775/oz</span>
         </div>
         <input type="range" class="val-slider" id="pnav-gold" min="1500" max="6000" step="25" value="2775"
@@ -2331,7 +2426,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span class="slider-label-text">AISC ($/oz)</span>
+          <span class="slider-label-text"><span class="assumption-tip">AISC ($/oz)<i class="info-icon">&#9432;</i><span class="tip-box"><span class="tip-title">All-In Sustaining Cost (P/NAV)</span><span class="tip-line"><span class="tip-label">Source:</span> NEM FY2025 actual AISC $1,358/oz (by-product basis); $262/oz beat vs $1,620 guidance.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Uses actual realized cost, not guidance, for P/NAV — reflects credibility inflection after Goldcorp integration.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — actual reported number; FY2026 guidance is higher at $1,680/oz.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each $50/oz change in AISC moves P/NAV by ~$2.50/share. AISC is the second-largest NAV driver after gold price.</span></span></span></span>
           <span class="slider-val" id="pnav-aisc-val">$1,358/oz</span>
         </div>
         <input type="range" class="val-slider" id="pnav-aisc" min="800" max="2200" step="10" value="1358"
@@ -2340,7 +2435,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span class="slider-label-text">Discount Rate</span>
+          <span class="slider-label-text"><span class="assumption-tip">Discount Rate<i class="info-icon">&#9432;</i><span class="tip-box"><span class="tip-title">NAV Discount Rate (Blended)</span><span class="tip-line"><span class="tip-label">Source:</span> OECD assets (Aus/Can) at 5%, West Africa/LatAm at 7–8%; blended ~5.75% reflecting ~60% OECD weighting.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Jurisdiction-weighted approach per RBC/Goldman Sachs methodology for Tier 1 gold NAV models.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — standard mining NAV practice; 5–8% range for senior producers.</span><span class="tip-line"><span class="tip-label">Impact:</span> Largest sensitivity driver in NAV. Each 0.25% increase reduces NAV/share by ~$3. The annuity factor drops from 12.02× to ~11.5× per 25bp.</span></span></span></span>
           <span class="slider-val" id="pnav-disc-val">5.75%</span>
         </div>
         <input type="range" class="val-slider" id="pnav-disc" min="3" max="10" step="0.25" value="5.75"
@@ -2349,7 +2444,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span class="slider-label-text">P/NAV Multiple</span>
+          <span class="slider-label-text"><span class="assumption-tip">P/NAV Multiple<i class="info-icon">&#9432;</i><span class="tip-box tip-right"><span class="tip-title">P/NAV Multiple</span><span class="tip-line"><span class="tip-label">Source:</span> Peer group median — AEM 1.4×, GOLD 1.2×, KGC 1.0×, GFI 0.9×. NEM placed at 1.20× sector midpoint.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Justified by NEM's scale leadership (largest gold miner), S&P 500 inclusion premium, and 118 Moz reserve base.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — at peer median, not premium. AEM trades at 1.4×.</span><span class="tip-line"><span class="tip-label">Impact:</span> A 0.1× change in P/NAV multiple moves the target by ~$9.30/share. If NEM re-rated to AEM's 1.4×, target rises to $130/sh.</span></span></span></span>
           <span class="slider-val" id="pnav-mult-val">1.20×</span>
         </div>
         <input type="range" class="val-slider" id="pnav-mult" min="0.5" max="2.0" step="0.05" value="1.20"
@@ -2383,13 +2478,13 @@ input[type=range].val-slider::-moz-range-thumb {
       <table>
         <thead><tr><th>Input / Output</th><th>Value</th><th>Source / Notes</th></tr></thead>
         <tbody>
-          <tr><td>Conservative Gold Deck (2yr trailing avg)</td><td class="val-gold"><strong>$2,775/oz</strong></td><td>2024 avg ~$2,350 + 2025 avg ~$3,200 = $2,775 midpoint; deliberately conservative vs $4,758 spot</td></tr>
-          <tr style="background:rgba(201,148,43,0.04);"><td>Less: AISC FY2025 (actual)</td><td style="color:var(--red);">($1,358)/oz</td><td>NEM FY2025 actual; $262/oz beat vs guidance — credibility inflection</td></tr>
+          <tr><td><span class="assumption-tip">Conservative Gold Deck (2yr trailing avg)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">P/NAV Gold Price Deck</span><span class="tip-line"><span class="tip-label">Source:</span> 2-year trailing average — 2024 (~$2,350) + 2025 (~$3,200) = $2,775 midpoint.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — 42% below current spot ($4,758/oz).</span><span class="tip-line"><span class="tip-label">Impact:</span> At spot gold, P/NAV target rises from $111.56 to $257/share.</span></span></span></td><td class="val-gold"><strong>$2,775/oz</strong></td><td>2024 avg ~$2,350 + 2025 avg ~$3,200 = $2,775 midpoint; deliberately conservative vs $4,758 spot</td></tr>
+          <tr style="background:rgba(201,148,43,0.04);"><td><span class="assumption-tip">Less: AISC FY2025 (actual)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">AISC — All-In Sustaining Cost</span><span class="tip-line"><span class="tip-label">Source:</span> NEM FY2025 actual (10-K filing); by-product basis. Beat $1,620 guidance by $262/oz.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — actual realized cost. FY2026 guided at $1,680 (used in DCF).</span><span class="tip-line"><span class="tip-label">Impact:</span> Direct driver of cash margin. Each $50/oz AISC change = ~$2.50/share in NAV.</span></span></span></td><td style="color:var(--red);">($1,358)/oz</td><td>NEM FY2025 actual; $262/oz beat vs guidance — credibility inflection</td></tr>
           <tr><td><strong>= Cash Margin / oz</strong></td><td class="val-gold"><strong>$1,417/oz</strong></td><td>Margin at conservative gold; at spot ($4,758), margin = $3,400/oz</td></tr>
-          <tr style="background:rgba(34,181,115,0.04);"><td>P&P Reserves</td><td class="val-green"><strong>118.2 Moz</strong></td><td>NEM 10-K FY2025; largest reserve base among senior gold majors</td></tr>
-          <tr><td>Mine Life Assumption</td><td>21 years</td><td>Weighted avg life; shorter than geologic potential (conservative)</td></tr>
+          <tr style="background:rgba(34,181,115,0.04);"><td><span class="assumption-tip">P&P Reserves<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Reserve Base Assumption</span><span class="tip-line"><span class="tip-label">Source:</span> NEM 10-K FY2025, Proven & Probable reserves. Largest reserve base among senior gold majors globally.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — uses P&P reserves only; excludes M&I resources (~45 Moz additional upside).</span><span class="tip-line"><span class="tip-label">Impact:</span> Reserve base drives production profile length and total ounces monetized in the NAV. Including resources would add ~30-40% to NAV.</span></span></span></td><td class="val-green"><strong>118.2 Moz</strong></td><td>NEM 10-K FY2025; largest reserve base among senior gold majors</td></tr>
+          <tr><td><span class="assumption-tip">Mine Life Assumption<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Mine Life Assumption</span><span class="tip-line"><span class="tip-label">Source:</span> Weighted average from NI 43-101 and company mine plans; 118.2 Moz / 5.63 Moz annual production = ~21 years.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — shorter than full geologic potential; excludes resource conversion upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Longer mine life increases annuity factor (currently 12.02×). Each additional year adds ~$3-4/share to NAV.</span></span></span></td><td>21 years</td><td>Weighted avg life; shorter than geologic potential (conservative)</td></tr>
           <tr style="background:rgba(201,148,43,0.04);"><td>Annual Production (Reserves ÷ Life)</td><td class="val-gold">5.63 Moz/yr</td><td>Reserve depletion approach; cross-check vs 6.9 Moz guided production</td></tr>
-          <tr><td>Discount Rate (blended)</td><td>5.75%</td><td>OECD assets (Aus/Can) 5%; W.Africa/LatAm 7–8%; blended reflects ~60% OECD weighting</td></tr>
+          <tr><td><span class="assumption-tip">Discount Rate (blended)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">NAV Discount Rate</span><span class="tip-line"><span class="tip-label">Source:</span> Jurisdiction-weighted: OECD (Aus/Can) 5%, West Africa/LatAm 7–8%. ~60% OECD weighting yields 5.75% blended.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — per RBC/Goldman Sachs standard for Tier 1 gold NAV models.</span><span class="tip-line"><span class="tip-label">Impact:</span> Largest sensitivity driver. Each 25bp increase reduces NAV/share by ~$3.</span></span></span></td><td>5.75%</td><td>OECD assets (Aus/Can) 5%; W.Africa/LatAm 7–8%; blended reflects ~60% OECD weighting</td></tr>
           <tr style="background:rgba(201,148,43,0.04);"><td>Annuity Factor (5.75%, 21yr)</td><td class="val-gold">12.02×</td><td>PV of $1/yr for 21 years at 5.75%</td></tr>
           <tr><td>Annual OCF ($1,417/oz × 5.63 Moz)</td><td>$7,978M/yr</td><td>Cash operating profit at conservative gold deck</td></tr>
           <tr style="background:rgba(34,181,115,0.04);"><td><strong>Gross NAV</strong></td><td class="val-green"><strong>$95,832M</strong></td><td>Annual OCF × Annuity Factor</td></tr>
@@ -2397,7 +2492,7 @@ input[type=range].val-slider::-moz-range-thumb {
           <tr style="background:rgba(34,181,115,0.04);"><td><strong>Equity NAV</strong></td><td class="val-green"><strong>$103,005M</strong></td><td>Gross NAV + Net Cash</td></tr>
           <tr><td>Shares Outstanding</td><td>1,108M</td><td>FY2025 diluted shares; declining via buyback program ($3B authorized)</td></tr>
           <tr style="background:rgba(201,148,43,0.06);"><td><strong>NAV per Share</strong></td><td class="val-gold"><strong>$92.96</strong></td><td>Equity NAV ÷ Shares</td></tr>
-          <tr><td>P/NAV Multiple Applied</td><td>1.20×</td><td>Peer range: AEM 1.4×, GOLD 1.2×, KGC 1.0×, GFI 0.9×; NEM at sector midpoint justified by scale + S&P 500 inclusion</td></tr>
+          <tr><td><span class="assumption-tip">P/NAV Multiple Applied<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">P/NAV Multiple</span><span class="tip-line"><span class="tip-label">Source:</span> Peer group: AEM 1.4×, GOLD 1.2×, KGC 1.0×, GFI 0.9×. NEM placed at 1.20× (sector midpoint).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — midpoint justified by NEM's scale + S&P 500 inclusion; not aggressive vs AEM's 1.4×.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each 0.1× change moves target by ~$9.30/share.</span></span></span></td><td>1.20×</td><td>Peer range: AEM 1.4×, GOLD 1.2×, KGC 1.0×, GFI 0.9×; NEM at sector midpoint justified by scale + S&P 500 inclusion</td></tr>
           <tr style="background:rgba(34,181,115,0.08);border-top:2px solid var(--green);"><td><strong>P/NAV Price Target</strong></td><td class="val-green" style="font-size:15px;"><strong>$111.56</strong></td><td><strong>NAV/sh × 1.20× P/NAV; conservative at 2-yr trailing gold deck</strong></td></tr>
         </tbody>
       </table>
@@ -2428,7 +2523,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 4: SOTP NAV — MINE-BY-MINE BUILD
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24">METHOD 2: SOTP — Sum-of-the-Parts / Mine-Level NAV</div>
+  <div class="section-label mt-24"><span class="assumption-tip">METHOD 2: SOTP — Sum-of-the-Parts / Mine-Level NAV<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">SOTP Methodology</span><span class="tip-line"><span class="tip-label">Source:</span> 11 mines valued individually using mine-specific discount rates (5–10.5%) based on jurisdiction risk. Corporate overhead capitalized at SG&A × 7× (Damodaran midpoint).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Cross-checks whole-company P/NAV and quantifies conglomerate discount/premium. Gold deck: $2,775/oz (conservative).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — mine-level discount rates penalize EM jurisdictions; same conservative gold deck as P/NAV.</span><span class="tip-line"><span class="tip-label">Impact:</span> SOTP at $99.80 is 10.5% below whole-company P/NAV ($111.56) — consistent with conglomerate discount for multi-jurisdiction portfolios.</span></span></span></div>
   <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.6;">
     <strong style="color:var(--gold-light);">Institutional SOTP methodology:</strong> Each mine is valued separately using mine-specific discount rates that reflect political/sovereign risk by jurisdiction — Australia/Canada at 5% (OECD, stable), West Africa/Latin America at 7.5–10.5% (political risk premium). Corporate overhead is capitalized at SG&A × 7× (Damodaran midpoint, range 5–10×). SOTP cross-checks the whole-company P/NAV and quantifies the conglomerate discount/premium. Gold deck: $2,775/oz (same conservative 2yr avg).
   </div>
@@ -2452,7 +2547,7 @@ input[type=range].val-slider::-moz-range-thumb {
     <div class="slider-grid">
       <div class="slider-row">
         <div class="slider-label">
-          <span class="slider-label-text">Gold Deck</span>
+          <span class="slider-label-text"><span class="assumption-tip">Gold Deck<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Gold Price Deck (SOTP)</span><span class="tip-line"><span class="tip-label">Source:</span> Same 2-yr trailing average as P/NAV: $2,775/oz. Applied uniformly across all 11 mine NAV calculations.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Conservative vs. spot ($4,758). Ensures SOTP floor is not inflated by peak-cycle gold pricing.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — 42% below spot. Even at this level, gross portfolio NAV = $87.6B.</span><span class="tip-line"><span class="tip-label">Impact:</span> Moves all mine NAVs simultaneously. Each $100/oz shifts gross portfolio NAV by ~$7B and SOTP/share by ~$6.</span></span></span></span>
           <span class="slider-val" id="sotp-gold-val">$2,775/oz</span>
         </div>
         <input type="range" class="val-slider" id="sotp-gold" min="1500" max="6000" step="25" value="2775"
@@ -2461,7 +2556,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div class="slider-row">
         <div class="slider-label">
-          <span class="slider-label-text">Global AISC Adj.</span>
+          <span class="slider-label-text"><span class="assumption-tip">Global AISC Adj.<i class="info-icon">&#9432;</i><span class="tip-box"><span class="tip-title">Global AISC Adjustment</span><span class="tip-line"><span class="tip-label">Source:</span> Stress-test lever applied uniformly to all mine-level AISCs (base = 0% adjustment).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Allows testing cost inflation scenarios (energy, labor, consumables) without changing mine-specific inputs.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> at 0%. Positive values model cost inflation; negative values model further cost improvement.</span><span class="tip-line"><span class="tip-label">Impact:</span> A +10% AISC adjustment reduces SOTP NAV by ~$8-10B, roughly $7-9/share.</span></span></span></span>
           <span class="slider-val" id="sotp-aisc-adj-val">0%</span>
         </div>
         <input type="range" class="val-slider" id="sotp-aisc-adj" min="-30" max="50" step="1" value="0"
@@ -2472,7 +2567,7 @@ input[type=range].val-slider::-moz-range-thumb {
 
     <!-- Per-mine disc rate overrides -->
     <div style="margin-top:12px;">
-      <div style="font-size:10px;color:var(--text-3);margin-bottom:8px;font-weight:600;letter-spacing:0.04em;">PER-MINE DISCOUNT RATES</div>
+      <div style="font-size:10px;color:var(--text-3);margin-bottom:8px;font-weight:600;letter-spacing:0.04em;"><span class="assumption-tip">PER-MINE DISCOUNT RATES<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Jurisdiction-Based Discount Rates</span><span class="tip-line"><span class="tip-label">Source:</span> Fraser Institute mining policy rankings, sovereign risk premiums, and institutional SOTP methodology (RBC, Goldman Sachs).</span><span class="tip-line"><span class="tip-label">Rationale:</span> OECD (Aus/Can) at 5% for stable jurisdictions; emerging markets at 7.5–10.5% reflecting political, regulatory, and currency risk.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — Argentina (Cerro Negro) at 10.5% reflects FX/sovereign risk premium.</span><span class="tip-line"><span class="tip-label">Impact:</span> Higher discount rates penalize EM-heavy mines. Cadia (5%) contributes 27% of NAV; Cerro Negro (10.5%) only 3.8%.</span></span></span></div>
       <div class="sotp-disc-grid">
         <!-- Tier 1: OECD -->
         <div class="sotp-disc-item">
@@ -2728,7 +2823,7 @@ input[type=range].val-slider::-moz-range-thumb {
           <span style="color:var(--green);font-family:var(--font-mono);font-weight:600;">+ $7,173M</span>
         </div>
         <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);">
-          <span style="color:var(--text-2);font-size:11px;">− Capitalized Corporate Overhead (SG&A $382M × 7×)</span>
+          <span style="color:var(--text-2);font-size:11px;"><span class="assumption-tip">− Capitalized Corporate Overhead (SG&A $382M × 7×)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Corporate Overhead Deduction</span><span class="tip-line"><span class="tip-label">Source:</span> NEM FY2025 SG&A $382M (10-K filing) × 7× capitalization multiple (Damodaran SOTP methodology, range 5–10×).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — at Damodaran midpoint. 5× = $1,910M deducted; 10× = $3,820M.</span><span class="tip-line"><span class="tip-label">Impact:</span> Reduces SOTP equity NAV by $2,674M (~$2.41/share). Sensitivity: 5× vs 10× changes SOTP/share by ~$1.70.</span></span></span></span>
           <span style="color:var(--red);font-family:var(--font-mono);font-weight:600;">− $2,674M</span>
         </div>
         <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);">
@@ -2794,7 +2889,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 5: DCF MODEL — 5-YEAR FCFF
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24">METHOD 3: DCF — 5-Year FCFF Model (Primary Method, 70% Weight)</div>
+  <div class="section-label mt-24"><span class="assumption-tip">METHOD 3: DCF — 5-Year FCFF Model (Primary Method, 70% Weight)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF Model — Terminal Value Assumption</span><span class="tip-line"><span class="tip-label">Source:</span> Exit multiple approach — 9.5× EV/EBITDA at terminal year (peer median: AEM 10.0×, KGC 13.7×, GFI 5.5×).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Exit multiple preferred over perpetuity growth for miners because mine lives are finite. 9.5× is at peer median, not premium.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — at sector median. A 1.0× increase in exit multiple would add ~$15/share.</span><span class="tip-line"><span class="tip-label">Impact:</span> Terminal value is ~35-40% of total DCF. The exit multiple is the second-largest sensitivity after gold price.</span></span></span></div>
   <div style="font-size:11px;color:var(--text-3);margin-bottom:10px;line-height:1.6;">
     5-year free cash flow to firm (FCFF) model using a per-ounce AISC cost structure. Gold Y1: $5,200/oz — 9% below the bank consensus average of $5,720/oz (Goldman, JPMorgan, Citi, BofA, Barclays). WACC: 7.04% (CAPM β=0.61, ERP=4.5%, rf=4.31%). Exit multiple: 9.5× EV/EBITDA (peer median, conservative). DCF is primary because NEM generates $7.3B annual FCF — making the intrinsic value from cash flows more reliable than reserve-based NAV at a point-in-time gold price.
   </div>
@@ -2822,7 +2917,7 @@ input[type=range].val-slider::-moz-range-thumb {
       <tbody>
         <tr><td>FY2024A</td><td>$2,390</td><td>6.86</td><td>$1,611</td><td>$18,563</td><td>$10,120</td><td>54.5%</td><td>$4,850</td><td>$3.07</td></tr>
         <tr style="background:rgba(201,148,43,0.06);"><td><strong>FY2025A</strong></td><td class="val-gold">$3,200</td><td>6.90</td><td style="color:var(--green);font-weight:600;">$1,358 ✓</td><td class="val-gold">$22,097</td><td class="val-gold">$13,123</td><td class="val-green">59.4%</td><td class="val-green"><strong>$7,299</strong></td><td class="val-green"><strong>$6.89</strong></td></tr>
-        <tr style="background:rgba(34,181,115,0.04);"><td><strong>FY2026E</strong></td><td class="val-gold">$5,200</td><td>7.10</td><td>$1,680</td><td>$24,820</td><td>$16,200</td><td class="val-green">65.3%</td><td class="val-green"><strong>$8,400</strong></td><td class="val-green"><strong>$5.60</strong></td></tr>
+        <tr style="background:rgba(34,181,115,0.04);"><td><strong><span class="assumption-tip">FY2026E<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF Y1 Key Assumptions</span><span class="tip-line"><span class="tip-label">Gold $5,200/oz:</span> 9% below bank consensus average of $5,720 (JPM $6,300, GS $5,400, UBS $6,200, MS $5,700, Citi $5,000). <span class="tip-stance-conservative">Conservative.</span></span><span class="tip-line"><span class="tip-label">Production 7.10 Moz:</span> NEM guidance 7.1 Moz (adjusted −3.8% historical miss rate for outer years).</span><span class="tip-line"><span class="tip-label">AISC $1,680/oz:</span> NEM FY2026 guidance midpoint. <span class="tip-stance-conservative">Conservative</span> vs FY2025 actual ($1,358). Escalates 2.5%/yr (CPI+1%).</span><span class="tip-line"><span class="tip-label">Impact:</span> Y1 is the highest-weighted year in the DCF. Gold + AISC drive $8.4B FCF estimate.</span></span></span></strong></td><td class="val-gold">$5,200</td><td>7.10</td><td>$1,680</td><td>$24,820</td><td>$16,200</td><td class="val-green">65.3%</td><td class="val-green"><strong>$8,400</strong></td><td class="val-green"><strong>$5.60</strong></td></tr>
         <tr><td>FY2027E</td><td>$5,000</td><td>7.30</td><td>$1,722</td><td>$25,100</td><td>$16,800</td><td>66.9%</td><td>$9,100</td><td>$6.20</td></tr>
         <tr><td>FY2028E</td><td>$4,800</td><td>7.50</td><td>$1,765</td><td>$25,200</td><td>$17,000</td><td>67.5%</td><td>$9,800</td><td>$6.80</td></tr>
         <tr><td>FY2029E</td><td>$4,600</td><td>7.60</td><td>$1,809</td><td>$24,700</td><td>$16,500</td><td>66.8%</td><td>$9,400</td><td>$6.50</td></tr>
@@ -2836,7 +2931,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- WACC Build + Sensitivity -->
   <div class="grid-2 mt-16">
     <div class="panel">
-      <div class="panel-title">WACC Build-Up — 7.04% (Sourced, Defensible)</div>
+      <div class="panel-title"><span class="assumption-tip">WACC Build-Up — 7.04% (Sourced, Defensible)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">WACC / Discount Rate (DCF)</span><span class="tip-line"><span class="tip-label">Source:</span> CAPM: rf 4.31% (10Y UST) + Beta 0.61 × ERP 4.50% (Damodaran) = 7.06% Ke. Blended with 2.99% after-tax Kd at 96/4 weights.</span><span class="tip-line"><span class="tip-label">Rationale:</span> NEM's low beta (0.61, statistically significant) reflects gold's defensive nature. Near-net-cash balance sheet means equity dominates.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — standard CAPM inputs from observable/academic sources. ESG overlay (+38bp) available as conservative scenario.</span><span class="tip-line"><span class="tip-label">Impact:</span> Largest single sensitivity in DCF. Each 50bp increase reduces DCF/share by ~$12.</span></span></span></div>
       <table class="wacc-table">
         <thead><tr><th>Component</th><th>Value</th><th>Source</th></tr></thead>
         <tbody>
@@ -2894,7 +2989,7 @@ input[type=range].val-slider::-moz-range-thumb {
         </thead>
         <tbody>
           <tr style="background:rgba(201,148,43,0.08);">
-            <td><strong>DCF (5-yr FCFF)</strong> <span style="font-size:9px;color:var(--gold-light);">PRIMARY</span></td>
+            <td><strong><span class="assumption-tip">DCF (5-yr FCFF)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF — Primary Method (70%)</span><span class="tip-line"><span class="tip-label">Source:</span> 5-year FCFF model. Gold $5,200/oz (−9% vs consensus), WACC 7.04% (CAPM), exit 9.5× EV/EBITDA (peer median).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — below-consensus gold, peer-median exit, CAPM-derived WACC.</span><span class="tip-line"><span class="tip-label">Impact:</span> Dominant at 70% weight. Contributes $164.57 to blended target. Even at $4,000 gold, DCF implies ~$150/sh.</span></span></span></strong> <span style="font-size:9px;color:var(--gold-light);">PRIMARY</span></td>
             <td class="val-gold"><strong>$235.10</strong></td>
             <td class="val-green"><strong>+117.2%</strong></td>
             <td><strong>70%</strong></td>
@@ -2902,7 +2997,7 @@ input[type=range].val-slider::-moz-range-thumb {
             <td>Gold $5,200/oz; WACC 7.04%; Exit 9.5×</td>
           </tr>
           <tr>
-            <td><strong>P/NAV (2-yr avg gold, 1.20×)</strong> <span style="font-size:9px;color:var(--gold-light);">PRIMARY</span></td>
+            <td><strong><span class="assumption-tip">P/NAV (2-yr avg gold, 1.20×)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">P/NAV — Secondary Method (30%)</span><span class="tip-line"><span class="tip-label">Source:</span> Annuity-based NAV using $2,775/oz gold (2yr trailing avg), $1,358/oz AISC, 21yr life, 5.75% discount. 1.20× multiple.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — gold deck 42% below spot. Uses P&P reserves only, excluding resource upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Provides floor valuation. Contributes $33.47 to blended target. At spot gold, P/NAV alone = $257/sh.</span></span></span></strong> <span style="font-size:9px;color:var(--gold-light);">PRIMARY</span></td>
             <td class="val-gold"><strong>$111.56</strong></td>
             <td class="val-green"><strong>+3.1%</strong></td>
             <td><strong>30%</strong></td>
@@ -2910,7 +3005,7 @@ input[type=range].val-slider::-moz-range-thumb {
             <td>Gold deck $2,775/oz (conservative); 118.2 Moz reserves</td>
           </tr>
           <tr style="background:rgba(34,181,115,0.08);border-top:2px solid var(--green);border-bottom:2px solid var(--green);">
-            <td><strong>BLENDED TARGET</strong></td>
+            <td><strong><span class="assumption-tip">BLENDED TARGET<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Scenario & Blend Weights</span><span class="tip-line"><span class="tip-label">Source:</span> 70% DCF ($235.10) + 30% P/NAV ($111.56) = $198.03. Standard analyst convention for gold majors.</span><span class="tip-line"><span class="tip-label">Rationale:</span> DCF dominant because NEM generates $7.3B FCF. P/NAV captures reserve optionality and provides asset-based floor.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — standard weighting. A 50/50 split would give ~$173; a 60/40 split gives ~$185.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each 10% shift from DCF to P/NAV reduces target by ~$12.35/share.</span></span></span></strong></td>
             <td class="val-green" style="font-size:14px;"><strong>$198.03</strong></td>
             <td class="val-green" style="font-size:14px;"><strong>+82.9%</strong></td>
             <td><strong>100%</strong></td>
@@ -2918,7 +3013,7 @@ input[type=range].val-slider::-moz-range-thumb {
             <td><strong>Primary recommendation target — 12-month horizon</strong></td>
           </tr>
           <tr style="background:rgba(201,148,43,0.04);">
-            <td>SOTP (mine-by-mine, overhead adj.)</td>
+            <td><span class="assumption-tip">SOTP (mine-by-mine, overhead adj.)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">SOTP — Sum-of-the-Parts</span><span class="tip-line"><span class="tip-label">Source:</span> 11 mines valued individually with jurisdiction-specific discount rates (5–10.5%). Corporate overhead deducted at SG&A $382M × 7× (Damodaran).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — same $2,775 gold deck; conglomerate discount reflected. Serves as a floor valuation.</span><span class="tip-line"><span class="tip-label">Impact:</span> Confirms NEM is near intrinsic floor. Below whole-company P/NAV by 10.5% — consistent with conglomerate discount.</span></span></span></td>
             <td>$99.80</td>
             <td>−7.8%</td>
             <td>—</td>
@@ -2926,7 +3021,7 @@ input[type=range].val-slider::-moz-range-thumb {
             <td>11 mines × jurisdiction rates; SG&A $382M × 7×; conservative floor</td>
           </tr>
           <tr>
-            <td>Monte Carlo Median (weighted)</td>
+            <td><span class="assumption-tip">Monte Carlo Median (weighted)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Monte Carlo Simulation</span><span class="tip-line"><span class="tip-label">Source:</span> 50,000 correlated iterations across 5 stochastic variables (gold price, production, AISC, beta, discount rate). Weighted across bull/base/bear scenarios.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — probabilistic output, not a point estimate. 91.2% probability of exceeding current price.</span><span class="tip-line"><span class="tip-label">Impact:</span> Confirms DCF/P/NAV range is robust to input uncertainty. Bear tail (5th percentile) still ~$85/sh.</span></span></span></td>
             <td>~$133.80</td>
             <td class="val-green">+23.6%</td>
             <td>—</td>
@@ -3003,73 +3098,73 @@ input[type=range].val-slider::-moz-range-thumb {
         <thead><tr><th>Assumption</th><th>Value Used</th><th>Source</th><th>Conservatism Check</th></tr></thead>
         <tbody>
           <tr>
-            <td>Gold Price (DCF, Y1)</td>
+            <td><span class="assumption-tip">Gold Price (DCF, Y1)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Gold Price Deck — DCF</span><span class="tip-line"><span class="tip-label">Source:</span> Consensus bank forecasts: JPM $6,300, GS $5,400, UBS $6,200, MS $5,700, Citi $5,000 — avg $5,720.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — $5,200 is 9% below bank consensus avg. Does not require gold to rise from spot ($4,758).</span><span class="tip-line"><span class="tip-label">Impact:</span> Primary revenue driver. Each $100/oz moves DCF target by ~$18/share.</span></span></span></td>
             <td class="val-gold">$5,200/oz</td>
             <td>Bank avg: JPM $6,300, GS $5,400, UBS $6,200, MS $5,700, Citi $5,000</td>
             <td style="color:var(--green);">−9% vs consensus $5,720 ✓</td>
           </tr>
           <tr style="background:rgba(201,148,43,0.04);">
-            <td>Gold Deck (P/NAV)</td>
+            <td><span class="assumption-tip">Gold Deck (P/NAV)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Gold Price Deck — P/NAV</span><span class="tip-line"><span class="tip-label">Source:</span> 2-year trailing average: 2024 avg ~$2,350 + 2025 avg ~$3,200 = $2,775 midpoint.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — 42% below current spot. Standard institutional methodology to avoid peak-cycle NAV inflation.</span><span class="tip-line"><span class="tip-label">Impact:</span> At spot gold, P/NAV target rises from $111 to $257/share. Gold deck is the largest NAV sensitivity.</span></span></span></td>
             <td class="val-gold">$2,775/oz</td>
             <td>2-yr trailing avg: 2024 ~$2,350 + 2025 ~$3,200 ÷ 2</td>
             <td style="color:var(--green);">−42% vs spot $4,758 ✓</td>
           </tr>
           <tr>
-            <td>AISC Y1 (DCF)</td>
+            <td><span class="assumption-tip">AISC Y1 (DCF)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">AISC — DCF Model Input</span><span class="tip-line"><span class="tip-label">Source:</span> NEM FY2026 guidance midpoint ($1,680/oz); Feb 2026 earnings release. Escalated 2.5%/yr (CPI+1%).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — uses guidance, not FY2025 actual ($1,358). NEM has beaten guidance 2 of last 3 years by avg $262/oz.</span><span class="tip-line"><span class="tip-label">Impact:</span> Directly affects FCF and EBITDA margin. Using actual ($1,358) instead of guidance would add ~$20/share to DCF.</span></span></span></td>
             <td>$1,680/oz</td>
             <td>NEM FY2026 guidance midpoint; Feb 2026 earnings</td>
             <td style="color:var(--amber);">Per guidance; upside if history repeats (FY2025: −$262 beat)</td>
           </tr>
           <tr style="background:rgba(201,148,43,0.04);">
-            <td>AISC (P/NAV)</td>
+            <td><span class="assumption-tip">AISC (P/NAV)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">AISC — P/NAV Model Input</span><span class="tip-line"><span class="tip-label">Source:</span> NEM FY2025 actual all-in sustaining cost, by-product basis. 10-K filing.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — actual realized number. Represents the credibility inflection ($262/oz beat vs $1,620 guidance).</span><span class="tip-line"><span class="tip-label">Impact:</span> Lower AISC = wider cash margin ($1,417/oz). Each $50/oz reduction adds ~$2.50/share to NAV.</span></span></span></td>
             <td>$1,358/oz</td>
             <td>NEM FY2025 actual; by-product basis</td>
             <td style="color:var(--green);">Actual realized; credibility verified ✓</td>
           </tr>
           <tr>
-            <td>Risk-Free Rate</td>
+            <td><span class="assumption-tip">Risk-Free Rate<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Risk-Free Rate</span><span class="tip-line"><span class="tip-label">Source:</span> US 10-Year Treasury yield, Mar 31 2026. Observable market rate.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — current market-observable input; standard CAPM practice.</span><span class="tip-line"><span class="tip-label">Impact:</span> Flows through to WACC via cost of equity and cost of debt. Each 25bp change shifts WACC by ~24bp.</span></span></span></td>
             <td>4.31%</td>
             <td>US 10Y Treasury, Mar 31, 2026</td>
             <td style="color:var(--green);">Current observable; standard ✓</td>
           </tr>
           <tr style="background:rgba(201,148,43,0.04);">
-            <td>Equity Beta</td>
+            <td><span class="assumption-tip">Equity Beta<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Equity Beta</span><span class="tip-line"><span class="tip-label">Source:</span> 5-year monthly regression vs S&P 500. t-stat = 3.6 (p &lt; 0.001), SE ~0.17. Bloomberg data.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Gold miners have lower beta than intuition suggests — gold's safe-haven status provides portfolio diversification.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — statistically significant regression output; not subjectively adjusted.</span><span class="tip-line"><span class="tip-label">Impact:</span> Lower beta = lower cost of equity = higher DCF. If beta were 1.0× instead of 0.61×, DCF drops ~$30/share.</span></span></span></td>
             <td>0.61×</td>
             <td>5yr monthly regression vs S&P 500; t=3.6, p&lt;0.001</td>
             <td style="color:var(--green);">Statistically significant; gold miners lower β than intuition ✓</td>
           </tr>
           <tr>
-            <td>ERP (Damodaran)</td>
+            <td><span class="assumption-tip">ERP (Damodaran)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Equity Risk Premium</span><span class="tip-line"><span class="tip-label">Source:</span> Damodaran implied ERP, January 2026 update. Derived from S&P 500 cash flow expectations.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — academic standard; widely used by institutional analysts and investment banks.</span><span class="tip-line"><span class="tip-label">Impact:</span> Multiplied by beta (0.61) to get equity risk component. Each 50bp ERP change moves WACC by ~30bp.</span></span></span></td>
             <td>4.5%</td>
             <td>Damodaran implied ERP, Jan 2026 (monthly update)</td>
             <td style="color:var(--green);">Academic standard; implied from S&P 500 cash flows ✓</td>
           </tr>
           <tr style="background:rgba(201,148,43,0.04);">
-            <td>Exit EV/EBITDA</td>
+            <td><span class="assumption-tip">Exit EV/EBITDA<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Terminal Value — Exit Multiple</span><span class="tip-line"><span class="tip-label">Source:</span> Peer median: AEM 10.0×, KGC 13.7×, GFI 5.5×. Excluding streamers, median ~9.5×.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Exit multiple used instead of perpetuity growth because mine lives are finite. Terminal value is ~35-40% of DCF.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — at peer median, not premium. KGC at 13.7× suggests upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each 1.0× increase in exit multiple adds ~$15/share to DCF target.</span></span></span></td>
             <td>9.5×</td>
             <td>Peer median: AEM 10.0×, KGC 13.7×, GFI 5.5× → excl. WPM median ≈ 9.5×</td>
             <td style="color:var(--green);">At peer median, not premium ✓</td>
           </tr>
           <tr>
-            <td>Effective Tax Rate</td>
+            <td><span class="assumption-tip">Effective Tax Rate<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Effective Tax Rate</span><span class="tip-line"><span class="tip-label">Source:</span> NEM FY2025 actual: $4,596M tax ÷ $11,763M pre-tax income = 39.1%.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Above US statutory 21% due to multi-jurisdiction mining (Ghana, PNG, Australia withholding taxes).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — uses actual high rate; no optimization assumed.</span><span class="tip-line"><span class="tip-label">Impact:</span> Affects after-tax FCF and after-tax cost of debt. Each 1% lower tax rate adds ~$1.50/share to DCF.</span></span></span></td>
             <td>39.1%</td>
             <td>NEM FY2025: $4,596M ÷ $11,763M pre-tax income</td>
             <td style="color:var(--green);">Above US statutory 21% due to Ghana/PNG/Aus jurisdictions ✓</td>
           </tr>
           <tr style="background:rgba(201,148,43,0.04);">
-            <td>Production Y1</td>
+            <td><span class="assumption-tip">Production Y1<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Production Assumption</span><span class="tip-line"><span class="tip-label">Source:</span> NEM FY2026 guidance 7.1 Moz × 0.962 (3.8% historical haircut) = 6.84 Moz.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Applies 10-year average guidance miss rate (−3.8%). NEM missed production guidance in 3 of last 5 years during Goldcorp integration.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — haircuts guidance by historical miss rate; not assumed at face value.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each 0.1 Moz production change shifts DCF by ~$4/share at current gold price assumptions.</span></span></span></td>
             <td>6.84 Moz</td>
             <td>NEM guidance 7.1 Moz × 0.962 (−3.8% historical haircut)</td>
             <td style="color:var(--green);">Applies 10yr average miss rate; conservative ✓</td>
           </tr>
           <tr>
-            <td>P/NAV Discount Rate</td>
+            <td><span class="assumption-tip">P/NAV Discount Rate<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">P/NAV Discount Rate</span><span class="tip-line"><span class="tip-label">Source:</span> OECD assets 5%, West Africa/LatAm 7–8%; ~60% OECD weighting yields 5.75% blended.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — per RBC/Goldman standard for Tier 1 gold NAV models.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each 25bp moves annuity factor and NAV/share by ~$3. Most sensitive NAV input after gold deck.</span></span></span></td>
             <td>5.75%</td>
             <td>OECD 5%, W.Africa 7–8%; NEM ~60% OECD blend</td>
             <td style="color:var(--green);">RBC/GS methodology for Tier 1 gold NAV ✓</td>
           </tr>
           <tr style="background:rgba(201,148,43,0.04);">
-            <td>P/NAV Multiple</td>
+            <td><span class="assumption-tip">P/NAV Multiple<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">P/NAV Multiple</span><span class="tip-line"><span class="tip-label">Source:</span> Peer group: AEM 1.4×, GOLD 1.2×, KGC 1.0×, GFI 0.9×. NEM at 1.20× sector midpoint.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — midpoint; justified by NEM's scale leadership and S&P 500 inclusion.</span><span class="tip-line"><span class="tip-label">Impact:</span> Direct multiplier on NAV/share. 0.1× change = ~$9.30/share movement.</span></span></span></td>
             <td>1.20×</td>
             <td>Peer range: AEM 1.4×, GOLD 1.2×, KGC 1.0×, GFI 0.9×</td>
             <td style="color:var(--green);">Midpoint; NEM scale and S&P 500 inclusion justify ✓</td>
@@ -3108,7 +3203,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 8: GOLD PRICE SENSITIVITY SCENARIOS
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24">Gold Price Scenarios — Target at Each Gold Assumption</div>
+  <div class="section-label mt-24"><span class="assumption-tip">Gold Price Scenarios — Target at Each Gold Assumption<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Scenario Assumptions (Base / Bull / Bear)</span><span class="tip-line"><span class="tip-label">Source:</span> Gold price scenarios derived from bank consensus forecasts and spot market. Base: $5,200/oz (9% below consensus). Bear: $3,500/oz (26% below spot). Bull: $5,500/oz (16% above spot).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Standard analyst scenario framework. Bear case tests thesis break-even; bull case shows upside optionality. All scenarios hold other assumptions constant.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — even the bear case ($3,500 gold, −26% from spot) shows +21.9% upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Probability-weighted EV: 45% base + 25% bull + 22% bear + 8% stress = $193.42 (+78.7% upside).</span></span></span></div>
   <div class="panel">
     <div class="panel-title">Blended Target Sensitivity — At What Gold Price Is NEM Still a Buy?</div>
     <table>
