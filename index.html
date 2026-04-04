@@ -914,6 +914,204 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   .grid-4 { grid-template-columns: 1fr 1fr; }
   .tab-panel { padding: 16px 12px 40px; }
 }
+
+/* ─────────────────────────────────────────
+   INTERACTIVE SLIDER PANELS — Valuation Tab
+   ───────────────────────────────────────── */
+.slider-panel {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-left: 3px solid var(--gold-light);
+  border-radius: 6px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+.slider-panel-title {
+  font-size: 10px;
+  color: var(--gold-light);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.slider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.slider-row { display: flex; flex-direction: column; gap: 5px; }
+.slider-label { display: flex; justify-content: space-between; align-items: baseline; }
+.slider-label-text { font-size: 10px; color: var(--text-3); letter-spacing: 0.04em; }
+.slider-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-light);
+  min-width: 80px;
+  text-align: right;
+}
+input[type=range].val-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  background: #30363d;
+}
+input[type=range].val-slider::-webkit-slider-runnable-track {
+  height: 4px; border-radius: 2px;
+}
+input[type=range].val-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  border: 2px solid #0d1117;
+  box-shadow: 0 0 0 2px rgba(201,148,43,0.4);
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+input[type=range].val-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 4px rgba(201,148,43,0.25);
+}
+input[type=range].val-slider::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  border: 2px solid #0d1117;
+  cursor: pointer;
+}
+.slider-range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #636e7b;
+  margin-top: 1px;
+}
+.preset-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #21262d;
+  align-items: center;
+}
+.preset-label { font-size: 9px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-right: 2px; }
+.preset-btn {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #30363d;
+  background: #161b22;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.preset-btn:hover { border-color: var(--gold-light); color: var(--gold-light); background: rgba(201,148,43,0.06); }
+.preset-btn.preset-active { border-color: var(--gold-light); background: rgba(201,148,43,0.14); color: var(--gold-light); }
+.preset-btn.btn-reset { border-color: #30363d; color: #58a6ff; }
+.preset-btn.btn-reset:hover { border-color: #58a6ff; color: #58a6ff; background: rgba(88,166,255,0.06); }
+.preset-btn.btn-stress { border-color: #E05252; color: #E05252; }
+.preset-btn.btn-stress:hover { background: rgba(224,82,82,0.08); }
+/* Live output box */
+.live-output-box {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+.live-output-header {
+  background: rgba(201,148,43,0.08);
+  border-bottom: 1px solid #30363d;
+  padding: 6px 12px;
+  font-size: 9px;
+  color: var(--gold-light);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(34,181,115,0.12);
+  border: 1px solid rgba(34,181,115,0.3);
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 1px 7px;
+  border-radius: 3px;
+}
+.live-badge::before { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.live-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid #21262d;
+}
+.live-row:last-child { border-bottom: none; }
+.live-row.live-highlight { background: rgba(201,148,43,0.05); }
+.live-row.live-total { background: rgba(34,181,115,0.07); border-top: 2px solid rgba(34,181,115,0.3); }
+.live-key { font-size: 11px; color: var(--text-2); }
+.live-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-light);
+  transition: color 0.25s;
+}
+.live-val.val-changed { color: #58a6ff; }
+.live-val.val-up   { color: var(--green); }
+.live-val.val-down { color: var(--red); }
+/* SOTP mine discount rows */
+.sotp-disc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+.sotp-disc-item { display: flex; flex-direction: row; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid #1e242b; }
+.sotp-disc-item:last-child { border-bottom: none; }
+.sotp-disc-name { font-size: 9px; font-weight: 600; letter-spacing: 0.03em; min-width: 82px; flex-shrink: 0; }
+/* Upside flash */
+.upside-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+.upside-chip.up   { color: var(--green); border-color: rgba(34,181,115,0.4); background: rgba(34,181,115,0.08); }
+.upside-chip.down { color: var(--red);   border-color: rgba(224,82,82,0.4);  background: rgba(224,82,82,0.08); }
+@media (max-width: 900px) {
+  .slider-grid { grid-template-columns: 1fr 1fr; }
+  .sotp-disc-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .slider-grid { grid-template-columns: 1fr; }
+  .sotp-disc-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
@@ -2105,6 +2303,80 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
     P/NAV is the gold mining industry's primary intrinsic value method. NAV = PV of all future mine cash flows (gold price − AISC × production × annuity factor) + net cash. The P/NAV multiple applied reflects where NEM should trade relative to peers. A conservative 2-year trailing average gold deck ($2,775/oz vs. $4,758 spot) ensures no peak-cycle pricing.
   </div>
 
+  <!-- ═══ P/NAV INTERACTIVE SLIDER PANEL ═══ -->
+  <div class="slider-panel" id="pnav-slider-panel">
+    <div class="slider-panel-title">
+      <span>⚡ Live P/NAV Recalculator</span>
+      <span class="live-badge">LIVE</span>
+    </div>
+
+    <div class="preset-row">
+      <span class="preset-label">Presets:</span>
+      <button class="preset-btn preset-active" onclick="setPNavPreset('base')">Base Case</button>
+      <button class="preset-btn" onclick="setPNavPreset('bear')">Bear (−30% gold)</button>
+      <button class="preset-btn" onclick="setPNavPreset('bull')">Bull (spot gold)</button>
+      <button class="preset-btn btn-stress" onclick="setPNavPreset('stress')">Stress (high AISC)</button>
+      <button class="preset-btn btn-reset" onclick="setPNavPreset('reset')">↺ Reset</button>
+    </div>
+
+    <div class="slider-grid">
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-label-text">Gold Deck</span>
+          <span class="slider-val" id="pnav-gold-val">$2,775/oz</span>
+        </div>
+        <input type="range" class="val-slider" id="pnav-gold" min="1500" max="6000" step="25" value="2775"
+               oninput="recalcPNAV()">
+        <div class="slider-range-labels"><span>$1,500</span><span>$6,000</span></div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-label-text">AISC ($/oz)</span>
+          <span class="slider-val" id="pnav-aisc-val">$1,358/oz</span>
+        </div>
+        <input type="range" class="val-slider" id="pnav-aisc" min="800" max="2200" step="10" value="1358"
+               oninput="recalcPNAV()">
+        <div class="slider-range-labels"><span>$800</span><span>$2,200</span></div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-label-text">Discount Rate</span>
+          <span class="slider-val" id="pnav-disc-val">5.75%</span>
+        </div>
+        <input type="range" class="val-slider" id="pnav-disc" min="3" max="10" step="0.25" value="5.75"
+               oninput="recalcPNAV()">
+        <div class="slider-range-labels"><span>3%</span><span>10%</span></div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-label-text">P/NAV Multiple</span>
+          <span class="slider-val" id="pnav-mult-val">1.20×</span>
+        </div>
+        <input type="range" class="val-slider" id="pnav-mult" min="0.5" max="2.0" step="0.05" value="1.20"
+               oninput="recalcPNAV()">
+        <div class="slider-range-labels"><span>0.5×</span><span>2.0×</span></div>
+      </div>
+    </div>
+
+    <div class="live-output-box">
+      <div class="live-output-header">Live Output</div>
+      <div class="live-row"><span class="live-key">Cash Margin</span><span class="live-val" id="pnav-out-margin">$1,417/oz</span></div>
+      <div class="live-row"><span class="live-key">Annual OCF</span><span class="live-val" id="pnav-out-ocf">$7,978M/yr</span></div>
+      <div class="live-row"><span class="live-key">Annuity Factor</span><span class="live-val" id="pnav-out-annuity">12.02×</span></div>
+      <div class="live-row"><span class="live-key">Gross NAV</span><span class="live-val" id="pnav-out-grossnav">$95,832M</span></div>
+      <div class="live-row"><span class="live-key">Equity NAV</span><span class="live-val" id="pnav-out-equitynav">$103,005M</span></div>
+      <div class="live-row"><span class="live-key">NAV / Share</span><span class="live-val" id="pnav-out-navps">$92.96</span></div>
+      <div class="live-row live-highlight"><span class="live-key">P/NAV Price Target</span><span class="live-val" id="pnav-out-price">$111.56</span></div>
+      <div class="live-row live-total">
+        <span class="live-key">Upside vs $108.25</span>
+        <span class="live-val" id="pnav-out-upside">
+          <span class="upside-chip up" id="pnav-upside-chip">+3.1%</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- ═══ END P/NAV SLIDER PANEL ═══ -->
+
   <div class="grid-2">
     <div class="panel">
       <div class="panel-title">P/NAV Full Build — Whole-Company Annuity Model</div>
@@ -2160,6 +2432,137 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.6;">
     <strong style="color:var(--gold-light);">Institutional SOTP methodology:</strong> Each mine is valued separately using mine-specific discount rates that reflect political/sovereign risk by jurisdiction — Australia/Canada at 5% (OECD, stable), West Africa/Latin America at 7.5–10.5% (political risk premium). Corporate overhead is capitalized at SG&A × 7× (Damodaran midpoint, range 5–10×). SOTP cross-checks the whole-company P/NAV and quantifies the conglomerate discount/premium. Gold deck: $2,775/oz (same conservative 2yr avg).
   </div>
+
+  <!-- ═══ SOTP INTERACTIVE SLIDER PANEL ═══ -->
+  <div class="slider-panel" id="sotp-slider-panel">
+    <div class="slider-panel-title">
+      <span>⚡ Live SOTP Recalculator</span>
+      <span class="live-badge">LIVE</span>
+    </div>
+
+    <div class="preset-row">
+      <span class="preset-label">Presets:</span>
+      <button class="preset-btn preset-active" onclick="setSOTPPreset('base')">Base Case</button>
+      <button class="preset-btn" onclick="setSOTPPreset('bear')">Bear (−30% gold)</button>
+      <button class="preset-btn" onclick="setSOTPPreset('bull')">Bull (spot gold)</button>
+      <button class="preset-btn btn-stress" onclick="setSOTPPreset('stress')">Stress (high AISC)</button>
+      <button class="preset-btn btn-reset" onclick="setSOTPPreset('reset')">↺ Reset</button>
+    </div>
+
+    <div class="slider-grid">
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-label-text">Gold Deck</span>
+          <span class="slider-val" id="sotp-gold-val">$2,775/oz</span>
+        </div>
+        <input type="range" class="val-slider" id="sotp-gold" min="1500" max="6000" step="25" value="2775"
+               oninput="recalcSOTP()">
+        <div class="slider-range-labels"><span>$1,500</span><span>$6,000</span></div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-label-text">Global AISC Adj.</span>
+          <span class="slider-val" id="sotp-aisc-adj-val">0%</span>
+        </div>
+        <input type="range" class="val-slider" id="sotp-aisc-adj" min="-30" max="50" step="1" value="0"
+               oninput="recalcSOTP()">
+        <div class="slider-range-labels"><span>−30%</span><span>+50%</span></div>
+      </div>
+    </div>
+
+    <!-- Per-mine disc rate overrides -->
+    <div style="margin-top:12px;">
+      <div style="font-size:10px;color:var(--text-3);margin-bottom:8px;font-weight:600;letter-spacing:0.04em;">PER-MINE DISCOUNT RATES</div>
+      <div class="sotp-disc-grid">
+        <!-- Tier 1: OECD -->
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--green);">Cadia</div>
+          <input type="range" class="val-slider" id="disc-cadia" min="3" max="12" step="0.5" value="5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-cadia-val" style="min-width:32px;">5.0%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--green);">Boddington</div>
+          <input type="range" class="val-slider" id="disc-boddington" min="3" max="12" step="0.5" value="5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-boddington-val" style="min-width:32px;">5.0%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--green);">Tanami</div>
+          <input type="range" class="val-slider" id="disc-tanami" min="3" max="12" step="0.5" value="5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-tanami-val" style="min-width:32px;">5.0%</div>
+        </div>
+        <!-- Tier 2: Moderate EM -->
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--gold-light);">Lihir</div>
+          <input type="range" class="val-slider" id="disc-lihir" min="3" max="15" step="0.5" value="6.5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-lihir-val" style="min-width:32px;">6.5%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--gold-light);">Ahafo</div>
+          <input type="range" class="val-slider" id="disc-ahafo" min="3" max="15" step="0.5" value="7.5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-ahafo-val" style="min-width:32px;">7.5%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--gold-light);">Merian</div>
+          <input type="range" class="val-slider" id="disc-merian" min="3" max="15" step="0.5" value="8"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-merian-val" style="min-width:32px;">8.0%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--gold-light);">Ahafo North</div>
+          <input type="range" class="val-slider" id="disc-ahafo-north" min="3" max="15" step="0.5" value="7.5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-ahafo-north-val" style="min-width:32px;">7.5%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--gold-light);">Peñasquito</div>
+          <input type="range" class="val-slider" id="disc-penasquito" min="3" max="15" step="0.5" value="7.5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-penasquito-val" style="min-width:32px;">7.5%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--gold-light);">Pueblo Viejo</div>
+          <input type="range" class="val-slider" id="disc-pueblo-viejo" min="3" max="15" step="0.5" value="8.5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-pueblo-viejo-val" style="min-width:32px;">8.5%</div>
+        </div>
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--gold-light);">Yanacocha</div>
+          <input type="range" class="val-slider" id="disc-yanacocha" min="3" max="15" step="0.5" value="8.5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-yanacocha-val" style="min-width:32px;">8.5%</div>
+        </div>
+        <!-- Tier 3: High risk -->
+        <div class="sotp-disc-item">
+          <div class="sotp-disc-name" style="color:var(--red);">Cerro Negro</div>
+          <input type="range" class="val-slider" id="disc-cerro-negro" min="5" max="20" step="0.5" value="10.5"
+                 oninput="recalcSOTP()" style="width:80px;">
+          <div class="slider-val" id="disc-cerro-negro-val" style="min-width:32px;">10.5%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-output-box">
+      <div class="live-output-header">Live SOTP Output</div>
+      <div class="live-row"><span class="live-key">Gross Portfolio NAV</span><span class="live-val" id="sotp-out-gross">$87,649M</span></div>
+      <div class="live-row"><span class="live-key">+ Net Cash</span><span class="live-val" id="sotp-out-cash">+$7,173M</span></div>
+      <div class="live-row"><span class="live-key">− Corp Overhead (7× SG&amp;A)</span><span class="live-val" id="sotp-out-overhead">−$2,674M</span></div>
+      <div class="live-row live-highlight"><span class="live-key">SOTP Equity NAV</span><span class="live-val" id="sotp-out-equity">$92,148M</span></div>
+      <div class="live-row"><span class="live-key">SOTP NAV / Share</span><span class="live-val" id="sotp-out-navps">$83.17</span></div>
+      <div class="live-row live-highlight"><span class="live-key">SOTP @ 1.20×</span><span class="live-val" id="sotp-out-target">$99.80</span></div>
+      <div class="live-row live-total">
+        <span class="live-key">Upside vs $108.25</span>
+        <span class="live-val" id="sotp-out-upside">
+          <span class="upside-chip down" id="sotp-upside-chip">−7.8%</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- ═══ END SOTP SLIDER PANEL ═══ -->
 
   <!-- Mine-by-mine table -->
   <div class="panel">
@@ -4933,7 +5336,286 @@ function initTab4Charts() {
 }
 
 /* ============================================================
-   TAB 5 — VALUATION ENGINE CHARTS
+   TAB 5 — VALUATION ENGINE CHARTS + LIVE SLIDER ENGINE
+   ============================================================ */
+
+// ── CONSTANTS ──
+const CURRENT_PRICE  = 108.25;
+const RESERVES_MOZ   = 118.2;
+const MINE_LIFE      = 21;
+const SHARES_M       = 1108;
+const NET_CASH       = 7173;    // $M
+const CORP_OVERHEAD  = 2674;    // $M  (SG&A $382M × 7×)
+const PNAV_MULT_DEF  = 1.20;    // default P/NAV multiple (used by SOTP output)
+
+// SOTP mine data: [name, prodKoz, aiscBase, discId, mineLife]
+const SOTP_MINES = [
+  { name: 'Cadia',        prod: 650,  aisc:  400, discId: 'disc-cadia',        life: 30 },
+  { name: 'Boddington',   prod: 800,  aisc: 1150, discId: 'disc-boddington',   life: 20 },
+  { name: 'Lihir',        prod: 700,  aisc: 1350, discId: 'disc-lihir',        life: 22 },
+  { name: 'Tanami',       prod: 480,  aisc: 1050, discId: 'disc-tanami',        life: 18 },
+  { name: 'Ahafo',        prod: 550,  aisc: 1250, discId: 'disc-ahafo',        life: 15 },
+  { name: 'Pueblo Viejo', prod: 350,  aisc: 1300, discId: 'disc-pueblo-viejo', life: 15 },
+  { name: 'Merian',       prod: 350,  aisc: 1200, discId: 'disc-merian',       life: 10 },
+  { name: 'Ahafo North',  prod: 250,  aisc: 1100, discId: 'disc-ahafo-north',  life: 13 },
+  { name: 'Cerro Negro',  prod: 300,  aisc: 1100, discId: 'disc-cerro-negro',  life: 12 },
+  { name: 'Peñasquito',   prod: 350,  aisc: 1500, discId: 'disc-penasquito',   life: 10 },
+  { name: 'Yanacocha',    prod: 120,  aisc: 1600, discId: 'disc-yanacocha',    life: 20 },
+];
+
+// ── HELPER: flash a value element ──
+function flashVal(el, newVal, oldVal) {
+  if (!el) return;
+  el.textContent = newVal;
+  el.classList.remove('val-up', 'val-down', 'val-changed');
+  void el.offsetWidth; // reflow
+  if (typeof oldVal === 'number' && typeof newVal === 'number') {
+    el.classList.add(newVal > oldVal ? 'val-up' : newVal < oldVal ? 'val-down' : 'val-changed');
+  } else {
+    el.classList.add('val-changed');
+  }
+  setTimeout(() => el.classList.remove('val-up','val-down','val-changed'), 1200);
+}
+
+// ── HELPER: format number ──
+function fmt(n, decimals=0) {
+  return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+}
+
+// ── HELPER: sync preset button active state ──
+function syncPresetBtns(groupPrefix, preset) {
+  document.querySelectorAll(`[onclick^="${groupPrefix}"]`).forEach(btn => {
+    const arg = btn.getAttribute('onclick').match(/'(\w+)'/)?.[1];
+    btn.classList.toggle('preset-active', arg === preset);
+  });
+}
+
+/* ============================================================
+   P/NAV LIVE RECALCULATION ENGINE
+   ============================================================ */
+window.recalcPNAV = function() {
+  const goldDeck  = parseFloat(document.getElementById('pnav-gold').value);
+  const aisc      = parseFloat(document.getElementById('pnav-aisc').value);
+  const discRate  = parseFloat(document.getElementById('pnav-disc').value) / 100;
+  const mult      = parseFloat(document.getElementById('pnav-mult').value);
+
+  // Update slider display labels
+  document.getElementById('pnav-gold-val').textContent  = '$' + fmt(goldDeck) + '/oz';
+  document.getElementById('pnav-aisc-val').textContent  = '$' + fmt(aisc) + '/oz';
+  document.getElementById('pnav-disc-val').textContent  = parseFloat(document.getElementById('pnav-disc').value).toFixed(2) + '%';
+  document.getElementById('pnav-mult-val').textContent  = mult.toFixed(2) + '×';
+
+  // Core formula
+  const cashMargin  = goldDeck - aisc;
+  const annuity     = (1 - Math.pow(1 + discRate, -MINE_LIFE)) / discRate;
+  const annualProd  = RESERVES_MOZ / MINE_LIFE;
+  const grossNav    = cashMargin > 0 ? cashMargin * annualProd * annuity : 0;
+  const equityNav   = grossNav + NET_CASH;
+  const navPs       = equityNav / SHARES_M;
+  const navPrice    = navPs * mult;
+  const annualOCF   = cashMargin > 0 ? cashMargin * annualProd : 0;
+  const upside      = ((navPrice - CURRENT_PRICE) / CURRENT_PRICE) * 100;
+
+  // Update DOM outputs
+  const setLive = (id, text) => { const el = document.getElementById(id); if(el) { flashVal(el, text, el.textContent); } };
+  setLive('pnav-out-margin',    cashMargin > 0 ? '$' + fmt(cashMargin) + '/oz' : 'NEGATIVE');
+  setLive('pnav-out-ocf',       cashMargin > 0 ? '$' + fmt(Math.round(annualOCF)) + 'M/yr' : 'N/A');
+  setLive('pnav-out-annuity',   annuity.toFixed(2) + '×');
+  setLive('pnav-out-grossnav',  cashMargin > 0 ? '$' + fmt(Math.round(grossNav)) + 'M' : '$0M');
+  setLive('pnav-out-equitynav', '$' + fmt(Math.round(equityNav)) + 'M');
+  setLive('pnav-out-navps',     '$' + navPs.toFixed(2));
+  setLive('pnav-out-price',     '$' + navPrice.toFixed(2));
+
+  // Upside chip
+  const chip = document.getElementById('pnav-upside-chip');
+  const chipWrap = document.getElementById('pnav-out-upside');
+  if (chip && chipWrap) {
+    const sign = upside >= 0 ? '+' : '';
+    chip.textContent = sign + upside.toFixed(1) + '%';
+    chip.className = 'upside-chip ' + (upside >= 0 ? 'up' : 'down');
+    flashVal(chipWrap.querySelector('.upside-chip') || chipWrap, sign + upside.toFixed(1) + '%');
+  }
+
+  // Update P/NAV sensitivity bar chart via Plotly.react()
+  const navGoldDecks = [2000, 2500, goldDeck, 3200, 3800, 4758];
+  const navLabels    = [
+    '$2,000\n(10yr avg)',
+    '$2,500\n(5yr avg)',
+    '$' + fmt(Math.round(goldDeck)) + '\n(★ current)',
+    '$3,200\n(1yr avg)',
+    '$3,800\n(recent)',
+    '$4,758\n(spot)'
+  ];
+  const dynamicAnnuity = (1 - Math.pow(1 + discRate, -MINE_LIFE)) / discRate;
+  const annualProdDyn  = RESERVES_MOZ / MINE_LIFE;
+  const navPrices = navGoldDecks.map(gd => {
+    const m = gd - aisc;
+    if (m <= 0) return 0;
+    return parseFloat(((m * annualProdDyn * dynamicAnnuity + NET_CASH) / SHARES_M * mult).toFixed(2));
+  });
+  const navColors = navPrices.map(p => p < CURRENT_PRICE ? '#E05252' : (p < 150 ? '#E8AF50' : '#22B573'));
+  const navSensData = [{
+    type: 'bar', x: navLabels, y: navPrices,
+    marker: { color: navColors, opacity: 0.85, line: { color: 'rgba(255,255,255,0.08)', width: 1 } },
+    text: navPrices.map(p => p > 0 ? '$' + p.toFixed(0) : 'N/A'),
+    textposition: 'outside', textfont: { size: 11, family: 'JetBrains Mono', color: '#E2E2E8' },
+    hovertemplate: 'Gold deck: %{x}<br>P/NAV implied price: $%{y:.2f}/sh<extra></extra>'
+  }];
+  const navSensLayout = mergeLayout({
+    title: { text: 'P/NAV Implied Price — Gold $' + fmt(Math.round(goldDeck)) + ' | AISC $' + fmt(Math.round(aisc)) + ' | Disc ' + (discRate*100).toFixed(2) + '% | ' + mult.toFixed(2) + '×', font: { size: 12, color: '#E2E2E8' } },
+    yaxis: { title: 'Implied Price/Share ($)', tickprefix: '$' },
+    height: 295,
+    margin: { l: 60, r: 20, t: 55, b: 70 },
+    shapes: [
+      { type: 'line', x0: -0.5, x1: 5.5, y0: CURRENT_PRICE, y1: CURRENT_PRICE,
+        line: { color: '#E05252', width: 1.5, dash: 'dash' } },
+      { type: 'line', x0: -0.5, x1: 5.5, y0: navPrices[2], y1: navPrices[2],
+        line: { color: '#E8AF50', width: 1.5, dash: 'dot' } }
+    ],
+    annotations: [
+      { x: 5, y: CURRENT_PRICE, text: 'Current $' + CURRENT_PRICE, showarrow: false,
+        font: { color: '#E05252', size: 9, family: 'JetBrains Mono' }, xanchor: 'right', yshift: -14 },
+      { x: 5, y: navPrices[2], text: 'Live Target $' + navPrices[2].toFixed(0), showarrow: false,
+        font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' }, xanchor: 'right', yshift: 10 },
+      { x: 2, y: navPrices[2] + (navPrices[2] > 0 ? navPrices[2]*0.04 : 8), text: '★ Live inputs', showarrow: false,
+        font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' } }
+    ]
+  });
+  if (document.getElementById('chart-nav-sensitivity')) {
+    Plotly.react('chart-nav-sensitivity', navSensData, navSensLayout, PLOTLY_CONFIG);
+  }
+};
+
+/* ============================================================
+   SOTP LIVE RECALCULATION ENGINE
+   ============================================================ */
+window.recalcSOTP = function() {
+  const goldDeck  = parseFloat(document.getElementById('sotp-gold').value);
+  const aiscAdj   = parseFloat(document.getElementById('sotp-aisc-adj').value) / 100;  // e.g. 0.10 = +10%
+
+  // Update main slider display labels
+  document.getElementById('sotp-gold-val').textContent     = '$' + fmt(goldDeck) + '/oz';
+  const adjPct = parseFloat(document.getElementById('sotp-aisc-adj').value);
+  document.getElementById('sotp-aisc-adj-val').textContent = (adjPct >= 0 ? '+' : '') + adjPct.toFixed(0) + '%';
+
+  // Per-mine calculation
+  const mineNavs = SOTP_MINES.map(mine => {
+    const disc  = parseFloat(document.getElementById(mine.discId).value) / 100;
+    const aisc  = mine.aisc * (1 + aiscAdj);
+    const margin = goldDeck - aisc;
+    if (margin <= 0) return 0;
+    const ann = (1 - Math.pow(1 + disc, -mine.life)) / disc;
+    return (margin * (mine.prod / 1000) * ann);   // $M
+  });
+
+  // Update per-mine disc labels
+  SOTP_MINES.forEach(mine => {
+    const discEl = document.getElementById(mine.discId);
+    const valEl  = document.getElementById(mine.discId + '-val');
+    if (discEl && valEl) valEl.textContent = parseFloat(discEl.value).toFixed(1) + '%';
+  });
+
+  const grossNav   = mineNavs.reduce((a, b) => a + b, 0);
+  const equityNav  = grossNav + NET_CASH - CORP_OVERHEAD;
+  const navPs      = equityNav / SHARES_M;
+  const sotpTarget = navPs * PNAV_MULT_DEF;
+  const upside     = ((sotpTarget - CURRENT_PRICE) / CURRENT_PRICE) * 100;
+
+  // Update DOM
+  const setLive = (id, text) => { const el = document.getElementById(id); if(el) { flashVal(el, text, el.textContent); } };
+  setLive('sotp-out-gross',   '$' + fmt(Math.round(grossNav)) + 'M');
+  setLive('sotp-out-cash',    '+$' + fmt(NET_CASH) + 'M');
+  setLive('sotp-out-overhead','−$' + fmt(CORP_OVERHEAD) + 'M');
+  setLive('sotp-out-equity',  '$' + fmt(Math.round(equityNav)) + 'M');
+  setLive('sotp-out-navps',   '$' + navPs.toFixed(2));
+  setLive('sotp-out-target',  '$' + sotpTarget.toFixed(2));
+
+  const chip = document.getElementById('sotp-upside-chip');
+  if (chip) {
+    const sign = upside >= 0 ? '+' : '';
+    chip.textContent = sign + upside.toFixed(1) + '%';
+    chip.className = 'upside-chip ' + (upside >= 0 ? 'up' : 'down');
+  }
+
+  // Update SOTP waterfall chart via Plotly.react()
+  const mineNames = SOTP_MINES.map(m => m.name);
+  const mineColors = SOTP_MINES.map(mine => {
+    const disc = parseFloat(document.getElementById(mine.discId).value);
+    return disc <= 5.5 ? '#22B573' : (disc <= 8.5 ? '#E8AF50' : '#E05252');
+  });
+  const allBars   = [...mineNames, 'Net Cash', 'SOTP Equity NAV'];
+  const allVals   = [...mineNavs.map(v => Math.round(v)), NET_CASH, Math.round(equityNav)];
+  const allColors = [...mineColors, '#22B573', '#E8AF50'];
+
+  const highestMineIdx = mineNavs.indexOf(Math.max(...mineNavs));
+  const highestMine    = SOTP_MINES[highestMineIdx];
+
+  const sotpPlotData = [{
+    type: 'bar', x: allBars, y: allVals,
+    marker: { color: allColors, opacity: 0.85, line: { color: 'rgba(255,255,255,0.08)', width: 1 } },
+    text: allVals.map(v => '$' + (v/1000).toFixed(1) + 'B'),
+    textposition: 'outside',
+    textfont: { size: 9, family: 'JetBrains Mono', color: '#E2E2E8' },
+    hovertemplate: '<b>%{x}</b><br>NAV: $%{y:,.0f}M<extra></extra>'
+  }];
+  const sotpPlotLayout = mergeLayout({
+    title: { text: 'SOTP NAV — Gold $' + fmt(Math.round(goldDeck)) + ' | Gross $' + (grossNav/1000).toFixed(1) + 'B | Equity $' + (equityNav/1000).toFixed(1) + 'B | $' + navPs.toFixed(2) + '/sh', font: { size: 12, color: '#E2E2E8' } },
+    yaxis: { title: 'Mine NAV ($M)', tickprefix: '$', ticksuffix: 'M' },
+    height: 345,
+    margin: { l: 65, r: 20, t: 60, b: 100 },
+    annotations: [
+      { x: highestMine.name, y: Math.round(mineNavs[highestMineIdx]),
+        text: '<b>$' + highestMine.aisc + '/oz AISC</b><br>' + ((mineNavs[highestMineIdx]/grossNav)*100).toFixed(0) + '% of gross NAV',
+        showarrow: true, arrowhead: 2, arrowcolor: '#22B573', ax: 0, ay: -60,
+        font: { size: 9, color: '#22B573', family: 'JetBrains Mono' }, bgcolor: '#0D1117', bordercolor: '#22B573', borderwidth: 1 },
+      { x: 'Cerro Negro', y: Math.round(mineNavs[8]) || 100,
+        text: 'Argentina\n10.5% default disc',
+        showarrow: true, arrowhead: 2, arrowcolor: '#E05252', ax: 40, ay: -40,
+        font: { size: 8, color: '#E05252', family: 'JetBrains Mono' }, bgcolor: '#0D1117', bordercolor: '#E05252', borderwidth: 1 }
+    ]
+  });
+  if (document.getElementById('chart-sotp-waterfall')) {
+    Plotly.react('chart-sotp-waterfall', sotpPlotData, sotpPlotLayout, PLOTLY_CONFIG);
+  }
+};
+
+/* ============================================================
+   PRESET HANDLERS
+   ============================================================ */
+const PNAV_DEFAULTS = { gold: 2775, aisc: 1358, disc: 5.75, mult: 1.20 };
+const SOTP_DEFAULTS = { gold: 2775, aiscAdj: 0 };
+const SOTP_DEFAULT_DISCS = { 'disc-cadia': 5, 'disc-boddington': 5, 'disc-tanami': 5,
+  'disc-lihir': 6.5, 'disc-ahafo': 7.5, 'disc-merian': 8, 'disc-ahafo-north': 7.5,
+  'disc-penasquito': 7.5, 'disc-pueblo-viejo': 8.5, 'disc-yanacocha': 8.5, 'disc-cerro-negro': 10.5 };
+
+window.setPNavPreset = function(preset) {
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.value = v; };
+  switch(preset) {
+    case 'base':   set('pnav-gold',2775); set('pnav-aisc',1358); set('pnav-disc',5.75); set('pnav-mult',1.20); break;
+    case 'bear':   set('pnav-gold',1943); set('pnav-aisc',1358); set('pnav-disc',5.75); set('pnav-mult',1.20); break; // 2775 × 0.70
+    case 'bull':   set('pnav-gold',4758); set('pnav-aisc',1358); set('pnav-disc',5.75); set('pnav-mult',1.20); break; // spot
+    case 'stress': set('pnav-gold',2775); set('pnav-aisc',1800); set('pnav-disc',7.00); set('pnav-mult',0.90); break;
+    case 'reset':  set('pnav-gold',PNAV_DEFAULTS.gold); set('pnav-aisc',PNAV_DEFAULTS.aisc); set('pnav-disc',PNAV_DEFAULTS.disc); set('pnav-mult',PNAV_DEFAULTS.mult); preset='base'; break;
+  }
+  syncPresetBtns('setPNavPreset', preset);
+  recalcPNAV();
+};
+
+window.setSOTPPreset = function(preset) {
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.value = v; };
+  switch(preset) {
+    case 'base':   set('sotp-gold',2775); set('sotp-aisc-adj',0); Object.entries(SOTP_DEFAULT_DISCS).forEach(([id,v])=>set(id,v)); break;
+    case 'bear':   set('sotp-gold',1943); set('sotp-aisc-adj',0); Object.entries(SOTP_DEFAULT_DISCS).forEach(([id,v])=>set(id,v)); break;
+    case 'bull':   set('sotp-gold',4758); set('sotp-aisc-adj',0); Object.entries(SOTP_DEFAULT_DISCS).forEach(([id,v])=>set(id,v)); break;
+    case 'stress': set('sotp-gold',2775); set('sotp-aisc-adj',20); Object.entries(SOTP_DEFAULT_DISCS).forEach(([id,v])=>set(id,v+2)); break;
+    case 'reset':  set('sotp-gold',SOTP_DEFAULTS.gold); set('sotp-aisc-adj',SOTP_DEFAULTS.aiscAdj); Object.entries(SOTP_DEFAULT_DISCS).forEach(([id,v])=>set(id,v)); preset='base'; break;
+  }
+  syncPresetBtns('setSOTPPreset', preset);
+  recalcSOTP();
+};
+
+/* ============================================================
+   MAIN initTab5Charts — called on tab switch
    ============================================================ */
 function initTab5Charts() {
   // ── 1. SENSITIVITY HEATMAP: WACC × Gold Price ──
@@ -4973,82 +5655,11 @@ function initTab5Charts() {
   });
   Plotly.newPlot('chart-sensitivity', sensitivityData, sensitivityLayout, PLOTLY_CONFIG);
 
-  // ── 2. P/NAV SENSITIVITY BAR CHART ──
-  const navGoldDecks = [2000, 2500, 2775, 3200, 3800, 4758];
-  const navLabels    = ['$2,000\n(10yr avg)', '$2,500\n(5yr avg)', '$2,775\n(2yr avg★)', '$3,200\n(1yr avg)', '$3,800\n(recent)', '$4,758\n(spot)'];
-  const aisc2025 = 1358; const reservesMoz = 118.2; const mineLife = 21;
-  const navWacc = 5.75/100; const pnavMult = 1.20; const sharesM = 1108; const netCash = 7173;
-  const annuityFactor = (1 - Math.pow(1 + navWacc, -mineLife)) / navWacc;
-  const annualProd = reservesMoz / mineLife;
-  const navPrices = navGoldDecks.map(gd => {
-    const margin = gd - aisc2025;
-    if (margin <= 0) return 0;
-    const grossNav = margin * annualProd * annuityFactor;
-    return Math.round((grossNav + netCash) / sharesM * pnavMult);
-  });
-  const navColors = navPrices.map(p => p < 108.25 ? '#E05252' : (p < 150 ? '#E8AF50' : '#22B573'));
-  const navSensData = [{
-    type: 'bar', x: navLabels, y: navPrices,
-    marker: { color: navColors, opacity: 0.85, line: { color: 'rgba(255,255,255,0.08)', width: 1 } },
-    text: navPrices.map(p => p > 0 ? '$' + p : 'N/A'),
-    textposition: 'outside', textfont: { size: 11, family: 'JetBrains Mono', color: '#E2E2E8' },
-    hovertemplate: 'Gold deck: %{x}<br>P/NAV implied price: $%{y}/sh<extra></extra>'
-  }];
-  const navSensLayout = mergeLayout({
-    title: { text: 'P/NAV Implied Price at Each Gold Deck — NEM Is Cheap at Any Gold Above $2,000/oz', font: { size: 12, color: '#E2E2E8' } },
-    yaxis: { title: 'Implied Price/Share ($)', tickprefix: '$' },
-    height: 295,
-    margin: { l: 60, r: 20, t: 55, b: 70 },
-    shapes: [
-      { type: 'line', x0: -0.5, x1: 5.5, y0: 108.25, y1: 108.25,
-        line: { color: '#E05252', width: 1.5, dash: 'dash' } },
-      { type: 'line', x0: -0.5, x1: 5.5, y0: 198.03, y1: 198.03,
-        line: { color: '#E8AF50', width: 1.5, dash: 'dot' } }
-    ],
-    annotations: [
-      { x: 5, y: 108.25, text: 'Current $108.25', showarrow: false,
-        font: { color: '#E05252', size: 9, family: 'JetBrains Mono' }, xanchor: 'right', yshift: -14 },
-      { x: 5, y: 198.03, text: 'Target $198.03', showarrow: false,
-        font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' }, xanchor: 'right', yshift: 10 },
-      { x: 2, y: navPrices[2] + 8, text: '★ Model uses 2yr avg', showarrow: false,
-        font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' } }
-    ]
-  });
-  Plotly.newPlot('chart-nav-sensitivity', navSensData, navSensLayout, PLOTLY_CONFIG);
+  // ── 2. P/NAV SENSITIVITY BAR CHART (initial render — sliders will use Plotly.react()) ──
+  recalcPNAV();
 
-  // ── 3. SOTP WATERFALL CHART ──
-  const sotpMines = ['Cadia','Boddington','Lihir','Tanami','Ahafo','Pueblo Viejo','Merian','Ahafo North','Cerro Negro','Peñasquito','Yanacocha'];
-  const sotpNavs  = [23731, 16201, 11506, 9679, 7404, 4287, 3699, 3403, 3342, 3063, 1334];
-  const sotpDiscs = [5.0, 5.0, 6.5, 5.0, 7.5, 8.5, 8.0, 7.5, 10.5, 7.5, 8.5]; // disc rates
-  const sotpColors = sotpDiscs.map(d => d <= 5.5 ? '#22B573' : (d <= 8.0 ? '#E8AF50' : '#E05252'));
-  const allBars = [...sotpMines, 'Net Cash', 'SOTP Equity NAV'];
-  const allVals = [...sotpNavs, 7173, 92148];
-  const allColors = [...sotpColors, '#22B573', '#E8AF50'];
-  const sotpData = [{
-    type: 'bar',
-    x: allBars,
-    y: allVals,
-    marker: { color: allColors, opacity: 0.85, line: { color: 'rgba(255,255,255,0.08)', width: 1 } },
-    text: allVals.map((v,i) => i < sotpMines.length ? '$' + (v/1000).toFixed(1) + 'B' : '$' + (v/1000).toFixed(1) + 'B'),
-    textposition: 'outside',
-    textfont: { size: 9, family: 'JetBrains Mono', color: '#E2E2E8' },
-    hovertemplate: '<b>%{x}</b><br>NAV: $%{y:,.0f}M<extra></extra>'
-  }];
-  const sotpLayout = mergeLayout({
-    title: { text: 'SOTP NAV: $87.6B Gross Portfolio | $92.1B Equity NAV | $83.17/sh — Cadia = 27% of Value', font: { size: 12, color: '#E2E2E8' } },
-    yaxis: { title: 'Mine NAV ($M)', tickprefix: '$', ticksuffix: 'M' },
-    height: 345,
-    margin: { l: 65, r: 20, t: 60, b: 100 },
-    annotations: [
-      { x: 'Cadia', y: 23731, text: '<b>$400/oz AISC</b><br>Lowest cost globally<br>27% of gross NAV',
-        showarrow: true, arrowhead: 2, arrowcolor: '#22B573', ax: 0, ay: -60,
-        font: { size: 9, color: '#22B573', family: 'JetBrains Mono' }, bgcolor: '#0D1117', bordercolor: '#22B573', borderwidth: 1 },
-      { x: 'Cerro Negro', y: 3342, text: 'Argentina 10.5%<br>High sovereign risk',
-        showarrow: true, arrowhead: 2, arrowcolor: '#E05252', ax: 40, ay: -40,
-        font: { size: 8, color: '#E05252', family: 'JetBrains Mono' }, bgcolor: '#0D1117', bordercolor: '#E05252', borderwidth: 1 }
-    ]
-  });
-  Plotly.newPlot('chart-sotp-waterfall', sotpData, sotpLayout, PLOTLY_CONFIG);
+  // ── 3. SOTP WATERFALL CHART (initial render — sliders will use Plotly.react()) ──
+  recalcSOTP();
 
   // ── 4. 8-METHOD CONVERGENCE BAR CHART ──
   const methods8 = ['DCF\n(Primary 70%)', 'P/NAV\n(Primary 30%)', 'Blended\nTarget', 'Relative Value\nRe-rate', 'Precedent\nEV/EBITDA', 'Monte Carlo\nMedian', 'Precedent\nP/NAV (1.27×)', 'SOTP\n(Mine-level)', 'Precedent\nEV/oz (floor)'];
