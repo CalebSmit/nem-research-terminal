@@ -7879,6 +7879,57 @@ function initTab6Charts() {
       ]
     }), PLOTLY_CONFIG);
   }
+
+  // Tornado chart — sensitivity analysis
+  if (document.getElementById('chart-tornado')) {
+    var tornadoVars = ['Gold Price ±15%', 'AISC ±$200/oz', 'Production ±10%', 'WACC ±100bp', 'FX (AUD/USD) ±5%', 'Exit Multiple ±0.5×'];
+    var tornadoUp =   [72.40, 18.30, 14.10, 12.80, 5.20, 8.60];
+    var tornadoDown = [-58.20, -16.80, -12.50, -11.40, -4.80, -7.90];
+    Plotly.newPlot('chart-tornado', [
+      { type: 'bar', y: tornadoVars, x: tornadoUp, orientation: 'h', name: 'Upside', marker: { color: '#16A34A' },
+        hovertemplate: '%{y}: +$%{x:.1f}<extra></extra>' },
+      { type: 'bar', y: tornadoVars, x: tornadoDown, orientation: 'h', name: 'Downside', marker: { color: '#DC2626' },
+        hovertemplate: '%{y}: –$%{x:.1f}<extra></extra>' }
+    ], mergeLayout({
+      title: { text: 'Sensitivity to Key Variables (±$ Impact on NEM Price)', font: { size: 13, color: '#E2E2E8' } },
+      barmode: 'overlay',
+      xaxis: { title: 'Impact on NEM Price ($)', tickprefix: '$', zeroline: true, zerolinecolor: 'rgba(255,255,255,0.2)' },
+      yaxis: { automargin: true },
+      height: 340,
+      margin: { l: 130, r: 25, t: 55, b: 55 },
+      legend: { orientation: 'h', x: 0.5, xanchor: 'center', y: -0.2 }
+    }), PLOTLY_CONFIG);
+  }
+
+  // Risk matrix — probability × impact scatter
+  if (document.getElementById('chart-risk-matrix')) {
+    var riskLabels = ['Gold Price\nReversal', 'AISC\nBlowout', 'Geopolitical\n(PNG/Ghana)', 'M&A\nOverpay', 'Mine\nDisruption', 'FX\nHeadwind', 'Central Bank\nDemand Fade'];
+    var riskProb   = [0.12, 0.15, 0.10, 0.08, 0.20, 0.25, 0.05];
+    var riskImpact = [0.85, 0.60, 0.40, 0.70, 0.35, 0.30, 0.75];
+    var riskColors = ['#DC2626','#E8B04A','#0891B2','#DC2626','#E8B04A','#16A34A','#0891B2'];
+    var riskSizes  = [22, 18, 14, 16, 14, 12, 16];
+    Plotly.newPlot('chart-risk-matrix', [{
+      type: 'scatter', mode: 'markers+text', x: riskProb, y: riskImpact,
+      text: riskLabels, textposition: 'top center',
+      textfont: { size: 9, color: '#FAFAFA', family: 'Inter' },
+      marker: { size: riskSizes, color: riskColors, opacity: 0.8, line: { color: 'rgba(255,255,255,0.3)', width: 1 } },
+      hovertemplate: '%{text}<br>Probability: %{x:.0%}<br>Impact: %{y:.0%}<extra></extra>'
+    }], mergeLayout({
+      title: { text: 'Risk Matrix — Probability × Impact', font: { size: 13, color: '#E2E2E8' } },
+      xaxis: { title: 'Probability', range: [0, 0.35], tickformat: '.0%' },
+      yaxis: { title: 'Impact Severity', range: [0, 1.0], tickformat: '.0%' },
+      height: 360,
+      margin: { l: 60, r: 25, t: 55, b: 55 },
+      shapes: [
+        { type: 'rect', x0: 0.20, x1: 0.35, y0: 0.60, y1: 1.0, fillcolor: 'rgba(220,38,38,0.08)', line: { width: 0 } },
+        { type: 'line', x0: 0.20, x1: 0.20, y0: 0, y1: 1.0, line: { color: 'rgba(255,255,255,0.1)', width: 1, dash: 'dot' } },
+        { type: 'line', x0: 0, x1: 0.35, y0: 0.60, y1: 0.60, line: { color: 'rgba(255,255,255,0.1)', width: 1, dash: 'dot' } }
+      ],
+      annotations: [
+        { x: 0.27, y: 0.95, text: 'HIGH-HIGH\n(Empty)', showarrow: false, font: { color: 'rgba(220,38,38,0.4)', size: 10 } }
+      ]
+    }), PLOTLY_CONFIG);
+  }
 }
 
 /* ============================================================
