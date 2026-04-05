@@ -1102,6 +1102,162 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .kill-icon { color: var(--red-light); font-size: 11px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
 
 /* ============================================================
+   PERPLEXITY METHODOLOGY — EXPANDER & THREAD CARDS
+   ============================================================ */
+.perp-expander {
+  border: 1px solid rgba(8,145,178,0.3);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  margin-top: 24px;
+  overflow: hidden;
+}
+.perp-expander summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  background: rgba(8,145,178,0.06);
+  user-select: none;
+  list-style: none;
+  border-bottom: 1px solid rgba(8,145,178,0.15);
+}
+.perp-expander summary::-webkit-details-marker { display: none; }
+.perp-expander summary::after {
+  content: '▶';
+  font-size: 9px;
+  color: var(--teal-light);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.perp-expander[open] summary::after { transform: rotate(90deg); }
+.perp-expander-body { padding: 20px 20px 24px; }
+
+/* Methodology panel */
+.perp-panel {
+  border: 2px solid rgba(8,145,178,0.35);
+  border-radius: var(--r-lg);
+  background: rgba(8,145,178,0.04);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+.perp-panel-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  margin-bottom: 10px;
+}
+.perp-panel p {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.perp-panel p:last-of-type { margin-bottom: 0; }
+
+/* Bloomberg vs Perplexity comparison table */
+.perp-compare-table th.teal-head {
+  background: rgba(8,145,178,0.12);
+  color: var(--teal-light);
+}
+.perp-compare-table th.grey-head {
+  background: var(--surface-3);
+  color: var(--text-3);
+}
+.perp-compare-table td { font-size: 12px; color: var(--text-2); vertical-align: top; }
+.perp-compare-table td:first-child { font-weight: 600; color: var(--text-3); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; width: 15%; }
+.perp-compare-table td:nth-child(2) { color: var(--text-2); width: 42%; }
+.perp-compare-table td:nth-child(3) { color: var(--teal-light); width: 43%; }
+
+/* Callout box */
+.perp-callout {
+  background: rgba(8,145,178,0.08);
+  border-left: 3px solid var(--teal-light);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 14px 16px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.perp-callout strong { color: var(--teal-light); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+
+/* Thread cards */
+.thread-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--r-lg);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.thread-id {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  margin-bottom: 2px;
+}
+.thread-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0;
+}
+.thread-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.thread-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.thread-field-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.thread-field-value {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.thread-field-value.highlight { color: var(--text); font-weight: 600; }
+.thread-feeds {
+  font-size: 11px;
+  color: var(--teal-light);
+  font-weight: 500;
+}
+.thread-tool-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--r);
+  background: rgba(8,145,178,0.12);
+  color: var(--teal-light);
+  border: 1px solid rgba(8,145,178,0.25);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* ============================================================
    ERA COMPARISON
    ============================================================ */
 .era-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -2038,6 +2194,322 @@ input[type=range].val-slider::-moz-range-thumb {
       <div class="cc-detail">MSCI ESG rating upgrade unlocks sovereign wealth fund mandates that were previously blocked by screening criteria.</div>
     </div>
   </div>
+
+  <!-- ============================================================
+       PERPLEXITY RESEARCH METHODOLOGY SECTIONS
+       Placed: after Research Log, before Kill Criteria
+       ============================================================ -->
+
+  <!-- SECTION A: PERPLEXITY METHODOLOGY -->
+  <details class="perp-expander">
+    <summary>Section A — Perplexity Computer: AI-Native Research Methodology</summary>
+    <div class="perp-expander-body">
+
+      <div class="perp-panel">
+        <div class="perp-panel-title">Perplexity Computer &mdash; AI-Native Research Methodology</div>
+        <p>This investment pitch was built through a multi-turn, multi-thread research process using Perplexity Computer — an AI-native research environment that orchestrates parallel search agents, cross-references primary sources in real time, and synthesizes findings across dozens of documents simultaneously. Unlike a Bloomberg terminal query that retrieves pre-indexed, structured data, Perplexity Computer initiates agentic research threads that follow leads, reconcile contradictions, and surface non-consensus insights that exist in the gap between filed documents, regulatory notices, and academic reports.</p>
+        <p>Each research thread below represents a discrete hypothesis that was tested against primary evidence. The process began with a reverse DCF anchor — working backward from NEM's stock price to identify what gold price the market was implying — and then expanded into eight independent channel checks covering supply dynamics, sovereign demand, regulatory risk, and qualitative signals. The output was not a list of facts retrieved from a database; it was a structured, falsifiable investment thesis built from first-principles evidence gathering.</p>
+        <p>The distinction from traditional terminal research is not speed — it is the <em>type</em> of question that can be answered. Bloomberg tells you what happened. Perplexity Computer tells you what it means, what changed, and what the market has not yet priced.</p>
+
+        <div class="mt-16">
+          <table class="perp-compare-table">
+            <thead>
+              <tr>
+                <th class="grey-head">Dimension</th>
+                <th class="grey-head">Bloomberg Terminal</th>
+                <th class="teal-head">Perplexity Computer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Approach</td>
+                <td>Structured query against pre-indexed financial database. Pull what exists. Data retrieval.</td>
+                <td>Multi-turn agentic research threads. Hypothesis-driven. Cross-source synthesis in real time.</td>
+              </tr>
+              <tr>
+                <td>Coverage</td>
+                <td>Financial statements, price history, analyst consensus, news wires. Well-trodden ground.</td>
+                <td>Primary filings + regulatory notices + academic reports + industry surveys + earnings NLP — sources that live outside any single database.</td>
+              </tr>
+              <tr>
+                <td>Speed</td>
+                <td>Seconds for structured data. Hours for primary document synthesis across multiple sources.</td>
+                <td>Parallel threads synthesize 40+ primary sources simultaneously. Full thesis built in hours, not days.</td>
+              </tr>
+              <tr>
+                <td>Non-consensus Edge</td>
+                <td>Low. Every peer runs the same terminal. Same data = same consensus = priced in.</td>
+                <td>High. Identifies findings that exist in the gap between sources — zero major gold discoveries, Ghana royalty law, Cadia copper NAV — none surfaceable via standard terminal query.</td>
+              </tr>
+              <tr>
+                <td>Output</td>
+                <td>Data tables, charts, analyst estimates. Answers to known questions.</td>
+                <td>Falsifiable investment claims, assumption-level thesis changes, and source-cited primary evidence. Answers to questions no one thought to ask.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="perp-callout">
+          <strong>Why This Matters for NEM</strong>
+          The $3,605 implied gold price, the zero major discoveries in 2023&ndash;2024, and the unpriced Cadia copper NAV were all identified through AI-native research cross-referencing primary sources that no terminal query would surface. The Ghana sliding-scale royalty law (effective Mar 10 2026) was found in a regulatory filing — not a news wire. The insider sale pattern that added nuance to the kill criteria was identified by NLP-reading 21 SEC Form 4 filings against their 10b5-1 disclosure status. These are the edges that Perplexity Computer was built to find.
+        </div>
+      </div>
+
+    </div>
+  </details>
+
+  <!-- SECTION B: 8 RESEARCH THREAD CARDS -->
+  <details class="perp-expander">
+    <summary>Section B — 8 Research Thread Cards: Before / After Impact Log</summary>
+    <div class="perp-expander-body">
+
+      <div class="grid-2">
+
+        <!-- THREAD 01 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 01</div>
+              <div class="thread-title">Reverse DCF Anchor</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge bull">BULLISH</span>
+              <span class="thread-tool-badge">Perplexity Finance</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;What gold price does NEM&rsquo;s current stock price imply using a reverse DCF with its reported cost structure?&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">$3,605/oz implied gold price — 32% below spot $4,758/oz. The market is pricing NEM as if gold is already in a bear market.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Reframed the central thesis from a price target to a falsifiable market claim: &ldquo;NEM is mispriced because it implies gold at $3,605 when spot is $4,758.&rdquo; This is the thesis anchor.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 01 (Thesis) &middot; Tab 06 (Valuation) &middot; Tab 14 (Model)</div>
+          </div>
+        </div>
+
+        <!-- THREAD 02 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 02</div>
+              <div class="thread-title">Supply Drought</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge bull">BULLISH</span>
+              <span class="thread-tool-badge">Perplexity Deep Research</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;Have there been any major new gold discoveries globally in 2023 or 2024? Define major as &ge;2 million ounces.&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">Zero major discoveries (&ge;2 Moz) in both 2023 AND 2024 — the first back-to-back discovery drought in 35 years, per S&amp;P Global data. Grassroots exploration budget share hit record-low 19%.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Raised structural gold price floor conviction from 3/5 to 5/5. Discovery drought creates a decade-long supply constraint that is independent of rate cycles.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 10 (Channel Checks)</div>
+          </div>
+        </div>
+
+        <!-- THREAD 03 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 03</div>
+              <div class="thread-title">Insider Transaction Deep Dive</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge neu">NEUTRAL</span>
+              <span class="thread-tool-badge">Perplexity Finance</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;Analyze all NEM insider transactions filed with the SEC in the past 12 months — separate open-market purchases from 10b5-1 plan sales. Are insiders buying or selling?&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">21 open-market sales totaling $7.6M; zero open-market purchases. CFO Nancy Fry&rsquo;s $2.05M sale has no confirmed 10b5-1 plan on file.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Downgraded insider signal from bullish to neutral-to-slightly-bearish. Added unconfirmed discretionary sale to kill criteria monitoring list.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 10 (Channel Checks) &middot; Tab 01 (Kill Criteria)</div>
+          </div>
+        </div>
+
+        <!-- THREAD 04 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 04</div>
+              <div class="thread-title">Ghana Royalty Law</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge bear">BEARISH</span>
+              <span class="thread-tool-badge">Perplexity Deep Research</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;Has Ghana changed its mining royalty regime in 2025 or 2026? What is the current royalty rate applied to gold producers operating in Ghana at spot gold above $4,000/oz?&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">New sliding-scale royalty law effective Mar 10 2026 — 12% ceiling is active at current $4,758/oz gold. Increases total AISC burden for Ahafo and Akyem operations.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Added +$50/oz to Ghana-weighted AISC estimate. Elevated Ghana regulatory risk to highest near-term risk in the framework. Added to kill criteria.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 07 (Risk) &middot; Tab 08 (Operations) &middot; Tab 01 (Kill Criteria)</div>
+          </div>
+        </div>
+
+        <!-- THREAD 05 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 05</div>
+              <div class="thread-title">Analyst Revision Velocity</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge bull">BULLISH</span>
+              <span class="thread-tool-badge">Perplexity Finance</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;How many analyst upgrades vs. downgrades has NEM received in the trailing 6 months? What are the most recent price targets from top-tier firms?&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">4 upgrades / 0 downgrades in trailing 6 months. Bernstein $157 (Feb 27 2026), Citi $150, Scotia $151 — all still anchored to stale gold decks ($3,200&ndash;$3,500/oz).</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Confirmed model is above consensus but not an outlier. Identified the $4,758 spot vs. stale consensus deck as the primary source of the $74/share target gap.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 07 (Peers &amp; Sentiment) &middot; Tab 14 (Model)</div>
+          </div>
+        </div>
+
+        <!-- THREAD 06 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 06</div>
+              <div class="thread-title">Copper / AI Demand</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge bull">BULLISH</span>
+              <span class="thread-tool-badge">Perplexity Deep Research</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;What is S&amp;P Global&rsquo;s copper demand outlook through 2040? How does AI data center buildout impact long-term copper demand?&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">42 Mt demand vs. 33 Mt peak supply by 2040 = 10 Mt structural deficit. AI data center copper demand projected +200% by 2030. Cadia is a Tier 1 copper asset in this context.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Added Cadia copper standalone NAV of $12&ndash;$15/share as non-consensus upside not included in base case DCF. Now tracked as a separate sensitivity in the model.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 05 (Mines &amp; Reserves) &middot; Tab 10 (CC8) &middot; Tab 13 (Verdict)</div>
+          </div>
+        </div>
+
+        <!-- THREAD 07 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 07</div>
+              <div class="thread-title">Conference Call NLP</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge bull">BULLISH</span>
+              <span class="thread-tool-badge">Perplexity Computer</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;Analyze the tone trajectory of NEM earnings call transcripts from Q2 2024 through Q4 2025. Score management tone, analyst question sentiment, and forward guidance language.&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">Q3 2025 tone peak 4.5/5.0; Q4 2025 4.1/5.0 (balanced and improving). Analyst question sentiment shifted from skeptical to confirmatory. 4-quarter AISC beat streak acknowledged.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Upgraded management credibility from &ldquo;recovering&rdquo; to &ldquo;restored.&rdquo; Added the 4Q AISC beat streak as a management quality signal in the scorecard.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 12 (Management Quality)</div>
+          </div>
+        </div>
+
+        <!-- THREAD 08 -->
+        <div class="thread-card">
+          <div class="thread-header">
+            <div>
+              <div class="thread-id">Thread 08</div>
+              <div class="thread-title">Central Bank Demand</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="cc-signal-badge bull">BULLISH</span>
+              <span class="thread-tool-badge">Perplexity Deep Research</span>
+            </div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Query Submitted</div>
+            <div class="thread-field-value">&ldquo;Is central bank gold buying accelerating or decelerating in 2024&ndash;2025? Which central banks are adding, and what are their stated motivations?&rdquo;</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Key Finding</div>
+            <div class="thread-field-value highlight">1,045t purchased in 2024 (third straight year &gt;1,000t); 863t in 2025. 68% of surveyed central banks plan to increase gold holdings. China&rsquo;s reserves still below peer average — significant latent demand.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-value">Confirmed gold demand is policy-level and structural, not speculative. Raised gold floor conviction and used as primary rebuttal to gold price reversal risk in the risk matrix.</div>
+          </div>
+          <div class="thread-field">
+            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 07 (Risk — gold reversal rebuttal)</div>
+          </div>
+        </div>
+
+      </div><!-- /.grid-2 -->
+    </div>
+  </details>
+  <!-- END PERPLEXITY METHODOLOGY SECTIONS -->
 
   <!-- KILL CRITERIA -->
   <div class="section-label mt-24">Kill Criteria — When the Thesis Is Wrong</div>
