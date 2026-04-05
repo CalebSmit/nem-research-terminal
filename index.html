@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#09090b">
 <title>NEM — Newmont Corporation | Investment Research | Perplexity Stock Pitch 2026</title>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,13 +84,20 @@
   --ls-body:  0.05em;  /* prose */
   --ls-label: 0.08em;  /* labels, buttons */
   --ls-caps:  0.12em;  /* all-caps eyebrows */
+
+  color-scheme: dark;
 }
 
 /* ============================================================
    RESET & BASE
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 14px; scroll-behavior: smooth; }
+html {
+  font-size: 14px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 body {
   background: var(--bg);
   color: var(--text);
@@ -97,6 +106,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 a { color: var(--gold-light); text-decoration: none; }
 a:hover { color: var(--gold); text-decoration: underline; }
@@ -140,6 +150,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   top: 0;
   z-index: 100;
   background: rgba(9,9,11,0.95);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-2);
   display: flex;
@@ -214,6 +225,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   top: 48px;
   z-index: 99;
   background: rgba(9,9,11,0.95);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -570,13 +582,14 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 /* ============================================================
    CHART CONTAINERS
    ============================================================ */
-.chart-wrap { width: 100%; }
+.chart-wrap { width: 100%; position: relative; }
 .chart-block {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r);
   padding: 18px 20px;
   overflow: visible;
+  isolation: isolate;
 }
 .chart-header {
   margin-bottom: 12px;
@@ -601,15 +614,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   color: var(--text-2);
   line-height: 1.55;
 }
-.chart-takeaway {
-  font-size: var(--fs-sm);
-  color: var(--text-2);
-  line-height: 1.65;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-}
-.chart-takeaway strong { color: var(--gold-light); }
+/* .chart-takeaway — see full definition in hero-chart section below */
 
 /* ============================================================
    HERO PANELS
@@ -1010,7 +1015,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .mine-table { font-size: var(--fs-body); }
 .mine-table th { font-size: var(--fs-xs); }
 .flag { font-size: 14px; }
-.sortable { cursor: pointer; user-select: none; }
+.sortable { cursor: pointer; -webkit-user-select: none; user-select: none; }
 .sortable:hover { color: var(--text-2); }
 
 /* ============================================================
@@ -1082,10 +1087,13 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 /* ============================================================
    SCROLLBAR
    ============================================================ */
+/* Webkit scrollbars (Chrome, Safari, Edge) */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--surface-4); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+/* Firefox scrollbar */
+* { scrollbar-width: thin; scrollbar-color: var(--surface-4) var(--bg); }
 
 /* ============================================================
    DESIGN SYSTEM UTILITIES — added in design pass
@@ -1172,8 +1180,8 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   border-radius: var(--r);
   padding: 16px 18px;
 }
-.dp-icon { font-size: 20px; margin-bottom: 8px; }
-.dp-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+/* .dp-icon — see styled badge definition below */
+.dp-title { font-size: var(--fs-md); font-weight: 700; color: var(--text); margin-bottom: 4px; }
 .dp-val { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--gold-light); margin-bottom: 4px; }
 .dp-desc { font-size: var(--fs-sm); color: var(--text-2); line-height: 1.6; }
 
@@ -1216,6 +1224,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   text-transform: uppercase;
   color: var(--teal-light);
   background: rgba(8,145,178,0.06);
+  -webkit-user-select: none;
   user-select: none;
   list-style: none;
   border-bottom: 1px solid rgba(8,145,178,0.15);
@@ -1433,7 +1442,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   transition: color 0.15s;
 }
 .source-bar a:hover { color: var(--text-2); }
-.src-sep { color: var(--text-3); opacity: 0.4; }
+.src-sep { margin: 0 4px; color: var(--text-3); opacity: 0.5; }
 
 /* ============================================================
    INTERACTIVE SLIDER PANELS — Valuation Tab
@@ -1485,6 +1494,9 @@ input[type=range].val-slider {
 }
 input[type=range].val-slider::-webkit-slider-runnable-track {
   height: 4px; border-radius: 2px;
+}
+input[type=range].val-slider::-moz-range-track {
+  height: 4px; border-radius: 2px; background: var(--surface-4);
 }
 input[type=range].val-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -1947,14 +1959,14 @@ input[type=range].val-slider::-moz-range-thumb {
 /* Overrides for bottom-of-tab context */
 .source-bar a:hover { color: var(--gold-light); }
 .src-label {
-  font-size:10px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--ls-caps);
   text-transform: uppercase;
-  color: var(--text-4);
+  color: var(--text-2);
   margin-right: 8px;
 }
-.src-sep { margin: 0 6px; color: var(--text-4); }
+/* .src-sep — see merged definition above */
 
 /* Chart panel inner padding */
 .panel .chart-title {
@@ -1970,28 +1982,7 @@ input[type=range].val-slider::-moz-range-thumb {
 }
 .kpi-tile .kpi-delta.neg { color: var(--red-light); }
 
-/* Section label → make the left-border accent visible */
-.section-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 12px;
-  padding-left: 10px;
-  position: relative;
-}
-.section-label::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 12px;
-  background: var(--gold);
-  border-radius: 2px;
-}
+/* Section label — see canonical definition above */
 
 /* Peer table — zebra striping */
 #peer-table tbody tr:nth-child(even) { background: var(--surface-2); }
@@ -2027,10 +2018,7 @@ input[type=range].val-slider::-moz-range-thumb {
   font-weight: 600; 
 }
 
-/* Chart containers baseline */
-.chart-wrap {
-  position: relative;
-}
+/* .chart-wrap — merged into single rule above */
 
 </style>
 </head>
