@@ -348,34 +348,63 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 
 /* ============================================================
    WHAT THE MARKET IS MISSING (per-tab)
+   Premium thesis callout — top-label, full-width, visually dominant
    ============================================================ */
 .wmim {
-  background: rgba(201,148,43,0.05);
-  border: 1px solid rgba(201,148,43,0.2);
-  border-left: 3px solid var(--gold);
-  border-radius: var(--r);
-  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(201,148,43,0.08) 0%, rgba(201,148,43,0.04) 100%);
+  border: 1px solid rgba(201,148,43,0.30);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--r-lg);
+  padding: 18px 22px 20px;
   margin-bottom: 24px;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 10px;
+  position: relative;
+}
+.wmim::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 60%, transparent 100%);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
 }
 .wmim-label {
-  font-size: 9px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
-  white-space: nowrap;
-  margin-top: 2px;
+  line-height: 1;
+}
+.wmim-label::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
   flex-shrink: 0;
 }
-.wmim-text {
-  font-size: 12.5px;
-  color: var(--text-2);
-  line-height: 1.65;
+.wmim-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin-bottom: 2px;
 }
-.wmim-text strong { color: var(--gold-light); }
+.wmim-text {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.7;
+  max-width: 100%;
+}
+.wmim-text strong { color: var(--gold-light); font-weight: 600; }
 
 /* ============================================================
    LAYOUT UTILITIES
@@ -2046,7 +2075,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div><!-- /ai-native-research-advantage -->
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">The Stock Still Prices Gold at $3,605 — 32% Below Today's Spot</div>
     <div class="wmim-text">NEM's stock embeds a <strong>$3,605/oz gold assumption</strong> — 32% below current spot of $4,758. The market has not updated its gold price assumption since gold's structural breakout above $4,000. Three converging catalysts — mispriced gold, 75× FCF improvement, and restored cost discipline — create the widest asymmetric setup in NEM's listed history. Critically, consensus is anchoring to a trough production year (2026: 5.3 Moz) driven by deliberate mine sequencing, while management's stated longer-term framework targets approximately <strong>6 million ounces</strong> annually — a ~13% recovery that is nowhere in current market pricing.</div>
   </div>
 <div class="hero-paradox">
@@ -2581,7 +2611,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Consensus Is Running a 2022 Gold Deck on a 2026 Cash Machine</div>
     <div class="wmim-text">The consensus models NEM on $1,700–$1,900/oz gold. At $4,758 spot, NEM's forward FY2026E FCF yield is ~8.7% — exceptional for a large-cap stock in any sector. The market is pricing NEM as a low-FCF gold miner from 2022. It is now a cash machine.</div>
   </div>
 <div class="section-label">Key Performance Indicators</div>
@@ -2857,7 +2888,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Gold's Breakout Is Structural — Central Banks Have Permanently Shifted the Curve</div>
     <div class="wmim-text">The market treats gold's rise as cyclical. It isn't. Central bank demand has structurally shifted the demand curve — purchases are 3× the historical average and are accelerating. Major bank forecasts now target $5,000–$6,300 (Citi $5,000, GS $5,400, MS $5,700, UBS $6,200, JPM $6,300). NEM's implied gold price is <strong>still $3,605</strong> — below even the most bearish bank forecast.</div>
   </div>
 <div class="bull-regime-panel">
@@ -3155,7 +3187,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Integration Risk Is Gone. $7.3B FCF Is Here. The Stock Hasn't Caught Up.</div>
     <div class="wmim-text">NEM was written off after the Newcrest acquisition integration stumbled in 2023–2024. The portfolio rationalization is complete. <strong>$7,299M FCF</strong> — at a stock price that still embeds 2022-era earnings assumptions. The gap between current operational reality and market valuation is extraordinary.</div>
   </div>
 <div class="stat-row" style="margin-bottom:20px;">
@@ -3316,7 +3349,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">11 Tier-1 Assets, Zero Integration Overhang — Priced as If It's Still 2023</div>
     <div class="wmim-text">NEM's mine portfolio was rationalized from 21 operations to 11 Tier-1 assets after 2024 divestitures. <strong>Cadia (Australia)</strong> is the flagship — lowest-cost, longest-life, and a copper byproduct that hedges AISC. The market still prices NEM as if integration risk from Newcrest remains — it is resolved. Critically, the portfolio's current 5.3 Moz trough guidance for 2026 reflects planned sequencing across specific assets, not a deterioration of the underlying mine base. The projects executing within this same portfolio — Cadia Panel Caves, Tanami Expansion 2, Ahafo South stripping, and Boddington grade recovery — are the precise mechanisms driving the return toward management's ~6 Moz normalized framework.</div>
   </div>
 <div class="section-label">Global Mine Portfolio — 10 Core Operations Across 5 Continents</div>
@@ -3728,7 +3762,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Three Independent Methods Converge at $189–$198. Consensus Is at $145.</div>
     <div class="wmim-text">The consensus price target averages ~$145 (22 analysts, Benzinga Apr 2026) — built on stale gold decks and implicitly modeled around 2026's trough production year. At $4,758 spot gold the DCF returns <strong>$222</strong>, P/NAV returns <strong>$112</strong>, and blended target is <strong>$189</strong>. At our base case of $5,200 gold the blended target is <strong>$198</strong>. Three independent methods converge within 15% of each other. The divergence from consensus is driven by two compounding errors: a stale gold price deck and an assumption that 2026's 5.3 Moz trough represents normalized production, rather than the low point before a management-guided recovery toward ~6 Moz.</div>
   </div>
 <div class="hero-reverse-dcf">
@@ -4769,7 +4804,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">World's Largest Gold Miner Trades at a 26% Discount to Its Own Peers</div>
     <div class="wmim-text">NEM is the largest gold miner in the world, yet it trades at a <strong>26% discount</strong> to the peer average EV/EBITDA. Sector leadership historically commands a premium — NEM's discount is entirely a function of stale analyst gold price assumptions and lingering Newcrest integration fear. Both are now wrong.</div>
   </div>
 <div class="stat-row" style="margin-bottom:20px;">
@@ -5158,7 +5194,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">The Bear Case Needs Two Simultaneous Disasters. The 91.2% MC Says Otherwise.</div>
     <div class="wmim-text">The bear case requires gold falling to $2,800 AND NEM's AISC rising back to $1,750. Both would need to happen simultaneously. <strong>The 91.2% Monte Carlo probability</strong> above current price incorporates full uncertainty in gold price, production, AISC, and macro regime. The asymmetry is structurally bullish.</div>
   </div>
 <div class="insight-band gold-accent" style="margin-bottom:16px;">
@@ -5308,7 +5345,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Three Unmodeled Catalysts — Each a Standalone Re-Rating Event</div>
     <div class="wmim-text">Consensus doesn't model the <strong>Nevada Gold Mines expansion</strong> or the full impact of the Q4 2025 buyback authorization. Each catalyst is an independent re-rating event. The market is waiting for proof — the proof is already in the quarterly numbers. Critically, the catalyst sequence culminates in the FY2026 annual results (Feb 2027), where management will formally demonstrate whether the trough-year thesis holds and the production recovery arc is tracking toward the ~6 Moz framework. That single data point could force a simultaneous re-rating of both the gold price assumption and the normalized production baseline.</div>
   </div>
 <div class="section-label">2026 Catalyst Timeline — Six Value-Unlocking Events</div>
@@ -5457,7 +5495,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">7 of 8 Independent Research Channels Are Net Bullish — Including the Bearish Ones</div>
     <div class="wmim-text">8 independent research channels across central bank data, satellite imagery, shipping data, equity flow, short interest, and regulatory filings. 7 of 8 are net bullish. Two bearish signals — Ghana royalty hike (Mar 10 2026) and insider selling ($7.6M net, no CEO purchases) — are documented and rebutted. Intellectual honesty requires including unfavorable signals. They do not break the thesis; they define its risk boundaries.</div>
   </div>
 <div class="section-label">Aggregate Signal Scorecard — Across 8 Primary Research Channels</div>
@@ -5765,7 +5804,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">ESG Leadership Shaves ~50bps Off WACC — Sell-Side Models Don't Price This In</div>
     <div class="wmim-text">ESG-driven WACC compression of <strong>−50bps</strong> adds approximately $8–12 per share to fair value in a DCF framework. Most sell-side models use a flat WACC without adjusting for NEM's ESG premium access to capital. This is a systematic undervaluation source.</div>
   </div>
 <div class="section-label">ESG Key Performance Indicators</div>
@@ -5954,7 +5994,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Management Beat Cost Guidance by $262/oz. The Stock Hasn't Re-Rated for Restored Credibility.</div>
     <div class="wmim-text"><strong>$262/oz better than guidance</strong> across the full year is not a rounding error — it's a structural improvement in operational discipline. Management's credibility was the main bear argument after 2023. That argument is now empirically wrong, but the stock hasn't re-rated to reflect restored credibility. Further, management has transparently framed 2026 as a planned trough year (5.3 Moz guidance) driven by sequencing at Ahafo South, Peñasquito, and Cadia — and guided explicitly toward a longer-term production framework of approximately 6 million ounces annually. A management team with this level of transparency and a $262/oz cost beat deserves a higher probability of execution credit on the recovery timeline than consensus is currently assigning.</div>
   </div>
 <div class="stat-row" style="margin-bottom:20px;">
@@ -6114,7 +6155,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Two Simultaneous Mispricing Events — Both Correcting in the Same Direction</div>
     <div class="wmim-text">The market is pricing NEM as a gold miner from 2022 — high costs, integration risk, uncertain FCF. Today, NEM has <strong>$7.3B FCF</strong>, the lowest-cost Tier-1 portfolio in the world, restored operational credibility, and trades at a 32% discount to spot gold. More specifically: the stock appears anchored to near-term trough conditions (2026: 5.3 Moz, deliberately planned) rather than normalized operating potential (management's ~6 Moz longer-term framework). The case rests on two simultaneous mispricing events correcting — a stale gold price assumption and a trough-year production baseline being treated as structural. Every day that gold stays above $4,000 and the recovery timeline advances, this thesis becomes more obvious. The trade window is now.</div>
   </div>
 <div class="hero-verdict">
@@ -6584,7 +6626,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="wmim">
-    <div class="wmim-label">What Market Is Missing</div>
+    <div class="wmim-label">What the Market Is Missing</div>
+    <div class="wmim-title">Even at $3,200 Gold — Down 33% — NEM Still Generates Positive FCF</div>
     <div class="wmim-text">Even at $3,200/oz gold — a <strong>33% decline</strong> from current spot — NEM still generates positive FCF and trades near fair value at $108. The bear case is not just improbable (91.2% MC), it is also limited in downside. The asymmetry is entirely to the upside.</div>
   </div>
 <div class="section-label">Q4 2025 Results — Actual vs. Estimates</div>
