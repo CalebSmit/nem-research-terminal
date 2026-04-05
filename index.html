@@ -61,6 +61,27 @@
   /* Radius */
   --r: 4px;
   --r-lg: 8px;
+
+  /* Type scale — 4-step scale, all non-interpolated */
+  --fs-xs:   10px;   /* eyebrows, labels, badges */
+  --fs-sm:   11px;   /* supporting text, sub-labels */
+  --fs-body: 12px;   /* body text, table cells */
+  --fs-md:   13px;   /* chart text, secondary prose */
+  --fs-lg:   14px;   /* primary prose, card titles */
+  --fs-xl:   16px;   /* section headlines */
+
+  /* Spacing scale */
+  --gap-xs:  8px;
+  --gap-sm:  12px;
+  --gap-md:  16px;
+  --gap-lg:  24px;
+  --gap-xl:  32px;
+
+  /* Letter-spacing scale */
+  --ls-tight: 0.03em;  /* display text */
+  --ls-body:  0.05em;  /* prose */
+  --ls-label: 0.08em;  /* labels, buttons */
+  --ls-caps:  0.12em;  /* all-caps eyebrows */
 }
 
 /* ============================================================
@@ -87,18 +108,18 @@ table { border-collapse: collapse; width: 100%; }
 th {
   padding: 9px 12px;
   text-align: left;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-2);
   background: var(--surface-2);
   border-bottom: 1px solid var(--border-2);
   white-space: nowrap;
 }
 td {
   padding: 9px 12px;
-  font-size: 12.5px;
+  font-size: var(--fs-md);
   border-bottom: 1px solid var(--border);
   color: var(--text-2);
   vertical-align: middle;
@@ -167,9 +188,9 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .topbar-badge {
   padding: 3px 9px;
   border-radius: var(--r);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: var(--ls-body);
   font-family: var(--font-mono);
 }
 .badge-buy {
@@ -183,7 +204,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   border: 1px solid rgba(201,148,43,0.3);
 }
 .topbar-spacer { flex: 1; }
-.topbar-meta { font-size: 11px; color: var(--text-3); white-space: nowrap; }
+.topbar-meta { font-size: var(--fs-sm); color: var(--text-2); white-space: nowrap; }
 
 /* ============================================================
    STORY PROGRESS BAR (below topbar)
@@ -222,11 +243,11 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 
 .story-phase-label {
   padding: 0 8px;
-  font-size: 8.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: var(--ls-caps);
   text-transform: uppercase;
-  color: var(--text-4);
+  color: var(--text-2);
   background: var(--surface-2);
   border-right: 1px solid var(--border);
   height: 100%;
@@ -243,8 +264,8 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
-  color: var(--text-3);
-  font-size: 10.5px;
+  color: var(--text-2);
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -330,8 +351,8 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
-  font-size: 10.5px;
-  color: var(--text-3);
+  font-size: 11px;
+  color: var(--text-2);
   padding: 0 16px;
   border-right: 1px solid var(--border);
 }
@@ -399,7 +420,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   margin-bottom: 2px;
 }
 .wmim-text {
-  font-size: 13px;
+  font-size: var(--fs-md);
   color: var(--text-2);
   line-height: 1.7;
   max-width: 100%;
@@ -461,11 +482,11 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 
 /* Panel section header */
 .panel-title {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-3);
+  letter-spacing: var(--ls-label);
+  color: var(--text-2);
   margin-bottom: 14px;
 }
 .panel-insight {
@@ -478,11 +499,11 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 
 /* Section divider label */
 .section-label {
-  font-size: 10px;
+  font-size: var(--fs-xs);
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--ls-caps);
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-2);
   margin-bottom: 14px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
@@ -515,12 +536,12 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 }
 .kpi-tile:hover { border-color: rgba(201,148,43,0.25); }
 .kpi-label {
-  font-size: 10px;
+  font-size: var(--fs-xs);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--text-3);
-  line-height: 1.2;
+  color: var(--text-2);
+  line-height: 1.3;
 }
 .kpi-value {
   font-family: var(--font-mono);
@@ -536,11 +557,11 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .kpi-value.teal  { color: var(--teal-light); }
 .kpi-value.sm    { font-size: 20px; }
 .kpi-sub {
-  font-size: 11px;
+  font-size: var(--fs-sm);
   color: var(--text-3);
   font-family: var(--font-mono);
-  line-height: 1.4;
-  margin-top: 2px;
+  line-height: 1.45;
+  margin-top: 3px;
 }
 .kpi-sub.positive { color: var(--green-light); }
 .kpi-sub.negative { color: var(--red-light); }
@@ -561,31 +582,31 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   margin-bottom: 12px;
 }
 .chart-eyebrow {
-  font-size: 10px;
+  font-size: var(--fs-xs);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--ls-caps);
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-2);
   margin-bottom: 3px;
 }
 .chart-title {
-  font-size: 13px;
+  font-size: var(--fs-md);
   font-weight: 700;
   color: var(--text);
   line-height: 1.3;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 .chart-subtitle {
-  font-size: 11.5px;
+  font-size: var(--fs-sm);
   color: var(--text-2);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 .chart-takeaway {
-  font-size: 11.5px;
+  font-size: var(--fs-sm);
   color: var(--text-2);
-  line-height: 1.6;
-  margin-top: 12px;
-  padding-top: 10px;
+  line-height: 1.65;
+  margin-top: 14px;
+  padding-top: 12px;
   border-top: 1px solid var(--border);
 }
 .chart-takeaway strong { color: var(--gold-light); }
@@ -654,7 +675,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .hero-paradox-badge .lbl {
   font-size: 10px;
   color: var(--text-3);
-  letter-spacing: 0.07em;
+  letter-spacing: var(--ls-body);
   text-transform: uppercase;
   margin-top: 4px;
 }
@@ -695,7 +716,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .transform-val .year {
   font-size: 10px;
   color: var(--text-3);
-  letter-spacing: 0.07em;
+  letter-spacing: var(--ls-body);
   text-transform: uppercase;
   margin-bottom: 2px;
 }
@@ -741,7 +762,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .rdcf-item { padding: 0 20px; }
 .rdcf-item:first-child { padding-left: 0; }
 .rdcf-item:last-child { padding-right: 0; }
-.rdcf-label { font-size: 10px; color: var(--text-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 4px; }
+.rdcf-label { font-size: 10px; color: var(--text-3); letter-spacing: var(--ls-body); text-transform: uppercase; margin-bottom: 4px; }
 .rdcf-val { font-family: var(--font-mono); font-size: 26px; font-weight: 800; color: var(--text); line-height: 1.1; }
 .rdcf-val.gold  { color: var(--gold-light); }
 .rdcf-val.green { color: var(--green-light); }
@@ -766,7 +787,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .aisc-flip-sub { font-size: 13px; color: var(--text-2); margin-top: 8px; line-height: 1.65; }
 .aisc-flip-numbers { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
 .flip-val { text-align: center; }
-.flip-val .lbl { font-size: 10px; color: var(--text-3); letter-spacing: 0.07em; text-transform: uppercase; }
+.flip-val .lbl { font-size: 10px; color: var(--text-3); letter-spacing: var(--ls-body); text-transform: uppercase; }
 .flip-val .num { font-family: var(--font-mono); font-size: 30px; font-weight: 800; display: block; line-height: 1.1; }
 .flip-val .num.miss { color: var(--red-light); }
 .flip-val .num.beat { color: var(--green-light); }
@@ -817,7 +838,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   margin-top: 4px;
 }
 .hero-verdict .t-item { text-align: center; }
-.hero-verdict .t-lbl { font-size: 10px; color: var(--text-3); letter-spacing: 0.07em; text-transform: uppercase; }
+.hero-verdict .t-lbl { font-size: 10px; color: var(--text-3); letter-spacing: var(--ls-body); text-transform: uppercase; }
 .hero-verdict .t-val { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--gold-light); display: block; line-height: 1.1; margin-top: 2px; }
 .hero-verdict .t-val.green { color: var(--green-light); }
 .hero-verdict-divider { width: 1px; height: 44px; background: var(--border-2); }
@@ -839,17 +860,17 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   font-size: 10px;
   color: var(--gold);
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: var(--ls-body);
   margin-bottom: 8px;
 }
 .thesis-card-num.teal    { color: var(--teal-light); }
 .thesis-card-num.green-c { color: var(--green-light); }
 .thesis-card-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
-.thesis-card-body  { font-size: 12px; color: var(--text-2); line-height: 1.65; }
+.thesis-card-body  { font-size: var(--fs-body); color: var(--text-2); line-height: 1.65; }
 .thesis-card-stat {
   margin-top: 12px;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: var(--fs-md);
   font-weight: 700;
   color: var(--gold-light);
   padding-top: 10px;
@@ -893,9 +914,9 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .sc-upside.base   { color: var(--gold-light); }
 .sc-upside.bear   { color: var(--amber); }
 .sc-upside.stress { color: var(--red-light); }
-.sc-gold { font-size: 11px; color: var(--text-3); }
+.sc-gold { font-size: var(--fs-sm); color: var(--text-2); }
 .sc-gold span { font-family: var(--font-mono); color: var(--text-2); }
-.sc-prob { margin-top: 10px; font-size: 11px; color: var(--text-3); }
+.sc-prob { margin-top: 10px; font-size: var(--fs-sm); color: var(--text-2); }
 .sc-prob span { font-family: var(--font-mono); color: var(--text); font-weight: 700; }
 
 /* ============================================================
@@ -938,9 +959,9 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .timeline-dot.cat-low  { background: var(--text-3); border-color: var(--text-3); }
 .timeline-above { text-align: center; margin-bottom: 8px; order: -1; }
 .timeline-below { text-align: center; margin-top: 4px; }
-.timeline-label { font-size: 11px; color: var(--text-2); font-weight: 600; line-height: 1.3; max-width: 100px; }
-.timeline-date { font-size: 10px; color: var(--text-3); font-family: var(--font-mono); margin-top: 2px; }
-.timeline-impact { font-size: 10.5px; color: var(--gold-light); font-family: var(--font-mono); font-weight: 700; margin-top: 2px; }
+.timeline-label { font-size: var(--fs-sm); color: var(--text-2); font-weight: 600; line-height: 1.3; max-width: 100px; }
+.timeline-date { font-size: var(--fs-xs); color: var(--text-2); font-family: var(--font-mono); margin-top: 2px; }
+.timeline-impact { font-size: 11px; color: var(--gold-light); font-family: var(--font-mono); font-weight: 700; margin-top: 2px; }
 
 /* ============================================================
    SIGNAL SCORECARD
@@ -953,11 +974,11 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   border-bottom: 1px solid var(--border);
 }
 .signal-row:last-child { border-bottom: none; }
-.signal-name { font-size: 12px; color: var(--text); width: 190px; flex-shrink: 0; font-weight: 500; }
+.signal-name { font-size: var(--fs-body); color: var(--text); width: 190px; flex-shrink: 0; font-weight: 500; }
 .signal-bar-wrap { flex: 1; background: var(--surface-3); height: 7px; border-radius: 2px; overflow: hidden; }
 .signal-bar-fill { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
-.signal-score { font-family: var(--font-mono); font-size: 12px; font-weight: 700; width: 32px; text-align: right; }
-.signal-direction { font-size: 10.5px; width: 68px; text-align: right; font-weight: 600; letter-spacing: 0.03em; }
+.signal-score { font-family: var(--font-mono); font-size: var(--fs-body); font-weight: 700; width: 32px; text-align: right; }
+.signal-direction { font-size: var(--fs-xs); width: 68px; text-align: right; font-weight: 600; letter-spacing: var(--ls-tight); }
 
 /* ============================================================
    ESG STYLES
@@ -969,7 +990,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   padding: 18px 20px;
 }
 .esg-col-title {
-  font-size: 13px;
+  font-size: var(--fs-md);
   font-weight: 700;
   margin-bottom: 14px;
   padding-bottom: 10px;
@@ -980,14 +1001,14 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .esg-col-title.gov { color: var(--gold-light); }
 .esg-item { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
 .esg-item:last-child { border-bottom: none; }
-.esg-item-lbl { font-size: 10.5px; color: var(--text-3); margin-bottom: 2px; }
-.esg-item-val { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--text); }
+.esg-item-lbl { font-size: var(--fs-xs); color: var(--text-2); margin-bottom: 2px; }
+.esg-item-val { font-family: var(--font-mono); font-size: var(--fs-md); font-weight: 600; color: var(--text); }
 
 /* ============================================================
    MINING MAP
    ============================================================ */
-.mine-table { font-size: 12px; }
-.mine-table th { font-size: 10px; }
+.mine-table { font-size: var(--fs-body); }
+.mine-table th { font-size: var(--fs-xs); }
 .flag { font-size: 14px; }
 .sortable { cursor: pointer; user-select: none; }
 .sortable:hover { color: var(--text-2); }
@@ -1023,15 +1044,15 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   flex-shrink: 0;
   padding: 3px 9px;
   border-radius: var(--r);
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 .risk-badge.high { background: rgba(220,38,38,0.12); color: var(--red-light); border: 1px solid rgba(220,38,38,0.3); }
 .risk-badge.med  { background: rgba(217,119,6,0.12); color: var(--amber); border: 1px solid rgba(217,119,6,0.3); }
 .risk-badge.low  { background: rgba(22,163,74,0.08); color: var(--green-light); border: 1px solid rgba(22,163,74,0.25); }
-.risk-text { font-size: 12px; color: var(--text-2); flex: 1; line-height: 1.55; }
+.risk-text { font-size: var(--fs-body); color: var(--text-2); flex: 1; line-height: 1.6; }
 .risk-title { font-weight: 700; color: var(--text); display: block; margin-bottom: 3px; }
 
 /* ============================================================
@@ -1044,19 +1065,19 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   padding: 16px 18px;
 }
 .cc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-.cc-source { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+.cc-source { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--text-2); }
 .cc-signal-badge {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   padding: 2px 7px;
   border-radius: var(--r);
-  letter-spacing: 0.06em;
+  letter-spacing: var(--ls-label);
 }
 .cc-signal-badge.bull { background: rgba(22,163,74,0.12); color: var(--green-light); border: 1px solid rgba(22,163,74,0.3); }
 .cc-signal-badge.bear { background: rgba(220,38,38,0.12); color: var(--red-light); border: 1px solid rgba(220,38,38,0.3); }
 .cc-signal-badge.neu  { background: rgba(161,161,170,0.1); color: var(--text-3); border: 1px solid var(--border); }
-.cc-finding { font-size: 12.5px; color: var(--text); font-weight: 600; margin-bottom: 5px; line-height: 1.4; }
-.cc-detail { font-size: 11.5px; color: var(--text-2); line-height: 1.55; }
+.cc-finding { font-size: var(--fs-md); color: var(--text); font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+.cc-detail { font-size: var(--fs-sm); color: var(--text-2); line-height: 1.6; }
 
 /* ============================================================
    SCROLLBAR
@@ -1065,6 +1086,47 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--surface-4); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* ============================================================
+   DESIGN SYSTEM UTILITIES — added in design pass
+   ============================================================ */
+
+/* Eyebrow pattern — consistent across all tabs */
+.eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-2);
+  line-height: 1;
+}
+.eyebrow.gold  { color: var(--gold); }
+.eyebrow.teal  { color: var(--teal-light); }
+.eyebrow.green { color: var(--green-light); }
+.eyebrow.red   { color: var(--red-light); }
+
+/* Badge — compact inline label */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--r);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.badge.gold  { background: rgba(201,148,43,0.10); color: var(--gold-light); border: 1px solid rgba(201,148,43,0.3); }
+.badge.green { background: rgba(22,163,74,0.10); color: var(--green-light); border: 1px solid rgba(22,163,74,0.3); }
+.badge.teal  { background: rgba(8,145,178,0.10);  color: var(--teal-light);  border: 1px solid rgba(8,145,178,0.3); }
+.badge.red   { background: rgba(220,38,38,0.10);  color: var(--red-light);   border: 1px solid rgba(220,38,38,0.3); }
+.badge.muted { background: rgba(255,255,255,0.04); color: var(--text-2); border: 1px solid var(--border); }
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.divider-gold { border-color: rgba(201,148,43,0.2); }
 
 /* ============================================================
    VALUE HELPERS
@@ -1113,7 +1175,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .dp-icon { font-size: 20px; margin-bottom: 8px; }
 .dp-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
 .dp-val { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--gold-light); margin-bottom: 4px; }
-.dp-desc { font-size: 11.5px; color: var(--text-2); line-height: 1.55; }
+.dp-desc { font-size: var(--fs-sm); color: var(--text-2); line-height: 1.6; }
 
 /* ============================================================
    KILL CRITERIA
@@ -1125,9 +1187,9 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   align-items: flex-start;
   padding: 10px 0;
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  font-size: 12.5px;
+  font-size: var(--fs-md);
   color: var(--text-2);
-  line-height: 1.55;
+  line-height: 1.6;
 }
 .kill-list li:last-child { border-bottom: none; }
 .kill-icon { color: var(--red-light); font-size: 11px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
@@ -1148,9 +1210,9 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   justify-content: space-between;
   padding: 14px 18px;
   cursor: pointer;
-  font-size: 11px;
+  font-size: var(--fs-sm);
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--teal-light);
   background: rgba(8,145,178,0.06);
@@ -1161,7 +1223,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .perp-expander summary::-webkit-details-marker { display: none; }
 .perp-expander summary::after {
   content: '▶';
-  font-size: 9px;
+  font-size:10px;
   color: var(--teal-light);
   transition: transform 0.2s ease;
   flex-shrink: 0;
@@ -1178,15 +1240,15 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   margin-bottom: 20px;
 }
 .perp-panel-title {
-  font-size: 10.5px;
+  font-size: var(--fs-xs);
   font-weight: 700;
-  letter-spacing: 0.09em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--teal-light);
   margin-bottom: 10px;
 }
 .perp-panel p {
-  font-size: 12.5px;
+  font-size: var(--fs-md);
   color: var(--text-2);
   line-height: 1.65;
   margin-bottom: 12px;
@@ -1202,7 +1264,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   background: var(--surface-3);
   color: var(--text-3);
 }
-.perp-compare-table td { font-size: 12px; color: var(--text-2); vertical-align: top; }
+.perp-compare-table td { font-size: var(--fs-body); color: var(--text-2); vertical-align: top; }
 .perp-compare-table td:first-child { font-weight: 600; color: var(--text-3); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; width: 15%; }
 .perp-compare-table td:nth-child(2) { color: var(--text-2); width: 42%; }
 .perp-compare-table td:nth-child(3) { color: var(--teal-light); width: 43%; }
@@ -1214,11 +1276,11 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   border-radius: 0 var(--r) var(--r) 0;
   padding: 14px 16px;
   margin-top: 16px;
-  font-size: 12px;
+  font-size: var(--fs-body);
   color: var(--text-2);
-  line-height: 1.6;
+  line-height: 1.65;
 }
-.perp-callout strong { color: var(--teal-light); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+.perp-callout strong { color: var(--teal-light); font-size: 11px; letter-spacing: var(--ls-body); text-transform: uppercase; display: block; margin-bottom: 6px; }
 
 /* Thread cards */
 .thread-card {
@@ -1232,15 +1294,15 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   gap: 10px;
 }
 .thread-id {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.09em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--teal-light);
   margin-bottom: 2px;
 }
 .thread-title {
-  font-size: 13px;
+  font-size: var(--fs-md);
   font-weight: 700;
   color: var(--text);
   margin-bottom: 0;
@@ -1258,25 +1320,25 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   padding-top: 8px;
 }
 .thread-field-label {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-2);
 }
 .thread-field-value {
-  font-size: 12px;
+  font-size: var(--fs-body);
   color: var(--text-2);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 .thread-field-value.highlight { color: var(--text); font-weight: 600; }
 .thread-feeds {
-  font-size: 11px;
+  font-size: var(--fs-sm);
   color: var(--teal-light);
   font-weight: 500;
 }
 .thread-tool-badge {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   padding: 2px 8px;
   border-radius: var(--r);
@@ -1300,13 +1362,13 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 }
 .era-card.old-era { border-left: 3px solid var(--red-light); }
 .era-card.new-era { border-left: 3px solid var(--green-light); }
-.era-year { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+.era-year { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; margin-bottom: 12px; }
 .era-year.old { color: var(--red-light); }
 .era-year.new { color: var(--green-light); }
 .era-metric { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: baseline; }
 .era-metric:last-child { border-bottom: none; }
-.era-metric-lbl { font-size: 12px; color: var(--text-2); }
-.era-metric-val { font-family: var(--font-mono); font-size: 12px; font-weight: 600; }
+.era-metric-lbl { font-size: var(--fs-body); color: var(--text-2); }
+.era-metric-val { font-family: var(--font-mono); font-size: var(--fs-body); font-weight: 600; }
 .era-metric-val.bad  { color: var(--red-light); }
 .era-metric-val.good { color: var(--green-light); }
 
@@ -1314,7 +1376,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
    MARGIN BAR
    ============================================================ */
 .margin-bar-row { display: flex; align-items: center; gap: 12px; padding: 7px 0; }
-.margin-bar-label { font-size: 12px; color: var(--text-2); width: 130px; flex-shrink: 0; }
+.margin-bar-label { font-size: var(--fs-body); color: var(--text-2); width: 130px; flex-shrink: 0; }
 .margin-bar-track { flex: 1; background: var(--surface-3); height: 8px; border-radius: 2px; overflow: hidden; }
 .margin-bar-fill { height: 100%; border-radius: 2px; }
 .margin-bar-val { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--gold-light); width: 54px; text-align: right; }
@@ -1345,9 +1407,9 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
    ============================================================ */
 .source-bar {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 10px;
   color: var(--text-3);
-  padding: 8px 16px;
+  padding: 10px 16px;
   margin-top: 10px;
   border-top: 1px solid rgba(255,255,255,0.04);
   letter-spacing: 0.3px;
@@ -1357,10 +1419,10 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   flex-wrap: wrap;
 }
 .source-bar .src-label {
-  color: var(--text-3);
+  color: var(--text-2);
   text-transform: uppercase;
-  font-size: 8.5px;
-  letter-spacing: 0.1em;
+  font-size: 10px;
+  letter-spacing: var(--ls-caps);
   margin-right: 4px;
   font-weight: 700;
 }
@@ -1448,7 +1510,7 @@ input[type=range].val-slider::-moz-range-thumb {
 .slider-range-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
+  font-size:10px;
   color: var(--text-3);
   margin-top: 1px;
   font-family: var(--font-mono);
@@ -1462,10 +1524,10 @@ input[type=range].val-slider::-moz-range-thumb {
   border-top: 1px solid var(--border);
   align-items: center;
 }
-.preset-label { font-size: 9px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-right: 2px; }
+.preset-label { font-size:10px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-right: 2px; }
 .preset-btn {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size:10px;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: var(--r);
@@ -1494,7 +1556,7 @@ input[type=range].val-slider::-moz-range-thumb {
   background: rgba(201,148,43,0.08);
   border-bottom: 1px solid var(--border);
   padding: 7px 14px;
-  font-size: 9px;
+  font-size:10px;
   color: var(--gold-light);
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -1510,9 +1572,9 @@ input[type=range].val-slider::-moz-range-thumb {
   background: rgba(22,163,74,0.12);
   border: 1px solid rgba(22,163,74,0.3);
   color: var(--green-light);
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-label);
   padding: 1px 7px;
   border-radius: 3px;
 }
@@ -1547,7 +1609,7 @@ input[type=range].val-slider::-moz-range-thumb {
 }
 .sotp-disc-item { display: flex; flex-direction: row; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid var(--border); }
 .sotp-disc-item:last-child { border-bottom: none; }
-.sotp-disc-name { font-size: 9px; font-weight: 600; letter-spacing: 0.03em; min-width: 82px; flex-shrink: 0; }
+.sotp-disc-name { font-size:10px; font-weight: 600; letter-spacing: 0.03em; min-width: 82px; flex-shrink: 0; }
 .upside-chip {
   display: inline-flex;
   align-items: center;
@@ -1724,7 +1786,7 @@ input[type=range].val-slider::-moz-range-thumb {
 .ticker-item.green .ticker-val { color: var(--green-light); }
 .ticker-item.gold .ticker-val  { color: var(--gold-light); }
 .ticker-lbl {
-  font-size: 9px;
+  font-size:10px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1732,7 +1794,7 @@ input[type=range].val-slider::-moz-range-thumb {
 }
 .ticker-badge {
   flex-shrink: 0;
-  font-size: 9px;
+  font-size:10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1750,9 +1812,9 @@ input[type=range].val-slider::-moz-range-thumb {
 
 /* Chart takeaway — key insight line below charts */
 .chart-takeaway {
-  font-size: 11.5px;
+  font-size: var(--fs-body);
   color: var(--text-2);
-  line-height: 1.6;
+  line-height: 1.65;
   padding: 10px 16px 0;
   border-top: 1px solid var(--border);
   margin-top: 8px;
@@ -1852,7 +1914,7 @@ input[type=range].val-slider::-moz-range-thumb {
 }
 .hero-chart-panel .chart-sub {
   padding: 4px 18px 0;
-  font-size: 11.5px;
+  font-size: var(--fs-body);
   color: var(--text-2);
 }
 
@@ -1881,19 +1943,11 @@ input[type=range].val-slider::-moz-range-thumb {
   margin-bottom: 10px;
 }
 
-/* Source bar */
-.source-bar {
-  margin-top: 24px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-  font-size: 10.5px;
-  color: var(--text-3);
-  line-height: 1.7;
-}
-.source-bar a { color: var(--text-3); text-decoration: underline; }
+/* Source bar — see canonical definition above (font-mono, 9.5px) */
+/* Overrides for bottom-of-tab context */
 .source-bar a:hover { color: var(--gold-light); }
 .src-label {
-  font-size: 9px;
+  font-size:10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1909,7 +1963,7 @@ input[type=range].val-slider::-moz-range-thumb {
 
 /* KPI tile improvements */
 .kpi-tile .kpi-delta {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--green-light);
   margin-top: 2px;
@@ -1963,7 +2017,7 @@ input[type=range].val-slider::-moz-range-thumb {
   justify-content: space-between;
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 12.5px;
+  font-size: var(--fs-md);
 }
 .model-assumption-row:last-child { border-bottom: none; }
 .model-assumption-label { color: var(--text-2); }
@@ -2052,25 +2106,25 @@ input[type=range].val-slider::-moz-range-thumb {
   <div style="border:2px solid var(--teal-light);border-radius:var(--r);background:rgba(8,145,178,0.04);padding:18px 22px;margin-bottom:20px;">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
       <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal-light);">AI-Native Research Advantage — 3 Non-Consensus Findings</div>
-      <div style="margin-left:auto;font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--teal-light);background:rgba(8,145,178,0.12);border:1px solid rgba(8,145,178,0.25);border-radius:2px;padding:2px 8px;white-space:nowrap;">Perplexity Research</div>
+      <div style="margin-left:auto;font-size:10px;font-weight:700;letter-spacing: var(--ls-body);text-transform:uppercase;color:var(--teal-light);background:rgba(8,145,178,0.12);border:1px solid rgba(8,145,178,0.25);border-radius:2px;padding:2px 8px;white-space:nowrap;">Perplexity Research</div>
     </div>
     <div style="display:grid;grid-template-columns:2fr 1fr 2fr;gap:0;border:1px solid rgba(8,145,178,0.2);border-radius:2px;overflow:hidden;">
       <!-- Header row -->
-      <div style="background:rgba(8,145,178,0.12);padding:7px 12px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-light);border-right:1px solid rgba(8,145,178,0.15);">Finding</div>
-      <div style="background:rgba(8,145,178,0.12);padding:7px 12px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-light);border-right:1px solid rgba(8,145,178,0.15);">Source</div>
-      <div style="background:rgba(8,145,178,0.12);padding:7px 12px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-light);">Why a Terminal Missed It</div>
+      <div style="background:rgba(8,145,178,0.12);padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-light);border-right:1px solid rgba(8,145,178,0.15);">Finding</div>
+      <div style="background:rgba(8,145,178,0.12);padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-light);border-right:1px solid rgba(8,145,178,0.15);">Source</div>
+      <div style="background:rgba(8,145,178,0.12);padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-light);">Why a Terminal Missed It</div>
       <!-- Row 1 -->
-      <div style="padding:10px 12px;font-size:11.5px;color:var(--text);font-weight:600;border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Zero major gold discoveries in 2023–2024 <span style="color:var(--teal-light);font-weight:700;">(first in 35 years)</span></div>
-      <div style="padding:10px 12px;font-size:10.5px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">S&amp;P Global Market Intelligence, March 2026</div>
-      <div style="padding:10px 12px;font-size:10.5px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);line-height:1.5;">Required cross-referencing 35 years of discovery data against an industry threshold definition (≥2 Moz) — not a standard ticker query</div>
+      <div style="padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Zero major gold discoveries in 2023–2024 <span style="color:var(--teal-light);font-weight:700;">(first in 35 years)</span></div>
+      <div style="padding:10px 12px;font-size:11px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">S&amp;P Global Market Intelligence, March 2026</div>
+      <div style="padding:10px 12px;font-size:11px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);line-height:1.5;">Required cross-referencing 35 years of discovery data against an industry threshold definition (≥2 Moz) — not a standard ticker query</div>
       <!-- Row 2 -->
-      <div style="padding:10px 12px;font-size:11.5px;color:var(--text);font-weight:600;border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Fry EVP $2.05M sale (Mar 16 2026) — <span style="color:var(--gold-light);font-weight:700;">no confirmed 10b5-1 plan</span></div>
-      <div style="padding:10px 12px;font-size:10.5px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">SEC EDGAR Form 4 filings, March 2026</div>
-      <div style="padding:10px 12px;font-size:10.5px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);line-height:1.5;">Required reading 81 individual Form 4 filings and distinguishing systematic 10b5-1 sales from discretionary open-market transactions</div>
+      <div style="padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Fry EVP $2.05M sale (Mar 16 2026) — <span style="color:var(--gold-light);font-weight:700;">no confirmed 10b5-1 plan</span></div>
+      <div style="padding:10px 12px;font-size:11px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">SEC EDGAR Form 4 filings, March 2026</div>
+      <div style="padding:10px 12px;font-size:11px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);line-height:1.5;">Required reading 81 individual Form 4 filings and distinguishing systematic 10b5-1 sales from discretionary open-market transactions</div>
       <!-- Row 3 -->
-      <div style="padding:10px 12px;font-size:11.5px;color:var(--text);font-weight:600;border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Ghana sliding-scale royalty law effective Mar 10 2026 — <span style="color:var(--red-light);font-weight:700;">12% ceiling active</span></div>
-      <div style="padding:10px 12px;font-size:10.5px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Reuters Mar 9 2026, Ghana Minerals Commission</div>
-      <div style="padding:10px 12px;font-size:10.5px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);line-height:1.5;">Regulatory change in a non-primary market jurisdiction — not covered in real-time by standard equity research; required primary source search</div>
+      <div style="padding:10px 12px;font-size:12px;color:var(--text);font-weight:600;border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Ghana sliding-scale royalty law effective Mar 10 2026 — <span style="color:var(--red-light);font-weight:700;">12% ceiling active</span></div>
+      <div style="padding:10px 12px;font-size:11px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);border-right:1px solid rgba(8,145,178,0.15);line-height:1.5;">Reuters Mar 9 2026, Ghana Minerals Commission</div>
+      <div style="padding:10px 12px;font-size:11px;color:var(--text-2);border-top:1px solid rgba(8,145,178,0.12);line-height:1.5;">Regulatory change in a non-primary market jurisdiction — not covered in real-time by standard equity research; required primary source search</div>
     </div>
   </div><!-- /ai-native-research-advantage -->
 
@@ -2124,31 +2178,31 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <!-- TROUGH-YEAR / RECOVERY THESIS CALLOUT -->
   <div style="background:rgba(201,148,43,0.07);border:1px solid rgba(201,148,43,0.3);border-left:4px solid var(--gold);border-radius:2px;padding:20px 24px;margin-top:4px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">DRIVER 04 · TROUGH-YEAR MISPRICING — THE FOURTH PILLAR</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing: var(--ls-caps);text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">DRIVER 04 · TROUGH-YEAR MISPRICING — THE FOURTH PILLAR</div>
     <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4;">The Market Is Pricing the Trough. The Valuation Reflects the Recovery.</div>
     <div style="font-size:12px;color:var(--text-2);line-height:1.75;">
       Management has explicitly framed 2026 as a <strong style="color:var(--gold-light);">planned transition year</strong>, not a structural deterioration. Production guidance of 5.3 Moz reflects deliberate sequencing — high-stripping phases at Boddington and Ahafo South, infrastructure transition at Cadia, and grade positioning across Peñasquito — all designed to unlock higher-grade ore in 2027 and beyond. The consensus has absorbed the 2026 production figure as a baseline rather than recognizing it as the trough of a recovery arc.
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;">
       <div style="background:rgba(9,9,11,0.5);padding:12px;text-align:center;border-radius:2px;border:1px solid var(--border-2);">
-        <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.07em;">2025 Production</div>
+        <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing: var(--ls-body);">2025 Production</div>
         <div style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--text);margin:4px 0;">5.9 Moz</div>
-        <div style="font-size:9px;color:var(--text-3);">FY2025 Actual</div>
+        <div style="font-size:10px;color:var(--text-3);">FY2025 Actual</div>
       </div>
       <div style="background:rgba(220,38,38,0.08);padding:12px;text-align:center;border-radius:2px;border:1px solid rgba(220,38,38,0.25);">
-        <div style="font-size:9px;color:var(--red-light);text-transform:uppercase;letter-spacing:0.07em;">2026 — Trough Year</div>
+        <div style="font-size:10px;color:var(--red-light);text-transform:uppercase;letter-spacing: var(--ls-body);">2026 — Trough Year</div>
         <div style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--red-light);margin:4px 0;">5.3 Moz</div>
-        <div style="font-size:9px;color:var(--red-light);">Planned sequencing dip</div>
+        <div style="font-size:10px;color:var(--red-light);">Planned sequencing dip</div>
       </div>
       <div style="background:rgba(22,163,74,0.08);padding:12px;text-align:center;border-radius:2px;border:1px solid rgba(22,163,74,0.25);">
-        <div style="font-size:9px;color:var(--green-light);text-transform:uppercase;letter-spacing:0.07em;">2027 Recovery Target</div>
+        <div style="font-size:10px;color:var(--green-light);text-transform:uppercase;letter-spacing: var(--ls-body);">2027 Recovery Target</div>
         <div style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--green-light);margin:4px 0;">~6.0 Moz</div>
-        <div style="font-size:9px;color:var(--green-light);">Management framework</div>
+        <div style="font-size:10px;color:var(--green-light);">Management framework</div>
       </div>
       <div style="background:rgba(8,145,178,0.08);padding:12px;text-align:center;border-radius:2px;border:1px solid rgba(8,145,178,0.25);">
-        <div style="font-size:9px;color:var(--teal-light);text-transform:uppercase;letter-spacing:0.07em;">Recovery Upside</div>
+        <div style="font-size:10px;color:var(--teal-light);text-transform:uppercase;letter-spacing: var(--ls-body);">Recovery Upside</div>
         <div style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--teal-light);margin:4px 0;">~13%</div>
-        <div style="font-size:9px;color:var(--teal-light);">vs 2026 trough</div>
+        <div style="font-size:10px;color:var(--teal-light);">vs 2026 trough</div>
       </div>
     </div>
     <div style="margin-top:12px;font-size:11px;color:var(--text-3);line-height:1.6;">
@@ -3245,7 +3299,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr><td>EPS (Diluted)</td><td>$1.46</td><td>$(0.58)</td><td>$(3.00)</td><td>$2.86</td><td class="val-green">$6.89</td></tr>
         <tr><td>FCF ($M)</td><td>$2,626</td><td>$1,089</td><td class="val-red">$97</td><td>$2,961</td><td class="val-green">$7,299</td></tr>
         <tr><td>AISC ($/oz)</td><td>$1,228</td><td>$1,369</td><td>$1,512</td><td>$1,475</td><td class="val-green">$1,358</td></tr>
-        <tr style="background:rgba(220,38,38,0.04);"><td>Gold Production (Moz) <span style="font-size:9px;color:var(--text-3); ">— 2026 guidance: 5.3 Moz trough; recovery to ~6 Moz targeted by mgmt</span></td><td>6.26</td><td>6.00</td><td>5.54</td><td>6.86</td><td>6.90E</td></tr>
+        <tr style="background:rgba(220,38,38,0.04);"><td>Gold Production (Moz) <span style="font-size:10px;color:var(--text-3); ">— 2026 guidance: 5.3 Moz trough; recovery to ~6 Moz targeted by mgmt</span></td><td>6.26</td><td>6.00</td><td>5.54</td><td>6.86</td><td>6.90E</td></tr>
       </tbody>
     </table>
   </div>
@@ -3418,13 +3472,13 @@ input[type=range].val-slider::-moz-range-thumb {
         </div>
         <!-- PPI scale legend (hidden by default, shown when overlay active) -->
         <div id="ppi-legend" style="display:none;align-items:center;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:9px;color:var(--text-3);">Fraser PPI Score (0&ndash;100):</span>
-          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#1a4a2a;"></div><span style="font-size:9px;color:var(--text-2);">&lt;30 Very High Risk</span></div>
-          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#3d5c2c;"></div><span style="font-size:9px;color:var(--text-2);">30&ndash;50 High Risk</span></div>
-          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#7a8c2a;"></div><span style="font-size:9px;color:var(--text-2);">50&ndash;65 Moderate</span></div>
-          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#b8a020;"></div><span style="font-size:9px;color:var(--text-2);">65&ndash;80 Low Risk</span></div>
-          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#22B573;"></div><span style="font-size:9px;color:var(--text-2);">&gt;80 Tier 1 Jurisdiction</span></div>
-          <span style="font-size:9px;color:var(--text-3);margin-left:4px;">Source: Fraser Institute 2025 Annual Survey</span>
+          <span style="font-size:10px;color:var(--text-3);">Fraser PPI Score (0&ndash;100):</span>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#1a4a2a;"></div><span style="font-size:10px;color:var(--text-2);">&lt;30 Very High Risk</span></div>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#3d5c2c;"></div><span style="font-size:10px;color:var(--text-2);">30&ndash;50 High Risk</span></div>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#7a8c2a;"></div><span style="font-size:10px;color:var(--text-2);">50&ndash;65 Moderate</span></div>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#b8a020;"></div><span style="font-size:10px;color:var(--text-2);">65&ndash;80 Low Risk</span></div>
+          <div style="display:flex;align-items:center;gap:4px;"><div style="width:14px;height:8px;background:#22B573;"></div><span style="font-size:10px;color:var(--text-2);">&gt;80 Tier 1 Jurisdiction</span></div>
+          <span style="font-size:10px;color:var(--text-3);margin-left:4px;">Source: Fraser Institute 2025 Annual Survey</span>
         </div>
       </div>
     </div>
@@ -3793,7 +3847,7 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <div class="panel" style="background:rgba(201,148,43,0.04);border-color:rgba(201,148,43,0.2);margin-bottom:20px;padding:14px 18px;">
-    <div style="font-size:12.5px;color:var(--text-2);line-height:1.7;">
+    <div style="font-size:13px;color:var(--text-2);line-height:1.7;">
       <strong style="color:var(--gold-light);">Reverse DCF Interpretation:</strong> Working backwards from NEM's current $108.25 share price reveals the market is embedding a long-run gold price of <strong style="color:var(--red);">$3,605/oz</strong> — 32% below current spot of <strong style="color:var(--gold-light);">$4,758/oz</strong>. For this to be correct, gold must fall and stay there. Four independent valuation methods disagree: DCF, P/NAV, SOTP, and relative value all point to $98–$235/share. The blended conclusion is <strong style="color:var(--green);">$198.03</strong> — +82.9% upside.
     </div>
   </div>
@@ -4151,7 +4205,7 @@ input[type=range].val-slider::-moz-range-thumb {
         </thead>
         <tbody>
           <tr style="background:rgba(34,181,115,0.08);">
-            <td><strong>Cadia</strong> <span style="font-size:9px;color:var(--green);">★ TIER 1</span></td>
+            <td><strong>Cadia</strong> <span style="font-size:10px;color:var(--green);">★ TIER 1</span></td>
             <td>Australia</td>
             <td>650</td>
             <td style="color:var(--green);font-weight:600;">$400/oz</td>
@@ -4162,7 +4216,7 @@ input[type=range].val-slider::-moz-range-thumb {
             <td class="val-green">27.1%</td>
           </tr>
           <tr>
-            <td><strong>Boddington</strong> <span style="font-size:9px;color:var(--green);">OECD</span></td>
+            <td><strong>Boddington</strong> <span style="font-size:10px;color:var(--green);">OECD</span></td>
             <td>Australia</td>
             <td>800</td>
             <td>$1,150/oz</td>
@@ -4184,7 +4238,7 @@ input[type=range].val-slider::-moz-range-thumb {
             <td>13.1%</td>
           </tr>
           <tr>
-            <td><strong>Tanami</strong> <span style="font-size:9px;color:var(--green);">OECD</span></td>
+            <td><strong>Tanami</strong> <span style="font-size:10px;color:var(--green);">OECD</span></td>
             <td>Australia</td>
             <td>480</td>
             <td>$1,050/oz</td>
@@ -4342,7 +4396,7 @@ input[type=range].val-slider::-moz-range-thumb {
     </div>
 
     <!-- Discount rate legend -->
-    <div style="display:flex;gap:20px;font-size:9px;color:var(--text-3);margin-top:10px;flex-wrap:wrap;">
+    <div style="display:flex;gap:20px;font-size:10px;color:var(--text-3);margin-top:10px;flex-wrap:wrap;">
       <span><span style="color:var(--green);">■</span> OECD — Aus/Can — 5.0% — stable jurisdiction, low political risk</span>
       <span><span style="color:var(--amber);">■</span> Mid-tier EM — W.Africa / LatAm — 7.5–8.5% — moderate political / regulatory risk</span>
       <span><span style="color:var(--red);">■</span> High-risk — Argentina — 10.5% — currency/sovereign/inflation risk</span>
@@ -4390,7 +4444,7 @@ input[type=range].val-slider::-moz-range-thumb {
       <tbody>
         <tr><td>FY2024A</td><td>$2,390</td><td>6.86</td><td>$1,475</td><td>$18,557</td><td>$7,866</td><td>42.4%</td><td>$2,961</td><td>$2.86</td></tr>
         <tr style="background:rgba(201,148,43,0.06);"><td><strong>FY2025A</strong></td><td class="val-gold">$3,200</td><td>6.90</td><td style="color:var(--green);font-weight:600;">$1,358 ✓</td><td class="val-gold">$22,097</td><td class="val-gold">$13,123</td><td class="val-green">59.4%</td><td class="val-green"><strong>$7,299</strong></td><td class="val-green"><strong>$6.89</strong></td></tr>
-        <tr style="background:rgba(201,148,43,0.03);"><td colspan="9" style="font-size:9px;color:var(--text-3);padding:5px 8px;font-style:italic;line-height:1.55;"><strong>Note:</strong> FY2025A gold price $3,200 = annual average realized price across all four quarters (Q1 was low, Q4 was high). Current spot is $4,758/oz as of Mar 31 2026.</td></tr>
+        <tr style="background:rgba(201,148,43,0.03);"><td colspan="9" style="font-size:10px;color:var(--text-3);padding:5px 8px;font-style:italic;line-height:1.55;"><strong>Note:</strong> FY2025A gold price $3,200 = annual average realized price across all four quarters (Q1 was low, Q4 was high). Current spot is $4,758/oz as of Mar 31 2026.</td></tr>
         <tr style="background:rgba(220,38,38,0.05);"><td><strong><span class="assumption-tip">FY2026E &#9660; TROUGH<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF Y1 &#8212; Planned Trough Year</span><span class="tip-line"><span class="tip-label">Gold $5,200/oz:</span> 9% below bank consensus average of $5,720 (JPM $6,300, GS $5,400, UBS $6,200, MS $5,700, Citi $5,000). <span class="tip-stance-conservative">Conservative.</span></span><span class="tip-line"><span class="tip-label">Production 5.30 Moz:</span> NEM&#8217;s official FY2026 guidance (Feb 19 2026 earnings). Management explicitly designated 2026 a planned trough/transition year &#8212; sequencing at Ahafo South, Pe&#241;asquito, and Cadia positions for higher-grade access in 2027+.</span><span class="tip-line"><span class="tip-label">AISC $1,680/oz:</span> NEM FY2026 guidance midpoint. Conservative vs FY2025 actual ($1,358). Escalates 2.5%/yr (CPI+1%).</span><span class="tip-line"><span class="tip-label">Recovery:</span> Production recovers toward management&#8217;s ~6 Moz framework from FY2027 as stripping phases complete and Tanami Expansion 2 contributes 150&#8211;200 Koz/yr of new low-cost output.</span></span></span></strong></td><td class="val-gold">$5,200</td><td style="color:var(--red-light);font-weight:700;">5.30 &#9660;</td><td>$1,680</td><td>$19,350</td><td>$11,800</td><td class="val-green">61.0%</td><td class="val-green"><strong>$6,100</strong></td><td class="val-green"><strong>$4.10</strong></td></tr>
         <tr style="background:rgba(22,163,74,0.04);"><td><strong>FY2027E &#9650; Recovery</strong></td><td>$5,000</td><td style="color:var(--green-light);font-weight:700;">~6.00 &#9650;</td><td>$1,722</td><td>$22,800</td><td>$14,400</td><td>63.2%</td><td>$7,800</td><td>$5.40</td></tr>
         <tr><td>FY2028E</td><td>$4,800</td><td>~6.20</td><td>$1,765</td><td>$24,100</td><td>$15,500</td><td>64.3%</td><td>$8,900</td><td>$6.20</td></tr>
@@ -4464,7 +4518,7 @@ input[type=range].val-slider::-moz-range-thumb {
         </thead>
         <tbody>
           <tr style="background:rgba(201,148,43,0.08);">
-            <td><strong><span class="assumption-tip">DCF (5-yr FCFF)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF — Primary Method (70%)</span><span class="tip-line"><span class="tip-label">Source:</span> 5-year FCFF model. Gold $5,200/oz (−9% vs consensus), WACC 7.04% (CAPM), exit 9.5× EV/EBITDA (peer median).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — below-consensus gold, peer-median exit, CAPM-derived WACC.</span><span class="tip-line"><span class="tip-label">Impact:</span> Dominant at 70% weight. Contributes $164.57 to blended target. Even at $4,000 gold, DCF implies ~$150/sh.</span></span></span></strong> <span style="font-size:9px;color:var(--gold-light);">PRIMARY</span></td>
+            <td><strong><span class="assumption-tip">DCF (5-yr FCFF)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF — Primary Method (70%)</span><span class="tip-line"><span class="tip-label">Source:</span> 5-year FCFF model. Gold $5,200/oz (−9% vs consensus), WACC 7.04% (CAPM), exit 9.5× EV/EBITDA (peer median).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — below-consensus gold, peer-median exit, CAPM-derived WACC.</span><span class="tip-line"><span class="tip-label">Impact:</span> Dominant at 70% weight. Contributes $164.57 to blended target. Even at $4,000 gold, DCF implies ~$150/sh.</span></span></span></strong> <span style="font-size:10px;color:var(--gold-light);">PRIMARY</span></td>
             <td class="val-gold"><strong>$235.10</strong></td>
             <td class="val-green"><strong>+117.2%</strong></td>
             <td><strong>70%</strong></td>
@@ -4472,7 +4526,7 @@ input[type=range].val-slider::-moz-range-thumb {
             <td>Gold $5,200/oz; WACC 7.04%; Exit 9.5×</td>
           </tr>
           <tr>
-            <td><strong><span class="assumption-tip">P/NAV (2-yr avg gold, 1.20×)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">P/NAV — Secondary Method (30%)</span><span class="tip-line"><span class="tip-label">Source:</span> Annuity-based NAV using $2,775/oz gold (2yr trailing avg), $1,358/oz AISC, 21yr life, 5.75% discount. 1.20× multiple.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — gold deck 42% below spot. Uses P&P reserves only, excluding resource upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Provides floor valuation. Contributes $33.47 to blended target. At spot gold, P/NAV alone = $257/sh.</span></span></span></strong> <span style="font-size:9px;color:var(--gold-light);">PRIMARY</span></td>
+            <td><strong><span class="assumption-tip">P/NAV (2-yr avg gold, 1.20×)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">P/NAV — Secondary Method (30%)</span><span class="tip-line"><span class="tip-label">Source:</span> Annuity-based NAV using $2,775/oz gold (2yr trailing avg), $1,358/oz AISC, 21yr life, 5.75% discount. 1.20× multiple.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — gold deck 42% below spot. Uses P&P reserves only, excluding resource upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Provides floor valuation. Contributes $33.47 to blended target. At spot gold, P/NAV alone = $257/sh.</span></span></span></strong> <span style="font-size:10px;color:var(--gold-light);">PRIMARY</span></td>
             <td class="val-gold"><strong>$111.56</strong></td>
             <td class="val-green"><strong>+3.1%</strong></td>
             <td><strong>30%</strong></td>
@@ -4557,7 +4611,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <strong style="color:var(--green);">7 OF 8 INDEPENDENT METHODS ABOVE CURRENT PRICE — STRONG BUY CONVERGENCE</strong><br>
         Range: $99.80 (SOTP floor) – $235.10 (DCF) per share. Current price: $108.25 is an outlier below every primary method.<br>
         Blended target: $198.03 | Implied upside: +82.9% | Methods above current price: DCF (+117%), P/NAV (+3%), Monte Carlo (+24%), Precedent P/NAV (+9%), Precedent EV/EBITDA (+31%), Relative Value Re-rate (+47%), Reverse DCF (+73%)<br>
-        <span style="color:var(--text-3);font-size:9px;">Methodology: 5-yr FCFF DCF (WACC 7.04%) + P/NAV ($2,775 gold deck, 1.20×) — blended 70/30 | Rating: STRONG BUY | As of Mar 31, 2026</span>
+        <span style="color:var(--text-3);font-size:10px;">Methodology: 5-yr FCFF DCF (WACC 7.04%) + P/NAV ($2,775 gold deck, 1.20×) — blended 70/30 | Rating: STRONG BUY | As of Mar 31, 2026</span>
       </div>
     </div>
   </div>
@@ -6071,8 +6125,8 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr><td>2023</td><td>Tom Palmer</td><td>5.54</td><td>$1,390</td><td>$1,512</td><td class="val-red">–$122</td><td class="val-red">$97</td><td class="val-red">Miss</td></tr>
         <tr><td>2024</td><td>Tom Palmer</td><td>6.86</td><td>$1,580</td><td>$1,475</td><td class="val-green">+$105</td><td>$2,961</td><td class="val-green">Beat</td></tr>
         <tr style="background:rgba(34,181,115,0.05);"><td><strong>2025</strong></td><td>Tom Palmer</td><td>6.90E</td><td class="val-red">$1,620</td><td class="val-green"><strong>$1,358</strong></td><td class="val-green"><strong>+$262</strong></td><td class="val-green"><strong>$7,299</strong></td><td class="val-green"><strong>+27.9%</strong></td></tr>
-        <tr style="background:rgba(220,38,38,0.05);"><td><strong>2026 (Guided)</strong> <span style="font-size:9px;color:var(--red-light);">&#9660; TROUGH</span></td><td style="color:var(--text);">Natascha Viljoen</td><td style="color:var(--red-light);font-weight:700;">5.30 &#9660;</td><td style="color:var(--text-2);">$1,680</td><td style="color:var(--text-3);">Pending</td><td style="color:var(--text-3);">—</td><td style="color:var(--text-3);">—</td><td style="color:var(--amber);">Planned Trough</td></tr>
-        <tr style="background:rgba(22,163,74,0.04);"><td><strong>2027 (Mgmt Outlook)</strong> <span style="font-size:9px;color:var(--green-light);">&#9650; RECOVERY</span></td><td style="color:var(--text);">Natascha Viljoen</td><td style="color:var(--green-light);font-weight:700;">~6.0 &#9650;</td><td style="color:var(--text-2);">~$1,680</td><td style="color:var(--text-3);">Pending</td><td style="color:var(--text-3);">—</td><td style="color:var(--text-3);">—</td><td style="color:var(--green-light);">Recovery Framework</td></tr>
+        <tr style="background:rgba(220,38,38,0.05);"><td><strong>2026 (Guided)</strong> <span style="font-size:10px;color:var(--red-light);">&#9660; TROUGH</span></td><td style="color:var(--text);">Natascha Viljoen</td><td style="color:var(--red-light);font-weight:700;">5.30 &#9660;</td><td style="color:var(--text-2);">$1,680</td><td style="color:var(--text-3);">Pending</td><td style="color:var(--text-3);">—</td><td style="color:var(--text-3);">—</td><td style="color:var(--amber);">Planned Trough</td></tr>
+        <tr style="background:rgba(22,163,74,0.04);"><td><strong>2027 (Mgmt Outlook)</strong> <span style="font-size:10px;color:var(--green-light);">&#9650; RECOVERY</span></td><td style="color:var(--text);">Natascha Viljoen</td><td style="color:var(--green-light);font-weight:700;">~6.0 &#9650;</td><td style="color:var(--text-2);">~$1,680</td><td style="color:var(--text-3);">Pending</td><td style="color:var(--text-3);">—</td><td style="color:var(--text-3);">—</td><td style="color:var(--green-light);">Recovery Framework</td></tr>
       </tbody>
     </table>
   </div>
@@ -6207,11 +6261,11 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
         <div style="background:var(--surface-2);padding:8px;border-radius:2px;text-align:center;">
-          <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Expected Timing</div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Expected Timing</div>
           <div style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--gold-light);">Q1–Q2 2026</div>
         </div>
         <div style="background:rgba(201,148,43,0.08);border:1px solid rgba(201,148,43,0.2);padding:8px;border-radius:2px;text-align:center;">
-          <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Probability</div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Probability</div>
           <div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--gold-light);">75%</div>
         </div>
       </div>
@@ -6231,11 +6285,11 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
         <div style="background:var(--surface-2);padding:8px;border-radius:2px;text-align:center;">
-          <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Expected Timing</div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Expected Timing</div>
           <div style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--teal-light);">Ongoing Q1–Q3 2026</div>
         </div>
         <div style="background:rgba(8,145,178,0.08);border:1px solid rgba(8,145,178,0.2);padding:8px;border-radius:2px;text-align:center;">
-          <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Probability</div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Probability</div>
           <div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--teal-light);">65%</div>
         </div>
       </div>
@@ -6255,11 +6309,11 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
         <div style="background:var(--surface-2);padding:8px;border-radius:2px;text-align:center;">
-          <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Expected Timing</div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Expected Timing</div>
           <div style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--green-light);">Q2–Q4 2026</div>
         </div>
         <div style="background:rgba(22,163,74,0.08);border:1px solid rgba(22,163,74,0.2);padding:8px;border-radius:2px;text-align:center;">
-          <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Probability</div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Probability</div>
           <div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--green-light);">55%</div>
         </div>
       </div>
@@ -6270,7 +6324,7 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <!-- PROBABILITY-WEIGHTED EV SUMMARY -->
   <div style="background:rgba(22,163,74,0.06);border:1px solid rgba(22,163,74,0.25);border-left:3px solid var(--green-light);border-radius:2px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--green-light);white-space:nowrap;">Probability-Weighted EV</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing: var(--ls-caps);text-transform:uppercase;color:var(--green-light);white-space:nowrap;">Probability-Weighted EV</div>
     <div style="font-size:13px;color:var(--text-2);line-height:1.6;">
       Combined probability-weighted re-rating: <strong style="font-family:var(--font-mono);color:var(--green-light);">+$22–28/share</strong> across the three mechanisms, independent of any additional gold price appreciation.
     </div>
@@ -6278,24 +6332,24 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <!-- TROUGH-YEAR PRICING VERDICT STATEMENT -->
   <div style="background:var(--surface);border:2px solid var(--gold);border-radius:2px;padding:20px 24px;margin-bottom:24px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">CENTRAL VERDICT — TROUGH PRICING</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing: var(--ls-caps);text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">CENTRAL VERDICT — TROUGH PRICING</div>
     <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:12px;">The stock appears priced on near-term trough conditions rather than normalized operating potential.</div>
     <div style="font-size:12px;color:var(--text-2);line-height:1.8;">
       NEM's current price of $108.25 embeds two simultaneous errors: a gold assumption 32% below spot ($3,605 vs $4,758), and an implicit production baseline anchored to the 2026 trough year (5.3 Moz) rather than management's guided recovery toward approximately 6 million ounces annually from 2027. The 5.3 Moz trough reflects coordinated mine sequencing — Ahafo South and Peñasquito are in planned stripping phases, Cadia is undergoing Panel Cave development, and Boddington is in a grade transition — none of which represent permanent structural impairment. When the trough resolves and production recovers toward the ~6 Moz framework, the earnings power improvement compounds directly on top of any gold price re-rating. These two correction vectors operating in parallel define the asymmetric setup: the market pays for the trough, while the investment case reflects the recovery.
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;">
       <div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);padding:12px;border-radius:2px;text-align:center;">
-        <div style="font-size:9px;color:var(--red-light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;">Market's Implied View</div>
+        <div style="font-size:10px;color:var(--red-light);text-transform:uppercase;letter-spacing: var(--ls-body);margin-bottom:4px;">Market's Implied View</div>
         <div style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--red-light);">Trough is the floor</div>
         <div style="font-size:10px;color:var(--text-3);margin-top:4px;">5.3 Moz priced as permanent baseline at $3,605/oz gold</div>
       </div>
       <div style="background:rgba(201,148,43,0.08);border:1px solid rgba(201,148,43,0.25);padding:12px;border-radius:2px;text-align:center;">
-        <div style="font-size:9px;color:var(--gold-light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;">The Research View</div>
+        <div style="font-size:10px;color:var(--gold-light);text-transform:uppercase;letter-spacing: var(--ls-body);margin-bottom:4px;">The Research View</div>
         <div style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--gold-light);">Trough is the entry</div>
         <div style="font-size:10px;color:var(--text-3);margin-top:4px;">5.3 Moz is a planned transition; ~6 Moz recovery priced at $4,758+ spot</div>
       </div>
       <div style="background:rgba(22,163,74,0.08);border:1px solid rgba(22,163,74,0.25);padding:12px;border-radius:2px;text-align:center;">
-        <div style="font-size:9px;color:var(--green-light);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;">Dual Re-rating Potential</div>
+        <div style="font-size:10px;color:var(--green-light);text-transform:uppercase;letter-spacing: var(--ls-body);margin-bottom:4px;">Dual Re-rating Potential</div>
         <div style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--green-light);">Gold + Volume</div>
         <div style="font-size:10px;color:var(--text-3);margin-top:4px;">Gold re-rate AND ~13% production recovery both needed to close the gap</div>
       </div>
@@ -6315,7 +6369,7 @@ input[type=range].val-slider::-moz-range-thumb {
 
     <!-- Thesis driver callout -->
     <div style="background:var(--surface);border:1px solid rgba(201,148,43,0.3);border-left:3px solid var(--gold);border-radius:2px;padding:16px 20px;margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--gold-light);margin-bottom:6px;">THESIS DRIVER: OPERATING LEVERAGE</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing: var(--ls-caps);color:var(--gold-light);margin-bottom:6px;">THESIS DRIVER: OPERATING LEVERAGE</div>
       <div style="font-size:13px;color:var(--text);line-height:1.7;">
         NEM is not a gold bet — it is a <strong style="color:var(--green);">gold OPERATING LEVERAGE bet</strong> with a dividend, a cost floor, and copper optionality. GLD provides none of these. Every $100/oz increase in gold price generates ~$323M in incremental free cash flow for Newmont — GLD simply tracks the price 1:1.
       </div>
@@ -6326,18 +6380,18 @@ input[type=range].val-slider::-moz-range-thumb {
 
       <!-- Card 1: Operating Leverage -->
       <div class="panel" style="border-top:3px solid var(--gold);position:relative;">
-        <div style="position:absolute;top:10px;right:12px;background:rgba(201,148,43,0.12);border:1px solid rgba(201,148,43,0.25);border-radius:2px;padding:2px 8px;font-size:9px;font-weight:700;color:var(--gold-light);letter-spacing:0.08em;">CORE EDGE</div>
+        <div style="position:absolute;top:10px;right:12px;background:rgba(201,148,43,0.12);border:1px solid rgba(201,148,43,0.25);border-radius:2px;padding:2px 8px;font-size:10px;font-weight:700;color:var(--gold-light);letter-spacing:0.08em;">CORE EDGE</div>
         <div class="panel-title" style="color:var(--gold-light);">1 · Operating Leverage</div>
         <div style="font-size:12px;color:var(--text-2);line-height:1.65;margin-bottom:12px;">
           NEM's margins <strong>expand</strong> as gold rises. At AISC of $1,358/oz vs. spot gold $4,758/oz, NEM earns <strong style="color:var(--green);">$3,400/oz profit margin</strong>. GLD has zero margin — it tracks gold linearly with a 0.40% expense drag.
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
           <div style="background:var(--surface-2);padding:10px;text-align:center;border-radius:2px;">
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">NEM Margin/oz</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">NEM Margin/oz</div>
             <div style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--green);">$3,400</div>
           </div>
           <div style="background:var(--surface-2);padding:10px;text-align:center;border-radius:2px;">
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">GLD Margin/oz</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">GLD Margin/oz</div>
             <div style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--text-3);">$0</div>
           </div>
         </div>
@@ -6358,11 +6412,11 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <!-- Dividend timeline -->
           <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center;">
-            <div><div style="font-size:9px;color:var(--text-3);">1 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$1.00</div></div>
-            <div><div style="font-size:9px;color:var(--text-3);">2 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$2.00</div></div>
-            <div><div style="font-size:9px;color:var(--text-3);">3 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$3.00</div></div>
-            <div><div style="font-size:9px;color:var(--text-3);">4 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$4.00</div></div>
-            <div><div style="font-size:9px;color:var(--text-3);">5 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$5.00</div></div>
+            <div><div style="font-size:10px;color:var(--text-3);">1 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$1.00</div></div>
+            <div><div style="font-size:10px;color:var(--text-3);">2 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$2.00</div></div>
+            <div><div style="font-size:10px;color:var(--text-3);">3 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$3.00</div></div>
+            <div><div style="font-size:10px;color:var(--text-3);">4 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$4.00</div></div>
+            <div><div style="font-size:10px;color:var(--text-3);">5 Yr</div><div style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green);">$5.00</div></div>
           </div>
           <div style="height:4px;background:linear-gradient(to right,rgba(34,181,115,0.2),rgba(34,181,115,0.6));border-radius:2px;margin-top:8px;"></div>
         </div>
@@ -6379,14 +6433,14 @@ input[type=range].val-slider::-moz-range-thumb {
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
           <div style="background:var(--surface-2);padding:10px;text-align:center;border-radius:2px;">
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">NEM FY2025 FCF</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">NEM FY2025 FCF</div>
             <div style="font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--green);">$7.3B</div>
-            <div style="font-size:9px;color:var(--text-3);margin-top:2px;">Fuels buybacks + dividends</div>
+            <div style="font-size:10px;color:var(--text-3);margin-top:2px;">Fuels buybacks + dividends</div>
           </div>
           <div style="background:var(--surface-2);padding:10px;text-align:center;border-radius:2px;">
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">GLD Capital Returns</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">GLD Capital Returns</div>
             <div style="font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--text-3);">$0</div>
-            <div style="font-size:9px;color:var(--text-3);margin-top:2px;">ETF — no buyback mechanism</div>
+            <div style="font-size:10px;color:var(--text-3);margin-top:2px;">ETF — no buyback mechanism</div>
           </div>
         </div>
       </div>
@@ -6403,23 +6457,23 @@ input[type=range].val-slider::-moz-range-thumb {
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
           <div style="background:var(--surface-2);padding:10px;text-align:center;border-radius:2px;">
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Copper Reserves</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Copper Reserves</div>
             <div style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--amber);">2.9 Mt</div>
-            <div style="font-size:8px;color:var(--text-3);margin-top:3px;">(Cadia P&amp;P)</div>
+            <div style="font-size:10px;color:var(--text-3);margin-top:3px;">(Cadia P&amp;P)</div>
           </div>
           <div style="background:var(--surface-2);padding:10px;text-align:center;border-radius:2px;">
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Cadia AISC</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Cadia AISC</div>
             <div style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--green);">~$400/oz</div>
           </div>
           <div style="background:var(--surface-2);padding:10px;text-align:center;border-radius:2px;">
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">GLD Copper</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">GLD Copper</div>
             <div style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--text-3);">None</div>
           </div>
         </div>
         <div style="font-size:10px;color:var(--text-3);margin-top:8px;line-height:1.5;">
           JPM targets copper at $12,000/t. BofA at $12,500/t. NEM's Cadia copper alone could add meaningful NAV that GLD holders will never capture.
         </div>
-        <div style="font-size:9px;color:var(--text-3);margin-top:8px;padding:7px 9px;background:rgba(201,148,43,0.06);border-left:2px solid var(--amber);line-height:1.55;">
+        <div style="font-size:10px;color:var(--text-3);margin-top:8px;padding:7px 9px;background:rgba(201,148,43,0.06);border-left:2px solid var(--amber);line-height:1.55;">
           <strong>Note:</strong> Cadia P&amp;P copper reserves (NEM 2025 10-K). Total portfolio copper resources (M&amp;I) are larger but not used here — P&amp;P is the auditable reserve basis.
         </div>
       </div>
@@ -6434,20 +6488,20 @@ input[type=range].val-slider::-moz-range-thumb {
           <!-- NEM side -->
           <div style="background:var(--surface-2);border:1px solid rgba(34,181,115,0.2);padding:14px;text-align:center;border-radius:2px;">
             <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px;">NEM</div>
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Breakeven Gold</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Breakeven Gold</div>
             <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text);margin:4px 0;">$1,558/oz</div>
-            <div style="font-size:9px;color:var(--text-3);margin-bottom:6px;">Buffer vs Spot</div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:6px;">Buffer vs Spot</div>
             <div style="font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--green);">+205%</div>
-            <div style="font-size:9px;color:var(--text-3);margin-top:6px;line-height:1.4;">Below breakeven: still owns $57B in assets, 118 Moz reserves, producing mines</div>
+            <div style="font-size:10px;color:var(--text-3);margin-top:6px;line-height:1.4;">Below breakeven: still owns $57B in assets, 118 Moz reserves, producing mines</div>
           </div>
           <!-- GLD side -->
           <div style="background:var(--surface-2);border:1px solid rgba(201,148,43,0.2);padding:14px;text-align:center;border-radius:2px;">
             <div style="font-size:12px;font-weight:700;color:var(--gold-light);margin-bottom:6px;">GLD</div>
-            <div style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Breakeven Gold</div>
+            <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">Breakeven Gold</div>
             <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text);margin:4px 0;">$0/oz</div>
-            <div style="font-size:9px;color:var(--text-3);margin-bottom:6px;">Tracks Linearly to Zero</div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:6px;">Tracks Linearly to Zero</div>
             <div style="font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--gold-light);">1:1</div>
-            <div style="font-size:9px;color:var(--text-3);margin-top:6px;line-height:1.4;">No operating leverage, no floor, no dividends — just a gold price tracker</div>
+            <div style="font-size:10px;color:var(--text-3);margin-top:6px;line-height:1.4;">No operating leverage, no floor, no dividends — just a gold price tracker</div>
           </div>
         </div>
       </div>
@@ -6554,7 +6608,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div style="padding:10px;background:rgba(34,181,115,0.06);border:1px solid rgba(34,181,115,0.2);border-radius:2px;">
         <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:4px;">REBUTTAL</div>
-        <div style="font-size:11.5px;color:var(--text-2);line-height:1.6;">
+        <div style="font-size:12px;color:var(--text-2);line-height:1.6;">
           Central bank demand is treaty-driven and sovereign, not speculative. 1,100+ t/yr is now a policy-level commitment. Real yields would need to rise 200+ bps simultaneously — implausible with $34T US debt load.
         </div>
       </div>
@@ -6566,7 +6620,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div style="padding:10px;background:rgba(34,181,115,0.06);border:1px solid rgba(34,181,115,0.2);border-radius:2px;">
         <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:4px;">REBUTTAL</div>
-        <div style="font-size:11.5px;color:var(--text-2);line-height:1.6;">
+        <div style="font-size:12px;color:var(--text-2);line-height:1.6;">
           The Newcrest synergy program ($500M/yr) is structural, not temporary. Cadia's negative-AISC copper credits create a cost buffer. Even at $1,800/oz AISC and $4,758/oz gold, NEM generates $18+/oz net margin. At trough 5.3 Moz that implies $3.6B+ FCF &#8212; rising toward $6B+ as production recovers toward the ~6 Moz framework. The trough itself is not a catastrophe at these margins.
         </div>
       </div>
@@ -6578,7 +6632,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div style="padding:10px;background:rgba(34,181,115,0.06);border:1px solid rgba(34,181,115,0.2);border-radius:2px;">
         <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:4px;">REBUTTAL</div>
-        <div style="font-size:11.5px;color:var(--text-2);line-height:1.6;">
+        <div style="font-size:12px;color:var(--text-2);line-height:1.6;">
           Post-Newcrest, the Board has a zero-tolerance M&A policy for 2026. Tom Palmer explicitly committed to buyback focus. At P/NAV of ~1.0×, buybacks are clearly value-accretive vs. acquisition of any peer at 1.3–2.8× NAV.
         </div>
       </div>
@@ -6681,7 +6735,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </thead>
       <tbody>
         <tr><td>Gold Price ($/oz avg)</td><td>$1,941</td><td>$2,390</td><td class="val-gold">$4,758</td><td>$5,200</td><td>$5,000</td><td>$4,800</td></tr>
-        <tr style="background:rgba(220,38,38,0.04);"><td>Gold Production (Moz) <span style="font-family:var(--font-mono);font-size:9px;background:rgba(220,38,38,0.2);color:var(--red-light);padding:1px 5px;border-radius:2px;margin-left:4px;">&#9660; 2026 TROUGH</span></td><td>5.54</td><td>6.86</td><td>6.90</td><td style="color:var(--red-light);font-weight:700;">5.30 &#9660;</td><td style="color:var(--green-light);font-weight:700;">~6.00 &#9650;</td><td>~6.20</td></tr>
+        <tr style="background:rgba(220,38,38,0.04);"><td>Gold Production (Moz) <span style="font-family:var(--font-mono);font-size:10px;background:rgba(220,38,38,0.2);color:var(--red-light);padding:1px 5px;border-radius:2px;margin-left:4px;">&#9660; 2026 TROUGH</span></td><td>5.54</td><td>6.86</td><td>6.90</td><td style="color:var(--red-light);font-weight:700;">5.30 &#9660;</td><td style="color:var(--green-light);font-weight:700;">~6.00 &#9650;</td><td>~6.20</td></tr>
         <tr><td>AISC ($/oz)</td><td>$1,512</td><td>$1,475</td><td class="val-green">$1,358</td><td>$1,680</td><td>$1,580</td><td>$1,520</td></tr>
         <tr><td>Revenue ($M)</td><td>$11,775</td><td>$18,557</td><td>$22,097</td><td>$19,350</td><td>$22,800</td><td>$24,100</td></tr>
         <tr><td>EBITDA ($M)</td><td>$1,858</td><td>$7,866</td><td>$13,123</td><td>$11,800</td><td>$14,400</td><td>$15,500</td></tr>
@@ -6728,7 +6782,7 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
     </div>
     <div style="margin-top:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:2px;">
-      <div style="font-size:9.5px;color:var(--text-3);line-height:1.65;">
+      <div style="font-size:10px;color:var(--text-3);line-height:1.65;">
         <strong style="color:var(--text-2);">Street gold deck sourcing:</strong> $3,500–3,800 range based on: RBC Capital gold deck update (Q3 2025); Scotiabank NEM initiation (Oct 2025, target derived from ~$2,800–3,000 gold); Bernstein NEM upgrade (Feb 27 2026) — Bernstein's $157 target implies approximately $3,500–4,000 gold. Post-Q4 earnings, select banks have begun updating decks toward $4,000+. The gap between model ($5,200) and street ($3,500–4,000) will narrow quarter by quarter as gold holds above $4,500.
       </div>
     </div>
@@ -7117,7 +7171,7 @@ function initTab2Charts() {
         line: { color: '#E2E2E8', width: 1.5 },
         symbol: 'circle'
       },
-      text: forecastBanks.map((b, i) => `  ${b}<br>  <span style='font-size:9px;color:#A8A8B8'>${forecastDates[i]}</span>`),
+      text: forecastBanks.map((b, i) => `  ${b}<br>  <span style='font-size:10px;color:#A8A8B8'>${forecastDates[i]}</span>`),
       textposition: 'middle right',
       textfont: { size: 10, family: 'JetBrains Mono', color: '#E2E2E8' },
       customdata: forecastBanks.map((b, i) => [forecastDates[i], forecastUpside[i]]),
