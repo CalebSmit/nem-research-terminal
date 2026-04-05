@@ -322,6 +322,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 }
 .tab-header-left {
   flex: 1;
+  min-width: 0;
 }
 .tab-header-phase {
   font-size: 10px;
@@ -330,9 +331,10 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   text-transform: uppercase;
   color: var(--text-3);
   margin-bottom: 4px;
+  font-family: var(--font-mono);
 }
 .tab-header-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--text);
   line-height: 1.2;
@@ -341,43 +343,76 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 }
 .tab-header-title .accent { color: var(--gold-light); }
 .tab-header-sub {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-2);
   line-height: 1.6;
-  max-width: 760px;
+  max-width: 680px;
 }
+
+/* ─── TOP-RIGHT CALLOUT — redesigned ─────────────────────── */
+/* Replaces the old flat pill strip with a compact 2×N card grid.
+   Each stat is a mini-card with label on top, value below.
+   Max 4 stats per row; wraps gracefully at any width.         */
 .tab-header-meta {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  margin-top: 16px;
-  flex-wrap: wrap;
-  border: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(80px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border-2);
   border-radius: var(--r);
   overflow: hidden;
+  flex-shrink: 0;
   align-self: flex-start;
-  background: var(--surface-2);
+  min-width: 320px;
+  max-width: 420px;
+}
+/* When there are 5 stats, go 3-2 layout via nth-child magic */
+.tab-header-meta.stats-5 {
+  grid-template-columns: repeat(3, minmax(80px, 1fr));
 }
 .tab-header-stat {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
-  font-size: 11px;
-  color: var(--text-2);
-  padding: 0 16px;
-  border-right: 1px solid var(--border);
+  gap: 3px;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  transition: background 0.12s;
 }
-.tab-header-stat:last-child { border-right: none; }
+.tab-header-stat:hover { background: var(--surface-3); }
+.tab-header-stat .lbl {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
 .tab-header-stat .val {
   font-family: var(--font-mono);
-  font-size: 16px;
-  color: var(--gold-light);
+  font-size: 15px;
+  color: var(--text);
   font-weight: 700;
   line-height: 1.1;
+  white-space: nowrap;
 }
+.tab-header-stat .val.gold  { color: var(--gold-light); }
 .tab-header-stat .val.green { color: var(--green-light); }
 .tab-header-stat .val.red   { color: var(--red-light); }
+.tab-header-stat .val.teal  { color: var(--teal-light); }
+/* Legacy: unclassed val defaults to text, not gold */
+
+@media (max-width: 1100px) {
+  .tab-header { flex-direction: column; gap: 16px; }
+  .tab-header-meta { min-width: 0; max-width: 100%; grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 640px) {
+  .tab-header-meta { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* ============================================================
    WHAT THE MARKET IS MISSING (per-tab)
@@ -2046,6 +2081,187 @@ input[type=range].val-slider::-moz-range-thumb {
 
 /* .chart-wrap — merged into single rule above */
 
+/* ============================================================
+   PROMPT 5 — GLOBAL CONSISTENCY & FIT-AND-FINISH
+   ============================================================ */
+
+/* 1. TABLE OVERFLOW WRAPPER
+   Any table wider than its container gets horizontal scroll,
+   not clipping or layout breakage. */
+.panel table,
+.chart-block table,
+.esg-col table {
+  min-width: 0;
+}
+.panel { overflow: visible; }
+
+/* Table wrapper for wide tables */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--r);
+}
+.table-scroll table { min-width: 560px; }
+
+/* Peer table horizontal scroll on smaller viewports */
+#peer-table {
+  min-width: 640px;
+}
+.peer-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 2. SECTION LABEL SPACING FIXES
+   Ensure no orphaned spacing from style="margin-top:0" overrides */
+.section-label + .grid-3,
+.section-label + .grid-2,
+.section-label + .grid-4,
+.section-label + .panel,
+.section-label + .chart-block {
+  margin-top: 0;
+}
+
+/* 3. INLINE DETAILS EXPANDERS (Valuation tab)
+   Style the two bare <details> elements to match .perp-expander */
+details:not(.perp-expander) {
+  border: 1px solid var(--border-2);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-top: 0;
+}
+details:not(.perp-expander) > summary {
+  cursor: pointer;
+  background: var(--surface-2);
+  border-bottom: 1px solid transparent;
+  padding: 12px 18px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-2);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background 0.12s, color 0.12s;
+}
+details:not(.perp-expander) > summary::-webkit-details-marker { display: none; }
+details:not(.perp-expander) > summary:hover { background: var(--surface-3); color: var(--text); }
+details:not(.perp-expander)[open] > summary {
+  border-bottom-color: var(--border);
+  color: var(--gold-light);
+}
+details:not(.perp-expander)[open] > summary .det-arrow { transform: rotate(90deg); }
+.det-arrow {
+  font-size: 10px;
+  color: var(--text-3);
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+details:not(.perp-expander) > .panel {
+  border-top: none;
+  border-radius: 0 0 var(--r) var(--r);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* 4. CHART CONTAINER CLIPPING FIX
+   Charts render Plotly SVG which may be cut off at container edges */
+.chart-block,
+.panel {
+  overflow: visible;
+}
+/* But chart divs themselves need contained scroll if they overflow */
+[id^="chart-"] {
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+/* 5. WMIM / SECTION SPACING CONSISTENCY
+   Every tab gets 24px below WMIM before first content section */
+.wmim {
+  margin-bottom: 24px;
+}
+
+/* 6. HERO CHART PANEL — prevent Plotly from escaping */
+.hero-chart-panel {
+  overflow: hidden;
+}
+
+/* 7. PANEL-TITLE SPACING CONSISTENCY
+   All panel titles get the same bottom margin */
+.panel .panel-title,
+.chart-block .panel-title {
+  margin-bottom: 14px;
+}
+
+/* 8. COLLAPSED SECTION HEADER CONSISTENCY
+   All details/expanders get uniform spacing */
+.perp-expander,
+details:not(.perp-expander) {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+/* 9. SECTION LABEL WITH MT classes — ensure they don't double-stack */
+.section-label.mt-24 { margin-top: 24px; }
+.section-label.mt-20 { margin-top: 20px; }
+
+/* 10. KPI TILE VERTICAL ALIGNMENT CONSISTENCY */
+.kpi-tile {
+  justify-content: flex-start;
+}
+
+/* 11. HERO REVERSE DCF - prevent content overflow on mid-size screens */
+@media (max-width: 1100px) {
+  .hero-reverse-dcf {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .rdcf-item { padding: 0 12px; }
+  .rdcf-arrow { display: none; }
+}
+
+/* 12. STATS-5 RESPONSIVE FIX */
+@media (max-width: 1100px) {
+  .tab-header-meta.stats-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .tab-header-meta,
+  .tab-header-meta.stats-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 13. SCENARIO CARD GRID — prevent overflow on smaller widths */
+@media (max-width: 1100px) {
+  .scenario-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 14. SOURCE BAR — prevent cutoff */
+.source-bar {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+/* 15. MINE TABLE (Tab 4) — horizontal scroll on medium viewports */
+.mine-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mine-table-wrap table { min-width: 700px; }
+
+/* 16. WACC TABLE clean borders */
+.wacc-table tr:last-child td { border-bottom: none; }
+
+/* 17. SIGNAL SCORECARD — name column never truncates */
+.signal-name { white-space: normal; }
+
 </style>
 </head>
 <body>
@@ -2112,7 +2328,12 @@ input[type=range].val-slider::-moz-range-thumb {
       <div class="tab-header-title">The Investment Thesis</div>
       <div class="tab-header-sub">NEM trades at a 32% discount to spot gold — the largest dislocation in the company's listed history. The market is pricing the trough; the valuation reflects the recovery. Three converging drivers make this the highest-conviction trade in mining.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">$108.25</span><span>Current Price</span></div><div class="tab-header-stat"><span class="val">$198.03</span><span>Price Target</span></div><div class="tab-header-stat"><span class="val green">+82.9%</span><span>Upside</span></div><div class="tab-header-stat"><span class="val green">BUY</span><span>Recommendation</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">Current Price</span><span class="val">$108.25</span></div>
+      <div class="tab-header-stat"><span class="lbl">Price Target</span><span class="val gold">$198.03</span></div>
+      <div class="tab-header-stat"><span class="lbl">Upside</span><span class="val green">+82.9%</span></div>
+      <div class="tab-header-stat"><span class="lbl">Recommendation</span><span class="val green">BUY</span></div>
+    </div>
   </div>
 
 
@@ -2697,11 +2918,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">CONTEXT · 03</div>
+      <div class="tab-header-phase">CONTEXT · 02</div>
       <div class="tab-header-title">Gold Macro</div>
       <div class="tab-header-sub">Gold at $4,758/oz is not a temporary spike. Central bank de-dollarization, a 15-year supply drought, and structural de-risking flows have permanently repriced the floor.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">$4,758/oz</span><span>Gold Spot</span></div><div class="tab-header-stat"><span class="val green">+51%</span><span>YTD Performance</span></div><div class="tab-header-stat"><span class="val">1,045t</span><span>CB Buying 2024</span></div><div class="tab-header-stat"><span class="val">15yr</span><span>Supply Drought</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">Gold Spot</span><span class="val gold">$4,758/oz</span></div>
+      <div class="tab-header-stat"><span class="lbl">YTD Performance</span><span class="val green">+51%</span></div>
+      <div class="tab-header-stat"><span class="lbl">CB Buying 2024</span><span class="val">1,045t</span></div>
+      <div class="tab-header-stat"><span class="lbl">Supply Drought</span><span class="val">15yr</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -2914,7 +3140,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- SENSITIVITY TABLE (moved to bottom of Gold Macro tab) -->
   <div class="section-label mt-20">NEM Price Sensitivity to Gold Spot (Current DCF Model)</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:560px;">
       <thead>
         <tr>
           <th>Gold Price Scenario</th>
@@ -2974,6 +3201,7 @@ input[type=range].val-slider::-moz-range-thumb {
         </tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
   </div>
 
   <div class="source-bar">
@@ -2996,11 +3224,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">CONTEXT · 04</div>
+      <div class="tab-header-phase">CONTEXT · 03</div>
       <div class="tab-header-title">Company Profile & FCF Transformation</div>
       <div class="tab-header-sub">NEM has completed the most dramatic operational turnaround in major mining history: from $97M FCF in 2023 to $7,299M in 2025. The market has not updated.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">75×</span><span>FCF Growth 2yr</span></div><div class="tab-header-stat"><span class="val">$7.3B</span><span>FY2025 FCF</span></div><div class="tab-header-stat"><span class="val">1,108M</span><span>Shares Out</span></div><div class="tab-header-stat"><span class="val">$7.2B</span><span>Net Cash</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">FCF Growth 2yr</span><span class="val green">75×</span></div>
+      <div class="tab-header-stat"><span class="lbl">FY2025 FCF</span><span class="val gold">$7.3B</span></div>
+      <div class="tab-header-stat"><span class="lbl">Shares Out</span><span class="val">1,108M</span></div>
+      <div class="tab-header-stat"><span class="lbl">Net Cash</span><span class="val gold">$7.2B</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -3043,7 +3276,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- INCOME STATEMENT 5-YEAR TABLE -->
   <div class="section-label">5-Year Income Statement Summary</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:480px;">
       <thead>
         <tr>
           <th>Metric</th>
@@ -3065,6 +3299,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr style="background:rgba(220,38,38,0.04);"><td>Gold Production (Moz) <span style="font-size:10px;color:var(--text-3); ">— 2026 guidance: 5.3 Moz trough; recovery to ~6 Moz targeted by mgmt</span></td><td>6.26</td><td>6.00</td><td>5.54</td><td>6.86</td><td>5.89</td></tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
   </div>
 
   <!-- PRODUCTION RECOVERY ARC -->
@@ -3212,11 +3447,17 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">CONTEXT · 05</div>
+      <div class="tab-header-phase">CONTEXT · 04</div>
       <div class="tab-header-title">Mine Portfolio</div>
       <div class="tab-header-sub">NEM operates the most geographically diversified Tier-1 gold portfolio in the world. Cadia alone provides a 30-year production anchor.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">11</span><span>Tier-1 Mines</span></div><div class="tab-header-stat"><span class="val">5.7Moz</span><span>2025 Production</span></div><div class="tab-header-stat"><span class="val" style="color:var(--red-light);">5.3Moz</span><span>2026 Trough Guidance</span></div><div class="tab-header-stat"><span class="val" style="color:var(--green-light);">~6.0Moz</span><span>Recovery Target (2027+)</span></div><div class="tab-header-stat"><span class="val">30yr</span><span>Cadia Mine Life</span></div></div>
+    <div class="tab-header-meta stats-5">
+      <div class="tab-header-stat"><span class="lbl">Tier-1 Mines</span><span class="val">11</span></div>
+      <div class="tab-header-stat"><span class="lbl">2025 Production</span><span class="val gold">5.7 Moz</span></div>
+      <div class="tab-header-stat"><span class="lbl">2026 Trough Guidance</span><span class="val red">5.3 Moz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Recovery Target (2027+)</span><span class="val green">~6.0 Moz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Cadia Mine Life</span><span class="val">30yr</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -3260,6 +3501,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <details class="perp-expander">
     <summary>Mine Portfolio — Full Table (13 Mines)</summary>
     <div class="panel">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
       <table class="mine-table" id="mine-table">
         <thead>
           <tr>
@@ -3342,6 +3584,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </tr>
         </tbody>
       </table>
+      </div><!-- /overflow-x -->
       <div style="margin-top:10px;padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);font-size:11px;color:var(--text-2);line-height:1.6;">
         <strong style="color:var(--text);">Divested (all closed 2024–2025):</strong> Telfer &amp; Havieron (AU, sold $475M), CC&amp;V (USA, sold), Musselwhite (CA, sold $810M), Éléonore (CA, sold $795M), Akyem (GH, sold $900M+), Porcupine (CA, sold $200M+equity). Total proceeds: $4.3B.
         <span style="color:var(--gold-light);"> None of these appear in NEM’s go-forward production guidance.</span>
@@ -3624,11 +3867,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">VALUATION · 06</div>
+      <div class="tab-header-phase">VALUATION · 05</div>
       <div class="tab-header-title">Valuation — Three Methods Converge</div>
       <div class="tab-header-sub">DCF at spot gold, P/NAV, and SOTP all point to $190–$210. The convergence from three independent methods is the strongest valuation signal.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">$198.03</span><span>Blended Target</span></div><div class="tab-header-stat"><span class="val">0.85×</span><span>P/NAV</span></div><div class="tab-header-stat"><span class="val">7.8×</span><span>EV/EBITDA</span></div><div class="tab-header-stat"><span class="val">$190–$210</span><span>Bull Range</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">Blended Target</span><span class="val gold">$198.03</span></div>
+      <div class="tab-header-stat"><span class="lbl">P/NAV</span><span class="val gold">0.85×</span></div>
+      <div class="tab-header-stat"><span class="lbl">EV/EBITDA</span><span class="val">7.8×</span></div>
+      <div class="tab-header-stat"><span class="lbl">Bull Range</span><span class="val green">$190–$210</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -4933,7 +5181,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="section-label mt-24"><span class="assumption-tip">Gold Price Scenarios — Target at Each Gold Assumption<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Scenario Assumptions (Base / Bull / Bear)</span><span class="tip-line"><span class="tip-label">Source:</span> Gold price scenarios derived from bank consensus forecasts and spot market. Base: $5,200/oz (9% below consensus). Bear: $3,500/oz (26% below spot). Bull: $5,500/oz (16% above spot).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Standard analyst scenario framework. Bear case tests thesis break-even; bull case shows upside optionality. All scenarios hold other assumptions constant.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — even the bear case ($3,500 gold, −26% from spot) shows +21.9% upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Probability-weighted EV: 45% base + 25% bull + 22% bear + 8% stress = $198.40 (+83.3% upside).</span></span></span></div>
   <div class="panel">
     <div class="panel-title">Blended Target Sensitivity — At What Gold Price Is NEM Still a Buy?</div>
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:640px;">
       <thead>
         <tr>
           <th>Gold Scenario</th>
@@ -5019,6 +5268,7 @@ input[type=range].val-slider::-moz-range-thumb {
         </tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
     <div style="font-size:10px;color:var(--text-3);margin-top:8px;line-height:1.6;">
       Breakeven gold for thesis: ~$3,200/oz (−33% from spot). At $3,200/oz, blended target ≈ $113 — barely above current price. The margin of safety is substantial: gold would need to fall more than 1/3 from today's level AND stay there for the thesis to fail.
     </div>
@@ -5047,11 +5297,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">VALUATION · 07</div>
+      <div class="tab-header-phase">VALUATION · 06</div>
       <div class="tab-header-title">Peer Comparison</div>
       <div class="tab-header-sub">NEM trades at a discount to every major peer on EV/EBITDA, P/NAV, and FCF yield. The size premium should be a premium, not a discount.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">7.8×</span><span>NEM EV/EBITDA</span></div><div class="tab-header-stat"><span class="val">10.5×</span><span>Peer Average</span></div><div class="tab-header-stat"><span class="val">26%</span><span>Peer Discount</span></div><div class="tab-header-stat"><span class="val">6.1%</span><span>FCF Yield (LTM)</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">NEM EV/EBITDA</span><span class="val red">7.8×</span></div>
+      <div class="tab-header-stat"><span class="lbl">Peer Average</span><span class="val">10.5×</span></div>
+      <div class="tab-header-stat"><span class="lbl">Peer Discount</span><span class="val red">−26%</span></div>
+      <div class="tab-header-stat"><span class="lbl">FCF Yield (LTM)</span><span class="val green">6.1%</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -5077,7 +5332,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- PEER TABLE -->
   <div class="section-label mt-20">Full Peer Comparison Table</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table id="peer-table">
       <thead>
         <tr>
           <th>Company</th>
@@ -5191,6 +5447,7 @@ input[type=range].val-slider::-moz-range-thumb {
         </tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
   </div>
 
   <!-- AISC TRAJECTORY + AISC vs EV/EBITDA SCATTER -->
@@ -5387,7 +5644,8 @@ input[type=range].val-slider::-moz-range-thumb {
 
     <!-- M&A timeline table -->
     <div class="chart-title" style="margin-bottom:8px;">Selected Gold Mining M&amp;A Transactions — Decade Context</div>
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:520px;">
       <thead>
         <tr>
           <th>Year</th>
@@ -5408,6 +5666,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr style="background:rgba(34,181,115,0.06);border-top:2px solid var(--green);"><td><strong>NEM Today</strong></td><td colspan="2">Public market implied</td><td>$120B EV</td><td class="val-gold"><strong>0.85&times;</strong></td><td class="val-green"><strong>Discount to prior bull peaks; cheap vs re-rating precedent</strong></td></tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
 
     <div class="chart-takeaway" style="margin-top:12px;">
       <strong>Why this matters for NEM&#8217;s BUY case:</strong> M&amp;A precedents are the market&#8217;s clearest signal of &#8220;true&#8221; asset value — arm&#8217;s-length buyers paid 0.73&times;–1.10&times; P/NAV across 98 transactions over the past decade. NEM at 0.85&times; is in line with that range, not expensive. Yet NEM&#8217;s 118 Moz reserve base, S&amp;P 500 inclusion liquidity premium, and net cash balance sheet justify a premium to the average acquiree. A re-rating to 1.4&times; (AEM&#8217;s current public market multiple) is supported by historical M&amp;A precedent and would imply a share price of approximately <strong style="color:var(--green);">$185</strong> — consistent with our blended target of $198.
@@ -5437,11 +5696,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">RISK · 08</div>
+      <div class="tab-header-phase">RISK · 07</div>
       <div class="tab-header-title">Risk & Scenario Analysis</div>
       <div class="tab-header-sub">Monte Carlo across 10,000 simulations: 91.2% probability NEM exceeds current price. The risk/reward is asymmetric in the bull's favor.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">91.2%</span><span>P(>$108) MC</span></div><div class="tab-header-stat"><span class="val">$195.40</span><span>MC Median</span></div><div class="tab-header-stat"><span class="val">3.2×</span><span>Upside/Downside</span></div><div class="tab-header-stat"><span class="val">Low</span><span>Geopolitical Risk</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">P(&gt;$108) MC</span><span class="val green">91.2%</span></div>
+      <div class="tab-header-stat"><span class="lbl">MC Median</span><span class="val gold">$195.40</span></div>
+      <div class="tab-header-stat"><span class="lbl">Upside/Downside</span><span class="val green">3.2×</span></div>
+      <div class="tab-header-stat"><span class="lbl">Geopolitical Risk</span><span class="val green">Low</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -5720,11 +5984,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">EVIDENCE · 09</div>
+      <div class="tab-header-phase">EVIDENCE · 08</div>
       <div class="tab-header-title">Catalyst Map</div>
       <div class="tab-header-sub">Six catalysts in the next 12 months, any one of which could close the valuation gap. The cumulative probability of at least one catalyst firing is near certainty.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">6</span><span>Catalysts 12mo</span></div><div class="tab-header-stat"><span class="val">Q2 2026</span><span>Next Earnings</span></div><div class="tab-header-stat"><span class="val">$3B+</span><span>Capital Return</span></div><div class="tab-header-stat"><span class="val">NGM</span><span>Expansion Asset</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">Catalysts 12mo</span><span class="val gold">6</span></div>
+      <div class="tab-header-stat"><span class="lbl">Next Earnings</span><span class="val">Q2 2026</span></div>
+      <div class="tab-header-stat"><span class="lbl">Capital Return</span><span class="val green">$3B+</span></div>
+      <div class="tab-header-stat"><span class="lbl">Key Expansion Asset</span><span class="val teal">NGM</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -5828,7 +6097,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- FULL CATALYST TABLE -->
   <div class="section-label mt-20">Full Catalyst Register</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:640px;">
       <thead>
         <tr>
           <th>Catalyst</th>
@@ -5851,6 +6121,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr><td>Tanami Expansion Stage 2</td><td>2027</td><td>Growth</td><td class="val-green">+$6–10/sh</td><td>70%</td><td class="val-teal">In Construction</td><td>Decline hoisting nearly complete</td></tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
   </div>
 
 
@@ -5871,11 +6142,17 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">EVIDENCE · 10</div>
+      <div class="tab-header-phase">EVIDENCE · 09</div>
       <div class="tab-header-title">Alternative Data — Channel Checks</div>
       <div class="tab-header-sub">8 independent research channels. 6 bullish, 1 neutral, 2 bearish. Bearish signals are documented and bounded — they define risk limits, not thesis failure.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">7/8</span><span>Channels Bull/Neu</span></div><div class="tab-header-stat"><span class="val">97%</span><span>Composite Score</span></div><div class="tab-header-stat"><span class="val">Mixed</span><span>Insider Signal</span></div><div class="tab-header-stat"><span class="val">Strong</span><span>Supply Signal</span></div><div class="tab-header-stat"><span class="val" style="color:var(--red-light);">2 Bear</span><span>Bearish Signals</span></div></div>
+    <div class="tab-header-meta stats-5">
+      <div class="tab-header-stat"><span class="lbl">Bull/Neutral Channels</span><span class="val green">7/8</span></div>
+      <div class="tab-header-stat"><span class="lbl">Composite Score</span><span class="val gold">97%</span></div>
+      <div class="tab-header-stat"><span class="lbl">Insider Signal</span><span class="val">Mixed</span></div>
+      <div class="tab-header-stat"><span class="lbl">Supply Signal</span><span class="val green">Strong</span></div>
+      <div class="tab-header-stat"><span class="lbl">Bearish Signals</span><span class="val red">2 Bear</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -6137,11 +6414,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">EVIDENCE · 11</div>
+      <div class="tab-header-phase">EVIDENCE · 10</div>
       <div class="tab-header-title">ESG & WACC Advantage</div>
       <div class="tab-header-sub">NEM's ESG leadership isn't philanthropic — it directly reduces WACC through access to green capital, lower insurance costs, and reduced regulatory risk.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">Tier 1</span><span>ESG Rating</span></div><div class="tab-header-stat"><span class="val">−50bps</span><span>WACC Benefit</span></div><div class="tab-header-stat"><span class="val">2050</span><span>Net Zero Target</span></div><div class="tab-header-stat"><span class="val">#1</span><span>MSCI Sector Rank</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">ESG Rating</span><span class="val green">Tier 1</span></div>
+      <div class="tab-header-stat"><span class="lbl">WACC Benefit</span><span class="val green">−50bps</span></div>
+      <div class="tab-header-stat"><span class="lbl">Net Zero Target</span><span class="val">2050</span></div>
+      <div class="tab-header-stat"><span class="lbl">MSCI Sector Rank</span><span class="val gold">#1</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -6318,11 +6600,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">EVIDENCE · 12</div>
+      <div class="tab-header-phase">EVIDENCE · 11</div>
       <div class="tab-header-title">Management Credibility</div>
       <div class="tab-header-sub">The AISC beat of $262/oz is not luck — it's the result of a disciplined cost program that management has beaten for 4 consecutive quarters.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">$1,358</span><span>Actual AISC</span></div><div class="tab-header-stat"><span class="val">$1,620</span><span>Guided AISC</span></div><div class="tab-header-stat"><span class="val">-$262/oz</span><span>Beat Magnitude</span></div><div class="tab-header-stat"><span class="val">4Q Streak</span><span>Consecutive Beats</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">Actual AISC</span><span class="val green">$1,358/oz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Guided AISC</span><span class="val">$1,620/oz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Beat Magnitude</span><span class="val green">−$262/oz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Consecutive Beats</span><span class="val gold">4Q Streak</span></div>
+    </div>
   </div>
 
   <div class="wmim">
@@ -6379,7 +6666,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- 10-YEAR OPERATIONAL TABLE -->
   <div class="section-label mt-20">10-Year Operational Track Record</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:700px;">
       <thead>
         <tr>
           <th>Year</th>
@@ -6407,6 +6695,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr style="background:rgba(22,163,74,0.04);"><td><strong>2027 (Mgmt Outlook)</strong> <span style="font-size:10px;color:var(--green-light);">&#9650; RECOVERY</span></td><td style="color:var(--text);">Natascha Viljoen</td><td style="color:var(--green-light);font-weight:700;">~6.0 &#9650;</td><td style="color:var(--text-2);">~$1,680</td><td style="color:var(--text-3);">Pending</td><td style="color:var(--text-3);">—</td><td style="color:var(--text-3);">—</td><td style="color:var(--green-light);">Recovery Framework</td></tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
   </div>
 
   <!-- ERA COMPARISON CARDS -->
@@ -6479,11 +6768,16 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">VERDICT · 13</div>
+      <div class="tab-header-phase">VERDICT · 12</div>
       <div class="tab-header-title">The Verdict — BUY</div>
       <div class="tab-header-sub">Three independent valuation methods, 8 bullish channel checks, 91.2% Monte Carlo probability, and perfect Piotroski score all converge on one conclusion.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val green">BUY</span><span>Recommendation</span></div><div class="tab-header-stat"><span class="val green">+82.9%</span><span>Implied Upside</span></div><div class="tab-header-stat"><span class="val">$198.03</span><span>12-Month Target</span></div><div class="tab-header-stat"><span class="val green">HIGH</span><span>Conviction Level</span></div></div>
+    <div class="tab-header-meta">
+      <div class="tab-header-stat"><span class="lbl">Recommendation</span><span class="val green">BUY</span></div>
+      <div class="tab-header-stat"><span class="lbl">Implied Upside</span><span class="val green">+82.9%</span></div>
+      <div class="tab-header-stat"><span class="lbl">12-Month Target</span><span class="val gold">$198.03</span></div>
+      <div class="tab-header-stat"><span class="lbl">Conviction Level</span><span class="val green">HIGH</span></div>
+    </div>
   </div>
 
   <div style="background:rgba(201,148,43,0.06);border-left:3px solid var(--gold);padding:14px 20px;margin-bottom:20px;">
@@ -6825,7 +7119,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- 8-METHOD VALUATION TABLE -->
   <div class="section-label mt-20">8-Method Valuation Summary</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:580px;">
       <thead>
         <tr>
           <th>Method</th>
@@ -6848,6 +7143,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr style="background:rgba(34,181,115,0.08);"><td><strong>BLENDED TARGET</strong></td><td class="val-green"><strong>$198.03</strong></td><td><strong>100%</strong></td><td class="val-green"><strong>$198.03</strong></td><td><strong>DCF 70% + P/NAV 30%</strong></td><td class="val-green"><strong>+82.9%</strong></td></tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
   </div>
 
   <!-- THREE RISKS + REBUTTALS -->
@@ -6924,11 +7220,17 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">MODEL · 14</div>
+      <div class="tab-header-phase">MODEL · 13</div>
       <div class="tab-header-title">Quarterly Financial Model</div>
       <div class="tab-header-sub">Full financial model: annual history, forward estimates, and the model-vs-street gap that defines the re-rating opportunity. The earnings catch-up thesis in numbers.</div>
     </div>
-    <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">$4,758</span><span>Base Gold Price</span></div><div class="tab-header-stat"><span class="val">$1,358</span><span>Base AISC</span></div><div class="tab-header-stat"><span class="val" style="color:var(--red-light);">5.3Moz</span><span>2026 Trough</span></div><div class="tab-header-stat"><span class="val" style="color:var(--green-light);">~6.0Moz</span><span>Recovery Target</span></div><div class="tab-header-stat"><span class="val">$198.03</span><span>Price Target</span></div></div>
+    <div class="tab-header-meta stats-5">
+      <div class="tab-header-stat"><span class="lbl">Base Gold Price</span><span class="val gold">$4,758/oz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Base AISC</span><span class="val green">$1,358/oz</span></div>
+      <div class="tab-header-stat"><span class="lbl">2026 Trough</span><span class="val red">5.3 Moz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Recovery Target</span><span class="val green">~6.0 Moz</span></div>
+      <div class="tab-header-stat"><span class="lbl">Price Target</span><span class="val gold">$198.03</span></div>
+    </div>
   </div>
 
 
@@ -6943,7 +7245,8 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- FULL YEAR FINANCIAL MODEL -->
   <div class="section-label mt-20">Full-Year Financial Model</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:560px;">
       <thead>
         <tr>
           <th>Metric</th>
@@ -6972,12 +7275,14 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr><td>Net Debt/(Cash) ($M)</td><td>$2,842</td><td>$(1,240)</td><td class="val-green">$(7,173)</td><td>$(9,800)</td><td>$(12,400)</td><td>$(15,200)</td></tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
   </div>
 
   <!-- FORWARD ESTIMATES TABLE -->
   <div class="section-label mt-20">Forward Estimates vs Street Consensus</div>
   <div class="panel">
-    <table>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:600px;">
       <thead>
         <tr>
           <th>Metric / Year</th>
@@ -6998,6 +7303,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <tr><td>FCF ($M)</td><td>$3,600</td><td class="val-gold">$8,400</td><td class="val-green">+133%</td><td>$3,200</td><td class="val-gold">$9,100</td><td class="val-green">+184%</td><td>Gold price mismatch is primary driver</td></tr>
       </tbody>
     </table>
+    </div><!-- /overflow-x -->
     <div style="margin-top:14px;padding:12px;background:rgba(201,148,43,0.06);border:1px solid rgba(201,148,43,0.15);border-radius:2px;">
       <div style="font-size:12px;color:var(--text-2);line-height:1.7;">
         <strong style="color:var(--gold-light);">The Core Gap:</strong> Street consensus contains two compounding errors. First, gold price assumptions of $3,500–3,800/oz — from research notes that pre-date gold's structural re-rating above $4,500/oz. Second, consensus implicitly treats 2026's trough production of 5.3 Moz as normalized output rather than a deliberate sequencing trough. Management has guided explicitly to a recovery toward ~6 Moz annually from 2027 — a ~13% production uplift that layers on top of any gold price re-rating. When the Street corrects both assumptions simultaneously, the valuation gap closes from two directions at once. The catalyst for re-rating is simply time: as gold stays elevated and production recovers, the consensus catch-up occurs quarter by quarter.
