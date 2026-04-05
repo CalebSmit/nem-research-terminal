@@ -416,6 +416,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   border: 1px solid var(--border);
   border-radius: var(--r);
   padding: 18px 20px;
+  overflow: visible;
 }
 .panel-sm  { padding: 12px 14px; }
 .panel-lg  { padding: 24px 28px; }
@@ -525,6 +526,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   border: 1px solid var(--border);
   border-radius: var(--r);
   padding: 18px 20px;
+  overflow: visible;
 }
 .chart-header {
   margin-bottom: 12px;
@@ -2063,7 +2065,7 @@ input[type=range].val-slider::-moz-range-thumb {
         <span class="lbl">Market Discount to Spot</span>
       </div>
     </div>
-    <div id="chart-paradox" style="height:420px;"></div>
+    <div id="chart-paradox" style="height:400px;"></div>
     <div class="chart-takeaway"><strong>The gap is $1,153/oz</strong> — at NEM's 2025 production of ~5.9 Moz (and FY2026 trough guidance of 5.3 Moz), every $100/oz gold price increase adds ~$530M to trough-year FCF, rising toward ~$600M as production recovers toward the ~6 Moz framework. The market's $3,605 gold assumption requires gold to fall 24% from here.</div>
   </div>
 
@@ -2817,15 +2819,15 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="grid-3">
     <div class="panel">
       <div class="chart-title">FCF Inflection — Record $7,299M in 2025</div>
-      <div id="chart-sparkline-fcf" style="height:220px;"></div>
+      <div id="chart-sparkline-fcf" style="height:270px;"></div>
     </div>
     <div class="panel">
       <div class="chart-title">Revenue Growth Post-Newcrest</div>
-      <div id="chart-sparkline-rev" style="height:220px;"></div>
+      <div id="chart-sparkline-rev" style="height:270px;"></div>
     </div>
     <div class="panel">
       <div class="chart-title">AISC Trajectory — Cost Discipline Holds</div>
-      <div id="chart-sparkline-aisc" style="height:220px;"></div>
+      <div id="chart-sparkline-aisc" style="height:270px;"></div>
     </div>
   </div>
 
@@ -2895,7 +2897,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="section-label">Gold Price History (2016–2026)</div>
   <div class="panel">
     <div class="chart-title">Gold's Structural Breakout — $1,200 to $4,758: Three Distinct Legs Up</div>
-    <div id="chart-gold-price" style="height:420px;"></div>
+    <div id="chart-gold-price" style="height:380px;"></div>
     <div class="chart-takeaway"><strong>$1,200 → $4,758: three structural legs.</strong> Leg 1 (2019–2020): COVID safe-haven. Leg 2 (2022–2023): Russia–Ukraine, rate peak. Leg 3 (2024–2026): Central bank accumulation + de-dollarization. Each leg has a different demand driver — this is not one bubble, it is three independent reratings.</div>
   </div>
 
@@ -2903,12 +2905,12 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="grid-2 mt-16">
     <div class="panel">
       <div class="chart-title">Central Bank Gold Purchases Breaking Records (tonnes)</div>
-      <div id="chart-central-banks" style="height:320px;"></div>
+      <div id="chart-central-banks" style="height:340px;"></div>
       <div class="chart-takeaway"><strong>1,045t in 2024</strong> — 3rd consecutive year above 1,000t. Historical average (2010–2019) was 374t/yr. This is a <strong>2.8× structural step-change</strong> in demand that is not modeled in consensus price decks.</div>
     </div>
     <div class="panel">
       <div class="chart-title">Major Bank Gold Price Forecasts for 2026</div>
-      <div id="chart-bank-forecasts" style="height:320px;"></div>
+      <div id="chart-bank-forecasts" style="height:340px;"></div>
       <div class="chart-takeaway">NEM's implied gold price of <strong>$3,605/oz is below every major bank's 2026 forecast</strong>. The most bearish bank (Citi) targets $5,000 — 38% above NEM's embedded assumption. JPMorgan forecasts $6,300, Goldman $5,400, UBS $6,200. Street equity models have not updated to reflect gold's structural breakout above $4,500.</div>
     </div>
   </div>
@@ -3105,7 +3107,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="grid-2">
     <div class="panel">
       <div class="chart-title">Major Gold Discoveries Per Decade (Moz Found) — Collapsing</div>
-      <div id="chart-discovery" style="height:300px;"></div>
+      <div id="chart-discovery" style="height:340px;"></div>
       <div class="chart-takeaway">Discovery declined 85% since peak. No large discovery since Oyu Tolgoi (2001). With 10–15 year mine build times, <strong>no new supply is possible before 2035</strong> even if exploration surged today.</div>
     </div>
     <div class="panel panel-dark">
@@ -3219,7 +3221,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="panel mt-16" style="border-left:4px solid var(--gold);">
     <div class="panel-title" style="color:var(--gold-light);">Gold Production Arc — Trough in 2026, Recovery to ~6 Moz by 2027+</div>
     <div style="font-size:11px;color:var(--text-3);margin-bottom:8px;">Management has explicitly characterized 2026 as a planned transition year. The production dip is sequencing-driven, not structural. The ~6 Moz longer-term framework reflects recovery as Cadia Panel Caves, Tanami Expansion 2, Boddington grade recovery, and Ahafo North ramp-up contribute fully.</div>
-    <div id="chart-production-recovery" style="height:320px;"></div>
+    <div id="chart-production-recovery" style="height:340px;"></div>
     <div class="chart-takeaway"><strong>2026 is the trough, not the floor.</strong> The production arc falls from 5.9 Moz (FY2025) to 5.3 Moz (FY2026 guidance) before recovering toward management's stated framework of ~6 Moz annually from 2027 onward. Consensus is pricing the trough as a new baseline — a mispricing the recovery arc will correct. Each incremental ounce produced above 5.3 Moz at $4,758 gold adds ~$4,758 in revenue per 1,000 oz.</div>
     <div style="font-size:10px;color:var(--text-3);margin-top:8px;">
       Sources: NEM FY2026 Guidance (Feb 19 2026, Newmont) · Globe and Mail (Feb 21 2026, CEO commentary) · TIKR.com analyst model (Feb 20 2026) · Discovery Alert / LinkedIn (Feb 19 2026)
@@ -3934,7 +3936,7 @@ input[type=range].val-slider::-moz-range-thumb {
     <div class="panel">
       <div class="panel-title">P/NAV Sensitivity — NEM Is Cheap at Any Gold Price Above $2,000/oz</div>
       <div class="chart-title">P/NAV Sensitivity — Target at Each Gold Price × Multiple</div>
-    <div id="chart-nav-sensitivity" style="height:330px;"></div>
+    <div id="chart-nav-sensitivity" style="height:320px;"></div>
       <div class="chart-takeaway">At current spot $4,758: P/NAV = <strong>$257/share</strong> (using spot gold; the base model uses the conservative 2yr trailing deck at $2,775 = $112/share). Multiple ranges from 0.65× (stressed) to 1.0× (sector premium). NEM at 0.85× reflects integration discount that no longer applies post-divestiture completion.</div>
       <div style="font-size:10px;color:var(--text-3);margin-top:8px;line-height:1.6;">
         <strong style="color:var(--gold-light);">Key insight:</strong> Even at $2,500/oz gold (−47% from spot), P/NAV implies $91/share — barely below current price. At spot gold ($4,758), P/NAV alone implies $257/share. The model uses $2,775 (conservative 2yr avg). The upside case does not depend on gold continuing to rise.
@@ -4315,7 +4317,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- SOTP Waterfall chart -->
   <div class="panel mt-16">
     <div class="panel-title">SOTP NAV Contribution by Mine — Waterfall Chart</div>
-    <div id="chart-sotp-waterfall" style="height:380px;"></div>
+    <div id="chart-sotp-waterfall" style="height:400px;"></div>
     <div class="chart-takeaway">SOTP = sum of 11 mine NPVs using mine-specific discount rates (5–10.5%) + corporate overhead. Conservative gold deck of $2,775/oz. Result: <strong>$99.80/share</strong> — sets the floor. At spot gold deck the SOTP rises to ~$175/share.</div>
     <div style="font-size:10px;color:var(--text-3);margin-top:8px;line-height:1.6;">
       <strong style="color:var(--gold-light);">Cadia dominates:</strong> At $400/oz AISC — the lowest cost major gold mine globally — Cadia contributes 27.1% of gross portfolio NAV despite being only one of 11 mines. Boddington (18.5%) and Lihir (13.1%) round out the top three, collectively contributing ~58% of gross NAV. High-jurisdiction-risk mines (Cerro Negro, Yanacocha) contribute &lt;6% combined — limiting downside from EM political risk.
@@ -4511,7 +4513,7 @@ input[type=range].val-slider::-moz-range-thumb {
     </div>
 
     <!-- Convergence visual -->
-    <div id="chart-val-convergence" style="height:320px;margin-top:16px;"></div>
+    <div id="chart-val-convergence" style="height:340px;margin-top:16px;"></div>
     <div class="chart-takeaway">8 independent methods: DCF ($235), P/NAV ($112), SOTP ($100 floor / $175 at spot gold), Relative Value Re-rate ($159), Precedent EV/EBITDA ($142), Monte Carlo median ($134), Precedent P/NAV ($118), EV/oz floor ($106), Blended ($198). <strong>All above $100. Median $134. Blended $198.</strong></div>
 
     <!-- Convergence statement -->
@@ -4781,7 +4783,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="section-label">EV/EBITDA Comparison — NEM Is the Cheapest Major</div>
   <div class="panel">
     <div class="chart-title">NEM Trades at 7.8× EV/EBITDA — 26% Discount to Peer Average Despite Superior FCF</div>
-    <div id="chart-ev-ebitda" style="height:380px;"></div>
+    <div id="chart-ev-ebitda" style="height:360px;"></div>
     <div class="chart-takeaway"><strong>NEM at 7.8× EV/EBITDA vs peer average 10.5×</strong> — a 26% discount. Agnico Eagle (10.0×), Gold Fields (13.7×), Kinross (10.8×) all trade at premium multiples. Size and portfolio quality historically command a premium, not a discount. The discount is entirely explained by stale analyst gold decks.</div>
   </div>
 
@@ -5217,7 +5219,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="section-label mt-20">Risk Matrix — Probability × Impact</div>
   <div class="panel">
     <div class="chart-title">Risk Matrix — Probability × Impact (No High-High Risks)</div>
-    <div id="chart-risk-matrix" style="height:350px;"></div>
+    <div id="chart-risk-matrix" style="height:360px;"></div>
   <div class="chart-takeaway" style="margin:0 0 16px;"><strong>No risks in the high-probability/high-impact quadrant</strong>. The highest-impact risk (sustained gold decline) has <15% probability given structural demand shifts. Operational risks are mitigated by geographic diversification across 4 continents.</div>
   </div>
 
@@ -5461,7 +5463,7 @@ input[type=range].val-slider::-moz-range-thumb {
 <div class="section-label">Aggregate Signal Scorecard — Across 8 Primary Research Channels</div>
   <div class="panel">
     <div class="chart-title">Channel Signals: 7 of 8 Bullish — Weighted Score 8.4/10</div>
-    <div id="chart-signal-scorecard" style="height:340px;"></div>
+    <div id="chart-signal-scorecard" style="height:360px;"></div>
   <div class="chart-takeaway"><strong>7 of 8 channels bullish</strong>. Composite score 8.4/10. Two bearish signals (Ghana royalty hike, insider selling) are documented, rebutted, and tracked against a resolution calendar. This level of channel breadth — across CB data, satellite imagery, shipping data, insider transactions, short interest, ESG flows, and analyst positioning — is statistically rare and historically predictive of 12-month outperformance.</div>
   </div>
 
@@ -5613,7 +5615,7 @@ input[type=range].val-slider::-moz-range-thumb {
     <div class="moat-wrap mt-0" style="margin-top:0;">
       <div class="panel-title" style="margin-bottom:12px;">Competitive Moat — NEM vs Typical Gold Major</div>
       <div class="chart-title">Competitive Moat Radar — NEM vs Sector</div>
-    <div id="chart-moat-radar" style="height:350px;"></div>
+    <div id="chart-moat-radar" style="height:380px;"></div>
       <div class="chart-takeaway">NEM scores highest on reserve life, cost position, jurisdiction quality, and ESG access to capital. Only area below sector peak: near-term production growth (post-divestiture rationalization intentional). This moat strengthens over time.</div>
     </div>
   </div>
@@ -5799,12 +5801,12 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="grid-2 mt-16">
     <div class="panel">
       <div class="chart-title">ESG Radar — NEM vs Industry Average</div>
-      <div id="chart-esg-radar" style="height:360px;"></div>
+      <div id="chart-esg-radar" style="height:380px;"></div>
       <div class="chart-takeaway">MSCI ESG AA rating positions NEM for ESG-mandated index flows across $30T+ in tracked ESG AUM (CB Insights / JPMorgan, 2021; Bloomberg Intelligence). <strong>Top-quintile on every dimension</strong> vs gold mining peers. ESG premium reduces WACC by an estimated 50bps — adding ~$8–12/share to DCF fair value.</div>
     </div>
     <div class="panel">
       <div class="chart-title">ESG Score Breakdown by Category (100-Point Scale)</div>
-      <div id="chart-esg-bars" style="height:360px;"></div>
+      <div id="chart-esg-bars" style="height:300px;"></div>
       <div class="chart-takeaway">NEM leads sector on GHG intensity (−34% since 2019), water recycling (>90%), lost-time injury rate, and community investment. These metrics directly reduce insurance costs, regulatory risk, and operating license risk.</div>
     </div>
   </div>
@@ -6727,11 +6729,11 @@ function showTab(idx) {
 const DARK_LAYOUT = {
   paper_bgcolor: '#131316',
   plot_bgcolor:  '#131316',
-  font: { family: 'JetBrains Mono, Courier New, monospace', color: '#A8A8B8', size: 11 },
-  margin: { l: 60, r: 20, t: 50, b: 50 },
+  font: { family: 'JetBrains Mono, Courier New, monospace', color: '#A8A8B8', size: 12 },
+  margin: { l: 65, r: 25, t: 55, b: 55 },
   xaxis: { gridcolor: 'rgba(255,255,255,0.05)', linecolor: 'rgba(255,255,255,0.07)', zerolinecolor: 'rgba(255,255,255,0.07)' },
   yaxis: { gridcolor: 'rgba(255,255,255,0.05)', linecolor: 'rgba(255,255,255,0.07)', zerolinecolor: 'rgba(255,255,255,0.07)' },
-  hoverlabel: { bgcolor: '#1e1e24', bordercolor: 'rgba(255,255,255,0.1)', font: { family: 'JetBrains Mono, monospace', color: '#E2E2E8', size: 11 } },
+  hoverlabel: { bgcolor: '#1e1e24', bordercolor: 'rgba(255,255,255,0.1)', font: { family: 'JetBrains Mono, monospace', color: '#E2E2E8', size: 12 } },
   legend: { bgcolor: 'rgba(0,0,0,0)', bordercolor: 'rgba(255,255,255,0.07)', font: { size: 10 } },
   autosize: true
 };
@@ -6790,26 +6792,27 @@ function initTab0Charts() {
       textposition: 'outside',
       textfont: { family: 'JetBrains Mono', size: 12, color: '#E2E2E8' },
       hovertemplate: '<b>%{x}</b><br>Gold Price: $%{y:,.0f}/oz<extra></extra>',
-      width: [0.4, 0.4, 0.4]
+      width: [0.55, 0.55, 0.55]
     }
   ];
   const paradoxLayout = mergeLayout({
-    title: { text: 'NEM Priced as if Gold Falls 32% From Here — It Won\'t', font: { size: 13, color: '#E2E2E8' } },
-    yaxis: { title: 'Gold Price ($/oz)', tickprefix: '$', tickformat: ',.0f', range: [0, 6500] },
-    xaxis: { gridcolor: 'rgba(0,0,0,0)' },
-    height: 380,
+    title: { text: 'NEM Priced as if Gold Falls 32% From Here — It Won\'t', font: { size: 14, color: '#E2E2E8' } },
+    yaxis: { title: 'Gold Price ($/oz)', tickprefix: '$', tickformat: ',.0f', range: [0, 7200] },
+    xaxis: { gridcolor: 'rgba(0,0,0,0)', tickfont: { size: 12, family: 'JetBrains Mono' } },
+    height: 400,
+    margin: { l: 70, r: 30, t: 55, b: 60 },
     shapes: [{
       type: 'line', x0: -0.5, x1: 2.5, y0: 4758, y1: 4758,
       line: { color: '#E8AF50', width: 2, dash: 'dash' }
     }],
     annotations: [
-      { x: 2.3, y: 4758, text: 'Current Spot $4,758', showarrow: false,
-        font: { color: '#E8AF50', size: 11, family: 'JetBrains Mono' }, yshift: 14 },
-      { x: 0, y: 3605, text: '← Market implies gold falls here and stays', showarrow: true,
-        arrowcolor: '#E05252', ax: 0, ay: -50,
+      { x: 2, y: 4758, text: 'Spot $4,758/oz', showarrow: false,
+        font: { color: '#E8AF50', size: 11, family: 'JetBrains Mono' }, yshift: 16, xanchor: 'center' },
+      { x: 0, y: 3605, text: 'Market implies<br>gold falls here',
+        showarrow: true, arrowcolor: '#E05252', ax: 0, ay: -55,
         font: { color: '#E05252', size: 10, family: 'JetBrains Mono' } },
-      { x: 1, y: 4758, text: 'Gap = $1,153/oz', showarrow: false,
-        font: { color: '#E2E2E8', size: 11, family: 'JetBrains Mono' }, yshift: -30 }
+      { x: 1, y: 4181, text: 'Gap = $1,153/oz', showarrow: false,
+        font: { color: '#E2E2E8', size: 11, family: 'JetBrains Mono' }, xanchor: 'center' }
     ]
   });
   Plotly.newPlot('chart-paradox', paradoxData, paradoxLayout, PLOTLY_CONFIG);
@@ -6835,9 +6838,10 @@ function initTab1Charts() {
     hovertemplate: '<b>%{x}</b><br>Value add: $%{y:.2f}/sh<br>Cumulative: based on base $108.25<extra></extra>'
   }];
   const wfLayout = mergeLayout({
-    margin: { l: 70, r: 30, t: 60, b: 80 },
-    title: { text: 'Valuation Bridge: $108.25 → $198.03', font: { size: 13, color: '#E2E2E8' } },
-    yaxis: { title: 'Price/Share ($)', tickprefix: '$' }
+    margin: { l: 75, r: 30, t: 60, b: 90 },
+    title: { text: 'Valuation Bridge: $108.25 → $198.03', font: { size: 14, color: '#E2E2E8' } },
+    yaxis: { title: 'Price/Share ($)', tickprefix: '$', range: [0, 230] },
+    height: 380
   });
   Plotly.newPlot('chart-waterfall', wfData, wfLayout, PLOTLY_CONFIG);
 
@@ -6853,13 +6857,13 @@ function initTab1Charts() {
     hovertemplate: 'FY%{x}<br>FCF: $%{y:,.0f}M<extra></extra>'
   }];
   Plotly.newPlot('chart-sparkline-fcf', fcfData, mergeLayout({
-    title: { text: 'FCF: $97M (2023) → $7,299M (2025) — 75× in 2 Years', font: { size: 11, color: '#E2E2E8' } },
-    yaxis: { title: 'Free Cash Flow ($M)', tickprefix: '$', ticksuffix: 'M' },
-    height: 260,
-    margin: { l: 65, r: 20, t: 40, b: 50 },
+    title: { text: 'FCF: $97M (2023) → $7,299M (2025) — 75× in 2 Years', font: { size: 12, color: '#E2E2E8' } },
+    yaxis: { title: 'Free Cash Flow ($M)', tickprefix: '$', ticksuffix: 'M', range: [0, 9000] },
+    height: 270,
+    margin: { l: 70, r: 20, t: 45, b: 50 },
     annotations: [{
-      x: '2023', y: 97, text: '2023 trough<br>Newcrest integration costs', showarrow: true,
-      arrowcolor: '#E05252', ax: 0, ay: -50,
+      x: '2023', y: 97, text: 'Trough: Newcrest costs', showarrow: true,
+      arrowcolor: '#E05252', ax: 0, ay: -45,
       font: { color: '#E05252', size: 9, family: 'JetBrains Mono' }
     }]
   }), PLOTLY_CONFIG);
@@ -6877,8 +6881,10 @@ function initTab1Charts() {
     hovertemplate: 'FY%{x}<br>Revenue: $%{y:,.0f}M<extra></extra>'
   }];
   Plotly.newPlot('chart-sparkline-rev', revData, mergeLayout({
-    yaxis: { title: 'Revenue ($M)', tickprefix: '$', ticksuffix: 'M' },
-    margin: { l: 55, r: 20, t: 30, b: 40 }
+    title: { text: 'Revenue ($M) — Post-Newcrest Scale', font: { size: 12, color: '#E2E2E8' } },
+    yaxis: { title: 'Revenue ($M)', tickprefix: '$', ticksuffix: 'M', range: [0, 24000] },
+    height: 270,
+    margin: { l: 70, r: 20, t: 45, b: 50 }
   }), PLOTLY_CONFIG);
 
   // AISC Sparkline
@@ -6894,10 +6900,10 @@ function initTab1Charts() {
     hovertemplate: '%{x}<br>AISC: $%{y:,.0f}/oz<extra></extra>'
   }];
   Plotly.newPlot('chart-sparkline-aisc', aiscData, mergeLayout({
-    title: { text: 'AISC vs Gold Spot — Still 3.5× Margin at $4,758 Gold', font: { size: 11, color: '#E2E2E8' } },
+    title: { text: 'AISC vs Gold Spot — 3.5× Margin at $4,758', font: { size: 12, color: '#E2E2E8' } },
     yaxis: { title: 'AISC ($/oz)', tickprefix: '$', range: [900, 1950] },
-    height: 260,
-    margin: { l: 65, r: 20, t: 40, b: 50 },
+    height: 270,
+    margin: { l: 70, r: 20, t: 45, b: 50 },
     shapes: [{
       type: 'line', x0: 0, x1: 5, y0: 4758, y1: 4758,
       line: { color: 'rgba(232,175,80,0.2)', width: 1, dash: 'dot' }
@@ -6926,10 +6932,10 @@ function initTab2Charts() {
     name: 'Gold Spot'
   }];
   const goldLayout = mergeLayout({
-    title: { text: 'Gold in Structural Bull Market — $1,060 to $4,758 in 10 Years', font: { size: 13, color: '#E2E2E8' } },
+    title: { text: 'Gold in Structural Bull Market — $1,060 to $4,758 in 10 Years', font: { size: 14, color: '#E2E2E8' } },
     yaxis: { title: 'Gold Price ($/oz)', tickprefix: '$', tickformat: ',.0f' },
-    xaxis: { title: 'Date' },
-    height: 340,
+    xaxis: { title: 'Year' },
+    height: 380,
     shapes: [
       { type: 'rect', x0: '2020-01', x1: '2020-08', y0: 0, y1: 2200, fillcolor: 'rgba(34,181,115,0.05)', line: { width: 0 } },
       { type: 'rect', x0: '2024-07', x1: '2026-03', y0: 0, y1: 5200, fillcolor: 'rgba(201,148,43,0.05)', line: { width: 0 } }
@@ -6997,7 +7003,7 @@ function initTab2Charts() {
     showlegend: true,
     legend: {
       orientation: 'h',
-      y: -0.22,
+      y: 1.06,
       x: 0.5,
       xanchor: 'center',
       font: { size: 9, color: '#A8A8B8' },
@@ -7021,7 +7027,7 @@ function initTab2Charts() {
       }
     ],
     height: 340,
-    margin: { l: 60, r: 20, t: 55, b: 90 }
+    margin: { l: 65, r: 20, t: 75, b: 50 }
   });
   Plotly.newPlot('chart-central-banks', cbData, cbLayout, PLOTLY_CONFIG);
 
@@ -7130,8 +7136,8 @@ function initTab2Charts() {
         showarrow: false, xanchor: 'center'
       }
     ],
-    height: 320,
-    margin: { l: 30, r: 140, t: 55, b: 60 }
+    height: 340,
+    margin: { l: 30, r: 160, t: 55, b: 60 }
   });
   Plotly.newPlot('chart-bank-forecasts', forecastData, forecastLayout, PLOTLY_CONFIG);
 
@@ -7155,14 +7161,15 @@ function initTab2Charts() {
     title: { text: 'New Gold Discoveries Collapsed 90% Since 1990s — NEM 118 Moz Reserves Are Irreplaceable', font: { size: 12, color: '#E2E2E8' } },
     yaxis: { title: 'Major Discoveries (Moz/yr)', ticksuffix: ' Moz' },
     xaxis: { title: 'Year' },
-    height: 320,
-    margin: { l: 60, r: 30, t: 50, b: 50 },
+    height: 340,
+    margin: { l: 70, r: 30, t: 55, b: 60 },
     annotations: [
-      { x: '2013', y: 45, text: 'Last major find<br>(2013)', showarrow: true,
-        arrowcolor: '#E8AF50', ax: 40, ay: -30,
+      { x: '2013', y: 45, text: 'Last major<br>discovery', showarrow: true,
+        arrowcolor: '#E8AF50', ax: 50, ay: -35,
         font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' } },
-      { x: '2024', y: 9, text: '<10 Moz<br>found in 2024', showarrow: false,
-        font: { color: '#E05252', size: 9, family: 'JetBrains Mono' }, yshift: -20 }
+      { x: '2024', y: 9, text: '<10 Moz<br>in 2024', showarrow: true,
+        arrowcolor: '#E05252', ax: 40, ay: -30,
+        font: { color: '#E05252', size: 9, family: 'JetBrains Mono' } }
     ]
   });
   Plotly.newPlot('chart-discovery', discoveryData, discoveryLayout, PLOTLY_CONFIG);
@@ -7190,10 +7197,9 @@ function initTab3Charts() {
   }];
   const fcfTransLayout = mergeLayout({
     title: { text: 'FCF Explodes 75× in Two Years: $97M (2023) → $7,299M (2025)', font: { size: 13, color: '#E2E2E8' } },
-    yaxis: { title: 'Free Cash Flow ($M)', tickprefix: '$', ticksuffix: 'M', tickformat: ',.0f' },
-    height: 320,
+    yaxis: { title: 'Free Cash Flow ($M)', tickprefix: '$', ticksuffix: 'M', tickformat: ',.0f', range: [0, 8500] },
     height: 340,
-    margin: { l: 70, r: 30, t: 55, b: 50 },
+    margin: { l: 75, r: 30, t: 55, b: 55 },
     shapes: [{
       type: 'line', x0: -0.5, x1: 4.5, y0: 97, y1: 97,
       line: { color: '#E05252', width: 1, dash: 'dot' }
@@ -7253,9 +7259,9 @@ function initTab3Charts() {
   ];
   const prodRecoveryLayout = mergeLayout({
     title: { text: 'Production Arc: 2026 Trough → ~6 Moz Recovery Framework (Management Guided)', font: { size: 11, color: '#E2E2E8' } },
-    barmode: 'stack',
+    barmode: 'overlay',
     xaxis: { title: 'Fiscal Year', color: '#A1A1AA' },
-    yaxis: { title: 'Gold Production (Moz)', color: '#A1A1AA', range: [0, 8], dtick: 1, ticksuffix: ' Moz' },
+    yaxis: { title: 'Gold Production (Moz)', color: '#A1A1AA', range: [0, 8.5], dtick: 1, ticksuffix: ' Moz' },
     legend: { x: 0.01, y: 0.99, font: { size: 9, color: '#A8A8B8' }, bgcolor: 'rgba(0,0,0,0)' },
     annotations: [
       {
@@ -7304,17 +7310,17 @@ function initTab3Charts() {
     }
   ];
   const epsBeatLayout = mergeLayout({
-    title: { text: 'NEM Has Beaten Consensus EPS 7 of 8 Quarters Since Q1 2024', font: { size: 13, color: '#E2E2E8' } },
+    title: { text: 'NEM Has Beaten Consensus EPS 7 of 8 Quarters — Accelerating', font: { size: 13, color: '#E2E2E8' } },
     barmode: 'group',
-    yaxis: { title: 'EPS ($/sh)', tickprefix: '$' },
-    height: 320,
-    margin: { l: 60, r: 20, t: 55, b: 60 },
+    yaxis: { title: 'EPS ($/sh)', tickprefix: '$', range: [0, 3.4] },
+    height: 340,
+    margin: { l: 65, r: 20, t: 55, b: 65 },
     legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.01, y: 0.99 },
     annotations: [{
       x: 'Q4 2025', y: 2.52,
-      text: '+27.9% beat<br>Largest in streak', showarrow: true,
-      arrowcolor: '#22B573', ax: -60, ay: -40,
-      font: { color: '#22B573', size: 9, family: 'JetBrains Mono' }
+      text: '+27.9% beat', showarrow: true,
+      arrowcolor: '#22B573', ax: -55, ay: -40,
+      font: { color: '#22B573', size: 10, family: 'JetBrains Mono' }
     }]
   });
   Plotly.newPlot('chart-eps-beat', epsBeatData, epsBeatLayout, PLOTLY_CONFIG);
@@ -7915,8 +7921,8 @@ window.recalcPNAV = function() {
   const navSensLayout = mergeLayout({
     title: { text: 'P/NAV Implied Price — Gold $' + fmt(Math.round(goldDeck)) + ' | AISC $' + fmt(Math.round(aisc)) + ' | Disc ' + (discRate*100).toFixed(2) + '% | ' + mult.toFixed(2) + '×', font: { size: 12, color: '#E2E2E8' } },
     yaxis: { title: 'Implied Price/Share ($)', tickprefix: '$' },
-    height: 295,
-    margin: { l: 60, r: 20, t: 55, b: 70 },
+    height: 320,
+    margin: { l: 65, r: 20, t: 55, b: 75 },
     shapes: [
       { type: 'line', x0: -0.5, x1: 5.5, y0: CURRENT_PRICE, y1: CURRENT_PRICE,
         line: { color: '#E05252', width: 1.5, dash: 'dash' } },
@@ -8006,14 +8012,14 @@ window.recalcSOTP = function() {
     marker: { color: allColors, opacity: 0.85, line: { color: 'rgba(255,255,255,0.08)', width: 1 } },
     text: allVals.map(v => '$' + (v/1000).toFixed(1) + 'B'),
     textposition: 'outside',
-    textfont: { size: 9, family: 'JetBrains Mono', color: '#E2E2E8' },
+    textfont: { size: 10, family: 'JetBrains Mono', color: '#E2E2E8' },
     hovertemplate: '<b>%{x}</b><br>NAV: $%{y:,.0f}M<extra></extra>'
   }];
   const sotpPlotLayout = mergeLayout({
     title: { text: 'SOTP NAV — Gold $' + fmt(Math.round(goldDeck)) + ' | Gross $' + (grossNav/1000).toFixed(1) + 'B | Equity $' + (equityNav/1000).toFixed(1) + 'B | $' + navPs.toFixed(2) + '/sh', font: { size: 12, color: '#E2E2E8' } },
     yaxis: { title: 'Mine NAV ($M)', tickprefix: '$', ticksuffix: 'M' },
-    height: 345,
-    margin: { l: 65, r: 20, t: 60, b: 100 },
+    height: 400,
+    margin: { l: 70, r: 20, t: 60, b: 110 },
     annotations: [
       { x: highestMine.name, y: Math.round(mineNavs[highestMineIdx]),
         text: '<b>$' + highestMine.aisc + '/oz AISC</b><br>' + ((mineNavs[highestMineIdx]/grossNav)*100).toFixed(0) + '% of gross NAV',
@@ -8095,13 +8101,15 @@ function initTab5Charts() {
     textfont: { size: 9, family: 'JetBrains Mono' }
   }];
   const sensitivityLayout = mergeLayout({
-    title: { text: 'DCF Sensitivity: WACC × Gold — Even Bear Case ($3,800, 8.5%) Still $137+ Upside', font: { size: 12, color: '#E2E2E8' } },
-    xaxis: { title: 'Gold Price ($/oz)' }, yaxis: { title: 'WACC (%)' },
-    height: 340,
+    title: { text: 'DCF Sensitivity: WACC × Gold Price — Bear Case ($3,800, 8.5%) Still Above $108 Current', font: { size: 12, color: '#E2E2E8' } },
+    xaxis: { title: 'Gold Price ($/oz)', tickfont: { size: 11 } },
+    yaxis: { title: 'WACC (%)', tickfont: { size: 11 } },
+    height: 360,
+    margin: { l: 75, r: 80, t: 55, b: 60 },
     annotations: [{
-      x: '$5,200', y: '7.0%', text: '<b>BASE</b>', showarrow: true,
-      arrowcolor: '#E8AF50', arrowhead: 2, ax: 40, ay: -30,
-      font: { size: 9, color: '#E8AF50' }, bgcolor: '#0D1117', bordercolor: '#E8AF50', borderwidth: 1
+      x: '$5,200', y: '7.0%', text: '<b>BASE<br>CASE</b>', showarrow: true,
+      arrowcolor: '#E8AF50', arrowhead: 2, ax: 45, ay: -35,
+      font: { size: 10, color: '#E8AF50' }, bgcolor: 'rgba(13,17,23,0.9)', bordercolor: '#E8AF50', borderwidth: 1
     }]
   });
   Plotly.newPlot('chart-sensitivity', sensitivityData, sensitivityLayout, PLOTLY_CONFIG);
@@ -8129,10 +8137,10 @@ function initTab5Charts() {
     hovertemplate: '<b>%{x}</b><br>Implied Value: $%{y:.2f}/sh<extra></extra>'
   }];
   const conv8Layout = mergeLayout({
-    title: { text: '7 of 8 Methods Above Current Price $108.25 — STRONG BUY Convergence', font: { size: 12, color: '#E2E2E8' } },
-    yaxis: { title: 'Implied Value/Share ($)', tickprefix: '$', range: [0, 270] },
-    height: 285,
-    margin: { l: 65, r: 20, t: 55, b: 110 },
+    title: { text: '7 of 8 Methods Above $108.25 — STRONG BUY Convergence', font: { size: 13, color: '#E2E2E8' } },
+    yaxis: { title: 'Implied Value/Share ($)', tickprefix: '$', range: [0, 290] },
+    height: 340,
+    margin: { l: 70, r: 20, t: 55, b: 100 },
     shapes: [
       { type: 'line', x0: -0.5, x1: 8.5, y0: 108.25, y1: 108.25,
         line: { color: '#E05252', width: 2, dash: 'dash' } },
@@ -8169,20 +8177,20 @@ function initTab6Charts() {
     hovertemplate: '<b>%{x}</b><br>EV/EBITDA: %{y:.1f}x<extra></extra>'
   }];
   const evLayout = mergeLayout({
-    title: { text: 'NEM Trades at 7.8x EV/EBITDA — 26% Discount to Peer Avg Despite Best FCF Profile', font: { size: 13, color: '#E2E2E8' } },
-    yaxis: { title: 'EV/EBITDA (x)', ticksuffix: 'x' },
-    height: 320,
+    title: { text: 'NEM at 7.8× EV/EBITDA — 26% Discount to Peers Despite Best FCF Profile', font: { size: 13, color: '#E2E2E8' } },
+    yaxis: { title: 'EV/EBITDA (×)', ticksuffix: '×', range: [0, 17] },
+    height: 360,
     shapes: [{
       type: 'line', x0: -0.5, x1: 6.5, y0: 10.0, y1: 10.0,
       line: { color: '#A8A8B8', width: 1.5, dash: 'dash' }
     }],
     annotations: [
-      { x: 5.5, y: 10.0, text: 'Peer avg 10.0x', showarrow: false,
-        font: { color: '#A8A8B8', size: 10, family: 'JetBrains Mono' }, yshift: 10 },
-      { x: 0, y: 7.8, text: '← BUY: cheaper than peers<br>despite better FCF', showarrow: false,
-        font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' }, xanchor: 'left', yshift: -28 }
+      { x: 5.8, y: 10.0, text: 'Peer avg 10.0×', showarrow: false,
+        font: { color: '#A8A8B8', size: 10, family: 'JetBrains Mono' }, yshift: 12 },
+      { x: 0, y: 7.8, text: 'BUY ZONE — cheapest<br>despite best FCF', showarrow: false,
+        font: { color: '#E8AF50', size: 10, family: 'JetBrains Mono' }, xanchor: 'left', yshift: 16 }
     ],
-    margin: { l: 60, r: 20, t: 55, b: 60 }
+    margin: { l: 65, r: 20, t: 55, b: 60 }
   });
   Plotly.newPlot('chart-ev-ebitda', evData, evLayout, PLOTLY_CONFIG);
 
@@ -8215,7 +8223,7 @@ function initTab6Charts() {
   ];
   const aiscLayout = mergeLayout({
     title: { text: 'NEM Beat $262 Below Guidance in 2025 — Widest Lead Over Peers', font: { size: 12, color: '#E2E2E8' } },
-    yaxis: { title: 'AISC ($/oz)', tickprefix: '$', tickformat: ',.0f', range: [1050, 1900] },
+    yaxis: { title: 'AISC ($/oz)', tickprefix: '$', tickformat: ',.0f', range: [1050, 2000] },
     xaxis: { title: 'Fiscal Year' },
     height: 320,
     margin: { l: 70, r: 20, t: 55, b: 60 },
@@ -8224,8 +8232,9 @@ function initTab6Charts() {
       { x: '2025A', y: 1358, text: '$1,358 actual<br>vs $1,620 guided', showarrow: true,
         arrowcolor: '#22B573', ax: -70, ay: -30,
         font: { color: '#22B573', size: 9, family: 'JetBrains Mono' } },
-      { x: '2026G', y: 1680, text: '$1,680 guidance<br>(FY2026 target)', showarrow: false,
-        font: { color: '#A8A8B8', size: 9, family: 'JetBrains Mono' }, yshift: 14 }
+      { x: '2026G', y: 1680, text: '$1,680 guidance<br>(FY2026 target)', showarrow: true,
+        arrowcolor: '#A8A8B8', ax: 55, ay: -30,
+        font: { color: '#A8A8B8', size: 9, family: 'JetBrains Mono' } }
     ]
   });
   Plotly.newPlot('chart-aisc-peer', aiscPeersData, aiscLayout, PLOTLY_CONFIG);
@@ -8294,12 +8303,12 @@ function initTab7Charts() {
     height: 320,
     margin: { l: 70, r: 20, t: 55, b: 60 },
     shapes: [
-      { type: 'line', x0: 108.25, x1: 108.25, y0: 0, y1: 110, line: { color: '#E05252', width: 2, dash: 'dash' } },
-      { type: 'line', x0: 195.4, x1: 195.4, y0: 0, y1: 110, line: { color: '#E8AF50', width: 2, dash: 'dash' } }
+      { type: 'line', x0: 108.25, x1: 108.25, y0: 0, y1: 1, yref: 'paper', line: { color: '#E05252', width: 2, dash: 'dash' } },
+      { type: 'line', x0: 195.4, x1: 195.4, y0: 0, y1: 1, yref: 'paper', line: { color: '#E8AF50', width: 2, dash: 'dash' } }
     ],
     annotations: [
-      { x: 108.25, y: 115, text: 'Current<br>$108.25', showarrow: false, font: { color: '#E05252', size: 10, family: 'JetBrains Mono' } },
-      { x: 195.4, y: 115, text: 'Median<br>$195.40', showarrow: false, font: { color: '#E8AF50', size: 10, family: 'JetBrains Mono' } }
+      { x: 108.25, y: 1.04, yref: 'paper', text: 'Current<br>$108.25', showarrow: false, font: { color: '#E05252', size: 10, family: 'JetBrains Mono' }, xanchor: 'center' },
+      { x: 195.4, y: 1.04, yref: 'paper', text: 'Median<br>$195.40', showarrow: false, font: { color: '#E8AF50', size: 10, family: 'JetBrains Mono' }, xanchor: 'center' }
     ]
   });
   Plotly.newPlot('chart-monte-carlo', mcData, mcLayout, PLOTLY_CONFIG);
@@ -8324,13 +8333,13 @@ function initTab7Charts() {
     }
   ];
   const tornadoLayout = mergeLayout({
-    title: { text: 'Gold Price Drives 80%+ of NEM Value Variance — It Is Directionally Right', font: { size: 12, color: '#E2E2E8' } },
+    title: { text: 'Gold Price Drives 80%+ of NEM Value Variance — Direction Is What Matters', font: { size: 12, color: '#E2E2E8' } },
     barmode: 'overlay',
-    xaxis: { title: 'Impact on NEM Price/Share ($)', tickprefix: '$', zeroline: true, zerolinecolor: 'rgba(255,255,255,0.2)', range: [-90, 95] },
+    xaxis: { title: 'Impact on NEM Share Price ($)', tickprefix: '$', zeroline: true, zerolinecolor: 'rgba(255,255,255,0.25)', zerolinewidth: 2, range: [-95, 100] },
     yaxis: { automargin: true },
-    height: 320,
-    margin: { l: 160, r: 30, t: 55, b: 60 },
-    legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.6, y: 0.05 }
+    height: 340,
+    margin: { l: 170, r: 40, t: 55, b: 60 },
+    legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.62, y: 0.05 }
   });
   Plotly.newPlot('chart-tornado', tornadoData, tornadoLayout, PLOTLY_CONFIG);
 
@@ -8361,10 +8370,16 @@ function initTab7Charts() {
   }];
   const riskLayout = mergeLayout({
     title: { text: 'Risk Matrix — All Key Risks Are Mitigated or Manageable (hover for detail)', font: { size: 12, color: '#E2E2E8' } },
-    xaxis: { title: 'Probability (1=Low → 5=High)', range: [0, 5.5], dtick: 1 },
-    yaxis: { title: 'Impact (1=Low → 5=High)', range: [0, 5.5], dtick: 1 },
-    height: 340,
-    margin: { l: 70, r: 20, t: 55, b: 60 }
+    xaxis: { title: 'Probability (1=Low → 5=High)', range: [0, 5.8], dtick: 1 },
+    yaxis: { title: 'Impact (1=Low → 5=High)', range: [0, 5.8], dtick: 1 },
+    height: 360,
+    margin: { l: 75, r: 20, t: 55, b: 65 },
+    shapes: [
+      { type: 'rect', x0: 3, x1: 5.8, y0: 3, y1: 5.8,
+        fillcolor: 'rgba(220,38,38,0.04)', line: { width: 0 } },
+      { type: 'rect', x0: 0, x1: 3, y0: 0, y1: 3,
+        fillcolor: 'rgba(22,163,74,0.04)', line: { width: 0 } }
+    ]
   });
   Plotly.newPlot('chart-risk-matrix', riskData, riskLayout, PLOTLY_CONFIG);
 }
@@ -8389,10 +8404,10 @@ function initTab8Charts() {
     hovertemplate: '<b>%{x}</b><br>Value: $%{y:.2f}<extra></extra>'
   }];
   const catalystLayout = mergeLayout({
-    title: { text: 'Catalyst Waterfall: Five Identifiable Events Could Close $108 → $198 Gap', font: { size: 13, color: '#E2E2E8' } },
-    yaxis: { title: 'NEM Share Price ($)', tickprefix: '$', range: [0, 230] },
-    height: 340,
-    margin: { l: 70, r: 30, t: 55, b: 70 }
+    title: { text: 'Catalyst Waterfall — Five Events Close the $108 → $198 Gap', font: { size: 13, color: '#E2E2E8' } },
+    yaxis: { title: 'NEM Share Price ($)', tickprefix: '$', range: [0, 240] },
+    height: 360,
+    margin: { l: 70, r: 30, t: 55, b: 80 }
   });
   Plotly.newPlot('chart-catalyst-waterfall', catalystData, catalystLayout, PLOTLY_CONFIG);
 }
@@ -8419,10 +8434,10 @@ function initTab9Charts() {
   }];
   const signalLayout = mergeLayout({
     title: { text: '8 Channel Checks: All Green — Institutional Conviction Coalescing', font: { size: 13, color: '#E2E2E8' } },
-    xaxis: { title: 'Signal Strength (out of 10)', range: [0, 13] },
+    xaxis: { title: 'Signal Strength (out of 10)', range: [0, 12.5] },
     yaxis: { automargin: true },
     height: 360,
-    margin: { l: 175, r: 30, t: 55, b: 60 }
+    margin: { l: 185, r: 40, t: 55, b: 60 }
   });
   Plotly.newPlot('chart-signal-scorecard', signalData, signalLayout, PLOTLY_CONFIG);
 
@@ -8439,8 +8454,9 @@ function initTab9Charts() {
   }];
   Plotly.newPlot('chart-discovery2', dd2Data, mergeLayout({
     title: { text: 'New Gold Discoveries Down 90% — NEM\'s 118 Moz Reserves Irreplaceable', font: { size: 12, color: '#E2E2E8' } },
-    yaxis: { title: 'Major Discoveries (Moz/yr)' },
-    height: 300
+    yaxis: { title: 'Major Discoveries (Moz/yr)', range: [0, 155] },
+    height: 320,
+    margin: { l: 65, r: 20, t: 55, b: 55 }
   }), PLOTLY_CONFIG);
 
   // Competitive moat radar
@@ -8469,13 +8485,14 @@ function initTab9Charts() {
     font: { family: 'JetBrains Mono, monospace', color: '#A8A8B8', size: 10 },
     polar: {
       bgcolor: '#19191d',
+      domain: { x: [0.1, 0.9], y: [0.05, 0.95] },
       radialaxis: { visible: true, range: [0, 10], gridcolor: 'rgba(255,255,255,0.06)', tickfont: { color: '#62626E', size: 9 } },
-      angularaxis: { gridcolor: 'rgba(255,255,255,0.06)', tickfont: { color: '#A8A8B8', size: 10 } }
+      angularaxis: { gridcolor: 'rgba(255,255,255,0.06)', tickfont: { color: '#A8A8B8', size: 11 } }
     },
     title: { text: 'NEM Competitive Moat vs Peer Average', font: { size: 13, color: '#E2E2E8' } },
-    height: 360,
-    margin: { l: 50, r: 50, t: 50, b: 50 },
-    legend: { font: { color: '#A8A8B8' }, bgcolor: 'rgba(0,0,0,0)' },
+    height: 380,
+    margin: { l: 40, r: 40, t: 55, b: 40 },
+    legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.85, y: 0.15 },
     showlegend: true
   };
   Plotly.newPlot('chart-moat-radar', radarData, radarLayout, PLOTLY_CONFIG);
@@ -8510,12 +8527,13 @@ function initTab10Charts() {
     font: { family: 'JetBrains Mono, monospace', color: '#A8A8B8', size: 10 },
     polar: {
       bgcolor: '#19191d',
+      domain: { x: [0.1, 0.9], y: [0.05, 0.95] },
       radialaxis: { visible: true, range: [0, 100], gridcolor: 'rgba(255,255,255,0.06)', tickfont: { color: '#62626E', size: 9 } },
-      angularaxis: { gridcolor: 'rgba(255,255,255,0.06)', tickfont: { color: '#A8A8B8', size: 10 } }
+      angularaxis: { gridcolor: 'rgba(255,255,255,0.06)', tickfont: { color: '#A8A8B8', size: 11 } }
     },
     title: { text: 'NEM ESG Profile vs Industry Average', font: { size: 13, color: '#E2E2E8' } },
-    height: 360, margin: { l: 50, r: 50, t: 50, b: 50 },
-    legend: { font: { color: '#A8A8B8' }, bgcolor: 'rgba(0,0,0,0)' },
+    height: 380, margin: { l: 40, r: 40, t: 55, b: 40 },
+    legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.85, y: 0.15 },
     showlegend: true
   };
   Plotly.newPlot('chart-esg-radar', esgRadarData, esgRadarLayout, PLOTLY_CONFIG);
@@ -8532,15 +8550,16 @@ function initTab10Charts() {
     hovertemplate: '%{x}<br>Score: %{y}/100<extra></extra>'
   }];
   Plotly.newPlot('chart-esg-bars', esgBarsData, mergeLayout({
-    title: { text: 'ESG Pillar Scores — MSCI AA Enables Sovereign Wealth Fund Mandates (Buy Signal)', font: { size: 12, color: '#E2E2E8' } },
-    yaxis: { title: 'Score (out of 100)', range: [0, 115] },
+    title: { text: 'ESG Pillar Scores — MSCI AA Enables Sovereign Wealth Fund Mandates', font: { size: 12, color: '#E2E2E8' } },
+    yaxis: { title: 'Score (out of 100)', range: [0, 120] },
     xaxis: { title: 'ESG Pillar' },
-    height: 320,
+    height: 300,
     margin: { l: 65, r: 20, t: 55, b: 60 },
     annotations: [{
       x: 'Governance', y: 88,
-      text: '88/100 — top decile<br>91% board independent', showarrow: false,
-      font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' }, yshift: 18
+      text: '88/100 — top decile', showarrow: true,
+      arrowcolor: '#E8AF50', ax: 60, ay: -35,
+      font: { color: '#E8AF50', size: 10, family: 'JetBrains Mono' }
     }]
   }), PLOTLY_CONFIG);
 }
@@ -8571,7 +8590,6 @@ function initTab11Charts() {
   const guidanceLayout = mergeLayout({
     title: { text: '2025: $262/oz Below Guidance — Management\'s Best Execution in Decade', font: { size: 13, color: '#E2E2E8' } },
     yaxis: { title: 'AISC ($/oz)', tickprefix: '$', tickformat: ',.0f' },
-    height: 300,
     legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)' },
     height: 320,
     margin: { l: 70, r: 20, t: 55, b: 60 },
@@ -8612,15 +8630,15 @@ function initTab11Charts() {
   Plotly.newPlot('chart-eps-beats', epsBeatsData, mergeLayout({
     title: { text: 'Beat Consensus 7 of Last 8 Quarters — Accelerating', font: { size: 12, color: '#E2E2E8' } },
     barmode: 'group',
-    yaxis: { title: 'EPS ($/sh)', tickprefix: '$' },
+    yaxis: { title: 'EPS ($/sh)', tickprefix: '$', range: [0, 3.2] },
     xaxis: { title: 'Quarter' },
-    height: 320,
-    margin: { l: 65, r: 20, t: 55, b: 60 },
+    height: 340,
+    margin: { l: 65, r: 20, t: 55, b: 65 },
     legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.01, y: 0.99 },
     annotations: [{
-      x: "Q4'25", y: 2.52, text: '+27.9%<br>beat', showarrow: true,
-      arrowcolor: '#22B573', ax: -50, ay: -35,
-      font: { color: '#22B573', size: 9, family: 'JetBrains Mono' }
+      x: "Q4'25", y: 2.52, text: '+27.9% beat', showarrow: true,
+      arrowcolor: '#22B573', ax: -55, ay: -40,
+      font: { color: '#22B573', size: 10, family: 'JetBrains Mono' }
     }]
   }), PLOTLY_CONFIG);
 }
@@ -8645,10 +8663,10 @@ function initTab12Charts() {
     hovertemplate: '<b>%{x}</b><br>Value: $%{y:.2f}/sh<extra></extra>'
   }];
   const convergenceLayout = mergeLayout({
-    title: { text: '8 Valuation Methods All Above $108.25 — Even the Bear Case Is +37%', font: { size: 13, color: '#E2E2E8' } },
-    yaxis: { title: 'Implied NEM Price/Share ($)', tickprefix: '$', range: [0, 380] },
+    title: { text: '8 Valuation Methods All Above $108.25 — Bear Case Is Still +37%', font: { size: 13, color: '#E2E2E8' } },
+    yaxis: { title: 'Implied NEM Price/Share ($)', tickprefix: '$', range: [0, 360] },
     height: 360,
-    margin: { l: 70, r: 30, t: 55, b: 80 },
+    margin: { l: 70, r: 30, t: 55, b: 85 },
     shapes: [
       { type: 'line', x0: -0.5, x1: 7.5, y0: 108.25, y1: 108.25, line: { color: '#E05252', width: 2, dash: 'dash' } },
       { type: 'line', x0: -0.5, x1: 7.5, y0: 198.03, y1: 198.03, line: { color: '#E8AF50', width: 1.5, dash: 'dot' } }
@@ -8692,15 +8710,15 @@ function initTab13Charts() {
   Plotly.newPlot('chart-qtr-eps', qtrBeatData, mergeLayout({
     title: { text: 'Quarterly EPS Beats — 7 of 8, Q4 2025 Was the Largest (+27.9%)', font: { size: 13, color: '#E2E2E8' } },
     barmode: 'group',
-    yaxis: { title: 'EPS ($/sh)', tickprefix: '$' },
+    yaxis: { title: 'EPS ($/sh)', tickprefix: '$', range: [0, 3.2] },
     xaxis: { title: 'Quarter' },
-    height: 320,
-    margin: { l: 65, r: 20, t: 55, b: 60 },
+    height: 340,
+    margin: { l: 65, r: 20, t: 55, b: 65 },
     legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.01, y: 0.99 },
     annotations: [{
-      x: "Q4'25", y: 2.52, text: '+27.9%<br>largest beat', showarrow: true,
-      arrowcolor: '#22B573', ax: -60, ay: -35,
-      font: { color: '#22B573', size: 9, family: 'JetBrains Mono' }
+      x: "Q4'25", y: 2.52, text: '+27.9% largest beat', showarrow: true,
+      arrowcolor: '#22B573', ax: -65, ay: -40,
+      font: { color: '#22B573', size: 10, family: 'JetBrains Mono' }
     }]
   }), PLOTLY_CONFIG);
 }
