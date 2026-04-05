@@ -2050,31 +2050,31 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="story-phase">
     <div class="story-phase-label">Setup</div>
     <button class="tab-btn active" onclick="showTab(0)">01 · Thesis</button>
-    <button class="tab-btn" onclick="showTab(1)">02 · Command</button>
+    <button class="tab-btn" onclick="showTab(1)">02 · Scorecard</button>
   </div>
   <div class="story-phase">
     <div class="story-phase-label">Context</div>
     <button class="tab-btn" onclick="showTab(2)">03 · Gold Macro</button>
-    <button class="tab-btn" onclick="showTab(3)">04 · Profile</button>
-    <button class="tab-btn" onclick="showTab(4)">05 · Mines</button>
+    <button class="tab-btn" onclick="showTab(3)">04 · Financials</button>
+    <button class="tab-btn" onclick="showTab(4)">05 · Mine Portfolio</button>
   </div>
   <div class="story-phase">
     <div class="story-phase-label">Valuation</div>
     <button class="tab-btn" onclick="showTab(5)">06 · Valuation</button>
-    <button class="tab-btn" onclick="showTab(6)">07 · Peers</button>
-    <button class="tab-btn" onclick="showTab(7)">08 · Risk</button>
+    <button class="tab-btn" onclick="showTab(6)">07 · Peer Comps</button>
+    <button class="tab-btn" onclick="showTab(7)">08 · Risk & Scenarios</button>
   </div>
   <div class="story-phase">
     <div class="story-phase-label">Evidence</div>
-    <button class="tab-btn" onclick="showTab(8)">09 · Catalysts</button>
-    <button class="tab-btn" onclick="showTab(9)">10 · Channels</button>
+    <button class="tab-btn" onclick="showTab(8)">09 · Catalyst Map</button>
+    <button class="tab-btn" onclick="showTab(9)">10 · Alt Data</button>
     <button class="tab-btn" onclick="showTab(10)">11 · ESG</button>
-    <button class="tab-btn" onclick="showTab(11)">12 · Mgmt</button>
+    <button class="tab-btn" onclick="showTab(11)">12 · Management</button>
   </div>
   <div class="story-phase">
     <div class="story-phase-label">Verdict</div>
     <button class="tab-btn" onclick="showTab(12)">13 · Verdict</button>
-    <button class="tab-btn" onclick="showTab(13)">14 · Model</button>
+    <button class="tab-btn" onclick="showTab(13)">14 · Quarterly Model</button>
   </div>
 </nav>
 
@@ -2422,7 +2422,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <div class="thread-field">
             <div class="thread-field-label">Feeds Into</div>
-            <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 10 (Channel Checks)</div>
+            <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 10 (Alt Data)</div>
           </div>
         </div>
 
@@ -2452,7 +2452,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <div class="thread-field">
             <div class="thread-field-label">Feeds Into</div>
-            <div class="thread-feeds">→ Tab 10 (Channel Checks) &middot; Tab 01 (Kill Criteria)</div>
+            <div class="thread-feeds">→ Tab 10 (Alt Data) &middot; Tab 13 (Verdict → Kill Criteria)</div>
           </div>
         </div>
 
@@ -2482,7 +2482,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <div class="thread-field">
             <div class="thread-field-label">Feeds Into</div>
-            <div class="thread-feeds">→ Tab 07 (Risk) &middot; Tab 08 (Operations) &middot; Tab 01 (Kill Criteria)</div>
+            <div class="thread-feeds">→ Tab 07 (Peer Comps) &middot; Tab 08 (Risk &amp; Scenarios) &middot; Tab 13 (Verdict → Kill Criteria)</div>
           </div>
         </div>
 
@@ -2512,7 +2512,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <div class="thread-field">
             <div class="thread-field-label">Feeds Into</div>
-            <div class="thread-feeds">→ Tab 07 (Peers &amp; Sentiment) &middot; Tab 14 (Model)</div>
+            <div class="thread-feeds">→ Tab 07 (Peer Comps) &middot; Tab 14 (Model)</div>
           </div>
         </div>
 
@@ -2542,7 +2542,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <div class="thread-field">
             <div class="thread-field-label">Feeds Into</div>
-            <div class="thread-feeds">→ Tab 05 (Mines &amp; Reserves) &middot; Tab 10 (CC8) &middot; Tab 13 (Verdict)</div>
+            <div class="thread-feeds">→ Tab 05 (Mine Portfolio) &middot; Tab 10 (Alt Data → CC8) &middot; Tab 13 (Verdict)</div>
           </div>
         </div>
 
@@ -2572,7 +2572,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <div class="thread-field">
             <div class="thread-field-label">Feeds Into</div>
-            <div class="thread-feeds">→ Tab 12 (Management Quality)</div>
+            <div class="thread-feeds">→ Tab 12 (Management)</div>
           </div>
         </div>
 
@@ -2602,7 +2602,7 @@ input[type=range].val-slider::-moz-range-thumb {
           </div>
           <div class="thread-field">
             <div class="thread-field-label">Feeds Into</div>
-            <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 07 (Risk — gold reversal rebuttal)</div>
+            <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 08 (Risk – gold reversal rebuttal)</div>
           </div>
         </div>
 
@@ -2611,17 +2611,10 @@ input[type=range].val-slider::-moz-range-thumb {
   </details>
   <!-- END PERPLEXITY METHODOLOGY SECTIONS -->
 
-  <!-- KILL CRITERIA -->
-  <div class="section-label mt-24">Kill Criteria — When the Thesis Is Wrong</div>
-  <div class="panel">
-    <ul class="kill-list">
-      <li><span class="kill-icon">✕</span>Gold spot price falls below $2,800/oz and holds for 60+ days — implied value collapses to near current price</li>
-      <li><span class="kill-icon">✕</span>FY2026 AISC guidance of $1,680/oz is exceeded by more than $150/oz, signaling cost discipline reversal</li>
-      <li><span class="kill-icon">✕</span>FCF conversion drops below 70% — indicating capital misallocation returning post-Newcrest</li>
-      <li><span class="kill-icon">✕</span>Management executes large M&A (>$8B) at above-NAV multiples, destroying the value-creation story</li>
-      <li><span class="kill-icon">✕</span>Central bank gold purchases reverse materially (below 400 t/yr) for two consecutive years</li>
-      <li><span class="kill-icon">✕</span>Cadia or Boddington suffer permitting revocations or force-majeure production stoppages</li>
-    </ul>
+  <!-- KILL CRITERIA POINTER — full list lives in Verdict tab -->
+  <div class="panel" style="border-left:3px solid var(--red);padding:10px 16px;margin-top:16px;">
+    <span style="font-size:10px;color:var(--red);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Kill Criteria</span>
+    <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Six pre-committed exit triggers are defined in the <strong>Verdict tab</strong> alongside the full scenario and risk analysis. If any trigger fires, the recommendation is withdrawn regardless of price target. <span style="color:var(--text-3);">→ See <strong>13 · Verdict</strong> → Kill Criteria.</span></div>
   </div>
 
 
@@ -2645,8 +2638,8 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">SETUP · 02</div>
-      <div class="tab-header-title">Command Dashboard</div>
+      <div class="tab-header-phase">SCORECARD · 02</div>
+      <div class="tab-header-title">Investment Scorecard</div>
       <div class="tab-header-sub">The 8 most critical financial metrics at a glance. This is the single-screen health check — every number here is a reason to buy.</div>
     </div>
     <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">$7,299M</span><span>FCF FY2025</span></div><div class="tab-header-stat"><span class="val">91.2%</span><span>MC P(>$108)</span></div><div class="tab-header-stat"><span class="val">9/9</span><span>Piotroski Score</span></div><div class="tab-header-stat"><span class="val">27.9%</span><span>Q4 EPS Beat</span></div></div>
@@ -2735,7 +2728,7 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <!-- NON-CONSENSUS TABLE -->
-  <div class="section-label mt-20">Non-Consensus Calls vs Street</div>
+  <div class="section-label mt-20">Where This Model Breaks from Street Consensus</div>
   <div class="panel">
     <table class="nc-table">
       <thead>
@@ -2781,129 +2774,11 @@ input[type=range].val-slider::-moz-range-thumb {
     </table>
   </div>
 
-  <!-- PORTFOLIO INTERPRETATION -->
-  <div id="portfolio-interpretation" style="margin-top:20px;">
-    <div class="section-label">Portfolio Analysis — Why Asset Quality Matters for the Investment Case</div>
-
-    <!-- ANCHOR ASSETS -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-bottom:16px;">
-      <div style="background:var(--surface);border:1px solid var(--border);padding:16px;">
-        <div style="font-size:10px;letter-spacing:1.5px;color:var(--gold);margin-bottom:8px;">ANCHOR ASSETS &mdash; PORTFOLIO PILLARS</div>
-        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05);">
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">Nevada Gold Mines (38.5%)</div>
-          <div style="font-size:11px;color:var(--text-2);">World's largest gold complex. 999 Koz NEM share at $980/oz AISC. Nevada is the gold industry's premier jurisdiction &mdash; no sovereign risk, deep infrastructure, long mine life. Anchors the portfolio at scale.</div>
-        </div>
-        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05);">
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">Cadia (100%)</div>
-          <div style="font-size:11px;color:var(--text-2);">Lowest AISC in the portfolio at $890/oz &mdash; or effectively $0 at current copper prices when by-product credits are applied. 30+ year mine life. NSW, Australia is Tier 1 jurisdiction. Copper upside is free at current gold production.</div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">Pe&ntilde;asquito (100%)</div>
-          <div style="font-size:11px;color:var(--text-2);">Reports negative AISC of -$280/oz due to silver, zinc and lead by-products. Effectively a polymetallic mine that generates gold for free. Mexico jurisdiction concern is real but partially offset by the asset's unique economics.</div>
-        </div>
-      </div>
-
-      <div style="background:var(--surface);border:1px solid var(--border);padding:16px;">
-        <div style="font-size:10px;letter-spacing:1.5px;color:var(--teal);margin-bottom:8px;">JURISDICTION QUALITY &mdash; RISK PROFILE</div>
-        <table style="width:100%;border-collapse:collapse;font-size:11px;">
-          <thead>
-            <tr style="border-bottom:1px solid var(--border);">
-              <th style="text-align:left;padding:4px 0;color:var(--text-3);">Jurisdiction</th>
-              <th style="text-align:right;padding:4px 0;color:var(--text-3);">% Production</th>
-              <th style="text-align:right;padding:4px 0;color:var(--text-3);">Risk</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
-              <td style="padding:5px 0;color:var(--text);">USA (Nevada)</td>
-              <td style="text-align:right;color:var(--green);">~26%</td>
-              <td style="text-align:right;color:var(--green);">Very Low</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
-              <td style="padding:5px 0;color:var(--text);">Australia</td>
-              <td style="text-align:right;color:var(--green);">~25%</td>
-              <td style="text-align:right;color:var(--green);">Very Low</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
-              <td style="padding:5px 0;color:var(--text);">Canada (BC)</td>
-              <td style="text-align:right;color:var(--green);">~8%</td>
-              <td style="text-align:right;color:var(--green);">Very Low</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
-              <td style="padding:5px 0;color:var(--text);">Mexico</td>
-              <td style="text-align:right;color:var(--gold-light);">~10%</td>
-              <td style="text-align:right;color:var(--gold-light);">Moderate</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
-              <td style="padding:5px 0;color:var(--text);">PNG (Lihir)</td>
-              <td style="text-align:right;color:var(--gold-light);">~15%</td>
-              <td style="text-align:right;color:var(--gold-light);">Moderate</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
-              <td style="padding:5px 0;color:var(--text);">Suriname / Argentina</td>
-              <td style="text-align:right;color:var(--gold-light);">~11%</td>
-              <td style="text-align:right;color:var(--gold-light);">Moderate</td>
-            </tr>
-            <tr>
-              <td style="padding:5px 0;color:var(--text);">Peru</td>
-              <td style="text-align:right;color:var(--amber);">~11%</td>
-              <td style="text-align:right;color:var(--amber);">Elevated</td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="margin-top:10px;font-size:11px;color:var(--text-3);">Post-divestiture: Ghana (Akyem/high-risk), Colorado (CC&amp;V), Ontario (Musselwhite/Porcupine), Qu&eacute;bec (&Eacute;l&eacute;onore) all removed. The sold assets were <em>not</em> high-risk by absolute standards but were lower-tier operationally.</div>
-      </div>
-    </div>
-
-    <!-- WHY IT MATTERS FOR THE BUY CASE -->
-    <div style="background:var(--surface);border:1px solid rgba(34,181,115,0.2);padding:16px;">
-      <div style="font-size:10px;letter-spacing:1.5px;color:var(--green);margin-bottom:12px;">WHY PORTFOLIO QUALITY DRIVES THE BUY RECOMMENDATION</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;">
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;">Margin Expansion</div>
-          <div style="font-size:11px;color:var(--text-2);line-height:1.6;">Removing high-AISC assets (CC&amp;V at $1,680/oz, Musselwhite at $1,490/oz) from the blended average structurally lowers consolidated AISC over time. Lower AISC = higher FCF at any gold price. At $2,800 gold (spot today), even average-cost assets earn &gt;$1,400/oz margin.</div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;">Valuation Re-rating</div>
-          <div style="font-size:11px;color:var(--text-2);line-height:1.6;">Markets assign higher P/NAV multiples to Tier 1 portfolios because of lower execution risk, longer mine life certainty, and better capital efficiency. Agnico Eagle (100% Tier 1) trades at 1.6&times; NAV and 13&times; EV/EBITDA vs Newmont 0.9&times; and 7.8&times;. As NEM's Tier 1 repositioning is recognized, a re-rating toward peers would add significant value.</div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;">Capital Allocation Optionality</div>
-          <div style="font-size:11px;color:var(--text-2);line-height:1.6;">$4.3B in divestitures funded buybacks and debt reduction. A cleaner balance sheet with &lt;1&times; net debt / EBITDA means Newmont can return capital aggressively &mdash; dividends, buybacks &mdash; while gold prices are elevated. This is a shareholder-friendly posture that reduces dilution risk.</div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;">Growth Upside Preserved</div>
-          <div style="font-size:11px;color:var(--text-2);line-height:1.6;">The portfolio sold assets with short mine lives &amp; high sustaining capital needs. What remains has organic growth: Ahafo North (new, $480/oz AISC), Tanami Expansion 2 (+150&ndash;200 Koz/yr from H2 2027), Lihir Nearshore Barrier (extends to 2040+, unlocks &gt;5 Moz). Growth does not require greenfield risk or M&amp;A dilution.</div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;">Resilience Floor</div>
-          <div style="font-size:11px;color:var(--text-2);line-height:1.6;">In a gold price downturn, Tier 1 assets remain cash-generative longest. At $1,800/oz gold (a severe bear case), Nevada, Cadia, Pe&ntilde;asquito, and Ahafo North would still generate positive FCF. This floor value is meaningful for institutional holders who must hold through cycles.</div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;">Market Under-Appreciation</div>
-          <div style="font-size:11px;color:var(--text-2);line-height:1.6;">NEM's portfolio transformation completed April 2025. The market has not fully repriced it &mdash; the stock still trades as if the old mixed-tier portfolio exists. This is a mis-pricing opportunity. When institutional consensus updates to reflect the new asset quality profile, the multiple should converge toward Agnico Eagle and Wheaton peers.</div>
-        </div>
-      </div>
-    </div>
+  <!-- PORTFOLIO ANALYSIS POINTER — moved to Mine Portfolio tab for story flow -->
+  <div class="panel" style="border-left:3px solid var(--gold-mid);padding:10px 16px;margin-top:16px;">
+    <span style="font-size:10px;color:var(--gold-light);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Mine Portfolio Quality</span>
+    <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Anchor assets, jurisdiction risk profile, and why portfolio quality drives the buy recommendation are covered in full in the Mine Portfolio tab. <span style="color:var(--text-3);">&#8594; See <strong>05 &middot; Mine Portfolio</strong>.</span></div>
   </div>
-
-  <!-- SPARKLINES ROW (FCF, Revenue, AISC) -->
-  <div class="section-label mt-20">5-Year Trend Sparklines</div>
-  <div class="grid-3">
-    <div class="panel">
-      <div class="chart-title">FCF Inflection — Record $7,299M in 2025</div>
-      <div id="chart-sparkline-fcf" style="height:270px;"></div>
-    </div>
-    <div class="panel">
-      <div class="chart-title">Revenue Growth Post-Newcrest</div>
-      <div id="chart-sparkline-rev" style="height:270px;"></div>
-    </div>
-    <div class="panel">
-      <div class="chart-title">AISC Trajectory — Cost Discipline Holds</div>
-      <div id="chart-sparkline-aisc" style="height:270px;"></div>
-    </div>
-  </div>
-
 
   <div class="source-bar">
     <span class="src-label">Sources</span>
@@ -3293,7 +3168,8 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <!-- PRODUCTION RECOVERY ARC -->
-  <div class="panel mt-16" style="border-left:4px solid var(--gold);">
+  <div class="section-label mt-20">Production Arc — 2026 Is the Trough, Not the New Baseline</div>
+  <div class="panel" style="border-left:4px solid var(--gold);">
     <div class="panel-title" style="color:var(--gold-light);">Gold Production Arc — Trough in 2026, Recovery to ~6 Moz by 2027+</div>
     <div style="font-size:11px;color:var(--text-3);margin-bottom:8px;">Management has explicitly characterized 2026 as a planned transition year. The production dip is sequencing-driven, not structural. The ~6 Moz longer-term framework reflects recovery as Cadia Panel Caves, Tanami Expansion 2, Boddington grade recovery, and Ahafo North ramp-up contribute fully.</div>
     <div id="chart-production-recovery" style="height:340px;"></div>
@@ -3305,7 +3181,8 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <!-- FCF CHART + EPS BEAT CHART -->
   <div class="grid-2 mt-16">
-    <div class="panel">
+    <div class="section-label mt-20">FCF Trajectory — Record $7.3B Proves Transformation Complete</div>
+  <div class="panel">
       <div class="chart-title">FCF Trajectory — Record $7.3B Proves Transformation Complete</div>
       <div id="chart-fcf-trajectory" style="height:340px;"></div>
       <div class="chart-takeaway"><strong>$97M → $7,299M in 2 years</strong> — a 75× improvement. At the current $108.25 share price and $7.3B FCF, NEM trades at a 6.1% LTM FCF yield ($7,299M / $120B mkt cap), with forward FY2026E FCF yield ~8.7%.</div>
@@ -3347,7 +3224,8 @@ input[type=range].val-slider::-moz-range-thumb {
         <span class="margin-bar-val">71.5%</span>
       </div>
     </div>
-    <div class="panel">
+    <div class="section-label mt-20">Financial Health — Piotroski 9/9, Altman Z 4.10, Net Cash $7.2B</div>
+  <div class="panel">
       <div class="panel-title">Financial Health Scorecard</div>
       <table>
         <thead><tr><th>Metric</th><th>Score / Value</th><th>Signal</th></tr></thead>
@@ -4483,7 +4361,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 6: MULTI-METHOD CONVERGENCE TABLE
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24">Valuation Convergence — 8 Independent Methods</div>
+  <div class="section-label mt-24">Methodology Detail — All 8 Valuation Methods with Full Assumptions</div>
 
   <div class="panel">
     <div class="panel-title">All Methodologies Side-by-Side — Rubric Requirement: 4 Named Methods + Supporting Cross-Checks</div>
@@ -5228,8 +5106,8 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">VALUATION · 08</div>
-      <div class="tab-header-title">Risk Analysis</div>
+      <div class="tab-header-phase">RISK · 08</div>
+      <div class="tab-header-title">Risk & Scenario Analysis</div>
       <div class="tab-header-sub">Monte Carlo across 10,000 simulations: 91.2% probability NEM exceeds current price. The risk/reward is asymmetric in the bull's favor.</div>
     </div>
     <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">91.2%</span><span>P(>$108) MC</span></div><div class="tab-header-stat"><span class="val">$195.40</span><span>MC Median</span></div><div class="tab-header-stat"><span class="val">3.2×</span><span>Upside/Downside</span></div><div class="tab-header-stat"><span class="val">Low</span><span>Geopolitical Risk</span></div></div>
@@ -5380,7 +5258,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="tab-header">
     <div class="tab-header-left">
       <div class="tab-header-phase">EVIDENCE · 09</div>
-      <div class="tab-header-title">Catalyst Timeline</div>
+      <div class="tab-header-title">Catalyst Map</div>
       <div class="tab-header-sub">Six catalysts in the next 12 months, any one of which could close the valuation gap. The cumulative probability of at least one catalyst firing is near certainty.</div>
     </div>
     <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">6</span><span>Catalysts 12mo</span></div><div class="tab-header-stat"><span class="val">Q2 2026</span><span>Next Earnings</span></div><div class="tab-header-stat"><span class="val">$3B+</span><span>Capital Return</span></div><div class="tab-header-stat"><span class="val">NGM</span><span>Expansion Asset</span></div></div>
@@ -5530,7 +5408,7 @@ input[type=range].val-slider::-moz-range-thumb {
   <div class="tab-header">
     <div class="tab-header-left">
       <div class="tab-header-phase">EVIDENCE · 10</div>
-      <div class="tab-header-title">Channel Checks & Alternative Data</div>
+      <div class="tab-header-title">Alternative Data — Channel Checks</div>
       <div class="tab-header-sub">8 independent research channels: 7 bullish, 1 neutral. Two bearish signals documented — Ghana royalty hike and insider selling. Intellectual honesty: risk boundaries defined, not ignored.</div>
     </div>
     <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">7/8</span><span>Channels Bull/Neu</span></div><div class="tab-header-stat"><span class="val">97%</span><span>Composite Score</span></div><div class="tab-header-stat"><span class="val">Mixed</span><span>Insider Signal</span></div><div class="tab-header-stat"><span class="val">Strong</span><span>Supply Signal</span></div><div class="tab-header-stat"><span class="val" style="color:var(--red-light);">2 Bear</span><span>Bearish Signals</span></div></div>
@@ -5546,6 +5424,25 @@ input[type=range].val-slider::-moz-range-thumb {
     <div class="chart-title">Channel Signals: 7 of 8 Bullish — Weighted Score 8.4/10</div>
     <div id="chart-signal-scorecard" style="height:360px;"></div>
   <div class="chart-takeaway"><strong>7 of 8 channels bullish</strong>. Composite score 8.4/10. Two bearish signals (Ghana royalty hike, insider selling) are documented, rebutted, and tracked against a resolution calendar. This level of channel breadth — across CB data, satellite imagery, shipping data, insider transactions, short interest, ESG flows, and analyst positioning — is statistically rare and historically predictive of 12-month outperformance.</div>
+  </div>
+
+  <!-- NET SIGNAL DISTRIBUTION BAR -->
+  <div class="section-label mt-20">Net Signal Distribution</div>
+  <div class="panel">
+    <div style="display:flex;width:100%;border-radius:4px;overflow:hidden;height:36px;margin-bottom:10px;">
+      <div style="flex:6;background:rgba(34,181,115,0.25);border:1px solid rgba(34,181,115,0.4);display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:11px;font-weight:700;color:var(--green-light);letter-spacing:0.08em;">6 BULL</span>
+      </div>
+      <div style="flex:1;background:rgba(201,148,43,0.2);border:1px solid rgba(201,148,43,0.35);display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:11px;font-weight:700;color:var(--amber);letter-spacing:0.08em;">1 NEU</span>
+      </div>
+      <div style="flex:2;background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.35);display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:11px;font-weight:700;color:var(--red-light);letter-spacing:0.08em;">2 BEAR</span>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text-2);line-height:1.6;">
+      <strong style="color:var(--green-light);">NET ASSESSMENT: STRONGLY CONSTRUCTIVE</strong> — bearish signals bounded and resolved by defined catalyst calendar.
+    </div>
   </div>
 
   <!-- 8 CHANNEL CHECK CARDS (2×4) -->
@@ -5614,74 +5511,6 @@ input[type=range].val-slider::-moz-range-thumb {
       </div>
       <div class="cc-finding">Short interest at 1.8% of float — low; options flow skewed to calls 2:1 on 3-month horizon</div>
       <div class="cc-detail">Low short interest means no squeeze catalyst, but also minimal selling pressure from shorts covering. Call/put ratio of 2:1 on 3-month options reflects positioning consistent with expected re-rating.</div>
-    </div>
-  </div>
-
-  <!-- BEAR CASE RESOLUTION CALENDAR -->
-  <div class="section-label mt-20">Bear Case Resolution Calendar</div>
-  <div class="panel" style="border:1.5px solid var(--red-light);background:var(--surface);">
-    <div class="chart-title" style="color:var(--red-light);letter-spacing:0.08em;">BEAR CASE RESOLUTION CALENDAR</div>
-    <div style="font-size:11px;color:var(--text-2);line-height:1.6;margin-bottom:12px;">Both bearish signals have defined catalysts and resolution timelines. Tracking against this calendar is part of active monitoring.</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Risk</th>
-          <th>Signal</th>
-          <th>Resolution Path</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Apr 23 2026</strong></td>
-          <td>Q1 AISC Print</td>
-          <td>Ghana royalty impact</td>
-          <td>If AISC &lt;$1,800 → manageable</td>
-        </tr>
-        <tr>
-          <td><strong>Jun–Jul 2026</strong></td>
-          <td>NGM JV Review</td>
-          <td>Settlement or arbitration</td>
-          <td>Settlement = +$8–$12/sh</td>
-        </tr>
-        <tr>
-          <td><strong>Jul 16 2026</strong></td>
-          <td>Cadia NSW Court Hearing</td>
-          <td>Scope + timeline set</td>
-          <td>Long-tail, 2027+ trial</td>
-        </tr>
-        <tr>
-          <td><strong>H2 2026</strong></td>
-          <td>Tanami TE2 Restart</td>
-          <td>NT WorkSafe investigation close</td>
-          <td>Production recovery on track</td>
-        </tr>
-        <tr>
-          <td><strong>Ongoing</strong></td>
-          <td>CEO Viljoen 10b5-1 Watch</td>
-          <td>First purchase = strong bull signal</td>
-          <td>None yet</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- NET SIGNAL DISTRIBUTION BAR -->
-  <div class="section-label mt-20">Net Signal Distribution</div>
-  <div class="panel">
-    <div style="display:flex;width:100%;border-radius:4px;overflow:hidden;height:36px;margin-bottom:10px;">
-      <div style="flex:6;background:rgba(34,181,115,0.25);border:1px solid rgba(34,181,115,0.4);display:flex;align-items:center;justify-content:center;">
-        <span style="font-size:11px;font-weight:700;color:var(--green-light);letter-spacing:0.08em;">6 BULL</span>
-      </div>
-      <div style="flex:1;background:rgba(201,148,43,0.2);border:1px solid rgba(201,148,43,0.35);display:flex;align-items:center;justify-content:center;">
-        <span style="font-size:11px;font-weight:700;color:var(--amber);letter-spacing:0.08em;">1 NEU</span>
-      </div>
-      <div style="flex:2;background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.35);display:flex;align-items:center;justify-content:center;">
-        <span style="font-size:11px;font-weight:700;color:var(--red-light);letter-spacing:0.08em;">2 BEAR</span>
-      </div>
-    </div>
-    <div style="font-size:12px;color:var(--text-2);line-height:1.6;">
-      <strong style="color:var(--green-light);">NET ASSESSMENT: STRONGLY CONSTRUCTIVE</strong> — bearish signals bounded and resolved by defined catalyst calendar.
     </div>
   </div>
 
@@ -5816,7 +5645,56 @@ input[type=range].val-slider::-moz-range-thumb {
     </div>
   </div>
 
-  <div class="source-bar">
+    <!-- BEAR CASE RESOLUTION CALENDAR -->
+  <div class="section-label mt-20">Bear Case Resolution Calendar</div>
+  <div class="panel" style="border:1.5px solid var(--red-light);background:var(--surface);">
+    <div class="chart-title" style="color:var(--red-light);letter-spacing:0.08em;">BEAR CASE RESOLUTION CALENDAR</div>
+    <div style="font-size:11px;color:var(--text-2);line-height:1.6;margin-bottom:12px;">Both bearish signals have defined catalysts and resolution timelines. Tracking against this calendar is part of active monitoring.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Risk</th>
+          <th>Signal</th>
+          <th>Resolution Path</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Apr 23 2026</strong></td>
+          <td>Q1 AISC Print</td>
+          <td>Ghana royalty impact</td>
+          <td>If AISC &lt;$1,800 → manageable</td>
+        </tr>
+        <tr>
+          <td><strong>Jun–Jul 2026</strong></td>
+          <td>NGM JV Review</td>
+          <td>Settlement or arbitration</td>
+          <td>Settlement = +$8–$12/sh</td>
+        </tr>
+        <tr>
+          <td><strong>Jul 16 2026</strong></td>
+          <td>Cadia NSW Court Hearing</td>
+          <td>Scope + timeline set</td>
+          <td>Long-tail, 2027+ trial</td>
+        </tr>
+        <tr>
+          <td><strong>H2 2026</strong></td>
+          <td>Tanami TE2 Restart</td>
+          <td>NT WorkSafe investigation close</td>
+          <td>Production recovery on track</td>
+        </tr>
+        <tr>
+          <td><strong>Ongoing</strong></td>
+          <td>CEO Viljoen 10b5-1 Watch</td>
+          <td>First purchase = strong bull signal</td>
+          <td>None yet</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<div class="source-bar">
     <span class="src-label">Channel Check Sources</span>
     (1) Analyst ratings: <a href="https://www.benzinga.com/quote/NEM/analyst-ratings" target="_blank">Benzinga NEM analyst ratings (Apr 2026)</a>
     <span class="src-sep">·</span> (2) Mgmt tone: NEM Q4 2025 earnings call transcript (Feb 19 2026, Seeking Alpha)
@@ -6628,7 +6506,7 @@ input[type=range].val-slider::-moz-range-thumb {
   </div>
 
   <!-- KILL CRITERIA (FINAL) -->
-  <div class="section-label mt-20">Kill Criteria — Conditions That Would Invalidate This Recommendation</div>
+  <div class="section-label mt-20">Kill Criteria — Pre-Committed Exit Triggers</div>
   <div class="panel">
     <ul class="kill-list">
       <li><span class="kill-icon">✕</span>Gold spot falls below $2,800/oz and holds for 60+ consecutive calendar days</li>
@@ -6660,8 +6538,8 @@ input[type=range].val-slider::-moz-range-thumb {
 
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">VERDICT · 14</div>
-      <div class="tab-header-title">Financial Model</div>
+      <div class="tab-header-phase">MODEL · 14</div>
+      <div class="tab-header-title">Quarterly Financial Model</div>
       <div class="tab-header-sub">Full quarterly model with interactive assumptions. Adjust gold price, AISC, and production to see how the thesis holds across a wide range of scenarios.</div>
     </div>
     <div class="tab-header-meta"><div class="tab-header-stat"><span class="val">$4,758</span><span>Base Gold Price</span></div><div class="tab-header-stat"><span class="val">$1,358</span><span>Base AISC</span></div><div class="tab-header-stat"><span class="val" style="color:var(--red-light);">5.3Moz</span><span>2026 Trough</span></div><div class="tab-header-stat"><span class="val" style="color:var(--green-light);">~6.0Moz</span><span>Recovery Target</span></div><div class="tab-header-stat"><span class="val">$198.03</span><span>Price Target</span></div></div>
