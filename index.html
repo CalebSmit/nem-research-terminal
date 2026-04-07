@@ -504,6 +504,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .mb-8  { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mb-24 { margin-bottom: 24px; }
+.mt-28 { margin-top: 28px; }
 
 /* ============================================================
    PANEL / CARD BASE
@@ -2262,6 +2263,120 @@ details:not(.perp-expander) {
 /* 17. SIGNAL SCORECARD — name column never truncates */
 .signal-name { white-space: normal; }
 
+/* ============================================================
+   SECTION HEADER HIERARCHY
+   Replaces flat section-label with a 3-level visual system:
+   .sec-h1  — major section break (large)
+   .sec-h2  — subsection (standard section-label)
+   .section-label already covers h2 role; sec-h1 is additive
+   ============================================================ */
+.sec-h1 {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.25;
+}
+.sec-h1::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 18px;
+  background: var(--gold);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.sec-h1 .sec-h1-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+  margin-left: 4px;
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   JUDGE-READY COLLAPSIBLE — .judge-expander
+   Neutral styling for supporting-detail sections;
+   visual consistent with the existing design system.
+   Larger summary text than perp-expander; gold accent.
+   ============================================================ */
+.judge-expander {
+  border: 1px solid var(--border-2);
+  border-radius: var(--r);
+  background: var(--surface);
+  overflow: hidden;
+  margin-top: 20px;
+}
+.judge-expander + .judge-expander { margin-top: 12px; }
+.judge-expander > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  background: var(--surface-2);
+  -webkit-user-select: none;
+  user-select: none;
+  list-style: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.12s, color 0.12s;
+}
+.judge-expander > summary::-webkit-details-marker { display: none; }
+.judge-expander > summary:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+.judge-expander[open] > summary {
+  border-bottom-color: var(--border);
+  color: var(--gold-light);
+  background: var(--surface-3);
+}
+.judge-expander > summary .je-arrow {
+  font-size: 10px;
+  color: var(--text-3);
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+.judge-expander[open] > summary .je-arrow { transform: rotate(90deg); }
+.judge-expander > summary .je-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.judge-expander > summary .je-label::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  background: var(--border-2);
+  border-radius: 2px;
+  transition: background 0.12s;
+}
+.judge-expander[open] > summary .je-label::before {
+  background: var(--gold);
+}
+.judge-expander-body {
+  padding: 20px;
+}
+
+/* Stacked expanders — no double border between them */
+.judge-stack { display: flex; flex-direction: column; gap: 0; margin-top: 20px; }
+.judge-stack .judge-expander { margin-top: 0; border-bottom: none; border-radius: 0; }
+.judge-stack .judge-expander:first-child { border-radius: var(--r) var(--r) 0 0; }
+.judge-stack .judge-expander:last-child { border-bottom: 1px solid var(--border-2); border-radius: 0 0 var(--r) var(--r); }
+.judge-stack .judge-expander + .judge-expander { border-top: 1px solid var(--border); }
+
 </style>
 </head>
 <body>
@@ -2284,9 +2399,7 @@ details:not(.perp-expander) {
     <div class="ticker-item gold"><span class="ticker-val">BUY</span><span class="ticker-lbl">Rating</span></div>
   </div>
   <div class="ticker-badge">Perplexity Stock Pitch 2026</div>
-  <div class="ticker-badge" style="background:rgba(34,181,115,0.15);border-color:var(--green);color:var(--green);margin-left:6px;">Premium Data Audit ✓</div>
-  <div class="ticker-badge" style="background:rgba(201,148,43,0.12);border-color:var(--gold);color:var(--gold-light);margin-left:6px;">Pre-Improvement: 75/100</div>
-  <div class="ticker-badge" style="background:rgba(34,181,115,0.15);border-color:var(--green);color:var(--green);margin-left:6px;">Post-Improvement: 86/100</div>
+  <div class="ticker-badge" style="background:rgba(201,148,43,0.12);border-color:var(--gold);color:var(--gold-light);margin-left:6px;">As of March 31, 2026</div>
 </header>
 
 
@@ -2366,7 +2479,7 @@ details:not(.perp-expander) {
   </div>
 
   <!-- THREE-DRIVER THESIS CARDS -->
-  <div class="section-label">Three-Driver Investment Thesis</div>
+  <div class="sec-h1 mt-24">Three-Driver Investment Thesis</div>
   <div class="grid-3">
     <div class="thesis-card">
       <div class="thesis-card-num">DRIVER 01 · GOLD MISPRICING</div>
@@ -2389,8 +2502,10 @@ details:not(.perp-expander) {
   </div>
 
   <!-- TROUGH-YEAR / RECOVERY THESIS CALLOUT -->
-  <div style="background:rgba(201,148,43,0.07);border:1px solid rgba(201,148,43,0.3);border-left:4px solid var(--gold);border-radius:2px;padding:20px 24px;margin-top:4px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing: var(--ls-caps);text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">SUPPORTING CONTEXT — TROUGH-YEAR MISPRICING</div>
+  <details class="judge-expander" open>
+  <summary><span class="je-label">Production Arc — 2026 Trough &amp; 2027+ Recovery</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body" style="padding:0;">
+  <div style="background:rgba(201,148,43,0.07);border:1px solid rgba(201,148,43,0.3);border-left:4px solid var(--gold);border-radius:2px;padding:20px 24px;">
     <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4;">Why 2026 Trough Production Reinforces, Not Undermines, All Three Drivers</div>
     <div style="font-size:12px;color:var(--text-2);line-height:1.75;">
       Management has explicitly framed 2026 as a <strong style="color:var(--gold-light);">planned transition year</strong>, not a structural deterioration. Production guidance of 5.3 Moz reflects deliberate sequencing — high-stripping phases at Boddington and Ahafo South, infrastructure transition at Cadia, and grade positioning across Peñasquito — all designed to unlock higher-grade ore in 2027 and beyond. The consensus has absorbed the 2026 production figure as a baseline rather than recognizing it as the trough of a recovery arc.
@@ -2421,7 +2536,9 @@ details:not(.perp-expander) {
       <strong style="color:var(--text-2);">Why 2026 is lower — and why that is not structurally bearish:</strong> The production decline from 5.9 Moz (2025) to 5.3 Moz (2026) reflects coordinated mine sequencing across Tier-1 assets. Ahafo South and Peñasquito are in stripping phases that position them for higher-grade access in 2027‫+. Cadia is undergoing Panel Cave development (PC1–2 extending to 2042; PC3 FID expected H1 2026). Tanami Expansion 2 reaches first ore in H2 2027, adding 150–200 Koz/yr of low-cost production. These are investments in normalized earnings power — not operational failure.
     </div>
     <div style="font-size:10px;color:var(--text-3);margin-top:8px;">Source: NEM Q4 2025 Earnings Call, Feb 19 2026 · Globe and Mail / Chronicle-Journal, Feb 26 2026 · Discovery Alert analysis</div>
+
   </div>
+  </details>
 
   <div class="grid-3" style="margin-top:0;">
   </div>
@@ -2561,7 +2678,7 @@ details:not(.perp-expander) {
 
   <!-- SECTION B: 8 RESEARCH THREAD CARDS -->
   <details class="perp-expander">
-    <summary>8 Research Thread Cards — Before / After Impact Log</summary>
+    <summary>8 Research Thread Cards — How Each Finding Shaped the Analysis</summary>
     <div class="perp-expander-body">
 
       <div class="grid-2">
@@ -2587,11 +2704,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">$3,605/oz implied gold price — 32% below spot $4,758/oz. The market is pricing NEM as if gold is already in a bear market.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Reframed the central thesis from a price target to a falsifiable market claim: &ldquo;NEM is mispriced because it implies gold at $3,605 when spot is $4,758.&rdquo; This is the thesis anchor.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 01 (Thesis) &middot; Tab 06 (Valuation) &middot; Tab 14 (Model)</div>
           </div>
         </div>
@@ -2617,11 +2734,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">Zero major discoveries (&ge;2 Moz) in both 2023 AND 2024 — the first back-to-back discovery drought in 35 years, per S&amp;P Global data. Grassroots exploration budget share hit record-low 19%.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Raised structural gold price floor conviction from 3/5 to 5/5. Discovery drought creates a decade-long supply constraint that is independent of rate cycles.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 10 (Alt Data)</div>
           </div>
         </div>
@@ -2647,11 +2764,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">21 open-market sales totaling $7.6M; zero open-market purchases. EVP David James Fry&rsquo;s $2.05M sale (Mar 16 2026) has no confirmed 10b5-1 plan on file.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Downgraded insider signal from bullish to neutral-to-slightly-bearish. Added unconfirmed discretionary sale to kill criteria monitoring list.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 10 (Alt Data) &middot; Tab 13 (Verdict → Kill Criteria)</div>
           </div>
         </div>
@@ -2677,11 +2794,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">New sliding-scale royalty law effective Mar 10 2026 — 12% ceiling is active at current $4,758/oz gold. Increases total AISC burden for Ahafo and Akyem operations.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Added +$50/oz to Ghana-weighted AISC estimate. Elevated Ghana regulatory risk to highest near-term risk in the framework. Added to kill criteria.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 07 (Peer Comps) &middot; Tab 08 (Risk &amp; Scenarios) &middot; Tab 13 (Verdict → Kill Criteria)</div>
           </div>
         </div>
@@ -2707,11 +2824,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">4 upgrades / 0 downgrades in trailing 6 months. Bernstein $157 (Feb 27 2026), Citi $150, Scotia $151 — all still anchored to stale gold decks ($3,200&ndash;$3,500/oz).</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Confirmed model is above consensus but not an outlier. Identified the $4,758 spot vs. stale consensus deck as the primary source of the $74/share target gap.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 07 (Peer Comps) &middot; Tab 14 (Model)</div>
           </div>
         </div>
@@ -2737,11 +2854,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">42 Mt demand vs. 33 Mt peak supply by 2040 = 10 Mt structural deficit. AI data center copper demand projected +200% by 2030. Cadia is a Tier 1 copper asset in this context.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Added Cadia copper standalone NAV of $12&ndash;$15/share as non-consensus upside not included in base case DCF. Now tracked as a separate sensitivity in the model.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 05 (Mine Portfolio) &middot; Tab 10 (Alt Data → CC8) &middot; Tab 13 (Verdict)</div>
           </div>
         </div>
@@ -2767,11 +2884,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">Q3 2025 tone peak 4.5/5.0; Q4 2025 4.1/5.0 (balanced and improving). Analyst question sentiment shifted from skeptical to confirmatory. 4-quarter AISC beat streak acknowledged.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Upgraded management credibility from &ldquo;recovering&rdquo; to &ldquo;restored.&rdquo; Added the 4Q AISC beat streak as a management quality signal in the scorecard.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 12 (Management)</div>
           </div>
         </div>
@@ -2797,11 +2914,11 @@ details:not(.perp-expander) {
             <div class="thread-field-value highlight">1,045t purchased in 2024 (third straight year &gt;1,000t); 863t in 2025. 68% of surveyed central banks plan to increase gold holdings. China&rsquo;s reserves still below peer average — significant latent demand.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Assumption Changed</div>
+            <div class="thread-field-label">Analytical Impact</div>
             <div class="thread-field-value">Confirmed gold demand is policy-level and structural, not speculative. Raised gold floor conviction and used as primary rebuttal to gold price reversal risk in the risk matrix.</div>
           </div>
           <div class="thread-field">
-            <div class="thread-field-label">Feeds Into</div>
+            <div class="thread-field-label">Referenced In</div>
             <div class="thread-feeds">→ Tab 03 (Gold Macro) &middot; Tab 08 (Risk – gold reversal rebuttal)</div>
           </div>
         </div>
@@ -2821,7 +2938,7 @@ details:not(.perp-expander) {
     <span class="src-sep">·</span> FCF $7,299M: <a href="https://www.newmont.com/investors/news-release/news-details/2026/Newmont-Reports-Fourth-Quarter-and-Full-Year-2025-Results/default.aspx" target="_blank">NEM Q4 2025 Earnings, Feb 19 2026</a>
     <span class="src-sep">·</span> AISC: NEM Q4 2025 Production Report (Feb 19 2026)
     <span class="src-sep">·</span> Analyst consensus: <a href="https://www.benzinga.com/quote/NEM/analyst-ratings" target="_blank">Benzinga (22 analysts, Apr 2026)</a>
-    <span class="src-sep">·</span> <strong style="color:var(--green);">Premium Data Audit (Apr 2026):</strong> All market data, industry statistics, ESG context, AI/copper demand, and company profile cross-referenced against Statista, PitchBook Essentials, and CB Insights — premium sources used wherever they provide superior coverage; company-filed facts retained from primary filings
+    <span class="src-sep">·</span> Cross-reference sources: Statista, PitchBook Essentials, CB Insights; company-filed facts from primary SEC filings and earnings releases
   </div>
 </section>
 
@@ -3053,7 +3170,9 @@ details:not(.perp-expander) {
 
 
   <!-- SENSITIVITY TABLE (moved to bottom of Gold Macro tab) -->
-  <div class="section-label mt-20">NEM Price Sensitivity to Gold Spot (Current DCF Model)</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">NEM Price Sensitivity to Gold Spot</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel">
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
     <table style="min-width:560px;">
@@ -3118,6 +3237,8 @@ details:not(.perp-expander) {
     </table>
     </div><!-- /overflow-x -->
   </div>
+  </div>
+  </details>
 
   <div class="source-bar">
     <span class="src-label">Sources</span>
@@ -3189,7 +3310,7 @@ details:not(.perp-expander) {
   </div>
 
   <!-- INCOME STATEMENT 5-YEAR TABLE -->
-  <div class="section-label">5-Year Income Statement Summary</div>
+  <div class="sec-h1">5-Year Income Statement Summary</div>
   <div class="panel">
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
     <table style="min-width:480px;">
@@ -3230,7 +3351,7 @@ details:not(.perp-expander) {
   </div>
 
   <!-- FCF CHART + EPS BEAT CHART -->
-  <div class="section-label mt-20">FCF Trajectory — Record $7.3B Proves Transformation Complete</div>
+  <div class="sec-h1 mt-24">FCF Trajectory — Record $7.3B Proves Transformation Complete</div>
   <div class="grid-2 mt-16">
     <div class="panel">
       <div class="chart-title">FCF Trajectory — Record $7.3B Proves Transformation Complete</div>
@@ -3245,7 +3366,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- MARGIN PROGRESSION + PIOTROSKI -->
-  <div class="section-label mt-20">Margin Progression — FY2023 Trough vs FY2025 Record</div>
+  <details class="judge-expander" open>
+  <summary><span class="je-label">Margin Progression — FY2023 Trough vs FY2025 Record</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="grid-2 mt-16">
     <div class="panel">
       <div class="panel-title">Margin Progression (FY2023 Trough → FY2025 Record)</div>
@@ -3345,7 +3468,12 @@ details:not(.perp-expander) {
   </div>
 
   <!-- FY2026 AISC GUIDANCE RISK DISCLOSURE -->
-  <div class="section-label mt-20" style="color:var(--amber);">FY2026 AISC Guidance — Transparent Headwind Disclosure</div>
+  </div>
+  </details>
+
+  <details class="judge-expander">
+  <summary><span class="je-label">FY2026 AISC Guidance — Transparent Headwind Disclosure</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div style="background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.3);border-left:4px solid var(--amber);border-radius:2px;padding:18px 22px;margin-bottom:20px;">
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:14px;">
       <div style="background:rgba(9,9,11,0.5);padding:12px;text-align:center;border-radius:2px;border:1px solid var(--border-2);">
@@ -3369,6 +3497,9 @@ details:not(.perp-expander) {
     <div style="margin-top:8px;font-size:10px;color:var(--text-3);">Source: NEM Q4 2025 earnings call, Feb 19 2026 — FY2026 AISC guidance ~$1,680/oz midpoint</div>
   </div>
 
+
+  </div>
+  </details>
 
   <div class="source-bar">
     <span class="src-label">Sources</span>
@@ -3535,7 +3666,7 @@ details:not(.perp-expander) {
   </details>
 
   <!-- TRANSFORMATION / TIER 1 CALLOUT (moved below collapsed table) -->
-  <div class="section-label mt-20">Global Mine Portfolio — 10 Core Operations Across 5 Continents</div>
+  <div class="sec-h1 mt-24">Global Mine Portfolio — 10 Core Operations Across 5 Continents</div>
   <div id="tier-1-callout" style="background:rgba(201,148,43,0.06);border:1px solid rgba(201,148,43,0.25);padding:18px 22px;margin-bottom:16px;">
     <div style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">
       <div style="flex:1;min-width:280px;">
@@ -3716,7 +3847,9 @@ details:not(.perp-expander) {
 
 
   <!-- PREMIUM INSIGHT 3: COPPER STRUCTURAL DEFICIT (S&P GLOBAL JAN 2026) -->
-  <div class="section-label mt-20">Copper Structural Deficit — Why Cadia Is an Unpriced AI Infrastructure Asset</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">Copper Structural Deficit — Why Cadia Is an Unpriced AI Infrastructure Asset</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel" style="border-left:3px solid var(--teal);">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
       <div style="font-size:10px;letter-spacing:1.5px;color:var(--teal);font-family:'JetBrains Mono',monospace;">PREMIUM DATA — S&amp;P GLOBAL (JAN 8, 2026) · CB INSIGHTS (NOV 2024)</div>
@@ -3790,6 +3923,9 @@ details:not(.perp-expander) {
     </div>
   </div>
 
+  </div>
+  </details>
+
   <div class="source-bar">
     <span class="src-label">Sources</span>
     Reserve base 118.2 Moz P&amp;P: <a href="https://www.newmont.com/investors/news-release/news-details/2026/Newmont-Reports-2025-Mineral-Reserves-of-118-2-Million-Gold-Ounces-and-12-5-Million-Tonnes-of-Copper/default.aspx" target="_blank">NEM 2025 Mineral Reserves Report (Feb 19 2026)</a>
@@ -3860,7 +3996,7 @@ details:not(.perp-expander) {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 2: PRIMARY VALUATION OUTPUTS — KPI TILES
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label">Valuation Summary — Four Methods, One Answer</div>
+  <div class="sec-h1">Valuation Summary — Four Methods, One Answer</div>
   <div class="grid-4">
     <div class="kpi-tile">
       <div class="kpi-label"><span class="assumption-tip">DCF Value/Share<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF Price Target</span><span class="tip-line"><span class="tip-label">Source:</span> 5-year FCFF DCF model. Gold Y1 $5,200/oz (9% below $5,720 bank consensus avg). WACC 7.04%. Exit 9.5× EV/EBITDA.</span><span class="tip-line"><span class="tip-label">Rationale:</span> Primary method (70% weight) because NEM generates $7.3B annual FCF — cash-flow valuation is structurally appropriate for producers.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — gold deck below consensus, exit multiple at peer median.</span><span class="tip-line"><span class="tip-label">Impact:</span> Each $100/oz gold change moves DCF by ~$18/share. WACC ±50bp moves it by ~$12/share.</span></span></span></div>
@@ -3923,7 +4059,7 @@ details:not(.perp-expander) {
   <!-- ═══════════════════════════════════════════════════════════
        VALUATION SUMMARY TABLE — ORIENTATION BEFORE DETAIL
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24">Valuation Stack Summary — Understand the Full Picture Before the Detail</div>
+  <div class="sec-h1 mt-24">Valuation Stack Summary</div>
   <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.7;">
     Three independent valuation frameworks converge on a single answer. Read this table first — it maps the entire model stack so the detail sections that follow make sense in context. DCF leads because NEM generates $7.3B annual FCF. P/NAV anchors to reserve value at a ultra-conservative gold deck. SOTP builds each mine individually. All three are conservative. All three point above the current price.
   </div>
@@ -4073,7 +4209,7 @@ details:not(.perp-expander) {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 3: DCF MODEL — 5-YEAR FCFF (PRIMARY METHOD)
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24"><span class="assumption-tip">METHOD 1: DCF — 5-Year FCFF Model (Primary Method, 70% Weight)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF Model — Terminal Value Assumption</span><span class="tip-line"><span class="tip-label">Source:</span> Exit multiple approach — 9.5× EV/EBITDA at terminal year (peer median: AEM 10.0×, KGC 13.7×, GFI 5.5×).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Exit multiple preferred over perpetuity growth for miners because mine lives are finite. 9.5× is at peer median, not premium.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — at sector median. A 1.0× increase in exit multiple would add ~$15/share.</span><span class="tip-line"><span class="tip-label">Impact:</span> Terminal value is ~35-40% of total DCF. The exit multiple is the second-largest sensitivity after gold price.</span></span></span></div>
+  <div class="sec-h1 mt-28"><span class="assumption-tip">METHOD 1: DCF — 5-Year FCFF Model (Primary Method, 70% Weight)<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">DCF Model — Terminal Value Assumption</span><span class="tip-line"><span class="tip-label">Source:</span> Exit multiple approach — 9.5× EV/EBITDA at terminal year (peer median: AEM 10.0×, KGC 13.7×, GFI 5.5×).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Exit multiple preferred over perpetuity growth for miners because mine lives are finite. 9.5× is at peer median, not premium.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-neutral">Neutral</span> — at sector median. A 1.0× increase in exit multiple would add ~$15/share.</span><span class="tip-line"><span class="tip-label">Impact:</span> Terminal value is ~35-40% of total DCF. The exit multiple is the second-largest sensitivity after gold price.</span></span></span></div>
   <div style="font-size:11px;color:var(--text-3);margin-bottom:10px;line-height:1.6;">
     5-year free cash flow to firm (FCFF) model using a per-ounce AISC cost structure. Gold Y1: $5,200/oz — 9% below the bank consensus average of $5,720/oz (Goldman, JPMorgan, Citi, BofA, Barclays). WACC: 7.04% (CAPM β=0.61, ERP=4.5%, rf=4.31%). Exit multiple: 9.5× EV/EBITDA (peer median, conservative). DCF is primary because NEM generates $7.3B annual FCF — making the intrinsic value from cash flows more reliable than reserve-based NAV at a point-in-time gold price.
   </div>
@@ -4116,7 +4252,7 @@ details:not(.perp-expander) {
   <!-- WACC Build + Sensitivity -->
   <!-- ═══ DCF MODEL STRUCTURE EXPLAINER ═══ -->
   <div class="panel mt-16" style="border-left:3px solid var(--gold-light);background:rgba(201,148,43,0.03);">
-    <div class="panel-title" style="color:var(--gold-light);">How This DCF Model Is Built — Judge-Facing Explanation</div>
+    <div class="panel-title" style="color:var(--gold-light);">DCF Model Structure — Step-by-Step Build</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px;">
       <div>
         <div style="font-size:11px;color:var(--text-2);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Model Structure</div>
@@ -4370,7 +4506,7 @@ details:not(.perp-expander) {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 4: P/NAV MODEL — FULL BUILD
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24">METHOD 2: P/NAV — Price-to-Net Asset Value</div>
+  <div class="sec-h1 mt-28">METHOD 2: P/NAV — Price-to-Net Asset Value</div>
   <div style="font-size:11px;color:var(--text-3);margin-bottom:10px;line-height:1.6;">
     P/NAV is the gold mining industry's primary intrinsic value method. NAV = PV of all future mine cash flows (gold price − AISC × production × annuity factor) + net cash. The P/NAV multiple applied reflects where NEM should trade relative to peers. A conservative 2-year trailing average gold deck ($2,775/oz vs. $4,758 spot) ensures no peak-cycle pricing.
   </div>
@@ -4502,7 +4638,7 @@ details:not(.perp-expander) {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 5: SOTP NAV — MINE-BY-MINE BUILD
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24"><span class="assumption-tip">METHOD 3: SOTP — Sum-of-the-Parts / Mine-Level NAV<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">SOTP Methodology</span><span class="tip-line"><span class="tip-label">Source:</span> 11 mines valued individually using mine-specific discount rates (5–10.5%) based on jurisdiction risk. Corporate overhead capitalized at SG&A × 7× (Damodaran midpoint).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Cross-checks whole-company P/NAV and quantifies conglomerate discount/premium. Gold deck: $2,775/oz (conservative).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — mine-level discount rates penalize EM jurisdictions; same conservative gold deck as P/NAV.</span><span class="tip-line"><span class="tip-label">Impact:</span> SOTP at $99.80 is 10.5% below whole-company P/NAV ($111.56) — consistent with conglomerate discount for multi-jurisdiction portfolios.</span></span></span></div>
+  <div class="sec-h1 mt-28"><span class="assumption-tip">METHOD 3: SOTP — Sum-of-the-Parts / Mine-Level NAV<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">SOTP Methodology</span><span class="tip-line"><span class="tip-label">Source:</span> 11 mines valued individually using mine-specific discount rates (5–10.5%) based on jurisdiction risk. Corporate overhead capitalized at SG&A × 7× (Damodaran midpoint).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Cross-checks whole-company P/NAV and quantifies conglomerate discount/premium. Gold deck: $2,775/oz (conservative).</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — mine-level discount rates penalize EM jurisdictions; same conservative gold deck as P/NAV.</span><span class="tip-line"><span class="tip-label">Impact:</span> SOTP at $99.80 is 10.5% below whole-company P/NAV ($111.56) — consistent with conglomerate discount for multi-jurisdiction portfolios.</span></span></span></div>
   <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.6;">
     <strong style="color:var(--gold-light);">Institutional SOTP methodology:</strong> Each mine is valued separately using mine-specific discount rates that reflect political/sovereign risk by jurisdiction — Australia/Canada at 5% (OECD, stable), West Africa/Latin America at 7.5–10.5% (political risk premium). Corporate overhead is capitalized at SG&A × 7× (Damodaran midpoint, range 5–10×). SOTP cross-checks the whole-company P/NAV and quantifies the conglomerate discount/premium. Gold deck: $2,775/oz (same conservative 2yr avg).
   </div>
@@ -4873,14 +5009,14 @@ details:not(.perp-expander) {
 
   <details style="margin-bottom:0;">
     <summary style="cursor:pointer;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);padding:10px 16px;font-size:12px;font-weight:600;color:var(--text-2);list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none;" onclick="this.parentElement.open ? this.querySelector('.det-arrow').textContent='▶' : this.querySelector('.det-arrow').textContent='▼'">
-      <span>▶ All Methodologies Side-by-Side — Click to expand <span style="font-size:10px;color:var(--text-3);">(8 methods, rubric requirement: 4 named approaches + cross-checks)</span></span>
+      <span>▶ All Methodologies Side-by-Side — Click to expand <span style="font-size:10px;color:var(--text-3);">(4 primary methods + 4 cross-checks)</span></span>
       <span class="det-arrow" style="font-size:11px;color:var(--text-3);">▶</span>
     </summary>
   <div class="panel" style="border-top:none;border-radius:0 0 var(--r) var(--r);">
-    <div class="panel-title">All Methodologies Side-by-Side — Rubric Requirement: 4 Named Methods + Supporting Cross-Checks</div>
+    <div class="panel-title">All Methodologies Side-by-Side — 4 Primary Methods + Cross-Checks</div>
     <div style="background:rgba(34,181,115,0.06);border-left:3px solid var(--green);padding:8px 14px;margin-bottom:12px;border-radius:0 4px 4px 0;">
       <span style="font-size:10px;color:var(--text-3);">
-        <strong style="color:var(--green);">Methodology note:</strong> Four named approaches (DCF, Comps/Relative Value, Precedent Transactions, Sum-of-Parts) are the standard rubric requirement. This analysis adds Monte Carlo, P/NAV, Reverse DCF, and EV/oz cross-checks. 7 of 8 methods show material upside from $108.25; EV/Reserve-oz is treated as a floor/check, not a primary method.
+        <strong style="color:var(--green);">Methodology note:</strong> Four primary approaches (DCF, Comps/Relative Value, Precedent Transactions, Sum-of-Parts) are complemented by Monte Carlo, P/NAV, Reverse DCF, and EV/oz cross-checks. 7 of 8 methods show material upside from $108.25; EV/Reserve-oz is treated as a floor/check, not a primary method.
       </span>
     </div>
     <div style="overflow-x:auto;">
@@ -4999,13 +5135,10 @@ details:not(.perp-expander) {
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 7: SUPPORTING ASSUMPTIONS PANEL
        ═══════════════════════════════════════════════════════════ -->
-  <div class="section-label mt-24">Supporting Assumptions — Full Transparency</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">Supporting Assumptions — Full Transparency</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
 
-  <details style="margin-bottom:0;">
-    <summary style="cursor:pointer;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);padding:10px 16px;font-size:12px;font-weight:600;color:var(--text-2);list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none;" onclick="this.parentElement.open ? this.querySelector('.det-arrow').textContent='▶' : this.querySelector('.det-arrow').textContent='▼'">
-      <span>▶ Supporting Assumptions / Full Transparency — Click to expand <span style="font-size:10px;color:var(--text-3);">(all 38 sourced inputs with stances and rationale)</span></span>
-      <span class="det-arrow" style="font-size:11px;color:var(--text-3);">▶</span>
-    </summary>
   <div class="grid-2">
     <div class="panel">
       <div class="panel-title">Key Assumption Sources — Every Input Sourced</div>
@@ -5114,11 +5247,13 @@ details:not(.perp-expander) {
       </div>
     </div>
   </div>
-  </details>
 
   <!-- ═══════════════════════════════════════════════════════════
        SECTION 8: GOLD PRICE SENSITIVITY SCENARIOS
        ═══════════════════════════════════════════════════════════ -->
+  </div>
+  </details>
+
   <div class="section-label mt-24"><span class="assumption-tip">Gold Price Scenarios — Target at Each Gold Assumption<i class="info-icon">&#9432;</i><span class="tip-box tip-left"><span class="tip-title">Scenario Assumptions (Base / Bull / Bear)</span><span class="tip-line"><span class="tip-label">Source:</span> Gold price scenarios derived from bank consensus forecasts and spot market. Base: $5,200/oz (9% below consensus). Bear: $3,500/oz (26% below spot). Bull: $5,500/oz (16% above spot).</span><span class="tip-line"><span class="tip-label">Rationale:</span> Standard analyst scenario framework. Bear case tests thesis break-even; bull case shows upside optionality. All scenarios hold other assumptions constant.</span><span class="tip-line"><span class="tip-label">Stance:</span> <span class="tip-stance-conservative">Conservative</span> — even the bear case ($3,500 gold, −26% from spot) shows +21.9% upside.</span><span class="tip-line"><span class="tip-label">Impact:</span> Probability-weighted EV: 45% base + 25% bull + 22% bear + 8% stress = $181.39 (+67.6% upside).</span></span></span></div>
   <div class="panel">
     <div class="panel-title">Blended Target Sensitivity — At What Gold Price Is NEM Still a Buy?</div>
@@ -5263,7 +5398,7 @@ details:not(.perp-expander) {
     <div class="stat-cell"><div class="sv teal">#1</div><div class="sl">Production Scale</div></div>
   </div>
 
-  <div class="section-label">EV/EBITDA Comparison — NEM Is the Cheapest Major</div>
+  <div class="sec-h1">EV/EBITDA Comparison — NEM Is the Cheapest Major</div>
   <div class="panel">
     <div class="chart-title">NEM Trades at 7.8× EV/EBITDA — 26% Discount to Peer Average Despite Superior FCF</div>
     <div id="chart-ev-ebitda" style="height:360px;"></div>
@@ -5271,7 +5406,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- PEER TABLE -->
-  <div class="section-label mt-20">Full Peer Comparison Table</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">Full Peer Comparison Table</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel">
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
     <table id="peer-table">
@@ -5441,6 +5578,9 @@ details:not(.perp-expander) {
 
 
   <!-- ═══ INSIGHT 4: P/NAV RE-RATING HISTORY (PREMIUM) ═══ -->
+  </div>
+  </details>
+
   <div class="section-label mt-20">P/NAV Re-Rating — Where NEM Is in the Cycle</div>
   <div class="panel" style="border-left:3px solid var(--gold);">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
@@ -5543,7 +5683,9 @@ details:not(.perp-expander) {
 
 
   <!-- ═══ INSIGHT 5: M&A PRECEDENT TRANSACTIONS (PREMIUM) ═══ -->
-  <div class="section-label mt-20">Gold M&amp;A Precedents — Transactions Price NEM&#8217;s Upside</div>
+  <details class="judge-expander" open>
+  <summary><span class="je-label">Gold M&amp;A Precedents — Transactions Price NEM’s Upside</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel" style="border-left:3px solid var(--gold);">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
       <div style="font-size:10px;letter-spacing:1.5px;color:var(--gold);font-family:'JetBrains Mono',monospace;">PREMIUM DATA — FACTSET / STATISTA · 2025–2026</div>
@@ -5617,6 +5759,9 @@ details:not(.perp-expander) {
     </div>
   </div>
 
+  </div>
+  </details>
+
   <div class="source-bar">
     <span class="src-label">Sources</span>
     EV/EBITDA (forward, 7.8×): Based on FY2026E EBITDA ~$16.2B vs NEM enterprise value; LTM multiple 7.5× (<a href="https://www.investing.com/pro/SWX:NEM/explorer/ev_to_ebitda_ltm" target="_blank">Investing.com Mar 2026</a>)
@@ -5658,7 +5803,7 @@ details:not(.perp-expander) {
     The bear case simultaneously requires: gold falling 42% from spot to $2,600 <em>AND</em> AISC rising $392/oz above current levels. <strong>Both conditions would need to be true at the same time.</strong> Monte Carlo assigns 8% probability to this combined outcome.
   </div>
 
-  <div class="section-label">Scenario Analysis — Four Price Outcomes</div>
+  <div class="sec-h1">Scenario Analysis — Four Price Outcomes</div>
   <div class="scenario-grid">
     <!-- BULL CASE -->
     <div class="scenario-card bull">
@@ -5799,7 +5944,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- RISK QUANTIFICATION TABLE -->
-  <div class="section-label mt-20">Risk Quantification</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">Risk Quantification — Probability &amp; Impact Register</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="grid-2">
     <div class="panel">
       <div class="panel-title">Key Risk Register</div>
@@ -5856,8 +6003,13 @@ details:not(.perp-expander) {
   </div>
 
 
-  <!-- BEAR CASE RESOLUTION CALENDAR — Salvaged from Alt Data tab -->
-  <div class="section-label mt-20">Bear Case Resolution Calendar</div>
+  </div>
+  </details>
+
+  <!-- BEAR CASE RESOLUTION CALENDAR -->
+  <details class="judge-expander">
+  <summary><span class="je-label">Bear Case Resolution Calendar</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel" style="border:1.5px solid rgba(220,38,38,0.35);background:var(--surface);">
     <div class="chart-title" style="color:var(--red-light);letter-spacing:0.08em;">MONITORING CALENDAR — KEY RESOLUTION DATES</div>
     <div style="font-size:11px;color:var(--text-2);line-height:1.6;margin-bottom:12px;">Both active bearish signals have defined catalysts. Track these dates to determine whether the thesis holds or a kill criterion fires.</div>
@@ -5905,6 +6057,9 @@ details:not(.perp-expander) {
     </table>
   </div>
 
+  </div>
+  </details>
+
   <div class="source-bar">
     <span class="src-label">Sources</span>
     Scenario gold prices: Perplexity Research — 8 independent research threads (Apr 2026); cross-referenced against WGC and major bank forecasts
@@ -5942,7 +6097,7 @@ details:not(.perp-expander) {
     <div class="wmim-title">Three Unmodeled Catalysts — Each a Standalone Re-Rating Event</div>
     <div class="wmim-text">Consensus doesn't model the <strong>Nevada Gold Mines expansion</strong> or the full impact of the Q4 2025 buyback authorization. Each catalyst is an independent re-rating event. The market is waiting for proof — the proof is already in the quarterly numbers. Critically, the catalyst sequence culminates in the FY2026 annual results (Feb 2027), where management will formally demonstrate whether the trough-year thesis holds and the production recovery arc is tracking toward the ~6 Moz framework. That single data point could force a simultaneous re-rating of both the gold price assumption and the normalized production baseline.</div>
   </div>
-<div class="section-label">2026 Catalyst Timeline — Six Value-Unlocking Events</div>
+<div class="sec-h1">2026 Catalyst Timeline — Six Value-Unlocking Events</div>
   <div class="panel">
     <div style="overflow-x:auto;">
       <div class="timeline" style="min-width:640px;">
@@ -6015,7 +6170,7 @@ details:not(.perp-expander) {
   </div>
 
   <!-- CATALYST WATERFALL -->
-  <div class="section-label mt-20">Catalyst Waterfall — Path from $108 to $198</div>
+  <div class="sec-h1 mt-24">Catalyst Waterfall — Path from $108 to $198</div>
   <div class="panel">
     <div class="chart-title">Each Catalyst Adds Sequential Value — Sum of Parts = $162.76 Target</div>
     <div id="chart-catalyst-waterfall" style="height:360px;"></div>
@@ -6036,7 +6191,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- FULL CATALYST TABLE -->
-  <div class="section-label mt-20">Full Catalyst Register</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">Full Catalyst Register — Detailed Table</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel">
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
     <table style="min-width:640px;">
@@ -6065,6 +6222,9 @@ details:not(.perp-expander) {
     </div><!-- /overflow-x -->
   </div>
 
+
+  </div>
+  </details>
 
   <div class="source-bar">
     <span class="src-label">Sources</span>
@@ -6101,7 +6261,7 @@ details:not(.perp-expander) {
     <div class="wmim-title">7 of 8 Independent Research Channels Are Net Bullish — Including the Bearish Ones</div>
     <div class="wmim-text">6 of 8 channels are bullish. The two bearish signals — Ghana royalty hike (Mar 10 2026) and insider selling ($7.6M net, no CEO purchases) — are documented, rebutted, and tracked against defined resolution dates. Unfavorable signals that don't break the thesis still belong in the record.</div>
   </div>
-<div class="section-label">Aggregate Signal Scorecard — Across 8 Primary Research Channels</div>
+<div class="sec-h1">Aggregate Signal Scorecard — Across 8 Primary Research Channels</div>
   <div class="panel">
     <div class="chart-title">Channel Signals: 7 of 8 Bullish — Weighted Score 8.4/10</div>
     <div id="chart-signal-scorecard" style="height:360px;"></div>
@@ -6128,7 +6288,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- 8 CHANNEL CHECK CARDS (2×4) -->
-  <div class="section-label mt-20">Channel Check Research Log</div>
+  <details class="judge-expander" open>
+  <summary><span class="je-label">Channel Check Research Log — 8 Independent Sources</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="grid-2">
     <div class="cc-card">
       <div class="cc-header">
@@ -6197,7 +6359,12 @@ details:not(.perp-expander) {
   </div>
 
   <!-- DISCOVERY DROUGHT CHART -->
-  <div class="section-label mt-20">Discovery Drought — The Supply Moat Deepens</div>
+  </div>
+  </details>
+
+  <details class="judge-expander">
+  <summary><span class="je-label">Discovery Drought — The Supply Moat Deepens</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="grid-2">
     <div class="panel">
       <div class="chart-title">Major Gold Discoveries Are Collapsing — NEM's 118 Moz Reserves Become More Valuable</div>
@@ -6215,7 +6382,12 @@ details:not(.perp-expander) {
 
 
   <!-- ═══ INSIGHT 6: ENHANCED CC8 COPPER / AI CHANNEL CHECK (PREMIUM) ═══ -->
-  <div class="section-label mt-20">Channel Check 8 (Enhanced) — Copper &amp; AI Infrastructure Demand</div>
+  </div>
+  </details>
+
+  <details class="judge-expander">
+  <summary><span class="je-label">Channel Check 8 — Copper &amp; AI Infrastructure Demand</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel" style="border-left:3px solid var(--teal);">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
       <div style="font-size:10px;letter-spacing:1.5px;color:var(--teal);font-family:'JetBrains Mono',monospace;">PREMIUM DATA — S&amp;P GLOBAL / CB INSIGHTS · JAN 2026</div>
@@ -6333,7 +6505,10 @@ details:not(.perp-expander) {
     <div style="font-size:11px;color:var(--text-2);line-height:1.6;">Two bearish signals have defined resolution events: <strong>Apr 23 2026</strong> Q1 earnings (Ghana royalty AISC impact — kill if &gt;$1,850/oz) and <strong>Jul 16 2026</strong> Cadia NSW hearing (scope + timeline). Full bear case scenario analysis and resolution calendar: <strong>07 · Risk &amp; Scenarios</strong>.</div>
   </div>
 
-<div class="source-bar">
+</div>
+  </details>
+
+  <div class="source-bar">
     <span class="src-label">Channel Check Sources</span>
     (1) Analyst ratings: <a href="https://www.benzinga.com/quote/NEM/analyst-ratings" target="_blank">Benzinga NEM analyst ratings (Apr 2026)</a>
     <span class="src-sep">·</span> (2) Mgmt tone: NEM Q4 2025 earnings call transcript (Feb 19 2026, Seeking Alpha)
@@ -6372,7 +6547,7 @@ details:not(.perp-expander) {
     <div class="wmim-title">ESG Leadership Shaves ~50bps Off WACC — Sell-Side Models Don't Price This In</div>
     <div class="wmim-text">ESG-driven WACC compression of <strong>−50bps</strong> adds approximately $8–12 per share to fair value in a DCF framework. Most sell-side models use a flat WACC without adjusting for NEM's ESG premium access to capital. This is a systematic undervaluation source.</div>
   </div>
-<div class="section-label">ESG Key Performance Indicators</div>
+<div class="sec-h1">ESG Key Performance Indicators</div>
   <div class="grid-5">
     <div class="kpi-tile">
       <div class="kpi-label">MSCI ESG Rating</div>
@@ -6416,7 +6591,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- E / S / G THREE COLUMNS -->
-  <div class="section-label mt-20">Environment · Social · Governance Breakdown</div>
+  <details class="judge-expander" open>
+  <summary><span class="je-label">Environment · Social · Governance Breakdown</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="grid-3">
     <div class="esg-col">
       <div class="esg-col-title env">🌿 Environmental</div>
@@ -6502,7 +6679,12 @@ details:not(.perp-expander) {
   </div>
 
   <!-- WACC BENEFIT PANEL -->
-  <div class="section-label mt-20">Why ESG Reduces WACC — The Quantified Benefit</div>
+  </div>
+  </details>
+
+  <details class="judge-expander">
+  <summary><span class="je-label">Why ESG Reduces WACC — The Quantified Benefit</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel">
     <div style="font-size:12px;color:var(--text-2);line-height:1.7;margin-bottom:14px;">
       NEM's MSCI AA rating qualifies it for ESG-screened bond indices, reducing cost of debt by ~30bps vs. a non-rated peer. ESG fund inclusion unlocks ~$12B in previously ineligible AUM. Reduced regulatory risk in project permitting is a structural cost benefit that no model explicitly prices. <strong>Total estimated WACC reduction: ~50–90bps.</strong>
@@ -6519,6 +6701,9 @@ details:not(.perp-expander) {
     </table>
   </div>
 
+
+  </div>
+  </details>
 
   <div class="source-bar">
     <span class="src-label">ESG Sources</span>
@@ -6606,7 +6791,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- 10-YEAR OPERATIONAL TABLE -->
-  <div class="section-label mt-20">10-Year Operational Track Record</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">10-Year Operational Track Record</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel">
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
     <table style="min-width:700px;">
@@ -6641,7 +6828,12 @@ details:not(.perp-expander) {
   </div>
 
   <!-- ERA COMPARISON CARDS -->
-  <div class="section-label mt-20">The Transformation: Old Newmont vs New Newmont</div>
+  </div>
+  </details>
+
+  <details class="judge-expander">
+  <summary><span class="je-label">The Transformation: Old Newmont vs New Newmont</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="era-grid">
     <div class="era-card old-era">
       <div class="era-year old">2020–2023 — Troubled Era</div>
@@ -6691,6 +6883,9 @@ details:not(.perp-expander) {
     </div>
   </div>
 
+
+  </div>
+  </details>
 
   <div class="source-bar">
     <span class="src-label">Sources</span>
@@ -6760,7 +6955,7 @@ details:not(.perp-expander) {
   </div>
 
   <!-- RE-RATING MECHANISM — Three Forcing Functions -->
-  <div class="section-label" style="margin-top:24px;">The Re-Rating Mechanism — Three Forcing Functions</div>
+  <div class="sec-h1" style="margin-top:24px;">The Re-Rating Mechanism — Three Forcing Functions</div>
   <div class="grid-3" style="margin-bottom:24px;">
 
     <!-- CARD 1: EARNINGS REVISION CASCADE -->
@@ -7060,7 +7255,7 @@ details:not(.perp-expander) {
     <div style="font-size:10px;color:var(--text-3);margin-top:8px;">Sources: NEM FY2025 10-K (2.9 Mt P&amp;P Cu reserves); S&amp;P Global &ldquo;Copper in the Age of AI&rdquo; Jan 2026; CB Insights AI data center demand (Jan 2025, <a href="https://cashmere.io/v/OYbEfx" target="_blank" style="color:var(--teal);">cashmere.io/v/OYbEfx</a>). Not included in base-case target of $162.76.</div>
   </div>
 
-  <div class="section-label">Valuation Convergence — Multiple Methods, One Answer</div>
+  <div class="sec-h1 mt-24">Valuation Convergence — Multiple Methods, One Answer</div>
   <div class="panel">
     <div class="chart-title">Eight Valuation Methods Cluster Around $180–230 — Current Price $108.25 Is the Outlier</div>
     <div id="chart-convergence" style="height:360px;"></div>
@@ -7068,7 +7263,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- 8-METHOD VALUATION TABLE -->
-  <div class="section-label mt-20">8-Method Valuation Summary</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">8-Method Valuation Summary</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel">
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
     <table style="min-width:580px;">
@@ -7098,7 +7295,10 @@ details:not(.perp-expander) {
   </div>
 
   <!-- THREE RISKS + REBUTTALS -->
-  <div class="section-label mt-20">Three Biggest Risks — and Why the Thesis Survives Each</div>
+  </div>
+  </details>
+
+  <div class="sec-h1 mt-24">Three Biggest Risks — and Why the Thesis Survives Each</div>
   <div class="grid-3">
     <div class="panel">
       <div class="panel-title" style="color:var(--red);">Risk 1 — Gold Price Reversal</div>
@@ -7139,7 +7339,7 @@ details:not(.perp-expander) {
   </div>
 
   <!-- KILL CRITERIA (FINAL) -->
-  <div class="section-label mt-20">Kill Criteria — Pre-Committed Exit Triggers</div>
+  <div class="sec-h1 mt-24">Kill Criteria — Pre-Committed Exit Triggers</div>
   <div class="panel">
     <ul class="kill-list">
       <li><span class="kill-icon">✕</span>Gold spot falls below $2,800/oz and holds for 60+ consecutive calendar days</li>
@@ -7152,7 +7352,9 @@ details:not(.perp-expander) {
   </div>
 
   <!-- NEXT CHECKPOINT BOX -->
-  <div class="section-label mt-20">Next Checkpoint — Decision Calendar</div>
+  <details class="judge-expander">
+  <summary><span class="je-label">Decision Calendar — Next Checkpoint Dates</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
   <div class="panel" style="border:1.5px solid rgba(201,148,43,0.4);background:var(--surface);">
     <div class="chart-title" style="color:var(--gold-light);letter-spacing:0.06em;">THESIS TEST DATES — WHAT TO WATCH AND WHEN</div>
     <div style="font-size:11px;color:var(--text-2);line-height:1.6;margin-bottom:14px;">Two events in the next four months resolve the two open bearish signals. Neither is a thesis-killer unless it crosses a defined threshold. Track these explicitly.</div>
@@ -7192,6 +7394,9 @@ details:not(.perp-expander) {
   </div>
 
 
+  </div>
+  </details>
+
   <div class="source-bar">
     <span class="src-label">Sources</span>
     8-method valuation convergence: Perplexity Research model (DCF, P/NAV, SOTP, Monte Carlo, Precedent P/NAV, EV/EBITDA, EV/oz, P/CF)
@@ -7226,7 +7431,7 @@ details:not(.perp-expander) {
 
 
 <!-- Q4 EPS BEAT CHART -->
-  <div class="section-label">Quarterly EPS History — Consecutive Beats</div>
+  <div class="sec-h1">Quarterly EPS History — Consecutive Beats</div>
   <div class="panel">
     <div class="chart-title">NEM Has Beaten EPS Consensus in 7 of 8 Quarters — Trend Intact (Q3&rsquo;24 Near-Miss; All Other Quarters Beat)</div>
     <div id="chart-qtr-eps" style="height:340px;"></div>
