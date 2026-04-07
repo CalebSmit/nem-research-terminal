@@ -2377,6 +2377,57 @@ details:not(.perp-expander) {
 .judge-stack .judge-expander:last-child { border-bottom: 1px solid var(--border-2); border-radius: 0 0 var(--r) var(--r); }
 .judge-stack .judge-expander + .judge-expander { border-top: 1px solid var(--border); }
 
+
+/* ============================================================
+   SMOOTH DETAILS ANIMATION — grid-template-rows trick
+   Works for both .judge-expander and .perp-expander.
+   No JS required for the expand; tiny JS handles close anim.
+   ============================================================ */
+
+/* Keep overflow:hidden on the details containers for border-radius clipping.
+   The body wrapper animates via grid-template-rows which doesn't require
+   overflow:visible on the parent. */
+
+/* The inner body wrappers animate via grid rows */
+.judge-expander-body,
+.perp-expander-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+.judge-expander[open] > .judge-expander-body,
+.perp-expander[open] > .perp-expander-body {
+  grid-template-rows: 1fr;
+}
+
+/* The required inner wrapper that grid-template-rows animates against */
+.judge-expander-body > .je-inner,
+.perp-expander-body > .pe-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Arrow spin — already in CSS but we make it match the timing */
+.judge-expander > summary .je-arrow {
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.perp-expander > summary::after {
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Summary border-bottom fade on open */
+.judge-expander > summary {
+  transition: background 0.14s ease, color 0.14s ease,
+              border-bottom-color 0.14s ease !important;
+}
+
+/* Closing animation class (added by JS) */
+.judge-expander.is-closing > .judge-expander-body,
+.perp-expander.is-closing > .perp-expander-body {
+  grid-template-rows: 0fr;
+}
+
 </style>
 </head>
 <body>
@@ -9058,6 +9109,61 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(recalcPNAV, 150);
   setTimeout(recalcSOTP, 200);
 });
+
+
+
+// ── Smooth Details Animation ──────────────────────────────────────────────
+(function() {
+  function wrapInner(el, wrapClass) {
+    if (el.querySelector(':scope > .' + wrapClass)) return; // already wrapped
+    var wrapper = document.createElement('div');
+    wrapper.className = wrapClass;
+    while (el.firstChild) wrapper.appendChild(el.firstChild);
+    el.appendChild(wrapper);
+  }
+
+  function initExpanders() {
+    // Wrap judge-expander bodies
+    document.querySelectorAll('.judge-expander-body').forEach(function(body) {
+      wrapInner(body, 'je-inner');
+    });
+    // Wrap perp-expander bodies
+    document.querySelectorAll('.perp-expander-body').forEach(function(body) {
+      wrapInner(body, 'pe-inner');
+    });
+
+    // Attach smooth-close handler to every animated details
+    document.querySelectorAll('.judge-expander, .perp-expander').forEach(function(details) {
+      var summary = details.querySelector('summary');
+      if (!summary || summary._animBound) return;
+      summary._animBound = true;
+
+      summary.addEventListener('click', function(e) {
+        if (!details.open) return; // opening — browser handles natively, CSS animates
+
+        // Closing — prevent default, animate out, then remove [open]
+        e.preventDefault();
+        details.classList.add('is-closing');
+
+        var body = details.querySelector('.judge-expander-body, .perp-expander-body');
+        if (!body) { details.removeAttribute('open'); return; }
+
+        body.addEventListener('transitionend', function handler(ev) {
+          if (ev.propertyName !== 'grid-template-rows') return;
+          body.removeEventListener('transitionend', handler);
+          details.classList.remove('is-closing');
+          details.removeAttribute('open');
+        }, { once: false });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initExpanders);
+  } else {
+    initExpanders();
+  }
+})();
 
 </script>
 </body>
