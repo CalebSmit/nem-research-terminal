@@ -356,17 +356,18 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .tab-header-meta {
   display: grid;
   grid-template-columns: repeat(4, minmax(80px, 1fr));
-  gap: 1px;
-  background: var(--border);
+  gap: 0;
+  background: transparent;
   border: 1px solid var(--border-2);
-  border-radius: var(--r);
+  border-radius: 6px;
   overflow: hidden;
   flex-shrink: 0;
   align-self: flex-start;
-  min-width: 320px;
-  max-width: 420px;
+  min-width: 340px;
+  max-width: 440px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 4px 16px rgba(0,0,0,0.35);
 }
-/* When there are 5 stats, go 3-2 layout via nth-child magic */
+/* When there are 5 stats, go 3-2 layout */
 .tab-header-meta.stats-5 {
   grid-template-columns: repeat(3, minmax(80px, 1fr));
 }
@@ -374,16 +375,33 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 3px;
-  padding: 10px 14px;
+  gap: 5px;
+  padding: 12px 14px 11px;
   background: var(--surface-2);
-  transition: background 0.12s;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  position: relative;
+  transition: background 0.15s;
 }
+.tab-header-stat:last-child { border-right: none; }
+/* Accent top bar — color varies by .val child color class */
+.tab-header-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.07);
+  transition: background 0.15s;
+}
+.tab-header-stat:has(.val.gold)::before  { background: rgba(232,175,80,0.55); }
+.tab-header-stat:has(.val.green)::before { background: rgba(34,181,115,0.55); }
+.tab-header-stat:has(.val.red)::before   { background: rgba(224,82,82,0.55); }
+.tab-header-stat:has(.val.teal)::before  { background: rgba(34,211,238,0.55); }
 .tab-header-stat:hover { background: var(--surface-3); }
 .tab-header-stat .lbl {
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--text-3);
   line-height: 1;
@@ -394,11 +412,12 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 }
 .tab-header-stat .val {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text);
   font-weight: 700;
   line-height: 1.1;
   white-space: nowrap;
+  letter-spacing: -0.01em;
 }
 .tab-header-stat .val.gold  { color: var(--gold-light); }
 .tab-header-stat .val.green { color: var(--green-light); }
@@ -7435,27 +7454,119 @@ function initTab0Charts() {
    ============================================================ */
 function initTab1Charts() {
   // Gold price history
-  Plotly.newPlot('chart-gold-price', [{
-    type: 'scatter', mode: 'lines', name: 'Gold Spot ($/oz)',
-    x: ['2018','2019','2020','2021','2022','2023','2024','2025','2026 YTD'],
-    y: [1268, 1393, 1770, 1799, 1800, 1943, 2390, 3800, 4612],
-    line: { color: '#E8AF50', width: 3 },
-    fill: 'tozeroy', fillcolor: 'rgba(232,175,80,0.08)',
-    hovertemplate: '%{x}<br>Gold: $%{y:,.0f}/oz<extra></extra>'
-  }], mergeLayout({
-    title: { text: 'Gold Spot Price — Three Structural Legs to $4,612', font: { size: 13, color: '#E2E2E8' } },
-    yaxis: { title: 'Gold Price ($/oz)', tickprefix: '$', tickformat: ',.0f' },
-    height: 380,
-    margin: { l: 70, r: 25, t: 55, b: 55 },
+  // Gold price chart — denser data, clearly labeled legs, arrows that don't overlap the line
+  Plotly.newPlot('chart-gold-price', [
+    // Main gold price area
+    {
+      type: 'scatter', mode: 'lines', name: 'Gold Spot ($/oz)',
+      x: ['Jan 2018','Jan 2019','Jun 2019','Jan 2020','Aug 2020','Jan 2021','Jan 2022','Jun 2022','Jan 2023','Jan 2024','Jun 2024','Jan 2025','Jun 2025','Oct 2025','Apr 2026'],
+      y: [1305, 1290, 1415, 1580, 2075, 1900, 1830, 1820, 1925, 2050, 2340, 2815, 3350, 2620, 4612],
+      line: { color: '#E8AF50', width: 2.5, shape: 'spline', smoothing: 0.6 },
+      fill: 'tozeroy', fillcolor: 'rgba(232,175,80,0.07)',
+      hovertemplate: '<b>%{x}</b><br>Gold: <b>$%{y:,.0f}/oz</b><extra></extra>'
+    },
+    // Leg 1 peak marker
+    {
+      type: 'scatter', mode: 'markers', name: 'Leg 1 Peak',
+      x: ['Aug 2020'], y: [2075],
+      marker: { color: '#E8AF50', size: 9, symbol: 'circle', line: { color: '#131316', width: 2 } },
+      hovertemplate: 'Aug 2020 Peak<br>$%{y:,.0f}/oz<extra></extra>',
+      showlegend: false
+    },
+    // Leg 2 start marker
+    {
+      type: 'scatter', mode: 'markers', name: 'Leg 2',
+      x: ['Jan 2022'], y: [1830],
+      marker: { color: '#22D3EE', size: 9, symbol: 'circle', line: { color: '#131316', width: 2 } },
+      hovertemplate: 'Jan 2022<br>$%{y:,.0f}/oz<extra></extra>',
+      showlegend: false
+    },
+    // Leg 3 breakout marker
+    {
+      type: 'scatter', mode: 'markers', name: 'Leg 3',
+      x: ['Jan 2024'], y: [2050],
+      marker: { color: '#22B573', size: 9, symbol: 'circle', line: { color: '#131316', width: 2 } },
+      hovertemplate: 'Breakout: Jan 2024<br>$%{y:,.0f}/oz<extra></extra>',
+      showlegend: false
+    },
+    // Current price marker
+    {
+      type: 'scatter', mode: 'markers+text', name: 'Spot',
+      x: ['Apr 2026'], y: [4612],
+      marker: { color: '#E8AF50', size: 12, symbol: 'diamond', line: { color: '#fff', width: 1.5 } },
+      text: ['  $4,612/oz  TODAY'],
+      textposition: 'middle left',
+      textfont: { color: '#E8AF50', size: 11, family: 'JetBrains Mono' },
+      hovertemplate: 'Apr 2026 Spot<br><b>$4,612/oz</b><extra></extra>',
+      showlegend: false
+    }
+  ], mergeLayout({
+    title: { text: '', font: { size: 13, color: '#E2E2E8' } },
+    yaxis: {
+      title: { text: 'Gold Price ($/oz)', font: { size: 11 } },
+      tickprefix: '$', tickformat: ',.0f',
+      range: [900, 5400],
+      gridcolor: 'rgba(255,255,255,0.06)'
+    },
+    xaxis: {
+      gridcolor: 'rgba(255,255,255,0.04)',
+      tickangle: -30,
+      tickfont: { size: 10 }
+    },
+    height: 400,
+    margin: { l: 75, r: 120, t: 40, b: 70 },
     shapes: [
-      { type: 'rect', x0: '2019', x1: '2020', y0: 0, y1: 2200, fillcolor: 'rgba(232,175,80,0.06)', line: { width: 0 } },
-      { type: 'rect', x0: '2022', x1: '2023', y0: 0, y1: 2200, fillcolor: 'rgba(8,145,178,0.06)', line: { width: 0 } },
-      { type: 'rect', x0: '2024', x1: '2026 YTD', y0: 0, y1: 5000, fillcolor: 'rgba(34,181,115,0.06)', line: { width: 0 } }
+      // Leg 1 shaded region
+      { type: 'rect', x0: 'Jun 2019', x1: 'Aug 2020', y0: 900, y1: 5400,
+        fillcolor: 'rgba(232,175,80,0.07)', line: { width: 0 }, layer: 'below' },
+      // Leg 2 shaded region
+      { type: 'rect', x0: 'Jan 2022', x1: 'Jan 2023', y0: 900, y1: 5400,
+        fillcolor: 'rgba(34,211,238,0.06)', line: { width: 0 }, layer: 'below' },
+      // Leg 3 shaded region
+      { type: 'rect', x0: 'Jan 2024', x1: 'Apr 2026', y0: 900, y1: 5400,
+        fillcolor: 'rgba(34,181,115,0.07)', line: { width: 0 }, layer: 'below' },
+      // NEM embedded gold price line
+      { type: 'line', x0: 'Jan 2018', x1: 'Apr 2026', y0: 3641, y1: 3641,
+        line: { color: 'rgba(224,82,82,0.6)', width: 1.5, dash: 'dash' } }
     ],
     annotations: [
-      { x: '2020', y: 1770, text: 'Leg 1: COVID', showarrow: false, font: { color: '#E8AF50', size: 9, family: 'JetBrains Mono' }, yshift: 20 },
-      { x: '2022', y: 1800, text: 'Leg 2: Rate peak', showarrow: false, font: { color: '#22D3EE', size: 9, family: 'JetBrains Mono' }, yshift: 20 },
-      { x: '2025', y: 3800, text: 'Leg 3: CB buying', showarrow: false, font: { color: '#22B573', size: 9, family: 'JetBrains Mono' }, yshift: 20 }
+      // Leg labels — floated high, well above the line
+      {
+        x: 'Aug 2020', y: 2075,
+        text: '① COVID<br>safe-haven',
+        showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5,
+        arrowcolor: '#E8AF50', ax: -45, ay: -55,
+        font: { color: '#E8AF50', size: 10, family: 'JetBrains Mono' },
+        bgcolor: 'rgba(19,19,22,0.85)', bordercolor: 'rgba(232,175,80,0.4)',
+        borderpad: 4, borderwidth: 1
+      },
+      {
+        x: 'Jun 2022', y: 1820,
+        text: '② Russia-Ukraine<br>rate peak fear',
+        showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5,
+        arrowcolor: '#22D3EE', ax: 0, ay: -60,
+        font: { color: '#22D3EE', size: 10, family: 'JetBrains Mono' },
+        bgcolor: 'rgba(19,19,22,0.85)', bordercolor: 'rgba(34,211,238,0.4)',
+        borderpad: 4, borderwidth: 1
+      },
+      {
+        x: 'Jun 2025', y: 3350,
+        text: '③ Central bank<br>de-dollarization',
+        showarrow: true, arrowhead: 2, arrowsize: 1, arrowwidth: 1.5,
+        arrowcolor: '#22B573', ax: 30, ay: -55,
+        font: { color: '#22B573', size: 10, family: 'JetBrains Mono' },
+        bgcolor: 'rgba(19,19,22,0.85)', bordercolor: 'rgba(34,181,115,0.4)',
+        borderpad: 4, borderwidth: 1
+      },
+      // NEM embedded price label
+      {
+        x: 'Jun 2022', y: 3641,
+        text: 'NEM embedded: $3,641',
+        showarrow: false,
+        font: { color: 'rgba(224,82,82,0.85)', size: 9.5, family: 'JetBrains Mono' },
+        bgcolor: 'rgba(19,19,22,0.7)', borderpad: 3,
+        yshift: -14, xanchor: 'center'
+      }
     ]
   }), PLOTLY_CONFIG);
 
