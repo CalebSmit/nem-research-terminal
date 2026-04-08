@@ -2475,7 +2475,6 @@ details:not(.perp-expander) {
     <div class="story-phase-label">Verdict</div>
     <button class="tab-btn" onclick="showTab(11)">12 · Verdict</button>
     <button class="tab-btn" onclick="showTab(12)">13 · Perplexity Research</button>
-    <button class="tab-btn" onclick="showTab(13)">14 · Quarterly Model</button>
   </div>
 </nav>
 
@@ -3345,6 +3344,95 @@ details:not(.perp-expander) {
   </div>
   </details>
 
+  <!-- EPS BEAT HISTORY + FULL YEAR MODEL (migrated from former Quarterly Model tab) -->
+  <details class="judge-expander" open>
+  <summary><span class="je-label">Quarterly EPS History — 7 of 8 Consecutive Beats</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
+  <div class="panel">
+    <div class="chart-title">NEM Beaten EPS Consensus 7 of 8 Quarters — Q4‧25 Was the Largest Beat (+27.9%)</div>
+    <div id="chart-qtr-eps" style="height:300px;"></div>
+    <div class="chart-takeaway"><strong>7 of 8 consecutive EPS beats</strong> with accelerating magnitude. Q4 2025: $2.52 actual vs $1.97 consensus (+27.9%). At gold $4,612+ and guided AISC $1,680/oz, Q1 2026 estimates of ~$2.10 look stale — model implies $2.40–2.60.</div>
+  </div>
+  </div>
+  </details>
+
+  <details class="judge-expander">
+  <summary><span class="je-label">Full-Year Financial Model — FY2023A–FY2028E</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
+  <div class="panel">
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:560px;">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>FY2023A</th>
+          <th>FY2024A</th>
+          <th>FY2025A</th>
+          <th>FY2026E</th>
+          <th>FY2027E</th>
+          <th>FY2028E</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Gold Price ($/oz avg)</td><td>$1,941</td><td>$2,408</td><td class="val-gold">$3,498</td><td>$5,200</td><td>$5,000</td><td>$4,800</td></tr>
+        <tr style="background:rgba(220,38,38,0.04);"><td>Production (Moz) <span style="font-family:var(--font-mono);font-size:10px;background:rgba(220,38,38,0.2);color:var(--red-light);padding:1px 5px;border-radius:2px;margin-left:4px;">&#9660; 2026 TROUGH</span></td><td>5.54</td><td>6.86</td><td>5.89</td><td style="color:var(--red-light);font-weight:700;">5.30 &#9660;</td><td style="color:var(--green-light);font-weight:700;">~6.00 &#9650;</td><td>~6.20</td></tr>
+        <tr><td>AISC ($/oz)</td><td>$1,512</td><td>$1,475</td><td class="val-green">$1,358</td><td>$1,680</td><td>$1,580</td><td>$1,520</td></tr>
+        <tr><td>Revenue ($M)</td><td>$11,775</td><td>$18,557</td><td>$22,669</td><td>$19,350</td><td>$22,800</td><td>$24,100</td></tr>
+        <tr><td>EBITDA ($M)</td><td>$1,858</td><td>$7,866</td><td class="val-green">$13,480</td><td>$11,800</td><td>$14,400</td><td>$15,500</td></tr>
+        <tr><td>EBITDA Margin</td><td>15.8%</td><td>42.4%</td><td class="val-green">59.5%</td><td>61.0%</td><td>63.2%</td><td>64.3%</td></tr>
+        <tr><td>EPS (Diluted)</td><td>$(3.00)</td><td>$2.86</td><td class="val-green">$6.89</td><td>$4.10</td><td>$5.40</td><td>$6.20</td></tr>
+        <tr><td>Capex ($M)</td><td>$2,666</td><td>$3,402</td><td>$3,035</td><td>$3,350</td><td>$3,800</td><td>$3,800</td></tr>
+        <tr><td>FCF ($M)</td><td class="val-red">$97</td><td>$2,961</td><td class="val-green"><strong>$7,299</strong></td><td>$6,100</td><td class="val-green">$7,800</td><td class="val-green">$8,900</td></tr>
+        <tr><td>Net Debt/(Cash) ($M)</td><td>$2,842</td><td>$(1,240)</td><td class="val-green">$(7,173)</td><td>$(9,800)</td><td>$(12,400)</td><td>$(15,200)</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:10px;color:var(--text-3);margin-top:6px;line-height:1.55;padding:6px 8px;background:rgba(255,255,255,0.02);border-left:2px solid var(--border);">FY2026E–FY2028E reflect Perplexity Research model at $5,200/oz Y1 gold. FY2025A actuals: NEM Q4 2025 SEC filing (Feb 19 2026). Net cash $7,173M = cash $7,647M – debt $474M.</div>
+  </div>
+  </div>
+  </details>
+
+  <details class="judge-expander">
+  <summary><span class="je-label">Model vs Street Consensus — The $74/Share Gap Explained</span><span class="je-arrow">&#9654;</span></summary>
+  <div class="judge-expander-body">
+  <div class="panel">
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="min-width:600px;">
+      <thead>
+        <tr>
+          <th>Metric / Year</th>
+          <th>Street FY2026E</th>
+          <th>Model FY2026E</th>
+          <th>Difference</th>
+          <th>Street FY2027E</th>
+          <th>Model FY2027E</th>
+          <th>Difference</th>
+          <th>Source of Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Gold Price ($/oz)</td><td>$3,500–3,800</td><td class="val-gold">$5,200</td><td class="val-green">+43%</td><td>$3,000–3,200</td><td class="val-gold">$5,000</td><td class="val-green">+60%</td><td>Street still using pre-breakout gold decks</td></tr>
+        <tr><td>Revenue ($M)</td><td>$16,800</td><td class="val-gold">$24,820</td><td class="val-green">+$8.0B</td><td>$15,600</td><td class="val-gold">$25,100</td><td class="val-green">+$9.5B</td><td>Gold price &amp; production assumptions</td></tr>
+        <tr><td>EBITDA ($M)</td><td>$8,400</td><td class="val-gold">$16,200</td><td class="val-green">+93%</td><td>$7,800</td><td class="val-gold">$16,800</td><td class="val-green">+115%</td><td>Operating leverage; AISC beats</td></tr>
+        <tr><td>EPS</td><td>$3.20</td><td class="val-gold">$6.68</td><td class="val-green">+$3.48</td><td>$2.90</td><td class="val-gold">$7.22</td><td class="val-green">+$4.32</td><td>FCF + buybacks compress share count</td></tr>
+        <tr><td>FCF ($M)</td><td>$3,600</td><td class="val-gold">$8,400</td><td class="val-green">+133%</td><td>$3,200</td><td class="val-gold">$9,100</td><td class="val-green">+184%</td><td>Gold price mismatch is primary driver</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="margin-top:14px;padding:12px;background:rgba(201,148,43,0.06);border:1px solid rgba(201,148,43,0.15);border-radius:2px;">
+      <div style="font-size:12px;color:var(--text-2);line-height:1.7;">
+        <strong style="color:var(--gold-light);">The Core Gap:</strong> Street consensus embeds two compounding errors: gold assumptions of $3,500–3,800/oz from pre-breakout research notes, and 2026 trough production treated as normalized output. When both correct simultaneously, the valuation gap closes from two directions at once. The catalyst is simply time: as gold stays elevated and production recovers quarter by quarter, the consensus catch-up is mechanically forced.
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:10px 12px;background:rgba(8,145,178,0.06);border:1px solid rgba(8,145,178,0.2);border-radius:2px;">
+      <div style="font-size:10px;color:var(--text-2);line-height:1.65;">
+        <strong style="color:var(--teal-light);">KEY DISTINCTION — Two Different "Gold Forecasts":</strong> Street equity model gold decks ($3,500–3,800/oz, used to build EPS models and price targets) differ from bank commodity strategy forecasts (JPM $6,300, GS $5,400, UBS $6,200 — forward metal prices). Equity analysts have not yet adopted their own commodity team’s view. That convergence — when the equity desk updates to the commodity desk’s gold level — is exactly the re-rating catalyst.
+      </div>
+    </div>
+  </div>
+  </div>
+  </details>
+
   <div class="source-bar">
     <span class="src-label">Sources</span>
     FY2025 Revenue $22,669M, Adj. EBITDA $13,480M, FCF $7,299M, EPS $6.89: <a href="https://www.sec.gov/Archives/edgar/data/1164727/000116472726000009/newmontq42025earningsand20.htm" target="_blank">NEM Q4 2025 SEC Filing (Feb 19 2026)</a>
@@ -3352,6 +3440,7 @@ details:not(.perp-expander) {
     <span class="src-sep">·</span> Piotroski 9/9 (FY2025), Altman Z 5.04 (GuruFocus TTM Mar 2025), ROIC 19.6%: Calculated using NEM Dec 31 2025 balance sheet + income statement
     <span class="src-sep">·</span> Net cash $7,173M: NEM Q4 2025 balance sheet (cash $7,647M - debt $474M)
     <span class="src-sep">·</span> FY2026 AISC guidance ~$1,680/oz: NEM Q4 2025 earnings call (Feb 19 2026)
+    <span class="src-sep">·</span> Quarterly EPS actuals Q1’ 24–Q4’25 &amp; consensus: Bloomberg/Zacks Apr 2026; <a href="https://www.investing.com/news/earnings/newmont-beats-q4-estimates-highlights-record-free-cash-flow-shares-rise-1-4514942" target="_blank">Investing.com Feb 2026</a>
   </div>
 </section>
 
@@ -5183,6 +5272,33 @@ details:not(.perp-expander) {
     <div class="wmim-label">Key Insight</div>
     <div class="wmim-title">World's Largest Gold Miner at the Deepest Discount in the Sector</div>
     <div class="wmim-text">NEM trades at <strong>8.1× EV/EBITDA</strong> — a 23% discount to the peer average — despite the largest reserve base, second-lowest AISC, and highest FCF in the sector. Scale commands a premium everywhere except here. The discount reflects stale gold price assumptions, not operational impairment.</div>
+  </div>
+
+  <!-- WHY NEM WINS VS PEERS COMPETITIVE MOAT BOX -->
+  <div style="background:var(--surface);border:1px solid var(--border-2);border-top:3px solid var(--gold);border-radius:2px;padding:16px 20px;margin-bottom:20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px;">Why NEM vs. Peers — Five Structural Moats Not Visible in a Simple Comp Table</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+      <div style="border-right:1px solid var(--border-2);padding-right:12px;">
+        <div style="font-size:10px;font-weight:700;color:var(--gold-light);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">S&amp;P 500</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.5;">Only senior gold miner in S&amp;P 500. Systematic passive inflows that competitors cannot access. Index reconstitution forces buying by funds tracking the benchmark.</div>
+      </div>
+      <div style="border-right:1px solid var(--border-2);padding-right:12px;">
+        <div style="font-size:10px;font-weight:700;color:#14b8a6;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Net Cash</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.5;">$7.2B net cash position vs. Barrick at $0.7B and KGC at net debt. In a gold bull cycle, NEM can deploy capital for buybacks while leveraged peers face refinancing risk.</div>
+      </div>
+      <div style="border-right:1px solid var(--border-2);padding-right:12px;">
+        <div style="font-size:10px;font-weight:700;color:var(--green-light);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Reserve Tenure</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.5;">118.2 Moz P&amp;P reserves = ~20-year mine life at current production. AEM at 54 Moz, Barrick at 85 Moz. NEM is the only major that does not face medium-term reserve depletion risk.</div>
+      </div>
+      <div style="border-right:1px solid var(--border-2);padding-right:12px;">
+        <div style="font-size:10px;font-weight:700;color:var(--amber);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Copper Upside</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.5;">Cadia's 2.9 Mt copper reserves = $12–18/share in unpriced SOTP. Peers (AEM, KGC, GFI) have no comparable copper optionality. This is exclusively a NEM structural advantage.</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--green-light);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">FCF Yield</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.5;">5.8% LTM FCF yield vs. sector average 3.2%. Highest absolute FCF generation in the gold sector ($7.3B FY2025). Funds the $1.00/share dividend AND $3B buyback without stress.</div>
+      </div>
+    </div>
   </div>
 <div class="stat-row" style="margin-bottom:20px;">
     <div class="stat-cell"><div class="sv red">8.1×</div><div class="sl">NEM EV/EBITDA</div></div>
@@ -7378,10 +7494,6 @@ details:not(.perp-expander) {
 </section>
 
 <!-- ===========================================================
-     TAB 14 — QUARTERLY MODEL
-     =========================================================== -->
-
-<!-- ===========================================================
      TAB 13 — HOW I USED PERPLEXITY
      =========================================================== -->
 <section class="tab-panel" id="tab-12">
@@ -7397,6 +7509,37 @@ details:not(.perp-expander) {
       <div class="tab-header-stat"><span class="lbl">Premium Sources</span><span class="val teal">3</span></div>
       <div class="tab-header-stat"><span class="lbl">Unique Insights</span><span class="val green">5</span></div>
       <div class="tab-header-stat"><span class="lbl">vs. Baseline</span><span class="val green">+42%</span></div>
+    </div>
+  </div>
+
+  <!-- FIVE NON-OBVIOUS INSIGHTS EXECUTIVE SUMMARY -->
+  <div style="background:rgba(201,148,43,0.07);border:2px solid rgba(201,148,43,0.3);border-radius:2px;padding:20px 24px;margin-bottom:20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:14px;">Five Non-Obvious Insights Perplexity Computer Produced — Not Available From Any Single Static Source</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="background:var(--surface);border:1px solid var(--border-2);border-left:3px solid var(--gold);padding:12px;border-radius:2px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;">01 — $3,641/oz Gold Embed</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6;">NEM's stock currently prices gold at <strong>$3,641/oz</strong> — 21% below spot. This reverse-solve was produced by Perplexity Computer in a multi-turn FCFF thread. No sell-side report we reviewed had identified this specific implied price.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border-2);border-left:3px solid #14b8a6;padding:12px;border-radius:2px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#14b8a6;margin-bottom:6px;">02 — Copper/AI Optionality</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6;">Cadia's 2.9 Mt copper reserves are worth <strong>$12–18/share</strong> in standalone SOTP NAV. Every sell-side model treats this as a by-product credit only. CB Insights data on AI data center copper demand identified this as a structural tailwind, not in any analyst report.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border-2);border-left:3px solid var(--green);padding:12px;border-radius:2px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-light);margin-bottom:6px;">03 — Consensus Staleness Gap</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6;">22-analyst consensus uses $3,200–3,500/oz gold decks. Perplexity search + date-checking of individual analyst reports identified that <strong>none had updated to $4,000+ gold</strong> as of April 2026 — creating a $74/share target gap explained entirely by stale inputs.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border-2);border-left:3px solid var(--gold);padding:12px;border-radius:2px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;">04 — Four-Pillar Demand Floor</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6;">Statista premium data (WGC by sector + region, quarterly) showed that sub-$4,000 gold requires <strong>all four demand categories reversing simultaneously</strong> — central banks, ETFs, jewelry, and tech. Historically this has never happened.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border-2);border-left:3px solid #14b8a6;padding:12px;border-radius:2px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#14b8a6;margin-bottom:6px;">05 — 91.2% Probability Floor</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6;">Perplexity Computer ran 10,000 Monte Carlo paths across correlated gold, AISC, and production variables. The result — <strong>91.2% probability NEM &gt;$108</strong>, median $195.40 — is a specific, verifiable output that no static research could produce.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border-2);border-left:3px solid var(--green);padding:12px;border-radius:2px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-light);margin-bottom:6px;">06 — Discovery Drought Severity</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6;">S&P Global data retrieved via Perplexity: new gold discovered per year collapsed <strong>93%</strong> from 150 Moz (1995) to &lt;10 Moz (2024). Grassroots exploration at record-low 19% of budgets. NEM's 118.2 Moz reserve is structurally irreplaceable at current exploration rates.</div>
+      </div>
     </div>
   </div>
 
@@ -7592,15 +7735,15 @@ details:not(.perp-expander) {
   </div>
 </section>
 
+<!-- QUARTERLY MODEL REMOVED — content migrated to Financials tab (tab-2) -->
+<!-- PLACEHOLDER to maintain comment structure -->
 <!-- ===========================================================
-     TAB 14 — QUARTERLY MODEL (renumbered from 13)
+     END OF TAB CONTENT
      =========================================================== -->
-<section class="tab-panel" id="tab-13">
-
+<section class="tab-panel" id="tab-13-removed" style="display:none!important;">
   <div class="tab-header">
     <div class="tab-header-left">
-      <div class="tab-header-phase">MODEL · 14</div>
-      <div class="tab-header-title">Quarterly Financial Model</div>
+      <div class="tab-header-title">Removed</div>
       <div class="tab-header-sub">Full financial model: annual history, forward estimates, and the model-vs-street gap that defines the re-rating opportunity. The earnings catch-up thesis in numbers.</div>
     </div>
     <div class="tab-header-meta stats-5">
@@ -7791,7 +7934,8 @@ function initChartsForTab(idx) {
   if (idx === 9) initTab9Charts();   // ESG
   if (idx === 10) initTab10Charts(); // Management
   if (idx === 11) initTab11Charts(); // Verdict
-  if (idx === 12) initTab12Charts(); // Quarterly Model
+  // idx 12 = Perplexity Research tab (no charts)
+  // Quarterly Model removed — chart-qtr-eps now lives in Financials (idx 2)
 }
 
 /* ============================================================
@@ -8102,6 +8246,38 @@ function initTab2Charts() {
     annotations: [{
       x: 'Actual', y: 2.52, text: '+$0.55 beat\n(+27.9%)', showarrow: true,
       arrowcolor: '#22B573', ax: 55, ay: -35,
+      font: { color: '#22B573', size: 10, family: 'JetBrains Mono' }
+    }]
+  }), PLOTLY_CONFIG);
+
+  // Quarterly EPS beat chart (migrated from former Quarterly Model tab)
+  const qtrBeatData = [
+    {
+      type: 'bar', name: 'Consensus EPS',
+      x: ["Q1'24","Q2'24","Q3'24","Q4'24","Q1'25","Q2'25","Q3'25","Q4'25"],
+      y: [0.41, 0.55, 0.83, 0.95, 0.84, 1.06, 1.29, 1.97],
+      marker: { color: '#62626E', opacity: 0.7 },
+      hovertemplate: '%{x}<br>Consensus: $%{y:.2f}<extra></extra>'
+    },
+    {
+      type: 'bar', name: 'Actual EPS',
+      x: ["Q1'24","Q2'24","Q3'24","Q4'24","Q1'25","Q2'25","Q3'25","Q4'25"],
+      y: [0.55, 0.72, 0.81, 1.40, 1.25, 1.43, 1.71, 2.52],
+      marker: { color: '#22B573', opacity: 0.85 },
+      hovertemplate: '%{x}<br>Actual: $%{y:.2f}<extra></extra>'
+    }
+  ];
+  Plotly.newPlot('chart-qtr-eps', qtrBeatData, mergeLayout({
+    title: { text: 'Quarterly EPS Beats — 7 of 8, Q4 2025 Was the Largest (+27.9%)', font: { size: 13, color: '#E2E2E8' } },
+    barmode: 'group',
+    yaxis: { title: 'EPS ($/sh)', tickprefix: '$', range: [0, 3.2] },
+    xaxis: { title: 'Quarter' },
+    height: 300,
+    margin: { l: 65, r: 20, t: 55, b: 65 },
+    legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.01, y: 0.99 },
+    annotations: [{
+      x: "Q4'25", y: 2.52, text: '+27.9% largest beat', showarrow: true,
+      arrowcolor: '#22B573', ax: -65, ay: -40,
       font: { color: '#22B573', size: 10, family: 'JetBrains Mono' }
     }]
   }), PLOTLY_CONFIG);
@@ -8770,39 +8946,7 @@ function initTab11Charts() {
 /* ============================================================
    TAB 13 — QUARTERLY MODEL CHARTS
    ============================================================ */
-function initTab12Charts() {
-  // Quarterly EPS beat chart
-  const qtrBeatData = [
-    {
-      type: 'bar', name: 'Consensus EPS',
-      x: ['Q1\'24','Q2\'24','Q3\'24','Q4\'24','Q1\'25','Q2\'25','Q3\'25','Q4\'25'],
-      y: [0.41, 0.55, 0.83, 0.95, 0.84, 1.06, 1.29, 1.97],
-      marker: { color: '#62626E', opacity: 0.7 },
-      hovertemplate: '%{x}<br>Consensus: $%{y:.2f}<extra></extra>'
-    },
-    {
-      type: 'bar', name: 'Actual EPS',
-      x: ['Q1\'24','Q2\'24','Q3\'24','Q4\'24','Q1\'25','Q2\'25','Q3\'25','Q4\'25'],
-      y: [0.55, 0.72, 0.81, 1.40, 1.25, 1.43, 1.71, 2.52],
-      marker: { color: '#22B573', opacity: 0.85 },
-      hovertemplate: '%{x}<br>Actual: $%{y:.2f}<extra></extra>'
-    }
-  ];
-  Plotly.newPlot('chart-qtr-eps', qtrBeatData, mergeLayout({
-    title: { text: 'Quarterly EPS Beats — 7 of 8, Q4 2025 Was the Largest (+27.9%)', font: { size: 13, color: '#E2E2E8' } },
-    barmode: 'group',
-    yaxis: { title: 'EPS ($/sh)', tickprefix: '$', range: [0, 3.2] },
-    xaxis: { title: 'Quarter' },
-    height: 340,
-    margin: { l: 65, r: 20, t: 55, b: 65 },
-    legend: { font: { color: '#A8A8B8', size: 11 }, bgcolor: 'rgba(0,0,0,0)', x: 0.01, y: 0.99 },
-    annotations: [{
-      x: "Q4'25", y: 2.52, text: '+27.9% largest beat', showarrow: true,
-      arrowcolor: '#22B573', ax: -65, ay: -40,
-      font: { color: '#22B573', size: 10, family: 'JetBrains Mono' }
-    }]
-  }), PLOTLY_CONFIG);
-}
+// initTab12Charts removed — EPS chart now initialized inside initTab2Charts (Financials tab)
 
 
 
