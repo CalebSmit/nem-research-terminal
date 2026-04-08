@@ -353,51 +353,38 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 /* Replaces the old flat pill strip with a compact 2×N card grid.
    Each stat is a mini-card with label on top, value below.
    Max 4 stats per row; wraps gracefully at any width.         */
+/* ─── TAB HEADER STATS — flat inline strip, no box ──────────
+   Stats sit in a horizontal row separated by faint dividers.
+   No borders, no background cards — clean and readable.      */
 .tab-header-meta {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(80px, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
   gap: 0;
   background: transparent;
-  border: 1px solid var(--border-2);
-  border-radius: 6px;
-  overflow: hidden;
+  border: none;
   flex-shrink: 0;
   align-self: flex-start;
-  min-width: 340px;
-  max-width: 440px;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 4px 16px rgba(0,0,0,0.35);
 }
-/* When there are 5 stats, go 3-2 layout */
 .tab-header-meta.stats-5 {
-  grid-template-columns: repeat(3, minmax(80px, 1fr));
+  /* same flex row, no override needed */
 }
 .tab-header-stat {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
-  padding: 12px 14px 11px;
-  background: var(--surface-2);
-  border-right: 1px solid rgba(255,255,255,0.05);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 4px 20px 4px 0;
+  background: transparent;
+  border: none;
   position: relative;
-  transition: background 0.15s;
 }
-.tab-header-stat:last-child { border-right: none; }
-/* Accent top bar — color varies by .val child color class */
-.tab-header-stat::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: rgba(255,255,255,0.07);
-  transition: background 0.15s;
+/* Thin vertical divider between stats — not after the last one */
+.tab-header-stat + .tab-header-stat {
+  padding-left: 20px;
+  border-left: 1px solid rgba(255,255,255,0.10);
 }
-.tab-header-stat:has(.val.gold)::before  { background: rgba(232,175,80,0.55); }
-.tab-header-stat:has(.val.green)::before { background: rgba(34,181,115,0.55); }
-.tab-header-stat:has(.val.red)::before   { background: rgba(224,82,82,0.55); }
-.tab-header-stat:has(.val.teal)::before  { background: rgba(34,211,238,0.55); }
-.tab-header-stat:hover { background: var(--surface-3); }
 .tab-header-stat .lbl {
   font-size: 9px;
   font-weight: 700;
@@ -406,16 +393,13 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
   color: var(--text-3);
   line-height: 1;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
 }
 .tab-header-stat .val {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.15;
   white-space: nowrap;
   letter-spacing: -0.01em;
 }
@@ -423,14 +407,15 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 .tab-header-stat .val.green { color: var(--green-light); }
 .tab-header-stat .val.red   { color: var(--red-light); }
 .tab-header-stat .val.teal  { color: var(--teal-light); }
-/* Legacy: unclassed val defaults to text, not gold */
 
 @media (max-width: 1100px) {
-  .tab-header { flex-direction: column; gap: 16px; }
-  .tab-header-meta { min-width: 0; max-width: 100%; grid-template-columns: repeat(4, 1fr); }
+  .tab-header { flex-direction: column; gap: 12px; }
+  .tab-header-meta { flex-wrap: wrap; }
 }
 @media (max-width: 640px) {
-  .tab-header-meta { grid-template-columns: repeat(2, 1fr); }
+  .tab-header-meta { flex-wrap: wrap; gap: 8px 0; }
+  .tab-header-stat + .tab-header-stat { padding-left: 14px; }
+  .tab-header-stat { padding-right: 14px; }
 }
 
 /* ============================================================
@@ -2245,18 +2230,7 @@ details:not(.perp-expander) {
   .rdcf-arrow { display: none; }
 }
 
-/* 12. STATS-5 RESPONSIVE FIX */
-@media (max-width: 1100px) {
-  .tab-header-meta.stats-5 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 640px) {
-  .tab-header-meta,
-  .tab-header-meta.stats-5 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* 12. STATS-5 RESPONSIVE FIX — flex-based, no grid overrides needed */
 
 /* 13. SCENARIO CARD GRID — prevent overflow on smaller widths */
 @media (max-width: 1100px) {
