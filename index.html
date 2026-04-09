@@ -2815,8 +2815,73 @@ details:not(.perp-expander) {
   <div class="grid-2 mt-16">
     <div class="panel">
       <div class="chart-title">Central Bank Gold Purchases Breaking Records (tonnes)</div>
-      <div id="chart-central-banks" style="height:340px;"></div>
-      <div class="chart-takeaway"><strong>1,045t in 2024</strong> — 3rd consecutive year above 1,000t. Historical average (2010–2019) was 374t/yr. This is a <strong>2.8× structural step-change</strong> in demand that is not modeled in consensus price decks.</div>
+      <!-- Pure CSS bar chart — no Plotly, no zoom, always renders correctly -->
+      <!-- Heights pre-computed: max scale = 1200t mapped to 192px bar area -->
+      <!-- 2019=668t→107px  2020=255t→41px  2021=463t→74px  2022=1136t→182px  2023=1037t→166px  2024=1045t→167px -->
+      <!-- avg374t→60px from bottom  1000t→160px from bottom -->
+      <div style="padding:14px 12px 0;">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-3);">
+          <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:10px;height:3px;background:#A8A8B8;display:inline-block;"></span>Pre-2022</span>
+          <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:10px;height:3px;background:#22B573;display:inline-block;"></span>Record (&gt;1,000t) &#9733;</span>
+          <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:10px;height:3px;background:#E8AF50;display:inline-block;"></span>2024</span>
+        </div>
+        <!-- chart container: 220px total, 28px reserved at bottom for labels -->
+        <div style="position:relative;height:220px;">
+          <!-- bar area: 192px tall, starts at top=0, bars grow from bottom of bar area -->
+          <!-- avg line at 60px from bottom of bar area = top: calc(220px - 28px - 60px) = 132px -->
+          <div style="position:absolute;left:0;right:0;top:132px;height:0;border-top:1px dashed rgba(168,168,184,0.5);">
+            <span style="position:absolute;left:4px;top:-15px;font-size:9px;font-family:'JetBrains Mono',monospace;color:#A8A8B8;white-space:nowrap;">avg 374t/yr</span>
+          </div>
+          <!-- 1000t line at 160px from bottom of bar area = top: calc(220px - 28px - 160px) = 32px -->
+          <div style="position:absolute;left:0;right:0;top:32px;height:0;border-top:1px dashed rgba(34,181,115,0.45);">
+            <span style="position:absolute;left:4px;top:3px;font-size:9px;font-family:'JetBrains Mono',monospace;color:#22B573;white-space:nowrap;">1,000t threshold</span>
+          </div>
+          <!-- bars row: sits at bottom, 192px tall, 28px label strip -->
+          <div style="position:absolute;bottom:0;left:0;right:0;height:220px;display:flex;align-items:flex-end;gap:5px;padding-bottom:28px;">
+            <!-- 2019: 107px -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:#A8A8B8;margin-bottom:3px;">668</div>
+              <div style="width:100%;height:107px;background:#A8A8B8;opacity:0.75;"></div>
+            </div>
+            <!-- 2020: 41px -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:#A8A8B8;margin-bottom:3px;">255</div>
+              <div style="width:100%;height:41px;background:#62626E;opacity:0.75;"></div>
+            </div>
+            <!-- 2021: 74px -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:#A8A8B8;margin-bottom:3px;">463</div>
+              <div style="width:100%;height:74px;background:#A8A8B8;opacity:0.75;"></div>
+            </div>
+            <!-- 2022: 182px RECORD -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:#22B573;font-weight:700;margin-bottom:3px;">1,136 &#9733;</div>
+              <div style="width:100%;height:182px;background:#22B573;opacity:0.9;"></div>
+            </div>
+            <!-- 2023: 166px -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:#22B573;font-weight:700;margin-bottom:3px;">1,037 &#9733;</div>
+              <div style="width:100%;height:166px;background:#22B573;opacity:0.9;"></div>
+            </div>
+            <!-- 2024: 167px -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:#E8AF50;font-weight:700;margin-bottom:3px;">1,045 &#9733;</div>
+              <div style="width:100%;height:167px;background:#E8AF50;opacity:0.9;"></div>
+            </div>
+          </div>
+          <!-- year labels row -->
+          <div style="position:absolute;bottom:4px;left:0;right:0;display:flex;gap:5px;">
+            <div style="flex:1;text-align:center;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-2);">2019</div>
+            <div style="flex:1;text-align:center;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-2);">2020</div>
+            <div style="flex:1;text-align:center;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-2);">2021</div>
+            <div style="flex:1;text-align:center;font-size:10px;font-family:'JetBrains Mono',monospace;color:#22B573;font-weight:700;">2022</div>
+            <div style="flex:1;text-align:center;font-size:10px;font-family:'JetBrains Mono',monospace;color:#22B573;font-weight:700;">2023</div>
+            <div style="flex:1;text-align:center;font-size:10px;font-family:'JetBrains Mono',monospace;color:#E8AF50;font-weight:700;">2024</div>
+          </div>
+        </div>
+        <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--text-3);margin-top:4px;text-align:center;">Net tonnes purchased — 3 consecutive years above 1,000t (&#9733;)</div>
+      </div>
+      <div class="chart-takeaway" style="margin-top:10px;"><strong>1,045t in 2024</strong> — 3rd consecutive year above 1,000t. Historical average (2010–2021) was 374t/yr. This is a <strong>2.8× structural step-change</strong> in demand that is not modeled in consensus price decks.</div>
     </div>
     <div class="panel">
       <div class="chart-title">Major Bank Gold Price Forecasts for 2026</div>
