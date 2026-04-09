@@ -8130,36 +8130,7 @@ function initTab1Charts() {
     ]
   }), PLOTLY_CONFIG);
 
-  // Central bank purchases — 2019–2024 window so bars are large and differences visible
-  Plotly.newPlot('chart-central-banks', [{
-    type: 'bar',
-    x: ['2019','2020','2021','2022','2023','2024'],
-    y: [668, 255, 463, 1136, 1037, 1045],
-    marker: {
-      color: ['#A8A8B8','#62626E','#A8A8B8','#22B573','#22B573','#E8AF50'],
-      opacity: 0.9
-    },
-    text: ['668t','255t','463t','1,136t\u2605','1,037t\u2605','1,045t\u2605'],
-    textposition: 'outside',
-    textfont: { size: 12, family: 'JetBrains Mono', color: '#E2E2E8' },
-    hovertemplate: '%{x}<br>CB Net Purchases: %{y:,.0f} tonnes<extra></extra>'
-  }], mergeLayout({
-    title: { text: 'Central Bank Net Gold Purchases — 3 Consecutive Years Above 1,000 Tonnes (★)', font: { size: 12, color: '#E2E2E8' } },
-    yaxis: { title: 'Net Tonnes Purchased', range: [0, 1380] },
-    xaxis: { type: 'category', tickfont: { size: 13, family: 'JetBrains Mono', color: '#E2E2E8' } },
-    height: 340,
-    margin: { l: 65, r: 25, t: 60, b: 55 },
-    shapes: [{
-      type: 'line', xref: 'paper', x0: 0, x1: 1, y0: 374, y1: 374,
-      line: { color: '#62626E', width: 1.5, dash: 'dash' }
-    }],
-    annotations: [
-      { x: '2020', y: 374, text: '2010–2021 avg: 374t/yr', showarrow: false,
-        font: { color: '#A8A8B8', size: 11, family: 'JetBrains Mono' }, yshift: 16 },
-      { x: '2022', y: 1136, text: 'Record 1,136t', showarrow: false,
-        font: { color: '#22B573', size: 12, family: 'JetBrains Mono' }, yshift: 28 }
-    ]
-  }), PLOTLY_CONFIG);
+  // Central bank purchases chart is now pure CSS/HTML in the DOM — no Plotly call needed.
 
   // Bank forecasts
   Plotly.newPlot('chart-bank-forecasts', [{
