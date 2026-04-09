@@ -8085,14 +8085,14 @@ function initTab1Charts() {
     height: 340,
     margin: { l: 65, r: 25, t: 60, b: 55 },
     shapes: [{
-      type: 'line', x0: -0.5, x1: 5.5, y0: 374, y1: 374,
+      type: 'line', xref: 'paper', x0: 0, x1: 1, y0: 374, y1: 374,
       line: { color: '#62626E', width: 1.5, dash: 'dash' }
     }],
     annotations: [
       { x: '2020', y: 374, text: '2010–2021 avg: 374t/yr', showarrow: false,
         font: { color: '#A8A8B8', size: 11, family: 'JetBrains Mono' }, yshift: 16 },
-      { x: '2022', y: 1136, text: 'Record\n1,136t', showarrow: false,
-        font: { color: '#22B573', size: 11, family: 'JetBrains Mono' }, yshift: 32 }
+      { x: '2022', y: 1136, text: 'Record 1,136t', showarrow: false,
+        font: { color: '#22B573', size: 12, family: 'JetBrains Mono' }, yshift: 28 }
     ]
   }), PLOTLY_CONFIG);
 
